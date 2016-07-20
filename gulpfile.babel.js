@@ -16,6 +16,8 @@ import webpackDevMiddelware from 'webpack-dev-middleware';
 import webpackHotMiddelware from 'webpack-hot-middleware';
 import colorsSupported      from 'supports-color';
 import historyApiFallback   from 'connect-history-api-fallback';
+import tar      from 'gulp-tar';
+import gzip     from 'gulp-gzip';
 
 let root = 'client';
 
@@ -31,7 +33,7 @@ let resolveToComponents = (glob = '') => {
 // map of all paths
 let paths = {
   js: resolveToComponents('**/*!(.spec.js).js'), // exclude spec files
-  styl: resolveToApp('**/*.styl'), // stylesheets
+  styl: resolveToApp('**/*.scss'), // stylesheets
   html: [
     resolveToApp('**/*.html'),
     path.join(root, 'index.html')
@@ -121,6 +123,14 @@ gulp.task('clean', (cb) => {
     gutil.log("[clean]", paths);
     cb();
   })
+});
+
+gulp.task('build', ['webpack'], () => {
+    
+  return gulp.src('./dist/**')
+     .pipe(tar('build.tar'))
+     .pipe(gzip())
+     .pipe(gulp.dest('./builds/'));
 });
 
 gulp.task('default', ['watch']);

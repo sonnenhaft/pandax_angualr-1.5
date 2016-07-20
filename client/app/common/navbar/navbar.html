@@ -1,8 +1,15 @@
-<nav class="navbar">
-  <div class="logo">
-    <h1><a ui-sref="home">{{ $ctrl.name }}</a></h1>
-  </div>
-  <div class="nav-links">
-    <span><a ui-sref="about">about</a></span>
+<nav 
+	class="navbar" 
+	flex-sm="100">
+  <div 
+  	class="logo"
+  	layout="row">
+    <h1 hide show-gt-sm><a ui-sref="home" class="logo__link">PANDA</a></h1>
+    <md-icon 
+    	md-svg-icon="/assets/images/icons/svg/ic_menu_white.svg" 
+    	hide-gt-sm
+    	flex-offset-xs="90"
+    	aria-label="menu">
+    </md-icon>
   </div>
 </nav>

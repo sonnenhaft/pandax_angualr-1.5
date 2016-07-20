@@ -1,0 +1,37 @@
+// base styles
+@import "scss/colors";
+@import "scss/fonts";
+@import "scss/typography";
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  // browsers default to 16px for font-size,
+  // so setting top-level font-size to 62.5%
+  // scales 1rem to equal 10px.
+  font: 62.5% $avenir-regular, sans-serif;
+}
+
+app {
+	display: flex;
+	height: 100%;
+	position: relative;
+	width: 100%;
+}
+
+// components
+@import "common/navbar/navbar.scss";

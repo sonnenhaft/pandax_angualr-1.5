@@ -1,0 +1,16 @@
+h1 {
+	font: 26px $avenir-regular;
+}
+
+h2 {
+	font: 20px $avenir-regular;
+	line-height: 24px;
+}
+
+
+.logo {
+	color: $white;
+	&__link {
+		color: $white;
+	}
+}

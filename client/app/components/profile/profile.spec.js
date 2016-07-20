@@ -1,16 +1,16 @@
-import HeroModule from './hero'
-import HeroController from './hero.controller';
-import HeroComponent from './hero.component';
-import HeroTemplate from './hero.html';
+import ProfileModule from './profile'
+import ProfileController from './profile.controller';
+import ProfileComponent from './profile.component';
+import ProfileTemplate from './profile.html';
 
-describe('Hero', () => {
+describe('Profile', () => {
   let $rootScope, makeController;
 
-  beforeEach(window.module(HeroModule));
+  beforeEach(window.module(ProfileModule));
   beforeEach(inject((_$rootScope_) => {
     $rootScope = _$rootScope_;
     makeController = () => {
-      return new HeroController();
+      return new ProfileController();
     };
   }));
 
@@ -30,20 +30,20 @@ describe('Hero', () => {
     // template specs
     // tip: use regex to ensure correct bindings are used e.g., {{  }}
     it('has name in template [REMOVE]', () => {
-      expect(HeroTemplate).to.match(/{{\s?\$ctrl\.name\s?}}/g);
+      expect(ProfileTemplate).to.match(/{{\s?\$ctrl\.name\s?}}/g);
     });
   });
 
   describe('Component', () => {
       // component/directive specs
-      let component = HeroComponent;
+      let component = ProfileComponent;
 
       it('includes the intended template',() => {
-        expect(component.template).to.equal(HeroTemplate);
+        expect(component.template).to.equal(ProfileTemplate);
       });
 
       it('invokes the right controller', () => {
-        expect(component.controller).to.equal(HeroController);
+        expect(component.controller).to.equal(ProfileController);
       });
   });
 });

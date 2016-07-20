@@ -7,10 +7,17 @@ module.exports = {
   entry: {},
   module: {
     loaders: [
-       { test: /\.js$/, exclude: [/app\/lib/, /node_modules/], loader: 'ng-annotate!babel' },
-       { test: /\.html$/, loader: 'raw' },
-       { test: /\.styl$/, loader: 'style!css!stylus' },
-       { test: /\.css$/, loader: 'style!css' }
+      { test: /\.js$/, exclude: [/app\/lib/, /node_modules/], loader: 'ng-annotate!babel' },
+      { test: /\.html$/, loader: 'raw' },
+      { test: /\.scss$/, loader: 'style!css!sass' },
+      { test: /\.css$/, loader: 'style!css' },
+      {test: /\.(eot|woff|woff2|ttf|svg)$/, loader: 'url-loader?limit=30000&name=assets/fonts/[name]-[hash].[ext]'},
+      {test: /\.(jpg|png)$/, loader: 'file-loader?limit=30000&name=assets/images/[name]-[hash].[ext]'},
+      {
+        test: /\.svg$/,
+        exclude: [/assets\/fonts/],
+        loader: 'file-loader?limit=30000&name=assets/images/icons/[name].[ext]'
+      }
     ]
   },
   plugins: [

@@ -16,4 +16,10 @@ config.plugins = config.plugins.concat([
   new webpack.HotModuleReplacementPlugin()
 ]);
 
+config.resolve = {
+  alias: {
+    config: path.join(__dirname, 'config/development')
+  }
+};
+
 module.exports = config;
