@@ -1,5 +1,5 @@
 ### We use
-- [Starter kit](https://github.com/AngularClass/NG6-starter)
+- [NG6-starter](https://github.com/AngularClass/NG6-starter)
 - [AngularJS's commit message convention](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines)
 - [Angular Material](https://material.angularjs.org/latest/)
 - [SASS](http://sass-lang.com/guide)
