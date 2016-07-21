@@ -1,7 +1,12 @@
 class ProfileController {
   constructor() {
-    this.name = 'profile';
+/*	  Object.assign(this, {
+
+	  });*/
   }
+
+
+
 }
 
 export default ProfileController;

@@ -31,7 +31,7 @@ angular.module('app', [
       '900': 'FFFFFF'
     });
     let backgroundMap = $mdThemingProvider.extendPalette('grey', {
-      '50': '9e9e9e'
+      // '50': '9e9e9e'
     });
     
     $mdThemingProvider.definePalette('primaryMap', primaryMap);
