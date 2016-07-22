@@ -9,6 +9,10 @@ export default class Validation {
   }
 
   check (field, credentials) {
+    if (field === 'repeater') {
+      return this[field](credentials.password, credentials[field]);
+    }
+
     return this[field](credentials[field]);
   }
 
@@ -33,6 +37,13 @@ export default class Validation {
   password (str) {
     let validation = str.length >= 6;
     return this.message('password', validation, 'Password should contain more then 6 character.');
+  }
+
+  repeater (pass, repeater) {
+    if (pass != repeater) {
+      return this.message('repeater', false, 'Passwords do not match.');
+    }
+    return this.message('repeater', true, 'Passwords do not match.');
   }
 
 }

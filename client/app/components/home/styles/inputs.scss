@@ -1,4 +1,6 @@
 .input {
+  margin-bottom: 13px;
+
   label, .forgot {
     font: 0.938em $open-sans, sans-serif;
     display: inline-block;
@@ -36,7 +38,7 @@
     margin-top: 10px;
   }
 
-  &:first-child {
-    margin-bottom: 13px;
+  &:last-child {
+    margin-bottom: 0;
   }
 }

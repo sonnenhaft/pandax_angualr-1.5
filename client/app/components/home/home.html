@@ -85,13 +85,26 @@
                 {{$ctrl.signUpPasswordError}}
               </span>
             </div>
+            <div class="input">
+              <label>Re-enter password <i>*</i></label>
+              <input type="password"
+                     name="repeater"
+                     ng-model="$ctrl.repeater"
+                     ng-keyup="$ctrl.signUpRepeaterError = false"
+                     autocomplete="off"
+                     required />
+              <span class="error" ng-if="$ctrl.signUpRepeaterError">
+                {{$ctrl.signUpRepeaterError}}
+              </span>
+            </div>
           </div>
           <div class="sign-button">
             <md-button ng-disabled="!registerForm.$valid"
                        ng-class="{disabled: !registerForm.$valid}"
                        ng-click="$ctrl.onSubmit({
                         email: registerForm.email.$viewValue,
-                        password: registerForm.password.$viewValue
+                        password: registerForm.password.$viewValue,
+                        repeater: registerForm.repeater.$viewValue
                       })">
               Sign up
             </md-button>
