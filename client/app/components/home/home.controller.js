@@ -1,8 +1,8 @@
 class HomeController {
 
-  constructor ($stateParams) {
+  constructor ($stateParams, $state, Validation) {
 
-    _.assign(this, {$stateParams});
+    _.assign(this, {$stateParams, $state, Validation});
 
     this.signIn = true;
     this.signUp = false;
@@ -20,18 +20,37 @@ class HomeController {
     }
   }
 
-  onSignUp (credentials) {
-    console.log(credentials);
+  onSubmit (credentials) {
+    let isError, errorMessage;
+
+    isError = this.Validation.error(credentials).length;
+    errorMessage = this.Validation.error(credentials);
+
+    if (isError) {
+      _.map(errorMessage, error => {
+        this[
+          (this.signIn ? 'signIn' : 'signUp') + _.capitalize(error.name) + 'Error'
+        ] = error.text;
+      });
+
+      return false;
+    }
+
+    this.$state.go('profile');
   }
 
-  onSignIn (credentials) {
-    console.log(credentials);
+  switchTo (form) {
+    this.signIn = this.signUp = false;
+    this.email = this.password = '';
+    this[form] = true;
   }
 
 }
 
 HomeController.$inject = [
-  '$stateParams'
+  '$stateParams',
+  '$state',
+  'Validation'
 ];
 
 export default HomeController;

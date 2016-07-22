@@ -7,19 +7,34 @@
         <form name="loginForm" class="animated fadeIn">
           <div class="credentials">
             <div class="input">
-              <label>E-mail</label>
-              <input type="email" name="email" ng-model="$ctrl.email" required />
+              <label>E-mail <i>*</i></label>
+              <input type="email"
+                     name="email"
+                     ng-model="$ctrl.email"
+                     ng-keyup="$ctrl.emailError = false"
+                     required/>
+              <span class="error" ng-if="$ctrl.signInEmailError">
+                {{$ctrl.signInEmailError}}
+              </span>
             </div>
             <div class="input">
-              <label>Password</label>
+              <label>Password <i>*</i></label>
               <a href="" class="forgot">Forgot ?</a>
-              <input type="password" name="password" ng-model="$ctrl.password" autocomplete="off" required />
+              <input type="password"
+                     name="password"
+                     ng-model="$ctrl.password"
+                     ng-keyup="$ctrl.passwordError = false"
+                     autocomplete="off"
+                     required />
+              <span class="error" ng-if="$ctrl.signInPasswordError">
+                {{$ctrl.signInPasswordError}}
+              </span>
             </div>
           </div>
           <div class="sign-button">
             <md-button ng-disabled="!loginForm.$valid"
                        ng-class="{disabled: !loginForm.$valid}"
-                       ng-click="$ctrl.onSignIn({
+                       ng-click="$ctrl.onSubmit({
                         email: loginForm.email.$viewValue,
                         password: loginForm.password.$viewValue
                       })">
@@ -28,7 +43,7 @@
           </div>
         </form>
         <div class="account-ready">
-         Don't have an account? <a href="" ng-click="$ctrl.signUp = true; $ctrl.signIn = false">Sign Up</a>
+         Don't have an account? <a href="" ng-click="$ctrl.switchTo('signUp')">Sign Up</a>
         </div>
       </div>
 
@@ -48,28 +63,42 @@
           </div>
           <div class="credentials">
             <div class="input">
-              <label>E-mail</label>
-              <input type="email" name="email" ng-model="$ctrl.email" required />
+              <label>E-mail <i>*</i></label>
+              <input type="email"
+                     name="email"
+                     ng-model="$ctrl.email"
+                     ng-keyup="$ctrl.signUpEmailError = false"
+                     required />
+              <span class="error" ng-if="$ctrl.signUpEmailError">
+                {{$ctrl.signUpEmailError}}
+              </span>
             </div>
             <div class="input">
-              <label>Password</label>
-              <input type="password" name="password" ng-model="$ctrl.password" autocomplete="off" required />
+              <label>Password <i>*</i></label>
+              <input type="password"
+                     name="password"
+                     ng-model="$ctrl.password"
+                     ng-keyup="$ctrl.signUpPasswordError = false"
+                     autocomplete="off"
+                     required />
+              <span class="error" ng-if="$ctrl.signUpPasswordError">
+                {{$ctrl.signUpPasswordError}}
+              </span>
             </div>
           </div>
           <div class="sign-button">
             <md-button ng-disabled="!registerForm.$valid"
                        ng-class="{disabled: !registerForm.$valid}"
-                       ng-click="$ctrl.onSignUp({
+                       ng-click="$ctrl.onSubmit({
                         email: registerForm.email.$viewValue,
-                        password: registerForm.password.$viewValue,
-                        customer: $ctrl.isCustomer
+                        password: registerForm.password.$viewValue
                       })">
               Sign up
             </md-button>
           </div>
         </form>
         <div class="account-ready">
-          Already have an account? <a href="" ng-click="$ctrl.signUp = false; $ctrl.signIn = true">Log in</a>
+          Already have an account? <a href="" ng-click="$ctrl.switchTo('signIn')">Log in</a>
         </div>
       </div>
 

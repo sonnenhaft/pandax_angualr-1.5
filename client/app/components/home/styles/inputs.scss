@@ -8,6 +8,10 @@
 
   label {
     margin: 0 0 14px 8px;
+
+    i {
+      color: $Cardinal;
+    }
   }
 
   .forgot {
@@ -24,6 +28,12 @@
     outline: none;
     color: black;
     border-radius: 0;
+  }
+
+  .error {
+    text-align: center;
+    display: block;
+    margin-top: 10px;
   }
 
   &:first-child {
