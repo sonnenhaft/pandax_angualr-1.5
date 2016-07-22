@@ -21,7 +21,7 @@ angular.module('app', [
     // #how-to-configure-your-server-to-work-with-html5mode
     $locationProvider.html5Mode(true).hashPrefix('!');
 
-    $urlRouterProvider.otherwise(function ($injector) {
+    $urlRouterProvider.otherwise($injector => {
       /*
       ToDo: autoLogout when user is not authorized
        */

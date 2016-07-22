@@ -1,7 +1,12 @@
 class HomeController {
-  constructor() {
-    this.name = 'home';
+
+  constructor () {
+
+    this.isCustomer = true;
+    this.isProvider = false;
+
   }
+
 }
 
 export default HomeController;

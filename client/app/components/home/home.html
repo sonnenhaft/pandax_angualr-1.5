@@ -1,3 +1,45 @@
-<md-content flex layout-padding md-colors="{color:'primary-50'}">
-  
-<md-content/>
+<section id="home" flex md-colors="{color:'primary-50'}">
+  <div id="form">
+    <h1>MINX</h1>
+    <div class="enter-form">
+      <form name="loginForm">
+        <div class="type-of-user">
+          <md-button class="customer-user"
+                     ng-class="{active: $ctrl.isCustomer}"
+                     ng-click="$ctrl.isCustomer = true; $ctrl.isProvider = false">
+            Customer
+          </md-button>
+          <md-button class="provider-user"
+                     ng-class="{active: $ctrl.isProvider}"
+                     ng-click="$ctrl.isProvider = true; $ctrl.isCustomer = false">
+            Service provider
+          </md-button>
+        </div>
+        <div class="credentials">
+          <div class="input">
+            <label>E-mail</label>
+            <input type="email" name="email" ng-model="$ctrl.email" required />
+          </div>
+          <div class="input">
+            <label>Password</label>
+            <input type="password" name="password" ng-model="$ctrl.password" autocomplete="off" required />
+          </div>
+        </div>
+        <div class="sign-button">
+          <md-button ng-disabled="!loginForm.$valid"
+                     ng-class="{disabled: !loginForm.$valid}"
+                     ng-click="$ctrl.onSignIn({
+                        email: loginForm.email.$viewValue,
+                        password: loginForm.password.$viewValue,
+                        customer: $ctrl.isCustomer
+                      })">
+            Sign up
+          </md-button>
+        </div>
+      </form>
+      <div class="account-ready">
+        Already have an account? <a href="">Log in</a>
+      </div>
+    </div>
+  </div>
+</section>

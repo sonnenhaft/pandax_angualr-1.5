@@ -1,0 +1,82 @@
+// =============================================================================
+// $ Home template styles
+// =============================================================================
+
+@import "colors";
+
+#home {
+
+  width: 100%;
+  height: 100%;
+  padding: 0 5%;
+  background: black;
+
+  #form {
+    @import "buttons";
+    @import "inputs";
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 375px;
+    height: 495px;
+    margin: auto;
+
+    h1 {
+      text-align: center;
+      letter-spacing: 2.5px;
+      margin: 0 0 60px 0;
+      font: {
+        weight: 400;
+        size: 2.45em;
+      };
+    }
+
+    .enter-form {
+      .type-of-user {
+        margin-bottom: 42px;
+        overflow: hidden;
+        width: 100%;
+
+        button {
+          width: 49%;
+          float: left;
+
+          &:last-child {
+            float: right;
+          }
+        }
+      }
+
+      .credentials {
+        margin-bottom: 30px;
+      }
+
+      .sign-button {
+        margin-bottom: 23px;
+
+        button {
+          background: $Cardinal;
+          border-color: $Cardinal;
+
+          &.disabled {
+            background: black;
+            border-color: $Davy-grey;
+          }
+        }
+      }
+
+      .account-ready {
+        text-align: center;
+        font: 100% $open-sans, sans-serif;
+
+        a {
+          color: $Cardinal;
+        }
+      }
+    }
+  }
+
+}
