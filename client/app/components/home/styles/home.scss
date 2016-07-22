@@ -26,11 +26,12 @@
 
     h1 {
       text-align: center;
-      letter-spacing: 2.5px;
+      letter-spacing: 1.5px;
       margin: 0 0 60px 0;
+      line-height: 36px;
       font: {
         weight: 400;
-        size: 2.45em;
+        size: 1.875em;
       };
     }
 
@@ -60,6 +61,7 @@
         button {
           background: $Cardinal;
           border-color: $Cardinal;
+          font-size: 0.938em;
 
           &.disabled {
             background: black;
@@ -70,7 +72,8 @@
 
       .account-ready {
         text-align: center;
-        font: 100% $open-sans, sans-serif;
+        font: 0.938em $open-sans, sans-serif;
+        line-height: 24px;
 
         a {
           color: $Cardinal;
