@@ -4,7 +4,7 @@
     <div class="enter-form">
 
       <div class="login-form" ng-if="$ctrl.signIn">
-        <form name="loginForm">
+        <form name="loginForm" class="animated fadeIn">
           <div class="credentials">
             <div class="input">
               <label>E-mail</label>
@@ -33,7 +33,7 @@
       </div>
 
       <div class="register-form" ng-if="$ctrl.signUp">
-        <form name="registerForm">
+        <form name="registerForm" class="animated fadeIn">
           <div class="type-of-user">
             <md-button class="customer-user"
                        ng-class="{active: $ctrl.isCustomer}"

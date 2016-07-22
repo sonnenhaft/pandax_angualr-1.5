@@ -6,7 +6,7 @@ import AppComponent from './app.component';
 import 'normalize.css';
 import angularMaterial from 'angular-material';
 import 'lodash';
-
+import 'animate.css';
 import 'angular-material/angular-material.css';
 
 angular.module('app', [
