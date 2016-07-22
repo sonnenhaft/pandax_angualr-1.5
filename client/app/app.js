@@ -26,12 +26,12 @@ angular.module('app', [
        */
     });
 
-    // Extend the default angular 'grey' theme
-    let primaryMap = $mdThemingProvider.extendPalette('grey', {
-      '900': 'FFFFFF'
+    // Extend the default angular theme
+    let primaryMap = $mdThemingProvider.extendPalette('red', {
+      // '900': 'FFFFFF'
     });
     let backgroundMap = $mdThemingProvider.extendPalette('grey', {
-      // '50': '9e9e9e'
+      // '50': '9f9f9f'
     });
     
     $mdThemingProvider.definePalette('primaryMap', primaryMap);
@@ -40,6 +40,7 @@ angular.module('app', [
     $mdThemingProvider.theme('default')
       .primaryPalette('primaryMap')
       .backgroundPalette('backgroundMap');
+
   })
 
   .component('app', AppComponent);

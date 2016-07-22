@@ -1,8 +1,12 @@
 class ProfileController {
-  constructor() {
-/*	  Object.assign(this, {
 
-	  });*/
+  constructor(PROFILE_ATTRIBUTES_CONSTANT) {
+  	"ngInject";
+
+	  Object.assign(this, {
+	  	PROFILE_ATTRIBUTES_CONSTANT
+	  });
+
   }
 
 
