@@ -5,6 +5,7 @@ import Components from './components/components';
 import AppComponent from './app.component';
 import 'normalize.css';
 import angularMaterial from 'angular-material';
+import 'lodash';
 
 import 'angular-material/angular-material.css';
 
@@ -33,13 +34,17 @@ angular.module('app', [
     let backgroundMap = $mdThemingProvider.extendPalette('grey', {
       '50': '9e9e9e'
     });
-    
+
     $mdThemingProvider.definePalette('primaryMap', primaryMap);
     $mdThemingProvider.definePalette('backgroundMap', backgroundMap);
-  
+
     $mdThemingProvider.theme('default')
       .primaryPalette('primaryMap')
       .backgroundPalette('backgroundMap');
   })
-
+  .run(($rootScope, $state) => {
+    "ngInject";
+    // Add state to root scope
+    $rootScope.$state = $state;
+  })
   .component('app', AppComponent);
