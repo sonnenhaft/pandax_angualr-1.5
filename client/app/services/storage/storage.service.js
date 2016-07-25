@@ -1,8 +1,9 @@
 export default class Storage {
 
   constructor ($window) {
+    'ngInject';
 
-    _.assign(this, {$window})
+    _.assign(this, {$window});
 
   }
 
@@ -32,7 +33,3 @@ export default class Storage {
   }
 
 }
-
-Storage.$inject = [
-  '$window'
-];

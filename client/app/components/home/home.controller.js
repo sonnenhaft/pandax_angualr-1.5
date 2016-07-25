@@ -1,8 +1,9 @@
 class HomeController {
 
-  constructor ($stateParams, $state, Validation, Storage) {
+  constructor ($stateParams, Validation, User) {
+    'ngInject';
 
-    _.assign(this, {$stateParams, $state, Validation, Storage});
+    _.assign(this, {$stateParams, Validation, User});
 
     this.signIn = true;
     this.signUp = false;
@@ -25,6 +26,10 @@ class HomeController {
 
     isError = this.Validation.error(credentials).length;
     errorMessage = this.Validation.error(credentials);
+    credentials = _.assign(credentials, {
+      type: this.isCustomer ? 'customer' : 'provider',
+      auth: this.signIn
+    });
 
     if (isError) {
       _.map(errorMessage, error => {
@@ -36,15 +41,9 @@ class HomeController {
       return false;
     }
 
-    this.Storage.setObject('MINX', {
-      token: 'falseToken!ufhuishdfihsduf723e.rjueifgh8923yrhjo3nknhurfhg9823ornlkfn',
-      user: {
-        email: credentials.email,
-        type: this.isCustomer ? 'customer' : 'provider'
-      }
-    });
-
-    this.$state.go('profile');
+    return this.signIn ?
+      this.User.login(credentials) :
+      this.User.register(credentials);
   }
 
   switchTo (form) {
@@ -54,12 +53,5 @@ class HomeController {
   }
 
 }
-
-HomeController.$inject = [
-  '$stateParams',
-  '$state',
-  'Validation',
-  'Storage'
-];
 
 export default HomeController;

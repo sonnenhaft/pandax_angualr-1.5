@@ -2,12 +2,12 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import homeComponent from './home.component';
 import Validation from '../../services/validation/validation';
-import Storage from '../../services/storage/storage';
+import User from '../../services/user/user';
 
 let homeModule = angular.module('home', [
   uiRouter,
   Validation,
-  Storage
+  User
 ])
 
 .config(($stateProvider) => {
