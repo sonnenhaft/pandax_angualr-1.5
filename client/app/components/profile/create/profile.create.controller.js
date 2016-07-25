@@ -2,9 +2,6 @@ class ProfileCreateController {
 
   constructor () {
 
-    console.log('OOOOHOOG')
-
-
   }
 
 }

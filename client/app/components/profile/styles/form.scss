@@ -1,0 +1,49 @@
+#profile-form {
+
+  .input {
+    max-width: 360px;
+
+    &.image {
+      .file {
+        width: 88px;
+        height: 88px;
+        border-radius: 50%;
+        background: $Charcoal url('../assets/images/add.png') no-repeat center;
+        margin-bottom: 23px;
+
+        input {
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          cursor: pointer;
+          padding: 0;
+        }
+      }
+    }
+
+    label {
+      color: white;
+      font: 0.938em $open-sans, sans-serif;
+      line-height: 24px;
+      display: block;
+      margin: {
+        left: 8px;
+        bottom: 14px;
+        top: 13px;
+      };
+    }
+
+    input {
+      width: 100%;
+      padding: 0 10px;
+      border: none;
+      height: 34px;
+      outline: none;
+
+      &.first {
+        border-right: 1px solid $primary;
+      }
+    }
+  }
+
+}

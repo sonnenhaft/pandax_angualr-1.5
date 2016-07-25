@@ -1,1 +1,36 @@
-CREATE!
+<div id="profile-create">
+  <span class="page-name">Create profile</span>
+  <form name="create" id="profile-form">
+    <div class="input image">
+      <label>Add photo</label>
+      <div class="file">
+        <input type="file">
+      </div>
+    </div>
+    <div class="input name" layout="row">
+      <div flex>
+        <label>First Name</label>
+        <input type="text" class="first">
+      </div>
+      <div flex>
+        <label>Last Name</label>
+        <input type="text">
+      </div>
+    </div>
+    <div class="input phone">
+      <label>Mobile Number</label>
+      <div layout="row">
+        <div flex="25">
+          <input type="text" value="+9" class="first">
+        </div>
+        <div flex="75">
+          <input type="text">
+        </div>
+      </div>
+    </div>
+    <div class="input">
+      <label>Email</label>
+      <input type="email">
+    </div>
+  </form>
+</div>
