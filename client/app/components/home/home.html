@@ -34,6 +34,7 @@
           <div class="sign-button">
             <md-button ng-disabled="!loginForm.$valid"
                        ng-class="{disabled: !loginForm.$valid}"
+                       type="submit"
                        ng-click="$ctrl.onSubmit({
                         email: loginForm.email.$viewValue,
                         password: loginForm.password.$viewValue
@@ -101,6 +102,7 @@
           <div class="sign-button">
             <md-button ng-disabled="!registerForm.$valid"
                        ng-class="{disabled: !registerForm.$valid}"
+                       type="submit"
                        ng-click="$ctrl.onSubmit({
                         email: registerForm.email.$viewValue,
                         password: registerForm.password.$viewValue,
