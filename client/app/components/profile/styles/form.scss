@@ -10,6 +10,7 @@
         border-radius: 50%;
         background: $Charcoal url('../assets/images/add.png') no-repeat center;
         margin-bottom: 23px;
+        line-height: 0;
 
         input {
           width: 100%;
@@ -39,6 +40,8 @@
       border: none;
       height: 34px;
       outline: none;
+      font: 0.938em $open-sans, sans-serif;
+      font-weight: 600;
 
       &.first {
         border-right: 1px solid $primary;
