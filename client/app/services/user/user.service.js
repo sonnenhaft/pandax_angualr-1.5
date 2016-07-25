@@ -20,7 +20,7 @@ export default class User {
 
   register (credentials) {
     this.preAuth(credentials);
-    this.$state.go('profile');
+    this.$state.go('profile.create');
   }
 
   logout () {
