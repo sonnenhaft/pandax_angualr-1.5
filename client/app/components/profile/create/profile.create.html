@@ -16,6 +16,9 @@
             <p class="animated fadeIn">{{type.desc}}</p>
           </div>
         </md-button>
+        <div class="error" ng-if="$ctrl.typeError">
+          Please choose type of your service.
+        </div>
       </div>
     </div>
     <div flex="50" class="basic-data">
@@ -75,7 +78,6 @@
         <md-button ng-disabled="!createForm.$valid"
                    ng-class="{disabled: !createForm.$valid}"
                    ng-click="$ctrl.onReady({
-                    username: createForm.username.$viewValue,
                     first_name: createForm.first_name.$viewValue,
                     last_name: createForm.last_name.$viewValue,
                     phone: createForm.phone.$viewValue,

@@ -9,21 +9,36 @@ class ProfileCreateController {
     this.isProvider = this.session.user.type === 'provider';
     this.email = this.session.user.email;
 
-    this.providers = this.types();
+    this.providers = this.typesOfPrivider();
 
   }
 
   onReady (profile) {
-    console.log(profile);
+    if (!this.getActiveObject(this.providers) && this.isProvider) {
+      this.typeError = true;
+      return false;
+    }
+
+    if (this.isProvider) {
+      this.session.user = _.assign(this.session.user, {
+        username: this.username,
+        provider_id: this.getActiveObject(this.providers).id
+      });
+    }
+
+    this.session.user = _.assign(this.session.user, profile, {auth: true});
+
+    console.log(this.session.user);
   }
 
   validate (field) {
     console.log(field);
   }
 
-  types () {
+  typesOfPrivider () {
     const types = [
       {
+        id: 'prime_xx',
         name: 'Prime XX',
         cost: 250,
         desc: '',
@@ -31,6 +46,7 @@ class ProfileCreateController {
         active: false
       },
       {
+        id: 'prime_x',
         name: 'Prime X',
         cost: 150,
         desc: '',
@@ -38,6 +54,7 @@ class ProfileCreateController {
         active: false
       },
       {
+        id: 'prime',
         name: 'Prime',
         cost: 50,
         desc: '',
@@ -50,6 +67,7 @@ class ProfileCreateController {
   }
 
   switchObjectActivity (arr, index) {
+    this.typeError = false;
     _.map(arr, (object, i) => object.active = index === i);
   }
 
