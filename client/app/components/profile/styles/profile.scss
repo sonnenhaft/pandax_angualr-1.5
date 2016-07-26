@@ -26,6 +26,10 @@
     }
 
     @import "form";
+
+    @media (max-width: 960px) {
+      padding: 50px 5%;
+    }
   }
 
 }

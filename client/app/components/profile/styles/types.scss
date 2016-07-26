@@ -88,4 +88,8 @@
     color: white;
     text-align: center;
   }
+
+  @media (max-width: 960px) {
+    max-width: 100%;
+  }
 }

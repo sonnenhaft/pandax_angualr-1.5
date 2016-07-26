@@ -1,7 +1,7 @@
 <div id="profile-create">
   <span class="page-name">Create profile</span>
-  <form name="createForm" id="profile-form" layout="row">
-    <div flex="50" class="type-or-service" ng-if="$ctrl.isProvider">
+  <form name="createForm" id="profile-form" layout-gt-sm="row">
+    <div flex class="type-or-service" ng-if="$ctrl.isProvider">
       <div class="input type">
         <label>Choose type of your service</label>
         <md-button ng-repeat="type in $ctrl.providers"
@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <div flex="50" class="basic-data">
+    <div flex class="basic-data">
       <div class="input image">
         <label>Add photo</label>
         <div layout="row">
