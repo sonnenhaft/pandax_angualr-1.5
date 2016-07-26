@@ -42,7 +42,7 @@ class ProfileCreateController {
         name: 'Prime XX',
         cost: 250,
         desc: '',
-        img: '../../../../assets/images/services/prime_xx.png',
+        img: '/assets/images/services/prime_xx.png',
         active: false
       },
       {
@@ -50,7 +50,7 @@ class ProfileCreateController {
         name: 'Prime X',
         cost: 150,
         desc: '',
-        img: '../../../../assets/images/services/prime.png',
+        img: '/assets/images/services/prime.png',
         active: false
       },
       {
@@ -58,7 +58,7 @@ class ProfileCreateController {
         name: 'Prime',
         cost: 50,
         desc: '',
-        img: '../../../../assets/images/services/prime.png',
+        img: '/assets/images/services/prime.png',
         active: false
       }
     ];
