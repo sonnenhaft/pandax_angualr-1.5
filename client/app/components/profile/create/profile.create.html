@@ -4,6 +4,18 @@
     <div flex="50" class="type-or-service" ng-if="$ctrl.isProvider">
       <div class="input type">
         <label>Choose type of your service</label>
+        <md-button ng-repeat="type in $ctrl.providers"
+                   ng-click="$ctrl.switchObjectActivity($ctrl.providers, $index)"
+                   ng-class="{active: type.active}"
+                   aria-label="{{type.name}}">
+          <img ng-src="{{type.img}}" alt="{{type.name}}"/>
+          <div class="name">{{type.name}}</div>
+          <div class="price">{{type.cost}} $</div>
+          <div class="desc">
+            <i></i>
+            <p class="animated fadeIn">{{type.desc}}</p>
+          </div>
+        </md-button>
       </div>
     </div>
     <div flex="50" class="basic-data">

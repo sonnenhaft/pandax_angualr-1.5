@@ -1,6 +1,8 @@
 #profile-form {
 
   .input {
+    @import "types";
+
     max-width: 360px;
 
     &.image {
@@ -103,7 +105,7 @@
     @media (max-height: 790px) {
       position: relative;
       bottom: auto;
-      padding: 23px 0;
+      margin-top: 13px;
     }
   }
 
