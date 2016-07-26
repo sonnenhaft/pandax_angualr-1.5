@@ -74,7 +74,7 @@ class ProfileCreateController {
       {file: ''},
       {file: ''}
     ];
-    return this.isCustomer ? _.head(images) : images;
+    return this.isCustomer ? [_.head(images)] : images;
   }
 
   switchObjectActivity (arr, index) {
