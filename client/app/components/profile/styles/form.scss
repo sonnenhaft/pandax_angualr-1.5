@@ -49,4 +49,38 @@
     }
   }
 
+  .submit {
+    position: absolute;
+    bottom: 40px;
+    max-width: 360px;
+    width: 100%;
+
+    button {
+      padding: 0;
+      margin: 0;
+      background: $Cardinal;
+      border-radius: 0;
+      width: 100%;
+      height: 55px;
+      color: white;
+
+      .md-ripple-container {
+        border-radius: 0;
+      }
+
+      &.disabled {
+        background: black;
+      }
+    }
+
+    @media (max-height: 650px) {
+      position: relative;
+      bottom: auto;
+      padding: {
+        top: 30px;
+        bottom: 40px;
+      };
+    }
+  }
+
 }
