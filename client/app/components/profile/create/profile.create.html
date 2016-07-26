@@ -1,43 +1,78 @@
 <div id="profile-create">
   <span class="page-name">Create profile</span>
-  <form name="create" id="profile-form">
-    <div class="input image">
-      <label>Add photo</label>
-      <div class="file">
-        <input type="file">
+  <form name="createForm" id="profile-form" layout="row">
+    <div flex="50" class="type-or-service" ng-if="$ctrl.isProvider">
+      <div class="input type">
+        <label>Choose type of your service</label>
       </div>
     </div>
-    <div class="input name" layout="row">
-      <div flex>
-        <label>First Name</label>
-        <input type="text" class="first" required ng-model="$ctrl.first_name">
-      </div>
-      <div flex>
-        <label>Last Name</label>
-        <input type="text" required ng-model="$ctrl.last_name">
-      </div>
-    </div>
-    <div class="input phone">
-      <label>Mobile Number</label>
-      <div layout="row">
-        <div flex="25">
-          <input type="text" value="+9" class="first" readonly>
+    <div flex="50" class="basic-data">
+      <div class="input image">
+        <label>Add photo</label>
+        <div layout="row">
+          <div class="file-container first" flex>
+            <md-button class="file" aria-label="file">
+              <input type="file">
+            </md-button>
+          </div>
+          <div class="file-container" flex ng-if="$ctrl.isProvider">
+            <md-button class="file" aria-label="file">
+              <input type="file">
+            </md-button>
+          </div>
+          <div class="file-container last" flex ng-if="$ctrl.isProvider">
+            <md-button class="file" aria-label="file">
+              <input type="file">
+            </md-button>
+          </div>
         </div>
-        <div flex="75">
-          <input type="text" required ng-model="$ctrl.phone">
+      </div>
+      <div class="input username" ng-if="$ctrl.isProvider">
+        <label>Display Name</label>
+        <input type="text" name="username" required ng-model="$ctrl.username" ng-blur="$ctrl.validate($ctrl.username)">
+      </div>
+      <div class="input name" layout="row">
+        <div flex>
+          <label>First Name</label>
+          <input type="text" name="first_name" class="first" required ng-model="$ctrl.first_name">
+        </div>
+        <div flex>
+          <label>Last Name</label>
+          <input type="text" name="last_name" required ng-model="$ctrl.last_name">
         </div>
       </div>
-    </div>
-    <div class="input">
-      <label>Email</label>
-      <input type="email" required ng-model="$ctrl.email">
-    </div>
-    <div class="submit">
-      <md-button ng-disabled="!create.$valid"
-                 ng-class="{disabled: !create.$valid}"
-                 type="submit">
-        Ready
-      </md-button>
+      <div class="input phone">
+        <label>Mobile Number</label>
+        <div layout="row">
+          <div flex="25">
+            <input type="text" value="+9" class="first" readonly>
+          </div>
+          <div flex="75">
+            <input type="text" name="phone" required ng-model="$ctrl.phone">
+          </div>
+        </div>
+      </div>
+      <div class="input">
+        <label>Email</label>
+        <input type="email" name="email" required ng-model="$ctrl.email">
+      </div>
+      <div class="terms" ng-if="$ctrl.isProvider">
+        By clicking Ready you agree to the <a href="">Terms and Privacy</a>
+      </div>
+      <div class="submit">
+        <md-button ng-disabled="!createForm.$valid"
+                   ng-class="{disabled: !createForm.$valid}"
+                   ng-click="$ctrl.onReady({
+                    username: createForm.username.$viewValue,
+                    first_name: createForm.first_name.$viewValue,
+                    last_name: createForm.last_name.$viewValue,
+                    phone: createForm.phone.$viewValue,
+                    email: createForm.email.$viewValue
+                   })"
+                   type="submit">
+          Ready
+        </md-button>
+      </div>
     </div>
   </form>
 </div>
