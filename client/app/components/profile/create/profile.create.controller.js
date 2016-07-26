@@ -10,6 +10,7 @@ class ProfileCreateController {
     this.email = this.session.user.email;
 
     this.providers = this.typesOfPrivider();
+    this.images = this.ImagesOfUser();
 
   }
 
@@ -28,6 +29,7 @@ class ProfileCreateController {
 
     this.session.user = _.assign(this.session.user, profile, {auth: true});
 
+    console.log(this.images);
     console.log(this.session.user);
   }
 
@@ -64,6 +66,15 @@ class ProfileCreateController {
     ];
 
     return types;
+  }
+
+  ImagesOfUser () {
+    const images = [
+      {file: ''},
+      {file: ''},
+      {file: ''}
+    ];
+    return this.isCustomer ? _.head(images) : images;
   }
 
   switchObjectActivity (arr, index) {

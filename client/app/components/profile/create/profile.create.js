@@ -2,10 +2,12 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import profileCreateComponent from './profile.create.component';
 import Storage from '../../../services/storage/storage';
+import ngFileUpload from 'ng-file-upload';
 
 let profileCreateModule = angular.module('profileCreate', [
   uiRouter,
-  Storage
+  Storage,
+  ngFileUpload
 ])
 
   .config(($stateProvider) => {

@@ -25,19 +25,17 @@
       <div class="input image">
         <label>Add photo</label>
         <div layout="row">
-          <div class="file-container first" flex>
-            <md-button class="file" aria-label="file">
-              <input type="file">
-            </md-button>
-          </div>
-          <div class="file-container" flex ng-if="$ctrl.isProvider">
-            <md-button class="file" aria-label="file">
-              <input type="file">
-            </md-button>
-          </div>
-          <div class="file-container last" flex ng-if="$ctrl.isProvider">
-            <md-button class="file" aria-label="file">
-              <input type="file">
+          <div class="file-container"
+               flex
+               ng-repeat="image in $ctrl.images"
+               ng-class="{first: $index === 0, last: $index === 2}">
+            <md-button class="file"
+                       aria-label="file"
+                       ngf-select
+                       ng-model="image.file"
+                       name="file"
+                       ngf-max-size="3MB">
+              <img ngf-src="image.file" alt=""/>
             </md-button>
           </div>
         </div>
