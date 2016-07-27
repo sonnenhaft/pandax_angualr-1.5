@@ -54,7 +54,7 @@
           {{$ctrl[field.model + 'Error']}}
           </span>
         </div>
-        <div class="input name" ng-if="field.doubles" layout="row">
+        <div class="input name" ng-if="field.combined" layout="row">
           <div ng-repeat="combine in field.combined" flex>
             <label>{{combine.name}}</label>
             <input type="{{combine.type}}"
