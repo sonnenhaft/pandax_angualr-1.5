@@ -87,6 +87,10 @@
     a {
       color: white;
     }
+
+    @media (max-width: 960px) {
+      text-align: center;
+    }
   }
 
   .submit {
@@ -121,6 +125,7 @@
       position: relative;
       bottom: auto;
       margin: 20px 0;
+      max-width: 100%;
     }
 
     @media (max-height: 790px) {

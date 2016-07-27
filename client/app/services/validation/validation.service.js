@@ -67,7 +67,7 @@ export default class Validation {
   }
 
   isEmpty (field, value) {
-    return this.message(field, !_.isEmpty(value), 'Field is empty!');
+    return this.message(field, !_.isEmpty(value), 'Field is empty.');
   }
 
 }

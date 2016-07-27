@@ -22,7 +22,18 @@ class ProfileCreateController {
       return false;
     }
 
-    this.session.user = _.assign(this.session.user, profile, {auth: true});
+    this.session.user = _.assign(
+      this.session.user,
+      profile,
+      {
+        auth: true
+      },
+      {
+        [this.isCustomer ? 'photo' : 'photos']: this.isCustomer ?
+          _.head(this.images).file :
+          _.map(this.images, 'file')
+      }
+    );
 
     console.log(this.session.user);
   }

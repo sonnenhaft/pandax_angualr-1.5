@@ -9,6 +9,7 @@
   position: relative;
 
   .profile-pages {
+    display: block;
     position: relative;
     padding: {
       top: 52px;
@@ -29,7 +30,12 @@
 
     @media (max-width: 960px) {
       padding: 50px 5%;
+      max-width: 100%;
     }
+  }
+
+  @media (max-width: 960px) {
+    height: auto;
   }
 
 }
