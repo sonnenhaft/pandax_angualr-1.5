@@ -9,11 +9,19 @@ export default class Validation {
   }
 
   check (field, credentials) {
-    if (field === 'repeater') {
-      return this[field](credentials.password, credentials[field]);
-    }
+    switch (field) {
+      case 'repeater':
+        return this[field](credentials.password, credentials[field]);
 
-    return this[field](credentials[field]);
+      case 'first_name':
+      case 'last_name':
+      case 'displaying_name':
+      case 'phone':
+        return this.isEmpty(field, credentials[field]);
+
+      default:
+        return this[field](credentials[field]);
+    }
   }
 
   error (credentials) {
@@ -35,15 +43,22 @@ export default class Validation {
   }
 
   password (str) {
-    let validation = str.length >= 6;
-    return this.message('password', validation, 'Password should contain more then 6 character.');
+    return this.message('password', str.length >= 6, 'Password should contain more then 6 character.');
   }
 
   repeater (pass, repeater) {
-    if (pass != repeater) {
-      return this.message('repeater', false, 'Passwords do not match.');
+    return this.message('repeater', pass === repeater, 'Passwords do not match.');
+  }
+
+  images (arr) {
+    if (!_.find(arr, image => image.file.name)) {
+      return this.message('images', false, 'Please upload at least one photo.');
     }
-    return this.message('repeater', true, 'Passwords do not match.');
+    return this.message('images', true);
+  }
+
+  isEmpty (field, value) {
+    return this.message(field, !_.isEmpty(value), 'Field is empty!');
   }
 
 }

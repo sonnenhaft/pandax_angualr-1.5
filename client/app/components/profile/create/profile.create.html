@@ -10,10 +10,10 @@
                    aria-label="{{type.name}}">
           <img ng-src="{{type.img}}" alt="{{type.name}}"/>
           <div class="name">{{type.name}}</div>
-          <div class="price">{{type.cost}} $</div>
+          <div class="price">{{type.price}} $</div>
           <div class="desc">
             <i></i>
-            <p class="animated fadeIn">{{type.desc}}</p>
+            <p class="animated fadeIn">{{type.description}}</p>
           </div>
         </md-button>
         <div class="error" ng-if="$ctrl.typeError">
@@ -40,34 +40,35 @@
           </div>
         </div>
       </div>
-      <div class="input username" ng-if="$ctrl.isProvider">
-        <label>Display Name</label>
-        <input type="text" name="username" required ng-model="$ctrl.username" ng-blur="$ctrl.validate($ctrl.username)">
-      </div>
-      <div class="input name" layout="row">
-        <div flex>
-          <label>First Name</label>
-          <input type="text" name="first_name" class="first" required ng-model="$ctrl.first_name">
+      <div class="input-container" ng-repeat="field in $ctrl.fields">
+        <div class="input" ng-if="!field.combined">
+          <label>{{field.name}}</label>
+          <input type="{{field.type}}"
+                 name="{{field.model}}"
+                 required
+                 ng-model="$ctrl[field.model]"
+                 ng-class="{error: $ctrl[field.model + 'Error']}"
+                 ng-keyup="$ctrl[field.model + 'Error'] = false"
+                 ng-blur="$ctrl.validate({[field.model]: $ctrl[field.model]})">
+          <span class="error" ng-if="$ctrl[field.model + 'Error']">
+          {{$ctrl[field.model + 'Error']}}
+          </span>
         </div>
-        <div flex>
-          <label>Last Name</label>
-          <input type="text" name="last_name" required ng-model="$ctrl.last_name">
-        </div>
-      </div>
-      <div class="input phone">
-        <label>Mobile Number</label>
-        <div layout="row">
-          <div flex="25">
-            <input type="text" value="+9" class="first" readonly>
+        <div class="input name" ng-if="field.doubles" layout="row">
+          <div ng-repeat="combine in field.combined" flex>
+            <label>{{combine.name}}</label>
+            <input type="{{combine.type}}"
+                   name="{{combine.model}}"
+                   required
+                   ng-model="$ctrl[double.model]"
+                   ng-class="{error: $ctrl[combine.model + 'Error'], first: $index === 0}"
+                   ng-keyup="$ctrl[combine.model + 'Error'] = false"
+                   ng-blur="$ctrl.validate({[combine.model]: $ctrl[combine.model]})">
+            <span class="error" ng-if="$ctrl[combine.model + 'Error']">
+          {{$ctrl[combine.model + 'Error']}}
+          </span>
           </div>
-          <div flex="75">
-            <input type="text" name="phone" required ng-model="$ctrl.phone">
-          </div>
         </div>
-      </div>
-      <div class="input">
-        <label>Email</label>
-        <input type="email" name="email" required ng-model="$ctrl.email">
       </div>
       <div class="terms" ng-if="$ctrl.isProvider">
         By clicking Ready you agree to the <a href="">Terms and Privacy</a>

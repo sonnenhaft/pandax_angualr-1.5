@@ -58,6 +58,19 @@
       &.first {
         border-right: 1px solid $primary;
       }
+
+      &.error {
+        border: 2px solid $Cardinal;
+      }
+    }
+
+    span {
+      &.error {
+        color: white;
+        display: block;
+        text-align: center;
+        margin-top: 10px;
+      }
     }
 
     @media (max-width: 960px) {

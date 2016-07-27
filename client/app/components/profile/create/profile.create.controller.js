@@ -1,7 +1,9 @@
 class ProfileCreateController {
 
-  constructor (Storage) {
+  constructor (Storage, Validation) {
     'ngInject';
+
+    _.assign(this, {Validation});
 
     this.session = Storage.getObject('MINX');
 
@@ -11,6 +13,7 @@ class ProfileCreateController {
 
     this.providers = this.typesOfPrivider();
     this.images = this.ImagesOfUser();
+    this.fields = this.profileFields();
 
   }
 
@@ -22,8 +25,8 @@ class ProfileCreateController {
 
     if (this.isProvider) {
       this.session.user = _.assign(this.session.user, {
-        username: this.username,
-        provider_id: this.getActiveObject(this.providers).id
+        displaying_name: this.displaying_name,
+        service_types: this.getActiveObject(this.providers)
       });
     }
 
@@ -34,32 +37,76 @@ class ProfileCreateController {
   }
 
   validate (field) {
-    console.log(field);
+    if (this.Validation.error(field).length) {
+      _.map(this.Validation.error(field), error => {
+        this[error.name + 'Error'] = error.text;
+      });
+      return false;
+    }
+  }
+
+  profileFields () {
+    const specific = [
+      {
+        name: 'Display Name',
+        model: 'displaying_name',
+        type: 'text'
+      }
+    ];
+
+    const basic = [
+      {
+        combined: [
+          {
+            name: 'First Name',
+            model: 'first_name',
+            type: 'text'
+          },
+          {
+            name: 'Last Name',
+            model: 'last_name',
+            type: 'text'
+          }
+        ]
+      },
+      {
+        name: 'Phone Number',
+        model: 'phone',
+        type: 'number'
+      },
+      {
+        name: 'Email',
+        model: 'email',
+        type: 'email'
+      }
+    ];
+
+    return this.isProvider ? _.union(specific, basic) : basic;
   }
 
   typesOfPrivider () {
     const types = [
       {
-        id: 'prime_xx',
+        type: '1',
         name: 'Prime XX',
-        cost: 250,
-        desc: '',
+        price: 250,
+        description: '',
         img: '/assets/images/services/prime_xx.png',
         active: false
       },
       {
-        id: 'prime_x',
+        type: '2',
         name: 'Prime X',
-        cost: 150,
-        desc: '',
+        price: 150,
+        description: '',
         img: '/assets/images/services/prime.png',
         active: false
       },
       {
-        id: 'prime',
+        type: '3',
         name: 'Prime',
-        cost: 50,
-        desc: '',
+        price: 50,
+        description: '',
         img: '/assets/images/services/prime.png',
         active: false
       }
@@ -74,6 +121,7 @@ class ProfileCreateController {
       {file: ''},
       {file: ''}
     ];
+
     return this.isCustomer ? [_.head(images)] : images;
   }
 
