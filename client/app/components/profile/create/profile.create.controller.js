@@ -95,7 +95,7 @@ class ProfileCreateController {
       {
         name: 'Phone Number',
         model: 'phone',
-        type: 'number'
+        type: 'tel'
       },
       {
         name: 'Email',

@@ -63,7 +63,7 @@ export default class Validation {
   }
 
   phone (number) {
-    return this.message('phone', true);
+    return this.message('phone', /(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}/.test(number), 'Phone number is invalid.');
   }
 
   isEmpty (field, value) {
