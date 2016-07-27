@@ -5,7 +5,7 @@
       <div class="input type">
         <label>Choose type of your service</label>
         <md-button ng-repeat="type in $ctrl.providers"
-                   ng-click="$ctrl.switchObjectActivity($ctrl.providers, $index)"
+                   ng-click="type.active = !type.active; $ctrl.typeError = false;"
                    ng-class="{active: type.active}"
                    aria-label="{{type.name}}">
           <img ng-src="{{type.img}}" alt="{{type.name}}"/>
@@ -34,11 +34,15 @@
                        ngf-select
                        ng-model="image.file"
                        name="file"
-                       ngf-max-size="3MB">
+                       ngf-max-size="3MB"
+                       ng-click="$ctrl.imagesError = false">
               <img ngf-src="image.file" alt=""/>
             </md-button>
           </div>
         </div>
+        <span class="error" ng-if="$ctrl.imagesError">
+          {{$ctrl.imagesError}}
+        </span>
       </div>
       <div class="input-container" ng-repeat="field in $ctrl.fields">
         <div class="input" ng-if="!field.combined">
@@ -51,7 +55,7 @@
                  ng-keyup="$ctrl[field.model + 'Error'] = false"
                  ng-blur="$ctrl.validate({[field.model]: $ctrl[field.model]})">
           <span class="error" ng-if="$ctrl[field.model + 'Error']">
-          {{$ctrl[field.model + 'Error']}}
+            {{$ctrl[field.model + 'Error']}}
           </span>
         </div>
         <div class="input name" ng-if="field.combined" layout="row">
@@ -60,13 +64,13 @@
             <input type="{{combine.type}}"
                    name="{{combine.model}}"
                    required
-                   ng-model="$ctrl[double.model]"
+                   ng-model="$ctrl[combine.model]"
                    ng-class="{error: $ctrl[combine.model + 'Error'], first: $index === 0}"
                    ng-keyup="$ctrl[combine.model + 'Error'] = false"
                    ng-blur="$ctrl.validate({[combine.model]: $ctrl[combine.model]})">
             <span class="error" ng-if="$ctrl[combine.model + 'Error']">
-          {{$ctrl[combine.model + 'Error']}}
-          </span>
+              {{$ctrl[combine.model + 'Error']}}
+            </span>
           </div>
         </div>
       </div>

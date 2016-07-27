@@ -16,7 +16,6 @@ export default class Validation {
       case 'first_name':
       case 'last_name':
       case 'displaying_name':
-      case 'phone':
         return this.isEmpty(field, credentials[field]);
 
       default:
@@ -51,10 +50,21 @@ export default class Validation {
   }
 
   images (arr) {
-    if (!_.find(arr, image => image.file.name)) {
-      return this.message('images', false, 'Please upload at least one photo.');
-    }
-    return this.message('images', true);
+    let files;
+
+    files = _.map(arr, 'file');
+
+    return _
+      .chain(files)
+      .map(file => {
+        return this.message('images', !_.isEmpty(file), 'Please add at least one photo.');
+      })
+      .head()
+      .value();
+  }
+
+  phone (number) {
+    return this.message('phone', true);
   }
 
   isEmpty (field, value) {

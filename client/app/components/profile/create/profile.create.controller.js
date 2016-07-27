@@ -18,8 +18,12 @@ class ProfileCreateController {
   }
 
   onReady (profile) {
-    if (!this.getActiveObject(this.providers) && this.isProvider) {
+    if (!this.getActiveObject(this.providers).length && this.isProvider) {
       this.typeError = true;
+      return false;
+    }
+
+    if (!this.validate({images: this.images}) && this.isProvider) {
       return false;
     }
 
@@ -39,10 +43,12 @@ class ProfileCreateController {
   validate (field) {
     if (this.Validation.error(field).length) {
       _.map(this.Validation.error(field), error => {
+        console.log(error);
         this[error.name + 'Error'] = error.text;
       });
       return false;
     }
+    return true;
   }
 
   profileFields () {
@@ -125,13 +131,8 @@ class ProfileCreateController {
     return this.isCustomer ? [_.head(images)] : images;
   }
 
-  switchObjectActivity (arr, index) {
-    this.typeError = false;
-    _.map(arr, (object, i) => object.active = index === i);
-  }
-
   getActiveObject (arr) {
-    return _.find(arr, object => object.active === true);
+    return _.filter(arr, object => object.active === true);
   }
 
 }
