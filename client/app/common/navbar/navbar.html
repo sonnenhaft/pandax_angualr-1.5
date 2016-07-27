@@ -1,4 +1,5 @@
 <nav class="navbar" flex-sm="100">
+
   <div class="logo" layout="row">
     <h1 hide show-gt-sm>
       <a ui-sref="home" class="logo__link">MINX</a>
@@ -10,4 +11,7 @@
     	aria-label="menu">
     </md-icon>
   </div>
+
+  <div class="empty-avatar" ng-if="$ctrl.$state.current.name === 'profile.create'"></div>
+
 </nav>

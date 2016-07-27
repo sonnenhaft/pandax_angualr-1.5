@@ -18,7 +18,7 @@ class ProfileCreateController {
   }
 
   onReady (profile) {
-    if (!this.isProviderProfile()) {
+    if (!this.isProviderProfile() || !this.validate(profile)) {
       return false;
     }
 

@@ -1,7 +1,11 @@
 class NavbarController {
-  constructor() {
-    this.name = 'navbar';
+
+  constructor($state) {
+    'ngInject';
+
+    _.assign(this, {$state});
   }
+
 }
 
 export default NavbarController;

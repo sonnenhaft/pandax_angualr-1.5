@@ -13,4 +13,12 @@
       line-height: 36px;
     }
   }
+
+  .empty-avatar {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    margin: 55px auto 0;
+    background: $Charcoal url('/assets/images/avatar.png') no-repeat center;
+  }
 }
