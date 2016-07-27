@@ -50,17 +50,16 @@ export default class Validation {
   }
 
   images (arr) {
-    let files;
+    let files, validation;
 
     files = _.map(arr, 'file');
-
-    return _
+    validation = _
       .chain(files)
-      .map(file => {
-        return this.message('images', !_.isEmpty(file), 'Please add at least one photo.');
-      })
-      .head()
+      .map(file => _.isEmpty(file))
+      .filter(boolean => boolean === false)
       .value();
+
+    return this.message('images', validation.length === 3, 'Please add more photos.')
   }
 
   phone (number) {

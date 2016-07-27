@@ -18,12 +18,22 @@ class ProfileCreateController {
   }
 
   onReady (profile) {
-    if (!this.getActiveObject(this.providers).length && this.isProvider) {
+    if (!this.isProviderProfile()) {
+      return false;
+    }
+
+    this.session.user = _.assign(this.session.user, profile, {auth: true});
+
+    console.log(this.session.user);
+  }
+
+  isProviderProfile () {
+    if (this.isProvider && !this.getActiveObject(this.providers).length) {
       this.typeError = true;
       return false;
     }
 
-    if (!this.validate({images: this.images}) && this.isProvider) {
+    if (this.isProvider && !this.validate({images: this.images})) {
       return false;
     }
 
@@ -34,16 +44,12 @@ class ProfileCreateController {
       });
     }
 
-    this.session.user = _.assign(this.session.user, profile, {auth: true});
-
-    console.log(this.images);
-    console.log(this.session.user);
+    return true;
   }
 
   validate (field) {
     if (this.Validation.error(field).length) {
       _.map(this.Validation.error(field), error => {
-        console.log(error);
         this[error.name + 'Error'] = error.text;
       });
       return false;
