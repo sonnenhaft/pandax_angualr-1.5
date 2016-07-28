@@ -2,6 +2,7 @@
   background-color: black;
   color: $white;
   height: 100%;
+  position: relative;
 
   .logo {
     background: $Cardinal;
@@ -14,11 +15,26 @@
     }
   }
 
-  .empty-avatar {
+  .avatar {
     width: 88px;
     height: 88px;
     border-radius: 50%;
     margin: 55px auto 0;
-    background: $Charcoal url('/assets/images/avatar.png') no-repeat center;
+    background: $Charcoal;
+    text-align: center;
+    overflow: hidden;
+
+    &:before {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+    }
+
+    img {
+      display: inline-block;
+      vertical-align: middle;
+      max-width: 100%;
+    }
   }
 }

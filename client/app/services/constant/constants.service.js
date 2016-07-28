@@ -3,7 +3,63 @@ export default class Constants {
   constructor () {
 
     this.profile = this.profileConstants();
+    this.user = this.userConstants();
 
+  }
+
+  userConstants () {
+    const userConstants = {
+
+      avatar: {
+        empty: '/assets/images/avatar.png'
+      },
+
+      navigation: {
+        customer: [
+          {
+            text: 'Make order',
+            url: ''
+          },
+          {
+            text: 'Active orders',
+            url: ''
+          },
+          {
+            text: 'History',
+            url: ''
+          }
+        ],
+        provider: []
+      },
+
+      profile: {
+        uri: {
+          customer: [
+            {
+              text: 'Settings',
+              url: ''
+            },
+            {
+              text: 'Terms',
+              url: ''
+            }
+          ],
+          provider: [
+            {
+              text: 'Settings',
+              url: ''
+            },
+            {
+              text: 'Terms',
+              url: ''
+            }
+          ]
+        }
+      }
+
+    };
+
+    return userConstants;
   }
 
   profileConstants () {

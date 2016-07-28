@@ -1,9 +1,9 @@
 class ProfileCreateController {
 
-  constructor (Storage, Validation, Constants) {
+  constructor (Storage, Validation, Constants, $state) {
     'ngInject';
 
-    _.assign(this, {Validation, Constants});
+    _.assign(this, {Storage, Validation, Constants, $state});
 
     this.session = Storage.getObject('MINX');
 
@@ -36,6 +36,9 @@ class ProfileCreateController {
     );
 
     console.log(this.session.user);
+
+    this.Storage.setObject('MINX', this.session);
+    this.$state.go(this.isCustomer ? 'main.order' : '');
   }
 
   isProviderProfile () {

@@ -12,6 +12,28 @@
     </md-icon>
   </div>
 
-  <div hide show-gt-sm class="empty-avatar" ng-if="$ctrl.$state.current.name === 'profile.create'"></div>
+  <div hide show-gt-sm class="avatar">
+    <img ng-src="{{$ctrl.avatar}}" alt=""/>
+  </div>
+
+  <div class="navigation" ng-if="$ctrl.session.user.auth">
+    <ul>
+      <li ng-repeat="nav in $ctrl.navigation">
+        <a href="">
+          {{nav.text}}
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="settings" ng-if="$ctrl.session.user.auth">
+    <ul>
+      <li ng-repeat="settings in $ctrl.profile">
+        <a href="">
+          {{settings.text}}
+        </a>
+      </li>
+    </ul>
+  </div>
 
 </nav>
