@@ -59,7 +59,7 @@ export default class Validation {
       .filter(boolean => boolean === false)
       .value();
 
-    return this.message('images', validation.length === 3, 'Please add more photos.')
+    return this.message('images', validation.length === 3, 'Please upload 3 photos.')
   }
 
   phone (number) {

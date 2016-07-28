@@ -68,6 +68,7 @@ class ProfileCreateController {
     return true;
   }
 
+  //TODO: Move constants to service or different component
   profileFields () {
     const specific = [
       {
