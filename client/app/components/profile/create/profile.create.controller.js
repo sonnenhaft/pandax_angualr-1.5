@@ -1,9 +1,9 @@
 class ProfileCreateController {
 
-  constructor (Storage, Validation) {
+  constructor (Storage, Validation, Constants) {
     'ngInject';
 
-    _.assign(this, {Validation});
+    _.assign(this, {Validation, Constants});
 
     this.session = Storage.getObject('MINX');
 
@@ -11,9 +11,12 @@ class ProfileCreateController {
     this.isProvider = this.session.user.type === 'provider';
     this.email = this.session.user.email;
 
-    this.providers = this.typesOfPrivider();
-    this.images = this.ImagesOfUser();
-    this.fields = this.profileFields();
+    this.providers = Constants.profile.serviceTypes;
+    this.images = Constants.profile.images[this.session.user.type];
+    this.fields = Constants.profile.fields[this.session.user.type];
+
+
+    console.log();
 
   }
 
@@ -66,87 +69,6 @@ class ProfileCreateController {
       return false;
     }
     return true;
-  }
-
-  //TODO: Move constants to service or different component
-  profileFields () {
-    const specific = [
-      {
-        name: 'Display Name',
-        model: 'displaying_name',
-        type: 'text'
-      }
-    ];
-
-    const basic = [
-      {
-        combined: [
-          {
-            name: 'First Name',
-            model: 'first_name',
-            type: 'text'
-          },
-          {
-            name: 'Last Name',
-            model: 'last_name',
-            type: 'text'
-          }
-        ]
-      },
-      {
-        name: 'Phone Number',
-        model: 'phone',
-        type: 'tel'
-      },
-      {
-        name: 'Email',
-        model: 'email',
-        type: 'email'
-      }
-    ];
-
-    return this.isProvider ? _.union(specific, basic) : basic;
-  }
-
-  typesOfPrivider () {
-    const types = [
-      {
-        type: '1',
-        name: 'Prime XX',
-        price: 250,
-        description: '',
-        img: '/assets/images/services/prime_xx.png',
-        active: false
-      },
-      {
-        type: '2',
-        name: 'Prime X',
-        price: 150,
-        description: '',
-        img: '/assets/images/services/prime.png',
-        active: false
-      },
-      {
-        type: '3',
-        name: 'Prime',
-        price: 50,
-        description: '',
-        img: '/assets/images/services/prime.png',
-        active: false
-      }
-    ];
-
-    return types;
-  }
-
-  ImagesOfUser () {
-    const images = [
-      {file: ''},
-      {file: ''},
-      {file: ''}
-    ];
-
-    return this.isCustomer ? [_.head(images)] : images;
   }
 
   getActiveObject (arr) {
