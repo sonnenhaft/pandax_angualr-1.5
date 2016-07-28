@@ -15,9 +15,6 @@ class ProfileCreateController {
     this.images = Constants.profile.images[this.session.user.type];
     this.fields = Constants.profile.fields[this.session.user.type];
 
-
-    console.log();
-
   }
 
   onReady (profile) {
