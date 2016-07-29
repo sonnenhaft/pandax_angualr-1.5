@@ -1,3 +1,98 @@
-<div id="order">
+<div id="order" layout-gt-sm="row">
+
+  <div class="order-form" flex>
+    <h1 class="page-name">Make Order</h1>
+    <div class="provider-type" layout="row">
+      <div flex ng-repeat="type in $ctrl.providers">
+        <md-button ng-click="type.active = !type.active; $ctrl.typeError = false;"
+                   ng-class="{active: type.active}"
+                   aria-label="{{type.name}}">
+          <div class="price">{{type.price}}$</div>
+          <div class="name">{{type.name}}</div>
+          <div class="desc">
+            <i></i>
+            <p class="animated fadeIn">{{type.description}}</p>
+          </div>
+        </md-button>
+      </div>
+    </div>
+    <form name="orderForm" id="profile-form">
+      <div class="input" layout="row">
+        <div flex="60">
+          <label>Location</label>
+          <input type="text" name="location" class="first">
+        </div>
+        <div flex="40">
+          <label>Apt</label>
+          <input type="text" name="apt">
+        </div>
+      </div>
+      <div class="input" layout="row">
+        <div flex>
+          <label>Date</label>
+          <md-datepicker ng-model="$ctrl.date"
+                         md-placeholder="Enter date"
+                         md-min-date="$ctrl.currentDate"
+                         md-max-date="">
+          </md-datepicker>
+        </div>
+        <div flex>
+          <label></label>
+          <md-select ng-model="$ctrl.time" aria-label="Time">
+            <md-option ng-repeat="time in $ctrl.times" value="{{time}}" ng-disabled="$index === 1">
+              {{time}}
+            </md-option>
+          </md-select>
+        </div>
+        <div flex class="now">
+          <label></label>
+          <md-button>Now</md-button>
+        </div>
+      </div>
+      <div class="input" layout="row">
+        <div flex="60">
+          <label>Mobile Number</label>
+          <input type="tel" class="first">
+        </div>
+        <div flex="40">
+          <label>Entertainers</label>
+          <md-select ng-model="$ctrl.entertainer" aria-label="Entertainer">
+            <md-option ng-repeat="entertainer in $ctrl.entertainers" value="{{entertainer}}">
+              {{entertainer}}
+            </md-option>
+          </md-select>
+        </div>
+      </div>
+      <div class="input" layout="row">
+        <div flex="60">
+          <label>Length of booking</label>
+          <md-select ng-model="$ctrl.hour" aria-label="Hour">
+            <md-option ng-repeat="hour in $ctrl.hours" value="{{hour}}">
+              {{hour}}
+            </md-option>
+          </md-select>
+        </div>
+        <div flex>
+          <label>Cost</label>
+          <input type="text">
+        </div>
+      </div>
+      <div class="input">
+        <label>Notes</label>
+        <textarea></textarea>
+      </div>
+      <div class="submit">
+        <md-button ng-disabled="!orderForm.$valid"
+                   ng-class="{disabled: !orderForm.$valid}"
+                   type="submit">
+          Place Order
+        </md-button>
+      </div>
+    </form>
+  </div>
+
+  <div class="order-map" flex>
+
+  </div>
 
 </div>

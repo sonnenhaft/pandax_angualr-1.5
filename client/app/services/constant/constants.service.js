@@ -4,7 +4,44 @@ export default class Constants {
 
     this.profile = this.profileConstants();
     this.user = this.userConstants();
+    this.order = this.orderConstants();
 
+  }
+
+  orderConstants () {
+    const orderConstants = {
+
+      fields: {
+        location: [
+          {
+            name: 'Location',
+            model: 'location',
+            type: 'text',
+            flex: 80
+          },
+          {
+            name: 'Apt',
+            model: 'apt',
+            type: 'text',
+            flex: 20
+          }
+        ],
+        date: [
+          {
+            name: 'Time',
+            model: 'datepicker',
+            minDate: new Date()
+          },
+          {
+            model: 'time',
+            value: {}
+          }
+        ]
+      }
+
+    };
+
+    return orderConstants;
   }
 
   userConstants () {

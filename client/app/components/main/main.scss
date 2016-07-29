@@ -6,5 +6,18 @@
   .main-pages {
     display: block;
     position: relative;
+
+    .page-name {
+      color: white;
+      text-transform: uppercase;
+      font: {
+        size: 2em;
+        weight: normal;
+      }
+      letter-spacing: 2px;
+      line-height: 47px;
+      margin: 0 0 27px 0;
+      display: block;
+    }
   }
 }

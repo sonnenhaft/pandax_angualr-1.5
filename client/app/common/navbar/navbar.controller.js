@@ -10,19 +10,13 @@ class NavbarController {
     this.isCustomer = this.session.user.type === 'customer';
     this.isProvider = this.session.user.type === 'provider';
 
-    this.avatar = this.setUserPhoto();
+    this.avatar = this.showUserAvatar();
     this.navigation = Constants.user.navigation[this.session.user.type];
     this.profile = Constants.user.profile.uri[this.session.user.type];
 
   }
 
-  setUserPhoto () {
-    if (this.session.user && this.session.user.auth) {
-       return this.isCustomer ?
-         this.session.user.photo.$ngfBlobUrl :
-         _.head(this.session.user.photos.$ngfBlobUrl);
-    }
-
+  showUserAvatar () {
     return this.Constants.user.avatar.empty;
   }
 

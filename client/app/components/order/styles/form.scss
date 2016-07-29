@@ -1,0 +1,153 @@
+.order-form {
+
+  width: 100%;
+  height: 100%;
+  position: relative;
+  padding: 52px 30px;
+
+  .provider-type {
+    color: white;
+
+    div {
+      &:last-child {
+        button {
+          border-right: 0;
+        }
+      }
+
+      button {
+        border-radius: 0;
+        margin: 0;
+        padding: 0;
+        height: 89px;
+        width: 100%;
+        background: $Charcoal;
+        border-right: 2px solid $primary;
+
+        &.active {
+          background: -ms-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 100%);
+          background: -moz-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 100%);
+          background: -o-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 100%);
+          background: -webkit-gradient(linear, left top, right bottom, color-stop(0, rgba(24, 95, 221, 1)), color-stop(100, rgba(188, 55, 240, 1)));
+          background: -webkit-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 100%);
+          background: linear-gradient(to bottom right, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 100%);
+        }
+
+        .md-ripple-container {
+          border-radius: 0;
+        }
+
+        .price, .name {
+          position: absolute;
+          width: 100%;
+        }
+
+        .price {
+          top: 11px;
+          line-height: 50px;
+          font-size: 1.500em;
+        }
+
+        .name {
+          bottom: 9px;
+          line-height: 36px;
+          font-size: 1em;
+        }
+      }
+    }
+  }
+
+  @import "../../profile/styles/form";
+
+  #profile-form {
+    .input {
+      max-width: 100%;
+
+      label {
+        min-height: 24px;
+      }
+
+      md-datepicker {
+        button {
+          &.md-datepicker-button {
+            display: none;
+          }
+        }
+
+        .md-datepicker-input-container {
+          padding: 0;
+          margin: 0;
+          width: 100%;
+
+          input {
+            background: white;
+            border-right: 1px solid $primary;
+          }
+
+          button {
+            background: url('/assets/images/calendar.png') no-repeat center;
+            height: 34px;
+            top: 8px;
+            right: 16px;
+            margin: 0;
+
+            .md-datepicker-expand-triangle {
+              display: none;
+            }
+          }
+        }
+      }
+
+      md-select {
+        background: white;
+        margin: 0;
+        padding: 0;
+        height: 34px;
+        border-right: 1px solid $primary;
+
+        md-select-value {
+          padding: 0 10px;
+          border-bottom: 0;
+
+          ._md-select-icon {
+            background: url('/assets/images/drop.png') no-repeat center;
+            height: 6px;
+            width: 10px;
+            margin: 0 3px;
+
+            &:after {
+              display: none;
+            }
+          }
+        }
+      }
+
+      .now {
+        button {
+          margin: 0;
+          padding: 0;
+          border-radius: 0;
+          width: 100%;
+          min-height: 34px;
+          line-height: 34px;
+          background: $Cardinal;
+          text-transform: none;
+          color: white;
+          font: 0.938em $open-sans, sans-serif;
+
+          .md-ripple-container {
+            border-radius: 0;
+          }
+        }
+      }
+    }
+
+    .submit {
+      position: relative;
+      bottom: auto;
+      margin-top: 20px;
+      max-width: 100%;
+    }
+  }
+
+}

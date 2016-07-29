@@ -64,6 +64,18 @@
       }
     }
 
+    textarea {
+      width: 100%;
+      max-width: 100%;
+      border: 0;
+      min-height: 64px;
+      max-height: 100px;
+      font: 0.938em $open-sans, sans-serif;
+      font-weight: bold;
+      padding: 5px 10px;
+      outline: none;
+    }
+
     span {
       &.error {
         color: white;
