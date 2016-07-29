@@ -62,6 +62,11 @@
       &.error {
         border: 2px solid $Cardinal;
       }
+
+      &.location {
+        padding-right: 25px;
+        background: white url('/assets/images/pin.png') no-repeat center right 9px;
+      }
     }
 
     textarea {
