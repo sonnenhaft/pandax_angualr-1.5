@@ -51,48 +51,43 @@ export default class Constants {
         empty: '/assets/images/avatar.png'
       },
 
-      navigation: {
-        customer: [
-          {
-            text: 'Make order',
-            url: ''
-          },
-          {
-            text: 'Active orders',
-            url: ''
-          },
-          {
-            text: 'History',
-            url: ''
-          }
-        ],
-        provider: []
-      },
-
-      profile: {
-        uri: {
-          customer: [
-            {
-              text: 'Settings',
-              url: ''
-            },
-            {
-              text: 'Terms',
-              url: ''
-            }
-          ],
-          provider: [
-            {
-              text: 'Settings',
-              url: ''
-            },
-            {
-              text: 'Terms',
-              url: ''
-            }
-          ]
+      navigation: [
+        {
+          text: 'Make order',
+          url: 'main.order'
+        },
+        {
+          text: 'Active orders',
+          url: ''
+        },
+        {
+          text: 'History',
+          url: ''
+        },
+        {
+          text: 'Profile',
+          url: 'profile.create'
+        },
+        {
+          text: 'Payment',
+          url: ''
         }
-      }
+      ],
+
+      additionally: [
+        {
+          text: 'Terms',
+          url: ''
+        },
+        {
+          text: 'Contacts',
+          url: ''
+        },
+        {
+          text: 'Change password',
+          url: ''
+        }
+      ]
 
     };
 

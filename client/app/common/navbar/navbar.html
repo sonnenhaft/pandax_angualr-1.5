@@ -18,19 +18,19 @@
 
   <div class="navigation" ng-if="$ctrl.session.user.auth">
     <ul>
-      <li ng-repeat="nav in $ctrl.navigation">
-        <a href="">
+      <li ng-repeat="nav in $ctrl.navigation" ui-sref-active="active">
+        <a href="" ui-sref="{{nav.url}}">
           {{nav.text}}
         </a>
       </li>
     </ul>
   </div>
 
-  <div class="settings" ng-if="$ctrl.session.user.auth">
+  <div class="additional" ng-if="$ctrl.session.user.auth">
     <ul>
-      <li ng-repeat="settings in $ctrl.profile">
+      <li ng-repeat="nav in $ctrl.additional" ui-sref-active="active">
         <a href="">
-          {{settings.text}}
+          {{nav.text}}
         </a>
       </li>
     </ul>

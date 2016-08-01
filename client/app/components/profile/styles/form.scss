@@ -76,7 +76,7 @@
       min-height: 64px;
       max-height: 100px;
       font: 0.938em $open-sans, sans-serif;
-      font-weight: bold;
+      font-weight: 600;
       padding: 5px 10px;
       outline: none;
     }
@@ -87,6 +87,30 @@
         display: block;
         text-align: center;
         margin-top: 10px;
+      }
+    }
+
+    .descr {
+      margin: {
+        top: 15px;
+        left: 8px;
+      };
+
+      p {
+        font: 0.813em $open-sans, sans-serif;
+        color: $AuroMetalSaurus;
+        line-height: 17px;
+
+        i {
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          background: url('/assets/images/info.png') no-repeat center;
+          position: relative;
+          top: 3px;
+          left: 3px;
+        }
       }
     }
 

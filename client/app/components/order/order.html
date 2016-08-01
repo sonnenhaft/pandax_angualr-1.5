@@ -18,6 +18,30 @@
     </div>
     <form name="orderForm" id="profile-form">
       <div class="input" layout="row">
+        <div flex>
+          <label>Length of booking</label>
+          <md-select ng-model="$ctrl.hour" aria-label="Hour">
+            <md-option ng-repeat="hour in $ctrl.hours" value="{{hour}}">
+              {{hour}}
+            </md-option>
+          </md-select>
+          <div class="descr">
+            <p>Get 50% off on additional hours</p>
+          </div>
+        </div>
+        <div flex>
+          <label>Entertainers</label>
+          <md-select ng-model="$ctrl.entertainer" aria-label="Entertainer">
+            <md-option ng-repeat="entertainer in $ctrl.entertainers" value="{{entertainer}}">
+              {{entertainer}}
+            </md-option>
+          </md-select>
+          <div class="descr">
+            <p>Minimum 2 entertainers for first time customers <i></i></p>
+          </div>
+        </div>
+      </div>
+      <div class="input" layout="row">
         <div flex="60">
           <label>Location</label>
           <input type="text" name="location" class="first location">
@@ -25,6 +49,24 @@
         <div flex="40">
           <label>Apt</label>
           <input type="text" name="apt">
+        </div>
+      </div>
+      <div class="input">
+        <label>Location notes</label>
+        <textarea></textarea>
+      </div>
+      <div class="input radio" layout="row">
+        <div flex>
+          <md-button aria-label="ASAP" class="first">
+            <label for="asap">ASAP</label>
+            <input id="asap" type="checkbox" checked>
+          </md-button>
+        </div>
+        <div flex>
+          <md-button aria-label="Later">
+            <label for="later">Later</label>
+            <input id="later" type="checkbox">
+          </md-button>
         </div>
       </div>
       <div class="input" layout="row">
@@ -44,48 +86,12 @@
             </md-option>
           </md-select>
         </div>
-        <div flex class="now">
-          <label></label>
-          <md-button>Now</md-button>
-        </div>
-      </div>
-      <div class="input" layout="row">
-        <div flex="60">
-          <label>Mobile Number</label>
-          <input type="tel" class="first">
-        </div>
-        <div flex="40">
-          <label>Entertainers</label>
-          <md-select ng-model="$ctrl.entertainer" aria-label="Entertainer">
-            <md-option ng-repeat="entertainer in $ctrl.entertainers" value="{{entertainer}}">
-              {{entertainer}}
-            </md-option>
-          </md-select>
-        </div>
-      </div>
-      <div class="input" layout="row">
-        <div flex="60">
-          <label>Length of booking</label>
-          <md-select ng-model="$ctrl.hour" aria-label="Hour">
-            <md-option ng-repeat="hour in $ctrl.hours" value="{{hour}}">
-              {{hour}}
-            </md-option>
-          </md-select>
-        </div>
-        <div flex>
-          <label>Cost</label>
-          <input type="text">
-        </div>
-      </div>
-      <div class="input">
-        <label>Notes</label>
-        <textarea></textarea>
       </div>
       <div class="submit">
         <md-button ng-disabled="!orderForm.$valid"
                    ng-class="{disabled: !orderForm.$valid}"
                    type="submit">
-          Place Order
+          SEARCH FOR MINX
         </md-button>
       </div>
     </form>
