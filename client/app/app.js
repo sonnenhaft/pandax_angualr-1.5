@@ -47,7 +47,7 @@ angular
       .backgroundPalette('backgroundMap');
 
     uiGmapGoogleMapApiProvider.configure({
-      //    key: 'your api key',
+      key: 'AIzaSyAB5JHHZnmA2C6q_b7mc2zPaXdSeRocs1E',
       v: '3.20', //defaults to latest 3.X anyhow
       libraries: 'weather,geometry,visualization'
     });
