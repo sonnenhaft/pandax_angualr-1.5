@@ -47,4 +47,5 @@ app {
 }
 
 // components
-@import "common/navbar/navbar.scss";
+@import "./navbar/navbar";
+@import "./map/map";
