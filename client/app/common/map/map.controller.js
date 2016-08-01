@@ -3,6 +3,8 @@ class MpaController {
   constructor ($timeout) {
     'ngInject';
 
+    console.log(this.data);
+
     _.assign(this, {$timeout});
 
     //default positions
@@ -16,17 +18,31 @@ class MpaController {
   }
 
   onInit () {
+    this.getCurrentLocation();
+  }
+
+  getCurrentLocation () {
+    this.progress = true;
     navigator
       .geolocation
-      .getCurrentPosition((position) => {
-        this.$timeout(() => {
-          this.position = {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude
-          };
-          this.zoom = 15;
-        });
-      });
+      .getCurrentPosition(
+        position => {
+          this.$timeout(() => {
+            this.progress = false;
+            this.zoom = 15;
+            this.position = {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude
+            };
+          });
+        },
+        err => {
+          this.$timeout(() => {
+            this.progress = false;
+          });
+          console.log(err);
+        }
+      );
   }
 
 }

@@ -1,3 +1,10 @@
 <div id="map" ng-style="$ctrl.height">
-  <ui-gmap-google-map center="$ctrl.position" zoom="$ctrl.zoom"></ui-gmap-google-map>
+  <div class="progress animated fadeIn" ng-if="$ctrl.progress">
+    <div layout="row" layout-sm="column" layout-align="space-around">
+      <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+  </div>
+  <ui-gmap-google-map center="$ctrl.position" zoom="$ctrl.zoom">
+    <ui-gmap-marker ng-if="!$ctrl.progress" idKey="1" coords="$ctrl.position"></ui-gmap-marker>
+  </ui-gmap-google-map>
 </div>
