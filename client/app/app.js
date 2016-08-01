@@ -3,19 +3,23 @@ import uiRouter from 'angular-ui-router';
 import Common from './common/common';
 import Components from './components/components';
 import AppComponent from './app.component';
-import 'normalize.css';
 import angularMaterial from 'angular-material';
+import 'angular-simple-logger';
+import 'angular-google-maps';
 import 'lodash';
+import 'normalize.css';
 import 'animate.css';
 import 'angular-material/angular-material.css';
 
-angular.module('app', [
+angular
+  .module('app', [
     uiRouter,
     Common,
     Components,
-    angularMaterial
+    angularMaterial,
+    'uiGmapgoogle-maps'
   ])
-  .config(($locationProvider, $urlRouterProvider, $mdThemingProvider) => {
+  .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider) => {
     "ngInject";
     // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions
     // #how-to-configure-your-server-to-work-with-html5mode
@@ -41,6 +45,12 @@ angular.module('app', [
     $mdThemingProvider.theme('default')
       .primaryPalette('primaryMap')
       .backgroundPalette('backgroundMap');
+
+    uiGmapGoogleMapApiProvider.configure({
+      //    key: 'your api key',
+      v: '3.20', //defaults to latest 3.X anyhow
+      libraries: 'weather,geometry,visualization'
+    });
   })
   .run(($rootScope, $state) => {
     "ngInject";
