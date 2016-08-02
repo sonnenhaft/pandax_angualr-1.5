@@ -1,10 +1,22 @@
 <div id="map" ng-style="$ctrl.height">
-  <div class="progress animated fadeIn" ng-if="$ctrl.progress">
+  <div class="progress animated"
+       ng-if="$ctrl.progress"
+       ng-class="{fadeIn: $ctrl.progress, fadeOut: !$ctrl.progress}">
     <div layout="row" layout-sm="column" layout-align="space-around">
       <md-progress-circular md-mode="indeterminate"></md-progress-circular>
     </div>
   </div>
-  <ui-gmap-google-map center="$ctrl.position" zoom="$ctrl.zoom">
-    <ui-gmap-marker ng-if="!$ctrl.progress" idKey="1" coords="$ctrl.position"></ui-gmap-marker>
+  <ui-gmap-google-map center="$ctrl.position" zoom="$ctrl.zoom" options="{disableDefaultUI: true}">
+    <ui-gmap-marker ng-if="!$ctrl.progress && !$ctrl.blocked"
+                    idKey="1"
+                    coords="$ctrl.position"
+                    options="$ctrl.marker.options"
+                    events="$ctrl.marker.events"></ui-gmap-marker>
   </ui-gmap-google-map>
+  <md-button class="user-location animated"
+             aria-label="Location"
+             ng-click="$ctrl.getCurrentLocation()"
+             ng-if="!$ctrl.progress"
+             ng-class="{fadeOut: $ctrl.progress, bounceIn: !$ctrl.progress}">
+  </md-button>
 </div>

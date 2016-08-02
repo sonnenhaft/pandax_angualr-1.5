@@ -4,7 +4,8 @@ import controller from './map.controller';
 let mapComponent = {
   restrict: 'E',
   bindings: {
-    data: '='
+    input: '=',
+    output: '&'
   },
   template,
   controller
