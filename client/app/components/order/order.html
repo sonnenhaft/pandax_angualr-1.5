@@ -44,7 +44,22 @@
       <div class="input" layout="row">
         <div flex="60">
           <label>Location</label>
-          <input type="text" name="location" class="first location">
+          <md-autocomplete
+            required
+            md-selected-item="$ctrl.selectedItem"
+            md-search-text="$ctrl.searchText"
+            md-items="item in $ctrl.getLocation($ctrl.searchText)"
+            md-item-text="item.formatted_address"
+            md-min-length="2">
+            <md-item-template>
+              <span ng-click="$ctrl.setLocation(item)" md-highlight-text="$ctrl.searchText" md-highlight-flags="^i">
+                {{item.formatted_address}}
+              </span>
+            </md-item-template>
+            <md-not-found>
+              No states matching "{{$ctrl.searchText}}" were found.
+            </md-not-found>
+          </md-autocomplete>
         </div>
         <div flex="40">
           <label>Apt</label>
@@ -101,7 +116,7 @@
   </div>
 
   <div class="order-map" flex>
-    <map input="[1, 2, 3]"></map>
+    <map input="$ctrl.location" output=""></map>
   </div>
 
 </div>

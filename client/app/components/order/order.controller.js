@@ -1,7 +1,9 @@
 class orderController {
 
-  constructor (Constants) {
+  constructor (Constants, Location, $q) {
     'ngInject';
+
+    _.assign(this, {Location, $q});
 
     this.providers = Constants.profile.serviceTypes;
     this.fields = Constants.order.fields;
@@ -13,7 +15,28 @@ class orderController {
     this.entertainer = 1;
     this.hours = ['0.5 H', '1 H', '1.5 H', '2 H', '2.5 H', '3 H', '3.5 H', '4 H'];
     this.hour = '0.5 H';
+    this.location = '';
 
+  }
+
+  getLocation (str) {
+    let deferred = this.$q.defer();
+
+    this.Location.getLocationByString(str, location => {
+      deferred.resolve(location);
+    });
+
+    return deferred.promise;
+  }
+
+  setLocation (item) {
+    this.location = {
+      coords: {
+        latitude: item.geometry.location.lat(),
+        longitude: item.geometry.location.lng()
+      },
+      info: item
+    }
   }
 
 }

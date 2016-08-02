@@ -6,7 +6,10 @@
       <md-progress-circular md-mode="indeterminate"></md-progress-circular>
     </div>
   </div>
-  <ui-gmap-google-map center="$ctrl.position" zoom="$ctrl.zoom" options="{disableDefaultUI: true}">
+  <ui-gmap-google-map center="$ctrl.position"
+                      zoom="$ctrl.zoom"
+                      options="{disableDefaultUI: true}"
+                      styles="$ctrl.styles">
     <ui-gmap-marker ng-if="!$ctrl.progress && !$ctrl.blocked"
                     idKey="1"
                     coords="$ctrl.position"

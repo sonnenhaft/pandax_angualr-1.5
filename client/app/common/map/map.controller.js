@@ -1,29 +1,29 @@
 class MpaController {
 
-  constructor ($timeout, uiGmapGoogleMapApi) {
+  constructor ($scope, $timeout, Location, Constants) {
     'ngInject';
 
-    _.assign(this, {$timeout, uiGmapGoogleMapApi});
+    _.assign(this, {$scope, $timeout, Location});
 
     //default positions
-    this.zoom = 3;
-    this.position = {
-      latitude: 35.5375307,
-      longitude: -100.0695645
-    };
-
+    this.styles = Constants.map.styles;
+    this.zoom = Constants.map.position.default.zoom;
+    this.position = Constants.map.position.default.location;
     this.marker = this.markerOptions();
 
-    this.onInit();
   }
 
-  onInit () {
+  $onChanges (changes) {
+    if (changes.input.currentValue) {
+      this.$timeout(() => {
+        this.position = changes.input.currentValue.coords;
+        this.zoom = 15;
+      });
+    }
+  }
+
+  $onInit () {
     this.getCurrentLocation();
-    this.uiGmapGoogleMapApi
-      .then(
-        maps => this.Maps = maps,
-        err => console.log(err)
-      );
   }
 
   getCurrentLocation () {
@@ -59,21 +59,8 @@ class MpaController {
       },
       events: {
         dragend: (marker, event, args) => {
-          let Geocoder, LatLng, MarkerObject;
-
-          Geocoder = new this.Maps.Geocoder();
-          LatLng = new this.Maps.LatLng(marker.position.lat(), marker.position.lng());
-
-          Geocoder.geocode({latLng: LatLng}, (results, status) => {
-            MarkerObject = {
-              coords: {
-                latitude: marker.position.lat(),
-                longitude: marker.position.lng()
-              },
-              location: _.head(results)
-            };
-
-            console.log(MarkerObject);
+          this.Location.getMarkerLocation(marker, location => {
+            console.log(location);
           });
         }
       }

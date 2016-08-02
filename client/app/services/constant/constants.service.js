@@ -5,7 +5,43 @@ export default class Constants {
     this.profile = this.profileConstants();
     this.user = this.userConstants();
     this.order = this.orderConstants();
+    this.map = this.mapConstants();
 
+  }
+
+  mapConstants () {
+    const mapConstants = {
+
+      position: {
+        default: {
+          location: {
+            latitude: 35.5375307,
+            longitude: -100.0695645
+          },
+          zoom: 3
+        }
+      },
+
+      styles: [
+        {
+          stylers: [
+            { hue: '#890000' },
+            { visibility: 'simplified' },
+            { gamma: 0.5 },
+            { weight: 0.5 }
+          ]
+        },
+        {
+          featureType: 'water',
+          stylers: [
+            { color: '#ba192f' }
+          ]
+        }
+      ]
+
+    };
+
+    return mapConstants;
   }
 
   orderConstants () {
