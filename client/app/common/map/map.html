@@ -1,6 +1,6 @@
 <div id="map" ng-style="$ctrl.height">
   <div class="progress animated"
-       ng-if="$ctrl.progress"
+       ng-show="$ctrl.progress"
        ng-class="{fadeIn: $ctrl.progress, fadeOut: !$ctrl.progress}">
     <div layout="row" layout-sm="column" layout-align="space-around">
       <md-progress-circular md-mode="indeterminate"></md-progress-circular>
@@ -19,7 +19,7 @@
   <md-button class="user-location animated"
              aria-label="Location"
              ng-click="$ctrl.getCurrentLocation()"
-             ng-if="!$ctrl.progress"
+             ng-show="!$ctrl.progress"
              ng-class="{fadeOut: $ctrl.progress, bounceIn: !$ctrl.progress}">
   </md-button>
 </div>

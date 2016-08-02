@@ -94,11 +94,11 @@ export default class Constants {
         },
         {
           text: 'Active orders',
-          url: ''
+          url: 'home'
         },
         {
           text: 'History',
-          url: ''
+          url: 'home'
         },
         {
           text: 'Profile',
@@ -106,22 +106,22 @@ export default class Constants {
         },
         {
           text: 'Payment',
-          url: ''
+          url: 'home'
         }
       ],
 
       additionally: [
         {
           text: 'Terms',
-          url: ''
+          url: 'home'
         },
         {
           text: 'Contacts',
-          url: ''
+          url: 'home'
         },
         {
           text: 'Change password',
-          url: ''
+          url: 'home'
         }
       ]
 

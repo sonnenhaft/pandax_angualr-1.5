@@ -29,6 +29,7 @@ class MpaController {
   getCurrentLocation () {
     this.progress = true;
     this.blocked = false;
+
     navigator
       .geolocation
       .getCurrentPosition(
@@ -60,7 +61,7 @@ class MpaController {
       events: {
         dragend: (marker, event, args) => {
           this.Location.getMarkerLocation(marker, location => {
-            console.log(location);
+            this.output({location});
           });
         }
       }

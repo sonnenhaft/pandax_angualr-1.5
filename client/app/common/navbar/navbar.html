@@ -16,7 +16,7 @@
     <img ng-src="{{$ctrl.avatar}}" alt=""/>
   </div>
 
-  <div class="navigation" ng-if="$ctrl.session.user.auth">
+  <div class="navigation" hide show-gt-sm ng-if="$ctrl.session.user.auth">
     <ul>
       <li ng-repeat="nav in $ctrl.navigation" ui-sref-active="active">
         <a href="" ui-sref="{{nav.url}}">
@@ -26,7 +26,7 @@
     </ul>
   </div>
 
-  <div class="additional" ng-if="$ctrl.session.user.auth">
+  <div class="additional" hide show-gt-sm ng-if="$ctrl.session.user.auth">
     <ul>
       <li ng-repeat="nav in $ctrl.additional" ui-sref-active="active">
         <a href="">

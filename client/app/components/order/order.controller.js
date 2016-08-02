@@ -35,7 +35,13 @@ class orderController {
         latitude: item.geometry.location.lat(),
         longitude: item.geometry.location.lng()
       },
-      info: item
+      location: item
+    }
+  }
+
+  markerLocation ($event) {
+    if ($event) {
+      this.searchText = $event.location.formatted_address;
     }
   }
 
