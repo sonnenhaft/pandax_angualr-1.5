@@ -27,7 +27,12 @@ export default class Location {
   getMarkerLocation (marker, callback) {
     this.Geocoder
       .geocode(
-        {latLng: this.LatLng(marker.position.lat(), marker.position.lng())},
+        {
+          latLng: this.LatLng(
+            marker.position.lat(),
+            marker.position.lng()
+          )
+        },
         (results, status) => {
           callback({
             coords: {

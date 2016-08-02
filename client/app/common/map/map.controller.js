@@ -38,10 +38,13 @@ class MpaController {
           this.$timeout(() => {
             this.progress = false;
             this.zoom = 15;
+
             this.position = {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude
             };
+
+            this.markerCallback(this.locationToFunc(this.position));
           });
         },
         err => {
@@ -54,19 +57,31 @@ class MpaController {
       );
   }
 
+  locationToFunc (position) {
+    return {
+      position: {
+        lat: () => position.latitude,
+        lng: () => position.longitude
+      }
+    }
+  }
+
   markerOptions () {
     return {
       options: {
         draggable: true
       },
       events: {
-        dragend: (marker, event, args) => {
-          this.Location.getMarkerLocation(marker, location => {
-            this.output({location});
-          });
-        }
+        dragend: marker => this.markerCallback(marker)
       }
     }
+  }
+
+  markerCallback (marker) {
+    this.Location
+      .getMarkerLocation(marker, location => {
+        this.output({location});
+      });
   }
 
 }
