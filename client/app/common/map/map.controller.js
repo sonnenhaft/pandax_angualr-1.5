@@ -15,6 +15,7 @@ class MpaController {
 
   $onChanges (changes) {
     if (changes.input.currentValue) {
+      this.blocked = false;
       this.$timeout(() => {
         this.position = changes.input.currentValue.coords;
         this.zoom = 15;
