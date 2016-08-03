@@ -28,7 +28,7 @@ export default class Helper {
     halfhours = _
       .chain(hours)
       .map(hour => {
-        if (hour >= 1 && hour <= 9) {
+        if (hour >= 0 && hour <= 9) {
           return '0' + hour + ':30';
         }
 
