@@ -6,6 +6,8 @@ import AppComponent from './app.component';
 import angularMaterial from 'angular-material';
 import 'angular-simple-logger';
 import 'angular-google-maps';
+import 'moment';
+import 'angular-moment';
 import 'lodash';
 import 'normalize.css';
 import 'animate.css';
@@ -17,7 +19,8 @@ angular
     Common,
     Components,
     angularMaterial,
-    'uiGmapgoogle-maps'
+    'uiGmapgoogle-maps',
+    'angularMoment'
   ])
   .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider) => {
     "ngInject";

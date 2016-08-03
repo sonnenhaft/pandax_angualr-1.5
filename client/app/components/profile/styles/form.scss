@@ -85,8 +85,11 @@
       &.error {
         color: white;
         display: block;
-        text-align: center;
-        margin-top: 10px;
+        margin: {
+          left: 8px;
+          top: 10px;
+        };
+        font: 0.938em $open-sans, sans-serif;
       }
     }
 

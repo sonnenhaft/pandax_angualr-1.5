@@ -16,6 +16,7 @@ export default class Validation {
       case 'first_name':
       case 'last_name':
       case 'displaying_name':
+      case 'apt':
         return this.isEmpty(field, credentials[field]);
 
       default:

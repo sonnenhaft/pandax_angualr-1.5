@@ -23,14 +23,29 @@
         width: 100%;
         background: $Charcoal;
         border-right: 1px solid $primary;
+        overflow: visible;
 
         &.active {
-          background: -ms-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 100%);
-          background: -moz-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 100%);
-          background: -o-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 100%);
-          background: -webkit-gradient(linear, left top, right bottom, color-stop(0, rgba(24, 95, 221, 1)), color-stop(100, rgba(188, 55, 240, 1)));
-          background: -webkit-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 100%);
-          background: linear-gradient(to bottom right, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 100%);
+          background: -ms-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 185%);
+          background: -moz-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 185%);
+          background: -o-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 185%);
+          background: -webkit-gradient(linear, left top, right bottom, color-stop(0, rgba(24, 95, 221, 1)), color-stop(185, rgba(188, 55, 240, 1)));
+          background: -webkit-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 185%);
+          background: linear-gradient(to bottom right, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 185%);
+
+          &:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid rgba(24, 95, 221, 1);
+          }
         }
 
         .md-ripple-container {
@@ -160,6 +175,30 @@
           height: 54px;
           background: $Charcoal;
           border-radius: 0;
+          overflow: visible;
+
+          &.active {
+            background: -ms-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 185%);
+            background: -moz-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 185%);
+            background: -o-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 185%);
+            background: -webkit-gradient(linear, left top, right bottom, color-stop(0, rgba(24, 95, 221, 1)), color-stop(185, rgba(188, 55, 240, 1)));
+            background: -webkit-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 185%);
+            background: linear-gradient(to bottom right, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 185%);
+
+            &:after {
+              content: '';
+              position: absolute;
+              bottom: -5px;
+              left: 0;
+              right: 0;
+              margin: auto;
+              width: 0;
+              height: 0;
+              border-left: 5px solid transparent;
+              border-right: 5px solid transparent;
+              border-top: 5px solid rgba(24, 95, 221, 1);
+            }
+          }
 
           .md-ripple-container {
             border-radius: 0;
@@ -184,6 +223,7 @@
           }
 
           input {
+            cursor: pointer;
             opacity: 0;
           }
         }

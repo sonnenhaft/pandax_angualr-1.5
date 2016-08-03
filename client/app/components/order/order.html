@@ -20,7 +20,7 @@
       <div class="input" layout="row">
         <div flex>
           <label>Length of booking</label>
-          <md-select ng-model="$ctrl.hour" aria-label="Hour">
+          <md-select ng-model="$ctrl.hour" aria-label="Hour" name="hour">
             <md-option ng-repeat="hour in $ctrl.hours" value="{{hour}}">
               {{hour}}
             </md-option>
@@ -31,7 +31,7 @@
         </div>
         <div flex>
           <label>Entertainers</label>
-          <md-select ng-model="$ctrl.entertainer" aria-label="Entertainer">
+          <md-select ng-model="$ctrl.entertainer" aria-label="Entertainer" name="entertainer">
             <md-option ng-repeat="entertainer in $ctrl.entertainers" value="{{entertainer}}">
               {{entertainer}}
             </md-option>
@@ -63,24 +63,29 @@
         </div>
         <div flex="40">
           <label>Apt</label>
-          <input type="text" name="apt">
+          <input type="text" name="apt" ng-model="$ctrl.apt">
         </div>
       </div>
       <div class="input">
         <label>Location notes</label>
-        <textarea></textarea>
+        <textarea name="notes" ng-model="$ctrl.notes"></textarea>
       </div>
       <div class="input radio" layout="row">
         <div flex>
-          <md-button aria-label="ASAP" class="first">
+          <md-button aria-label="ASAP"
+                     class="first"
+                     ng-class="{active: $ctrl.asap}"
+                     ng-click="$ctrl.later = false">
             <label for="asap">ASAP</label>
-            <input id="asap" type="checkbox" checked>
+            <input id="asap" type="checkbox" name="asap" ng-model="$ctrl.asap">
           </md-button>
         </div>
         <div flex>
-          <md-button aria-label="Later">
+          <md-button aria-label="Later"
+                     ng-class="{active: $ctrl.later}"
+                     ng-click="$ctrl.asap = false">
             <label for="later">Later</label>
-            <input id="later" type="checkbox">
+            <input id="later" type="checkbox" name="later" ng-model="$ctrl.later">
           </md-button>
         </div>
       </div>
@@ -90,12 +95,13 @@
           <md-datepicker ng-model="$ctrl.date"
                          md-placeholder="Enter date"
                          md-min-date="$ctrl.currentDate"
-                         md-max-date="">
+                         md-max-date=""
+                         name="date">
           </md-datepicker>
         </div>
         <div flex>
           <label></label>
-          <md-select ng-model="$ctrl.time" aria-label="Time">
+          <md-select ng-model="$ctrl.time" aria-label="Time" name="time">
             <md-option ng-repeat="time in $ctrl.times" value="{{time}}" ng-disabled="$index === 1">
               {{time}}
             </md-option>
@@ -108,7 +114,17 @@
       <div class="submit">
         <md-button ng-disabled="!orderForm.$valid"
                    ng-class="{disabled: !orderForm.$valid}"
-                   type="submit">
+                   type="submit"
+                   ng-click="$ctrl.onSearch({
+                    hour: orderForm.hour.$viewValue,
+                    entertainer: orderForm.entertainer.$viewValue,
+                    apt: orderForm.apt.$viewValue,
+                    notes: orderForm.notes.$viewValue,
+                    asap: orderForm.asap.$viewValue,
+                    later: orderForm.later.$viewValue,
+                    date: orderForm.date.$viewValue,
+                    time: orderForm.time.$viewValue
+                   })">
           SEARCH FOR MINX
         </md-button>
       </div>

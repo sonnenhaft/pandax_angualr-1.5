@@ -1,9 +1,9 @@
 class MpaController {
 
-  constructor ($scope, $timeout, Location, Constants) {
+  constructor ($timeout, Location, Constants) {
     'ngInject';
 
-    _.assign(this, {$scope, $timeout, Location});
+    _.assign(this, {$timeout, Location});
 
     //default positions
     this.styles = Constants.map.styles;
@@ -44,7 +44,7 @@ class MpaController {
               longitude: position.coords.longitude
             };
 
-            this.markerCallback(this.locationToFunc(this.position));
+            this.markerCallback(this.positionToFunc(this.position));
           });
         },
         err => {
@@ -57,7 +57,7 @@ class MpaController {
       );
   }
 
-  locationToFunc (position) {
+  positionToFunc (position) {
     return {
       position: {
         lat: () => position.latitude,

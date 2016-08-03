@@ -1,6 +1,6 @@
 class orderController {
 
-  constructor (Constants, Location, $q) {
+  constructor (Constants, Location, $q, moment) {
     'ngInject';
 
     _.assign(this, {Location, $q});
@@ -15,6 +15,7 @@ class orderController {
     this.entertainer = 1;
     this.hours = ['0.5 H', '1 H', '1.5 H', '2 H', '2.5 H', '3 H', '3.5 H', '4 H'];
     this.hour = '0.5 H';
+    this.asap = true;
     this.location = '';
 
   }
@@ -22,9 +23,10 @@ class orderController {
   getLocation (str) {
     let deferred = this.$q.defer();
 
-    this.Location.getLocationByString(str, location => {
-      deferred.resolve(location);
-    });
+    this.Location
+      .getLocationByString(str, location => {
+        deferred.resolve(location);
+      });
 
     return deferred.promise;
   }
@@ -41,8 +43,13 @@ class orderController {
 
   markerLocation ($event) {
     if ($event) {
+      this.location = $event;
       this.searchText = $event.location.formatted_address;
     }
+  }
+
+  onSearch (form) {
+    console.log(_.assign(form, {location: this.location}));
   }
 
 }
