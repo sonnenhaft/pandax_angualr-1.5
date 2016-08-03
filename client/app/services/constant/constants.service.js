@@ -74,7 +74,7 @@ export default class Constants {
 
       navigation: [
         {
-          text: 'Make order',
+          text: 'Create order',
           url: 'main.order'
         },
         {

@@ -5,15 +5,15 @@ class orderController {
 
     _.assign(this, {Constants, Location, Helper, $q, moment});
 
-    this.time = Helper.getNearestTime('time');
-    this.range = Helper.getNearestTime('range');
-
   }
 
   $onInit () {
     _.mapValues(this.Constants.order.models, (model, key) => {
       this[key] = model;
     });
+
+    this.time = this.Helper.getNearestTime('time');
+    this.range = this.Helper.getNearestTime('range');
   }
 
   getLocation (str) {
@@ -42,6 +42,10 @@ class orderController {
       this.location = $event;
       this.searchText = $event.location.formatted_address;
     }
+  }
+
+  onDateChange (date) {
+    this.range = this.Helper.getNearestTime('range', date);
   }
 
   getTotalPrice () {

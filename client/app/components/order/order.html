@@ -1,6 +1,6 @@
 <div id="order" layout-gt-sm="row">
 
-  <div class="order-form" flex>
+  <div class="order-form animated fadeIn" flex>
     <h1 class="page-name">Create Order</h1>
     <div class="provider-type" layout="row">
       <div flex ng-repeat="type in $ctrl.providers">
@@ -101,6 +101,7 @@
         <div flex>
           <label>Date</label>
           <md-datepicker ng-model="$ctrl.date"
+                         ng-change="$ctrl.onDateChange($ctrl.date)"
                          md-placeholder="Enter date"
                          md-min-date="$ctrl.currentDate"
                          md-max-date=""
@@ -116,7 +117,7 @@
           </md-select>
         </div>
       </div>
-      <div class="total">
+      <div class="total animated">
         TOTAL: $ {{$ctrl.getTotalPrice()}}
       </div>
       <div class="submit">
@@ -140,7 +141,7 @@
     </form>
   </div>
 
-  <div class="order-map" flex>
+  <div class="order-map animated fadeInRight" flex>
     <map input="$ctrl.location" output="$ctrl.markerLocation(location)"></map>
   </div>
 
