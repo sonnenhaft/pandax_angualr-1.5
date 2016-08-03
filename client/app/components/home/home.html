@@ -69,6 +69,8 @@
                      name="email"
                      ng-model="$ctrl.email"
                      ng-keyup="$ctrl.signUpEmailError = false"
+                     ng-blur="$ctrl.validate({email: $ctrl.email})"
+                     ng-class="{error: $ctrl.signUpEmailError}"
                      required />
               <span class="error" ng-if="$ctrl.signUpEmailError">
                 {{$ctrl.signUpEmailError}}
@@ -80,6 +82,8 @@
                      name="password"
                      ng-model="$ctrl.password"
                      ng-keyup="$ctrl.signUpPasswordError = false"
+                     ng-blur="$ctrl.validate({password: $ctrl.password})"
+                     ng-class="{error: $ctrl.signUpPasswordError}"
                      autocomplete="off"
                      required />
               <span class="error" ng-if="$ctrl.signUpPasswordError">

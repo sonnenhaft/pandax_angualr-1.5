@@ -46,6 +46,16 @@ class HomeController {
       this.User.register(credentials);
   }
 
+  validate (field) {
+    if (this.Validation.error(field).length) {
+      _.map(this.Validation.error(field), error => {
+        this[(this.signIn ? 'signIn' : 'signUp') + _.capitalize(error.name) + 'Error'] = error.text;
+      });
+      return false;
+    }
+    return true;
+  }
+
   switchTo (form) {
     this.signIn = this.signUp = false;
     this.email = this.password = '';
