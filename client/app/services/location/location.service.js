@@ -54,4 +54,13 @@ export default class Location {
       )
   }
 
+  positionToFunc (position) {
+    return {
+      position: {
+        lat: () => position.latitude,
+        lng: () => position.longitude
+      }
+    }
+  }
+
 }

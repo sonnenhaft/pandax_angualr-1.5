@@ -1,7 +1,7 @@
 <div id="order" layout-gt-sm="row">
 
   <div class="order-form" flex>
-    <h1 class="page-name">Make Order</h1>
+    <h1 class="page-name">Create Order</h1>
     <div class="provider-type" layout="row">
       <div flex ng-repeat="type in $ctrl.providers">
         <md-button ng-click="type.active = !type.active; $ctrl.typeError = false;"
@@ -70,6 +70,14 @@
         <label>Location notes</label>
         <textarea name="notes" ng-model="$ctrl.notes"></textarea>
       </div>
+      <div class="input">
+        <label>Number of guests</label>
+        <md-select ng-model="$ctrl.guest" aria-label="Guest" name="guest">
+          <md-option ng-repeat="guest in $ctrl.guests" value="{{guest}}">
+            {{guest}}
+          </md-option>
+        </md-select>
+      </div>
       <div class="input radio" layout="row">
         <div flex>
           <md-button aria-label="ASAP"
@@ -120,6 +128,7 @@
                     entertainer: orderForm.entertainer.$viewValue,
                     apt: orderForm.apt.$viewValue,
                     notes: orderForm.notes.$viewValue,
+                    guest: orderForm.guest.$viewValue,
                     asap: orderForm.asap.$viewValue,
                     later: orderForm.later.$viewValue,
                     date: orderForm.date.$viewValue,

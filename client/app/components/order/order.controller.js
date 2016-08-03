@@ -5,12 +5,8 @@ class orderController {
 
     _.assign(this, {Constants, Location, Helper, $q, moment});
 
-    this.providers = _.reverse(Constants.profile.serviceTypes);
-
     this.time = Helper.getNearestTime('time');
     this.range = Helper.getNearestTime('range');
-
-    console.log(Helper.getNearestTime())
 
   }
 

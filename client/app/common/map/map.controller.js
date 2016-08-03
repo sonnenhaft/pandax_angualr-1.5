@@ -44,7 +44,7 @@ class MpaController {
               longitude: position.coords.longitude
             };
 
-            this.markerCallback(this.positionToFunc(this.position));
+            this.markerCallback(this.Location.positionToFunc(this.position));
           });
         },
         err => {
@@ -55,15 +55,6 @@ class MpaController {
           console.log(err);
         }
       );
-  }
-
-  positionToFunc (position) {
-    return {
-      position: {
-        lat: () => position.latitude,
-        lng: () => position.longitude
-      }
-    }
   }
 
   markerOptions () {

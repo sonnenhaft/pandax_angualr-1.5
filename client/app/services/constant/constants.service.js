@@ -48,12 +48,15 @@ export default class Constants {
     const orderConstants = {
 
       models: {
+        providers: _.reverse(this.profile.serviceTypes),
         date: new Date(),
         currentDate: new Date(),
         entertainers: _.range(1, 7),
         entertainer: 1,
         hours: ['0.5 H', '1 H', '1.5 H', '2 H', '2.5 H', '3 H', '3.5 H', '4 H'],
         hour: '0.5 H',
+        guests: ['1', '2-3', '4-5', '5-10', '10-15'],
+        guest: 1,
         asap: true
       }
 
@@ -119,7 +122,7 @@ export default class Constants {
         {
           type: '1',
           name: 'Party Girl',
-          price: 250,
+          price: 200,
           description: '',
           img: '/assets/images/services/prime_xx.png',
           active: false
@@ -127,7 +130,7 @@ export default class Constants {
         {
           type: '2',
           name: 'Hostess',
-          price: 150,
+          price: 125,
           description: '',
           img: '/assets/images/services/prime.png',
           active: false
