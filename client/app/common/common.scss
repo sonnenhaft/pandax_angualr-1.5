@@ -42,6 +42,10 @@ app {
 
 		main {
 			height: 100%;
+
+			@media (max-width: 960px) {
+				height: auto;
+			}
 		}
 	}
 }

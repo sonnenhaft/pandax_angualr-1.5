@@ -17,6 +17,17 @@
         weight: bold;
       }
     }
+
+    md-icon {
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      background: url('/assets/images/icons/svg/menu.svg') no-repeat center;
+
+      &.mobile {
+        background: url('/assets/images/icons/svg/close.svg') no-repeat center;
+      }
+    }
   }
 
   .avatar {
@@ -92,6 +103,20 @@
     }
   }
 
+  .mobilemenu {
+    position: absolute;
+    top: 66px;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: black;
+    padding-bottom: 30px;
+
+    .avatar {
+      margin: 41px auto 25px;
+    }
+  }
+
   @media (max-width: 960px) {
     .logo {
       padding: 15px 20px;
@@ -103,6 +128,20 @@
 
       md-icon {
         max-width: 24px;
+        outline: none;
+      }
+    }
+
+    .additional {
+      position: relative;
+      bottom: 0;
+
+      ul {
+        li {
+          a {
+            line-height: 47px;
+          }
+        }
       }
     }
   }

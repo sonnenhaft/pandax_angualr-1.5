@@ -6,10 +6,37 @@
     </div>
     <md-icon
       flex
-    	md-svg-icon="/assets/images/icons/svg/menu.svg"
     	hide-gt-sm
-    	aria-label="menu">
+    	aria-label="menu"
+      ng-click="$ctrl.mobile = !$ctrl.mobile"
+      ng-class="{mobile: $ctrl.mobile}">
     </md-icon>
+  </div>
+
+  <div class="mobilemenu" ng-if="$ctrl.mobile">
+    <div class="avatar">
+      <img ng-src="{{$ctrl.avatar}}" alt=""/>
+    </div>
+
+    <div class="navigation" ng-if="$ctrl.session.user.auth">
+      <ul>
+        <li ng-repeat="nav in $ctrl.navigation" ui-sref-active="active">
+          <a href="" ui-sref="{{nav.url}}">
+            {{nav.text}}
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="additional" ng-if="$ctrl.session.user.auth">
+      <ul>
+        <li ng-repeat="nav in $ctrl.additional" ui-sref-active="active">
+          <a href="">
+            {{nav.text}}
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 
   <div hide show-gt-sm class="avatar">

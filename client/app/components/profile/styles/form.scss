@@ -168,14 +168,20 @@
     @media (max-width: 960px) {
       position: relative;
       bottom: auto;
-      margin: 20px 0;
+      margin: {
+        top: 30px;
+        bottom: 15px;
+      };
       max-width: 100%;
     }
 
     @media (max-height: 790px) {
       position: relative;
       bottom: auto;
-      margin: 13px 0;
+      margin: {
+        top: 30px;
+        bottom: 15px;
+      };
     }
   }
 

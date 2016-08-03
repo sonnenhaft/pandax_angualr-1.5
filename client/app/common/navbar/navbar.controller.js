@@ -1,6 +1,6 @@
 class NavbarController {
 
-  constructor (Storage, Constants, $state) {
+  constructor (Storage, Constants, $state, $window) {
     'ngInject';
 
     _.assign(this, {Constants, $state});
@@ -13,6 +13,13 @@ class NavbarController {
     this.avatar = this.showUserAvatar();
     this.navigation = Constants.user.navigation;
     this.additional = Constants.user.additionally;
+    this.mobile = false;
+
+    $window.addEventListener('resize', () => {
+      if ($window.innerWidth <= 960) {
+        this.mobile = false;
+      }
+    });
 
   }
 
