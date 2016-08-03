@@ -20,5 +20,10 @@
       margin: 0 0 27px 0;
       display: block;
     }
+
+    @media (max-width: 960px) {
+      max-width: 100%;
+      width: 100%;
+    }
   }
 }

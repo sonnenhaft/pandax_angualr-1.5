@@ -41,8 +41,8 @@
           </div>
         </div>
       </div>
-      <div class="input" layout="row">
-        <div flex="60">
+      <div class="location" layout-gt-sm="row">
+        <div class="input" flex="60">
           <label>Location</label>
           <md-autocomplete
             required
@@ -61,7 +61,10 @@
             </md-not-found>
           </md-autocomplete>
         </div>
-        <div flex="40">
+        <div class="map" ng-if="$ctrl.mobile">
+          <map input="$ctrl.location" output="$ctrl.markerLocation(location)"></map>
+        </div>
+        <div class="input" flex="40">
           <label>Apt</label>
           <input type="text" name="apt" ng-model="$ctrl.apt">
         </div>
@@ -118,7 +121,7 @@
         </div>
       </div>
       <div class="total animated">
-        TOTAL: $ {{$ctrl.getTotalPrice()}}
+        <span>TOTAL: $ {{$ctrl.getTotalPrice()}}</span>
       </div>
       <div class="submit">
         <md-button ng-disabled="!orderForm.$valid"
@@ -141,7 +144,7 @@
     </form>
   </div>
 
-  <div class="order-map animated fadeInRight" flex>
+  <div class="order-map animated fadeInRight" flex ng-if="!$ctrl.mobile">
     <map input="$ctrl.location" output="$ctrl.markerLocation(location)"></map>
   </div>
 

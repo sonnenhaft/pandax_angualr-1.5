@@ -233,12 +233,16 @@
     .total {
       margin-top: 30px;
       text-align: center;
-      width: 100%;
-      height: 54px;
-      line-height: 54px;
-      color: white;
-      border: 1px solid white;
-      font-size: 0.938em;
+
+      span {
+        display: block;
+        width: 100%;
+        height: 54px;
+        line-height: 54px;
+        color: white;
+        border: 1px solid white;
+        font-size: 0.938em;
+      }
     }
 
     .submit {
@@ -247,6 +251,27 @@
       margin-top: 30px;
       margin-bottom: 10px;
       max-width: 100%;
+    }
+  }
+
+  @media (max-width: 960px) {
+    padding: 30px 0;
+
+    .provider-type {
+      padding: 0 2%;
+    }
+
+    #profile-form {
+      .input, .total, .submit {
+        padding: 0 2%;
+      }
+
+      .location {
+        .map {
+          margin-top: 30px;
+          height: 200px;
+        }
+      }
     }
   }
 

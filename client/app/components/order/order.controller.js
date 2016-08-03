@@ -1,9 +1,15 @@
 class orderController {
 
-  constructor (Constants, Location, Helper, $q, moment) {
+  constructor (Constants, Location, Helper, $q, $window, moment) {
     'ngInject';
 
     _.assign(this, {Constants, Location, Helper, $q, moment});
+
+    this.mobile = $window.innerWidth <= 960;
+
+    $window.addEventListener('resize', () => {
+      this.mobile = $window.innerWidth <= 960;
+    });
 
   }
 

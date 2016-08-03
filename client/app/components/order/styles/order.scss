@@ -7,4 +7,10 @@
 
   @import "form";
 
+  @media (max-width: 960px) {
+    .page-name {
+      padding: 0 5%;
+    }
+  }
+
 }
