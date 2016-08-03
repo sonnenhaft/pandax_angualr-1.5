@@ -44,7 +44,7 @@ export default class Validation {
   }
 
   password (str) {
-    return this.message('password', str.length >= 6, 'Password should contain more then 6 character.');
+    return this.message('password', str.length >= 6, 'Password should contain more then 6 characters.');
   }
 
   repeater (pass, repeater) {
