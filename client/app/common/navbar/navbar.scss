@@ -11,6 +11,7 @@
       margin: 33px auto 20px;
       letter-spacing: 3px;
       line-height: 36px;
+      text-align: center;
       font: {
         size: 1.625em;
         weight: bold;
@@ -87,6 +88,21 @@
           color: $AuroMetalSaurus;
           text-transform: uppercase;
         }
+      }
+    }
+  }
+
+  @media (max-width: 960px) {
+    .logo {
+      padding: 15px 20px;
+
+      .name {
+        margin: 0;
+        text-align: left;
+      }
+
+      md-icon {
+        max-width: 24px;
       }
     }
   }
