@@ -30,12 +30,18 @@
     outline: none;
     color: black;
     border-radius: 0;
+
+    &.error {
+      border: 2px solid $Cardinal;
+    }
   }
 
-  .error {
-    text-align: center;
-    display: block;
-    margin-top: 10px;
+  span {
+    &.error {
+      text-align: center;
+      display: block;
+      margin-top: 10px;
+    }
   }
 
   &:last-child {
