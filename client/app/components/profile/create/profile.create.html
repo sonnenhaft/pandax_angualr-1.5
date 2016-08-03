@@ -1,27 +1,7 @@
-<div id="profile-create" class="animated fadeIn">
-  <h1 class="page-name">Create profile</h1>
-  <form name="createForm" id="profile-form" layout-gt-sm="row">
-    <div flex class="type-or-service" ng-if="$ctrl.isProvider">
-      <div class="input type">
-        <label>Choose type of your service</label>
-        <md-button ng-repeat="type in $ctrl.providers"
-                   ng-click="type.active = !type.active; $ctrl.typeError = false;"
-                   ng-class="{active: type.active}"
-                   aria-label="{{type.name}}">
-          <img ng-src="{{type.img}}" alt="{{type.name}}"/>
-          <div class="name">{{type.name}}</div>
-          <div class="price">{{type.price}} $</div>
-          <div class="desc">
-            <i></i>
-            <p class="animated fadeIn">{{type.description}}</p>
-          </div>
-        </md-button>
-        <div class="error" ng-if="$ctrl.typeError">
-          Please choose type of your service.
-        </div>
-      </div>
-    </div>
-    <div flex class="basic-data">
+<div id="profile-create">
+  <span class="page-name">Create profile</span>
+  <form name="createForm" id="profile-form">
+    <div class="basic-data">
       <div class="input image">
         <label>Add photo</label>
         <div layout="row">

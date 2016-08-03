@@ -3,7 +3,7 @@
   .input {
     @import "types";
 
-    max-width: 360px;
+    max-width: 50%;
 
     &.image {
       .file-container {
@@ -141,7 +141,7 @@
   .submit {
     position: absolute;
     bottom: 40px;
-    max-width: 360px;
+    max-width: 50%;
     width: 100%;
 
     button {
