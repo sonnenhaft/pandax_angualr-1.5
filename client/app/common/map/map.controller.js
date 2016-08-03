@@ -60,7 +60,8 @@ class MpaController {
   markerOptions () {
     return {
       options: {
-        draggable: true
+        draggable: true,
+        icon: '/assets/images/pin_map.png'
       },
       events: {
         dragend: marker => this.markerCallback(marker)
