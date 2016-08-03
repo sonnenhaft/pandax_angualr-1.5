@@ -1,23 +1,23 @@
 class orderController {
 
-  constructor (Constants, Location, $q, moment) {
+  constructor (Constants, Location, Helper, $q, moment) {
     'ngInject';
 
-    _.assign(this, {Location, $q});
+    _.assign(this, {Constants, Location, Helper, $q, moment});
 
-    this.providers = Constants.profile.serviceTypes;
-    this.fields = Constants.order.fields;
+    this.providers = _.reverse(Constants.profile.serviceTypes);
 
-    this.date = new Date();
-    this.currentDate = new Date();
-    this.times = ['17:30', '18:00', '18:30', '19:00'];
-    this.entertainers = _.range(1, 7);
-    this.entertainer = 1;
-    this.hours = ['0.5 H', '1 H', '1.5 H', '2 H', '2.5 H', '3 H', '3.5 H', '4 H'];
-    this.hour = '0.5 H';
-    this.asap = true;
-    this.location = '';
+    this.time = Helper.getNearestTime('time');
+    this.range = Helper.getNearestTime('range');
 
+    console.log(Helper.getNearestTime())
+
+  }
+
+  $onInit () {
+    _.mapValues(this.Constants.order.models, (model, key) => {
+      this[key] = model;
+    });
   }
 
   getLocation (str) {
@@ -46,6 +46,14 @@ class orderController {
       this.location = $event;
       this.searchText = $event.location.formatted_address;
     }
+  }
+
+  getTotalPrice () {
+    return _
+      .chain(this.Helper.getActiveObjectFromArray(this.providers))
+      .map('price')
+      .sum()
+      .value() * parseFloat(this.hour) * Number(this.entertainer);
   }
 
   onSearch (form) {

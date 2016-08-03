@@ -47,32 +47,14 @@ export default class Constants {
   orderConstants () {
     const orderConstants = {
 
-      fields: {
-        location: [
-          {
-            name: 'Location',
-            model: 'location',
-            type: 'text',
-            flex: 80
-          },
-          {
-            name: 'Apt',
-            model: 'apt',
-            type: 'text',
-            flex: 20
-          }
-        ],
-        date: [
-          {
-            name: 'Time',
-            model: 'datepicker',
-            minDate: new Date()
-          },
-          {
-            model: 'time',
-            value: {}
-          }
-        ]
+      models: {
+        date: new Date(),
+        currentDate: new Date(),
+        entertainers: _.range(1, 7),
+        entertainer: 1,
+        hours: ['0.5 H', '1 H', '1.5 H', '2 H', '2.5 H', '3 H', '3.5 H', '4 H'],
+        hour: '0.5 H',
+        asap: true
       }
 
     };
@@ -136,7 +118,7 @@ export default class Constants {
       serviceTypes: [
         {
           type: '1',
-          name: 'Prime XX',
+          name: 'Party Girl',
           price: 250,
           description: '',
           img: '/assets/images/services/prime_xx.png',
@@ -144,7 +126,7 @@ export default class Constants {
         },
         {
           type: '2',
-          name: 'Prime X',
+          name: 'Hostess',
           price: 150,
           description: '',
           img: '/assets/images/services/prime.png',
@@ -152,7 +134,7 @@ export default class Constants {
         },
         {
           type: '3',
-          name: 'Prime',
+          name: 'Dancer',
           price: 50,
           description: '',
           img: '/assets/images/services/prime.png',

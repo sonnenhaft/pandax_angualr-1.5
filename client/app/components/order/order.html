@@ -7,7 +7,7 @@
         <md-button ng-click="type.active = !type.active; $ctrl.typeError = false;"
                    ng-class="{active: type.active}"
                    aria-label="{{type.name}}">
-          <div class="price">{{type.price}}$</div>
+          <div class="price">${{type.price}}</div>
           <div class="name">{{type.name}}</div>
           <div class="desc">
             <i></i>
@@ -75,7 +75,7 @@
           <md-button aria-label="ASAP"
                      class="first"
                      ng-class="{active: $ctrl.asap}"
-                     ng-click="$ctrl.later = false">
+                     ng-click="$ctrl.asap = true; $ctrl.later = false">
             <label for="asap">ASAP</label>
             <input id="asap" type="checkbox" name="asap" ng-model="$ctrl.asap">
           </md-button>
@@ -83,13 +83,13 @@
         <div flex>
           <md-button aria-label="Later"
                      ng-class="{active: $ctrl.later}"
-                     ng-click="$ctrl.asap = false">
+                     ng-click="$ctrl.later = true; $ctrl.asap = false">
             <label for="later">Later</label>
             <input id="later" type="checkbox" name="later" ng-model="$ctrl.later">
           </md-button>
         </div>
       </div>
-      <div class="input" layout="row">
+      <div class="input" layout="row" ng-if="!$ctrl.asap">
         <div flex>
           <label>Date</label>
           <md-datepicker ng-model="$ctrl.date"
@@ -101,15 +101,15 @@
         </div>
         <div flex>
           <label></label>
-          <md-select ng-model="$ctrl.time" aria-label="Time" name="time">
-            <md-option ng-repeat="time in $ctrl.times" value="{{time}}" ng-disabled="$index === 1">
+          <md-select ng-model="$ctrl.time" aria-label="Time" name="time" ng-disabled="$ctrl.asap">
+            <md-option ng-repeat="time in $ctrl.range" value="{{time}}">
               {{time}}
             </md-option>
           </md-select>
         </div>
       </div>
       <div class="total">
-        TOTAL: $ 750
+        TOTAL: $ {{$ctrl.getTotalPrice()}}
       </div>
       <div class="submit">
         <md-button ng-disabled="!orderForm.$valid"
