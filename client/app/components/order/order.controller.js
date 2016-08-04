@@ -63,6 +63,12 @@ class orderController {
   }
 
   onSearch (form) {
+    if (!this.Helper.getActiveObjectFromArray(this.providers).length) {
+      this.typeError = true;
+      return false;
+    }
+
+
     console.log(_.assign(form, {location: this.location}));
   }
 

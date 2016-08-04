@@ -123,7 +123,7 @@ export default class Constants {
           type: '1',
           name: 'Party Girl',
           price: 200,
-          description: '',
+          description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, deleniti doloremque harum magnam maxime neque omnis? Delectus enim fuga quod tenetur! Aut dolore dolorum earum eos eveniet omnis saepe voluptatum!',
           img: '/assets/images/services/prime_xx.png',
           active: false
         },

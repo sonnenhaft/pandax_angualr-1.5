@@ -9,12 +9,15 @@
                    aria-label="{{type.name}}">
           <div class="price">${{type.price}}</div>
           <div class="name">{{type.name}}</div>
-          <div class="desc">
-            <i></i>
-            <p class="animated fadeIn">{{type.description}}</p>
+          <i class="desc-icon"></i>
+          <div class="desc animated fadeIn">
+            {{type.description}}
           </div>
         </md-button>
       </div>
+    </div>
+    <div class="type-error" ng-if="$ctrl.typeError">
+      Please choose type of service.
     </div>
     <form name="orderForm" id="profile-form">
       <div class="input" layout="row">
