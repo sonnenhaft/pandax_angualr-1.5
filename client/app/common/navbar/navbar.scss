@@ -52,11 +52,14 @@
   }
 
   .navigation {
-    margin-top: 38px;
+    margin: 38px auto 0;
+    max-width: 150px;
 
     ul {
+      list-style: none;
+
       li {
-        text-align: center;
+        text-align: left;
 
         &.active {
           a {
@@ -79,11 +82,17 @@
   .additional {
     position: absolute;
     bottom: 34px;
+    left: 0;
+    right: 0;
+    margin: auto;
     width: 100%;
+    max-width: 150px;
 
     ul {
+      list-style: none;
+
       li {
-        text-align: center;
+        text-align: left;
 
         &.active {
           a {
@@ -132,12 +141,22 @@
       }
     }
 
+    .navigation {
+      ul {
+        li {
+          text-align: center;
+        }
+      }
+    }
+
     .additional {
       position: relative;
       bottom: 0;
 
       ul {
         li {
+          text-align: center;
+
           a {
             line-height: 47px;
           }
