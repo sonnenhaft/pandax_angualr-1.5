@@ -4,6 +4,7 @@ import About from './about/about';
 import Main from './main/main';
 import Profile from './profile/profile';
 import ProfileCreate from './profile/create/profile.create';
+import ProfileView from './profile/view/profile.view';
 import Order from './order/order';
 
 let componentModule = angular.module('app.components', [
@@ -12,6 +13,7 @@ let componentModule = angular.module('app.components', [
   Main,
   Profile,
   ProfileCreate,
+  ProfileView,
   Order
 ])
 
