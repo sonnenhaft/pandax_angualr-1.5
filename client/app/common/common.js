@@ -1,14 +1,12 @@
 import angular from 'angular';
 import Navbar from './navbar/navbar';
-import User from './user/user';
-import Constants from './constants/constants';
+import Map from './map/map';
 
 let commonModule = angular.module('app.common', [
   Navbar,
-  User,
-  Constants
+  Map
 ])
-  
+
 .name;
 
 export default commonModule;

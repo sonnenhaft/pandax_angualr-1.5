@@ -1,3 +1,128 @@
-<md-content flex layout-padding md-colors="{color:'primary-50'}">
-  
-<md-content/>
+<section id="home" flex md-colors="{color:'primary-50'}">
+  <div id="form">
+    <h1>MINX</h1>
+    <div class="enter-form">
+
+      <div class="login-form" ng-if="$ctrl.signIn">
+        <form name="loginForm" class="animated fadeIn">
+          <div class="credentials">
+            <div class="input">
+              <label>E-mail <i>*</i></label>
+              <input type="email"
+                     name="email"
+                     ng-model="$ctrl.email"
+                     ng-keyup="$ctrl.emailError = false"
+                     required/>
+              <span class="error" ng-if="$ctrl.signInEmailError">
+                {{$ctrl.signInEmailError}}
+              </span>
+            </div>
+            <div class="input">
+              <label>Password <i>*</i></label>
+              <a href="" class="forgot">Forgot ?</a>
+              <input type="password"
+                     name="password"
+                     ng-model="$ctrl.password"
+                     ng-keyup="$ctrl.passwordError = false"
+                     autocomplete="off"
+                     required />
+              <span class="error" ng-if="$ctrl.signInPasswordError">
+                {{$ctrl.signInPasswordError}}
+              </span>
+            </div>
+          </div>
+          <div class="sign-button">
+            <md-button ng-disabled="!loginForm.$valid"
+                       ng-class="{disabled: !loginForm.$valid}"
+                       type="submit"
+                       ng-click="$ctrl.onSubmit({
+                        email: loginForm.email.$viewValue,
+                        password: loginForm.password.$viewValue
+                      })">
+              Log In
+            </md-button>
+          </div>
+        </form>
+        <div class="account-ready">
+         Don't have an account? <a href="" ng-click="$ctrl.switchTo('signUp')">Sign Up</a>
+        </div>
+      </div>
+
+      <div class="register-form" ng-if="$ctrl.signUp">
+        <form name="registerForm" class="animated fadeIn">
+          <div class="type-of-user">
+            <md-button class="customer-user"
+                       ng-class="{active: $ctrl.isCustomer}"
+                       ng-click="$ctrl.isCustomer = true; $ctrl.isProvider = false">
+              Customer
+            </md-button>
+            <md-button class="provider-user"
+                       ng-class="{active: $ctrl.isProvider}"
+                       ng-click="$ctrl.isProvider = true; $ctrl.isCustomer = false">
+              Service provider
+            </md-button>
+          </div>
+          <div class="credentials">
+            <div class="input">
+              <label>E-mail <i>*</i></label>
+              <input type="email"
+                     name="email"
+                     ng-model="$ctrl.email"
+                     ng-keyup="$ctrl.signUpEmailError = false"
+                     ng-blur="$ctrl.validate({email: $ctrl.email})"
+                     ng-class="{error: $ctrl.signUpEmailError}"
+                     required />
+              <span class="error" ng-if="$ctrl.signUpEmailError">
+                {{$ctrl.signUpEmailError}}
+              </span>
+            </div>
+            <div class="input">
+              <label>Password <i>*</i></label>
+              <input type="password"
+                     name="password"
+                     ng-model="$ctrl.password"
+                     ng-keyup="$ctrl.signUpPasswordError = false"
+                     ng-blur="$ctrl.validate({password: $ctrl.password})"
+                     ng-class="{error: $ctrl.signUpPasswordError}"
+                     autocomplete="off"
+                     required />
+              <span class="error" ng-if="$ctrl.signUpPasswordError">
+                {{$ctrl.signUpPasswordError}}
+              </span>
+            </div>
+            <!--<div class="input">-->
+              <!--<label>Re-enter password <i>*</i></label>-->
+              <!--<input type="password"-->
+                     <!--name="repeater"-->
+                     <!--ng-model="$ctrl.repeater"-->
+                     <!--ng-keyup="$ctrl.signUpRepeaterError = false"-->
+                     <!--autocomplete="off"-->
+                     <!--required />-->
+              <!--<span class="error" ng-if="$ctrl.signUpRepeaterError">-->
+                <!--{{$ctrl.signUpRepeaterError}}-->
+              <!--</span>-->
+            <!--</div>-->
+          </div>
+          <div class="sign-button">
+            <md-button ng-disabled="!registerForm.$valid"
+                       ng-class="{disabled: !registerForm.$valid}"
+                       type="submit"
+                       ng-click="$ctrl.onSubmit({
+                        email: registerForm.email.$viewValue,
+                        password: registerForm.password.$viewValue
+                      })">
+              Sign up
+            </md-button>
+          </div>
+        </form>
+        <div class="account-ready">
+          Already have an account? <a href="" ng-click="$ctrl.switchTo('signIn')">Log in</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div id="copyright">
+    Copyright
+  </div>
+</section>

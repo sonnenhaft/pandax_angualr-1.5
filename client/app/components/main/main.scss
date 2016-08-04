@@ -1,0 +1,29 @@
+#main {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+
+  .main-pages {
+    display: block;
+    position: relative;
+
+    .page-name {
+      color: white;
+      text-transform: uppercase;
+      font: {
+        size: 2em;
+        weight: normal;
+      }
+      letter-spacing: 2px;
+      line-height: 47px;
+      margin: 0 0 27px 0;
+      display: block;
+    }
+
+    @media (max-width: 960px) {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+}

@@ -1,59 +1,6 @@
-<md-content flex layout-padding md-colors="{color:'primary-50'}">
-	<md-subheader class="md-primary">PROFILE</md-subheader>
+<section id="profile" layout-gt-sm="row">
 
-  <form name="profileForm" novalidate>
+  <navbar flex="20"></navbar>
+  <ui-view flex="80" class="profile-pages"></ui-view>
 
-		<section layout="column" layout-align="flex-start center">
-			<div>Add photo</div>
-			<md-button class="md-fab md-primary md-hue-2" aria-label="Mini FAB">
-			  <md-icon md-svg-src="/assets/images/icons/svg/ic_add_white.svg"></md-icon>
-			</md-button>
-		</section>
-
-    <md-input-container layout="row">
-      <label class="md-no-float">Email</label>
-      <input type="email" ng-model="user.email">
-    </md-input-container>
-
-		<div layout="row">
-      <md-input-container>
-        <label class="md-no-float">First Name</label>
-        <input type="text" ng-model="user.first_name">
-      </md-input-container>
-      <md-input-container>
-        <label class="md-no-float">Second Name</label>
-        <input type="text" ng-model="user.second_name">
-      </md-input-container>
-    </div>
-
-    <md-input-container layout="row">
-      <label class="md-no-float">Displaying Name</label>
-      <input type="text" ng-model="user.displaying_name">
-    </md-input-container>
-
-		<div layout="row">
-      <md-input-container flex="20" class="mobile-number">
-				<label class="md-no-float">Mobile Number</label>
-        <input type="text" ng-model="user.mobile_prefix">
-      </md-input-container>
-      <md-input-container flex="80">
-        <input type="text" ng-model="user.mobile_number" aria-label="Mobile Number">
-      </md-input-container>
-    </div>
-
-    <md-input-container layout="row">
-      <label class="md-no-float">Type of Service</label>
-      <md-select ng-model="user.service_type">
-        <md-option ng-repeat="serviceType in vm.PROFILE_ATTRIBUTES_CONSTANT.serviceTypes track by $index">
-          {{serviceType.text}}
-        </md-option>
-      </md-select>
-    </md-input-container>
-
-    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-      <md-button class="md-raised md-primary">READY</md-button>
-    </section>    
-
-  </form>
-
-<md-content/>
+</section>

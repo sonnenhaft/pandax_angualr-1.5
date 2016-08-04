@@ -1,9 +1,13 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import homeComponent from './home.component';
+import Validation from '../../services/validation/validation';
+import User from '../../services/user/user';
 
 let homeModule = angular.module('home', [
-  uiRouter
+  uiRouter,
+  Validation,
+  User
 ])
 
 .config(($stateProvider) => {
@@ -11,13 +15,13 @@ let homeModule = angular.module('home', [
 
   $stateProvider
     .state('home', {
-      url: '/',
+      url: '/?signup&user',
       component: 'home'
     });
 })
 
 .component('home', homeComponent)
-  
+
 .name;
 
 export default homeModule;
