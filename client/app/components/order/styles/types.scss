@@ -18,6 +18,12 @@
       border-right: 2px solid $primary;
       overflow: visible;
 
+      &.active .desc {
+        &:after {
+          display: none;
+        }
+      }
+
       &.active, &.active .desc {
         background: -ms-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 185%);
         background: -moz-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 185%);

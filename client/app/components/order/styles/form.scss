@@ -21,6 +21,12 @@
         min-width: 100%;
         border-right: 1px solid $primary;
 
+        &.error {
+          input {
+            border: 2px solid $Cardinal;
+          }
+        }
+
         md-autocomplete-wrap {
           box-shadow: 0 0 0 0;
           height: 34px;

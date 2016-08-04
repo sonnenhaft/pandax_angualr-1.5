@@ -10,7 +10,7 @@
           <div class="price">${{type.price}}</div>
           <div class="name">{{type.name}}</div>
           <i class="desc-icon"></i>
-          <div class="desc animated fadeIn">
+          <div class="desc animated fadeIn" ng-if="type.description">
             {{type.description}}
           </div>
         </md-button>
@@ -53,7 +53,10 @@
             md-search-text="$ctrl.searchText"
             md-items="item in $ctrl.getLocation($ctrl.searchText)"
             md-item-text="item.formatted_address"
-            md-min-length="2">
+            md-min-length="2"
+            md-search-text-change="$ctrl.validate({location: $ctrl.searchText})"
+            ng-class="{error: $ctrl.locationError}"
+            ng-keyup="$ctrl.locationError = false">
             <md-item-template>
               <span ng-click="$ctrl.setLocation(item)" md-highlight-text="$ctrl.searchText" md-highlight-flags="^i">
                 {{item.formatted_address}}
@@ -63,13 +66,24 @@
               No states matching "{{$ctrl.searchText}}" were found.
             </md-not-found>
           </md-autocomplete>
+          <span class="error" ng-if="$ctrl.locationError">
+            {{$ctrl.locationError}}
+          </span>
         </div>
         <div class="map" ng-if="$ctrl.mobile">
           <map input="$ctrl.location" output="$ctrl.markerLocation(location)"></map>
         </div>
         <div class="input" flex="40">
           <label>Apt</label>
-          <input type="text" name="apt" ng-model="$ctrl.apt">
+          <input type="text"
+                 name="apt"
+                 ng-model="$ctrl.apt"
+                 ng-blur="$ctrl.validate({apt: $ctrl.apt})"
+                 ng-keyup="$ctrl.aptError = false"
+                 ng-class="{error: $ctrl.aptError}">
+          <span class="error" ng-if="$ctrl.aptError">
+            {{$ctrl.aptError}}
+          </span>
         </div>
       </div>
       <div class="input">
