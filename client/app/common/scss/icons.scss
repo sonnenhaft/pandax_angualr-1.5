@@ -1,0 +1,13 @@
+.icon {
+	$height_medium: 15px;
+	$width_medium: 15px;
+	&_medium {
+		height: $height_medium;
+		width: $width_medium;
+		svg {
+			height: $height_medium;
+			width: $width_medium;
+		}
+	}
+}
+

@@ -3,12 +3,17 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
 @import "scss/colors";
 @import "scss/fonts";
+@import "scss/form";
 @import "scss/typography";
+@import "scss/icons";
 
 * {
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
+	&:focus {
+		outline: none;
+	}
 }
 
 html,
@@ -54,6 +59,18 @@ app {
 			}
 		}
 	}
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.disabled {
+	opacity: .5;
+}
+
+.photo_active {
+	border: 2px solid $Cardinal;
 }
 
 // components

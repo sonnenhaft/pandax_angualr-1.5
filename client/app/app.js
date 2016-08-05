@@ -38,26 +38,27 @@ angular
     let primaryMap = $mdThemingProvider.extendPalette('grey', {
       '900': 'FFFFFF'
     });
+    let accentMap = $mdThemingProvider.extendPalette('red', {
+      'A200': 'ba192f',
+    });
     let backgroundMap = $mdThemingProvider.extendPalette('grey', {
       '50': '151520'
     });
 
     $mdThemingProvider.definePalette('primaryMap', primaryMap);
+    $mdThemingProvider.definePalette('accentMap', accentMap);
     $mdThemingProvider.definePalette('backgroundMap', backgroundMap);
 
     $mdThemingProvider.theme('default')
       .primaryPalette('primaryMap')
+      .accentPalette('accentMap')
       .backgroundPalette('backgroundMap');
+      
 
     uiGmapGoogleMapApiProvider.configure({
       key: 'AIzaSyAB5JHHZnmA2C6q_b7mc2zPaXdSeRocs1E',
       v: '3', //defaults to latest 3.X anyhow
       libraries: 'weather,geometry,visualization'
     });
-  })
-  .run(($rootScope, $state) => {
-    "ngInject";
-    // Add state to root scope
-    $rootScope.$state = $state;
   })
   .component('app', AppComponent);

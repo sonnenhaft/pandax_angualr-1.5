@@ -1,9 +1,9 @@
 class orderController {
 
-  constructor (Constants, Location, Helper, Validation, $q, $window, moment) {
+  constructor (Constants, Location, Helper, Validation, $q, $window, moment, $state) {
     'ngInject';
 
-    _.assign(this, {Constants, Location, Helper, Validation, $q, moment});
+    _.assign(this, {Constants, Location, Helper, Validation, $q, moment, $state});
 
     this.mobile = $window.innerWidth <= 960;
 
@@ -78,6 +78,7 @@ class orderController {
       return false;
     }
 
+    this.$state.go('main.searchEntertainers');    
 
     console.log(
       _.assign(form, {
@@ -85,6 +86,7 @@ class orderController {
         service: this.Helper.getActiveObjectFromArray(this.providers)
       })
     );
+
   }
 
 }
