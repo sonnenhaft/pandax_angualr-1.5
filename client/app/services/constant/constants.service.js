@@ -69,7 +69,7 @@ export default class Constants {
     const userConstants = {
 
       avatar: {
-        empty: '/assets/images/avatar.png'
+        empty: '../assets/images/avatar.png'
       },
 
       navigation: [
