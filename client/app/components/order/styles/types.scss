@@ -76,7 +76,7 @@
         width: 16px;
         height: 16px;
         outline: none;
-        background: url('/assets/images/provider_desc.png') no-repeat center;
+        background: url('../assets/images/provider_desc.png') no-repeat center;
 
         &:hover + .desc, &:focus + .desc {
           display: block;
