@@ -1,11 +1,9 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import profileViewComponent from './profile.view.component';
-import Storage from '../../../services/storage/storage';
 
 let profileViewModule = angular.module('profileView', [
-  uiRouter,
-  Storage
+  uiRouter
 ])
 
   .config(($stateProvider) => {

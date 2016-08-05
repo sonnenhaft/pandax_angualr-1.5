@@ -1,20 +1,10 @@
 export default class ProfileViewController {
 
-  constructor (Storage) {
+  constructor ($state) {
     'ngInject';
 
-    _.assign(this, {Storage});
+    _.assign(this, {$state});
 
-    this.session = Storage.getObject('MINX');
-
-  }
-
-  $onInit () {
-    if (this.session.user.photo && this.session.user.photo.$ngfBlobUrl) {
-      this.photo = {
-        background: 'url(' + this.session.user.photo.$ngfBlobUrl + ') no-repeat fixed center'
-      };
-    }
   }
 
 }

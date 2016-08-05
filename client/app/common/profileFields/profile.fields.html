@@ -1,0 +1,92 @@
+<form name="profileForm"
+      id="profile-form"
+      ng-class="{
+        'view-mode': $ctrl.mode === 'profile.view',
+        'edit-mode': $ctrl.mode === 'profile.edit'
+      }">
+  <div class="basic-data">
+    <div class="input image">
+      <label ng-if="$ctrl.mode === 'profile.create'">Add photo</label>
+      <div layout="row">
+        <div class="file-container"
+             flex
+             ng-repeat="image in $ctrl.images"
+             ng-class="{first: $index === 0, last: $index === 2}">
+          <md-button class="file"
+                     aria-label="file"
+                     ngf-select
+                     ng-disabled="$ctrl.mode === 'profile.view'"
+                     ng-model="image.file"
+                     name="file"
+                     ngf-max-size="3MB"
+                     ng-click="$ctrl.imagesError = false">
+            <img ngf-src="image.file" alt=""/>
+          </md-button>
+        </div>
+      </div>
+      <span class="error" ng-if="$ctrl.imagesError">
+          {{$ctrl.imagesError}}
+        </span>
+    </div>
+    <div class="input-container" ng-repeat="field in $ctrl.fields">
+      <div class="input" ng-if="!field.combined">
+        <label>{{field.name}}</label>
+        <input type="{{field.type}}"
+               name="{{field.model}}"
+               required
+               autocomplete="off"
+               ng-readonly="$ctrl.mode === 'profile.view'"
+               ng-model="$ctrl[field.model]"
+               ng-class="{error: $ctrl[field.model + 'Error']}"
+               ng-keyup="$ctrl[field.model + 'Error'] = false"
+               ng-blur="$ctrl.validate({[field.model]: $ctrl[field.model]})">
+        <span class="error" ng-if="$ctrl[field.model + 'Error']">
+            {{$ctrl[field.model + 'Error']}}
+          </span>
+      </div>
+      <div class="input name" ng-if="field.combined" layout="row">
+        <div ng-repeat="combine in field.combined" flex>
+          <label>{{combine.name}}</label>
+          <input type="{{combine.type}}"
+                 name="{{combine.model}}"
+                 required
+                 autocomplete="off"
+                 ng-readonly="$ctrl.mode === 'profile.view'"
+                 ng-model="$ctrl[combine.model]"
+                 ng-class="{error: $ctrl[combine.model + 'Error'], first: $index === 0}"
+                 ng-keyup="$ctrl[combine.model + 'Error'] = false"
+                 ng-blur="$ctrl.validate({[combine.model]: $ctrl[combine.model]})">
+          <span class="error" ng-if="$ctrl[combine.model + 'Error']">
+              {{$ctrl[combine.model + 'Error']}}
+            </span>
+        </div>
+      </div>
+    </div>
+    <div class="terms" ng-if="$ctrl.isProvider">
+      By clicking Ready you agree to the <a href="">Terms and Privacy</a>
+    </div>
+    <div class="submit"
+         layout="row"
+         layout-align="{{$ctrl.mode === 'profile.edit' ? 'space-between center' : 'center'}}">
+      <div flex="45" ng-if="$ctrl.mode === 'profile.edit'">
+        <md-button class="cancel" ng-click="$ctrl.onEditCancel()">
+          Cancel
+        </md-button>
+      </div>
+      <div flex="{{$ctrl.mode === 'profile.edit' ? 45 : ''}}">
+        <md-button ng-disabled="!profileForm.$valid"
+                   ng-class="{disabled: !profileForm.$valid}"
+                   ng-click="$ctrl.onSubmit({
+                    first_name: profileForm.first_name.$viewValue,
+                    last_name: profileForm.last_name.$viewValue,
+                    phone: profileForm.phone.$viewValue,
+                    email: profileForm.email.$viewValue
+                   })"
+                   type="submit">
+          {{$ctrl.buttonName}}
+        </md-button>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="user-photo" ng-style="$ctrl.photo" ng-if="$ctrl.photo && !$ctrl.mode !== 'profile.create'"></div>
