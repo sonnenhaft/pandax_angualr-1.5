@@ -73,7 +73,7 @@
               <input type="email"
                      name="email"
                      ng-model="$ctrl.email"
-                     ng-keyup="$ctrl.signUpEmailError = false"
+                     ng-keyup="$ctrl.signUpEmailError = $ctrl.registerError = false"
                      ng-blur="$ctrl.validate({email: $ctrl.email})"
                      ng-class="{error: $ctrl.signUpEmailError}"
                      required />
@@ -86,7 +86,7 @@
               <input type="password"
                      name="password"
                      ng-model="$ctrl.password"
-                     ng-keyup="$ctrl.signUpPasswordError = false"
+                     ng-keyup="$ctrl.signUpPasswordError = $ctrl.registerError = false"
                      ng-blur="$ctrl.validate({password: $ctrl.password})"
                      ng-class="{error: $ctrl.signUpPasswordError}"
                      autocomplete="off"
@@ -118,6 +118,9 @@
                       })">
               Sign up
             </md-button>
+            <span class="sign-error" ng-if="$ctrl.registerError">
+              {{$ctrl.registerError}}
+            </span>
           </div>
         </form>
         <div class="account-ready">

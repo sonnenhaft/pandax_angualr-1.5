@@ -63,7 +63,11 @@ class HomeController {
     this.User
       .register(credentials)
       .then(
-        result => result,
+        result => {
+          if (result && result.error) {
+            this.registerError = result.error;
+          }
+        },
         error => error
       );
   }

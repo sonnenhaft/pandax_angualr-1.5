@@ -50,15 +50,23 @@ export default class User {
     return this
       .Request
       .send(
-        this.Constants.api.signup.uri(credentials.type),
         this.Constants.api.signup.method,
+        this.Constants.api.signup.uri(credentials.type),
         {
           email: credentials.email,
           password: credentials.password
         }
       )
       .then(
-        result => console.log(result),
+        result => {
+          if (result.data.detail) {
+            return {
+              error: result.data.detail
+            };
+          }
+
+          this.login(credentials);
+        },
         error => console.log(error)
       );
   }
