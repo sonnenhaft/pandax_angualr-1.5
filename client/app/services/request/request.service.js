@@ -11,14 +11,25 @@ export default class Request {
 
   }
 
-  send (method, url, data) {
+  send (token, method, url, data) {
+
+    let params = {
+      method,
+      url,
+      headers: this.headers,
+      data: JSON.stringify(data)
+    };
+
+    if (token) {
+      params.headers = _.assign(params.headers, {'Authorization': 'Bearer ' + token});
+    }
+
+    if (!data) {
+      _.unset(params, 'data');
+    }
+
     return this
-      .$http({
-        method,
-        url,
-        headers: this.headers,
-        data: JSON.stringify(data)
-      })
+      .$http(params)
       .then(
         result => result,
         error => error

@@ -1,9 +1,9 @@
 export default class profileFieldsController {
 
-  constructor (User, Constants, Validation, Storage, $state, $timeout) {
+  constructor (User, Constants, Validation, Storage, $state) {
     'ngInject';
 
-    _.assign(this, {User, Constants, Validation, Storage, $state, $timeout});
+    _.assign(this, {User, Constants, Validation, Storage, $state});
 
     this.session = Storage.getObject('MINX');
 
@@ -102,6 +102,7 @@ export default class profileFieldsController {
     if (this.mode === 'profile.edit') {
       this.onModeChange('profile.view');
       this.buildProfileModels();
+      this.User.updateUserProfile(profile);
       return false;
     }
 

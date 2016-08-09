@@ -33,7 +33,7 @@ export default class Constants {
           return path + '/' + user + '/profile'; // user is a type of user
         },
         method: {
-          PATH: 'PATH', // to update profile
+          PATCH: 'PATCH', // to update profile
           GET: 'GET' // to get profile information
         }
       },
