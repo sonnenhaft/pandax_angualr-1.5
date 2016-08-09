@@ -33,14 +33,14 @@
         <label>{{field.name}}</label>
         <input type="{{field.type}}"
                name="{{field.model}}"
-               ng-required="$ctrl.mode === 'profile.edit'"
+               ng-required="$ctrl.mode !== 'profile.view'"
                autocomplete="off"
                ng-readonly="$ctrl.mode === 'profile.view'"
                ng-model="$ctrl[field.model]"
-               ng-class="{error: $ctrl[field.model + 'Error'] && $ctrl.mode === 'profile.edit'}"
+               ng-class="{error: $ctrl[field.model + 'Error'] && $ctrl.mode !== 'profile.view'}"
                ng-keyup="$ctrl[field.model + 'Error'] = false"
                ng-blur="$ctrl.validate({[field.model]: $ctrl[field.model]})">
-        <span class="error" ng-if="$ctrl[field.model + 'Error'] && $ctrl.mode === 'profile.edit'">
+        <span class="error" ng-if="$ctrl[field.model + 'Error'] && $ctrl.mode !== 'profile.view'">
             {{$ctrl[field.model + 'Error']}}
           </span>
       </div>
@@ -49,14 +49,14 @@
           <label>{{combine.name}}</label>
           <input type="{{combine.type}}"
                  name="{{combine.model}}"
-                 ng-required="$ctrl.mode === 'profile.edit'"
+                 ng-required="$ctrl.mode !== 'profile.view'"
                  autocomplete="off"
                  ng-readonly="$ctrl.mode === 'profile.view'"
                  ng-model="$ctrl[combine.model]"
-                 ng-class="{error: $ctrl[combine.model + 'Error'] && $ctrl.mode === 'profile.edit', first: $index === 0}"
+                 ng-class="{error: $ctrl[combine.model + 'Error'] && $ctrl.mode !== 'profile.view', first: $index === 0}"
                  ng-keyup="$ctrl[combine.model + 'Error'] = false"
                  ng-blur="$ctrl.validate({[combine.model]: $ctrl[combine.model]})">
-          <span class="error" ng-if="$ctrl[combine.model + 'Error'] && $ctrl.mode === 'profile.edit'">
+          <span class="error" ng-if="$ctrl[combine.model + 'Error'] && $ctrl.mode !== 'profile.view'">
               {{$ctrl[combine.model + 'Error']}}
             </span>
         </div>
@@ -74,7 +74,7 @@
         </md-button>
       </div>
       <div flex="{{$ctrl.mode === 'profile.edit' ? 45 : ''}}">
-        <md-button ng-disabled="!profileForm.$valid && $ctrl.mode === 'profile.edit'"
+        <md-button ng-disabled="!profileForm.$valid && $ctrl.mode !== 'profile.view'"
                    ng-class="{disabled: !profileForm.$valid}"
                    ng-click="$ctrl.onSubmit({
                     first_name: profileForm.first_name.$viewValue,
