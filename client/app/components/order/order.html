@@ -1,0 +1,168 @@
+<div id="order" layout-gt-sm="row">
+
+  <div class="order-form animated fadeIn" flex>
+    <h1 class="page-name">Create Order</h1>
+    <div class="provider-type" layout="row">
+      <div flex ng-repeat="type in $ctrl.providers">
+        <md-button ng-click="type.active = !type.active; $ctrl.typeError = false;"
+                   ng-class="{active: type.active}"
+                   aria-label="{{type.name}}">
+          <div class="price">${{type.price}}</div>
+          <div class="name">{{type.name}}</div>
+          <i class="desc-icon"></i>
+          <div class="desc animated fadeIn" ng-if="type.description">
+            {{type.description}}
+          </div>
+        </md-button>
+      </div>
+    </div>
+    <div class="type-error" ng-if="$ctrl.typeError">
+      Please choose type of service.
+    </div>
+    <form name="orderForm" id="profile-form">
+      <div class="input" layout="row">
+        <div flex>
+          <label>Length of booking</label>
+          <md-select ng-model="$ctrl.hour" aria-label="Hour" name="hour">
+            <md-option ng-repeat="hour in $ctrl.hours" value="{{hour}}">
+              {{hour}}
+            </md-option>
+          </md-select>
+          <div class="descr">
+            <p>Get 50% off on additional hours</p>
+          </div>
+        </div>
+        <div flex>
+          <label>Entertainers</label>
+          <md-select ng-model="$ctrl.entertainer" aria-label="Entertainer" name="entertainer">
+            <md-option ng-repeat="entertainer in $ctrl.entertainers" value="{{entertainer}}">
+              {{entertainer}}
+            </md-option>
+          </md-select>
+          <div class="descr">
+            <p>Minimum 2 entertainers for first time customers <i></i></p>
+          </div>
+        </div>
+      </div>
+      <div class="location" layout-gt-sm="row">
+        <div class="input" flex="60">
+          <label>Location</label>
+          <md-autocomplete
+            required
+            md-selected-item="$ctrl.selectedItem"
+            md-search-text="$ctrl.searchText"
+            md-items="item in $ctrl.getLocation($ctrl.searchText)"
+            md-item-text="item.formatted_address"
+            md-min-length="2"
+            md-search-text-change="$ctrl.validate({location: $ctrl.searchText})"
+            ng-class="{error: $ctrl.locationError}"
+            ng-keyup="$ctrl.locationError = false">
+            <md-item-template>
+              <span ng-click="$ctrl.setLocation(item)" md-highlight-text="$ctrl.searchText" md-highlight-flags="^i">
+                {{item.formatted_address}}
+              </span>
+            </md-item-template>
+            <md-not-found>
+              No states matching "{{$ctrl.searchText}}" were found.
+            </md-not-found>
+          </md-autocomplete>
+          <span class="error" ng-if="$ctrl.locationError">
+            {{$ctrl.locationError}}
+          </span>
+        </div>
+        <div class="map" ng-if="$ctrl.mobile">
+          <map input="$ctrl.location" output="$ctrl.markerLocation(location)"></map>
+        </div>
+        <div class="input" flex="40">
+          <label>Apt</label>
+          <input type="text"
+                 name="apt"
+                 ng-model="$ctrl.apt"
+                 ng-blur="$ctrl.validate({apt: $ctrl.apt})"
+                 ng-keyup="$ctrl.aptError = false"
+                 ng-class="{error: $ctrl.aptError}">
+          <span class="error" ng-if="$ctrl.aptError">
+            {{$ctrl.aptError}}
+          </span>
+        </div>
+      </div>
+      <div class="input">
+        <label>Location notes</label>
+        <textarea name="notes" ng-model="$ctrl.notes"></textarea>
+      </div>
+      <div class="input">
+        <label>Number of guests</label>
+        <md-select ng-model="$ctrl.guest" aria-label="Guest" name="guest">
+          <md-option ng-repeat="guest in $ctrl.guests" value="{{guest}}">
+            {{guest}}
+          </md-option>
+        </md-select>
+      </div>
+      <div class="input radio" layout="row">
+        <div flex>
+          <md-button aria-label="ASAP"
+                     class="first"
+                     ng-class="{active: $ctrl.asap}"
+                     ng-click="$ctrl.asap = true; $ctrl.later = false">
+            <label for="asap">ASAP</label>
+            <input id="asap" type="checkbox" name="asap" ng-model="$ctrl.asap">
+          </md-button>
+        </div>
+        <div flex>
+          <md-button aria-label="Later"
+                     ng-class="{active: $ctrl.later}"
+                     ng-click="$ctrl.later = true; $ctrl.asap = false">
+            <label for="later">Later</label>
+            <input id="later" type="checkbox" name="later" ng-model="$ctrl.later">
+          </md-button>
+        </div>
+      </div>
+      <div class="input" layout="row" ng-if="!$ctrl.asap">
+        <div flex>
+          <label>Date</label>
+          <md-datepicker ng-model="$ctrl.date"
+                         ng-change="$ctrl.onDateChange($ctrl.date)"
+                         md-placeholder="Enter date"
+                         md-min-date="$ctrl.currentDate"
+                         md-max-date=""
+                         name="date">
+          </md-datepicker>
+        </div>
+        <div flex>
+          <label></label>
+          <md-select ng-model="$ctrl.time" aria-label="Time" name="time" ng-disabled="$ctrl.asap">
+            <md-option ng-repeat="time in $ctrl.range" value="{{time}}">
+              {{time}}
+            </md-option>
+          </md-select>
+        </div>
+      </div>
+      <div class="total animated">
+        <span>TOTAL: $ {{$ctrl.getTotalPrice()}}</span>
+      </div>
+      <div class="submit">
+        <md-button ng-disabled="!orderForm.$valid"
+                   ng-class="{disabled: !orderForm.$valid}"
+                   type="submit"
+                   ng-click="$ctrl.onSearch({
+                    hour: orderForm.hour.$viewValue,
+                    entertainer: orderForm.entertainer.$viewValue,
+                    apt: orderForm.apt.$viewValue,
+                    notes: orderForm.notes.$viewValue,
+                    guest: orderForm.guest.$viewValue,
+                    asap: orderForm.asap.$viewValue,
+                    later: orderForm.later.$viewValue,
+                    date: orderForm.date.$viewValue,
+                    time: orderForm.time.$viewValue
+                   })">
+          SEARCH FOR MINX
+        </md-button>
+      </div>
+    </form>
+  </div>
+
+  <div class="order-map animated fadeInRight" flex ng-if="!$ctrl.mobile">
+    <map input="$ctrl.location" output="$ctrl.markerLocation(location)"></map>
+  </div>
+
+</div>

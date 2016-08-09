@@ -1,0 +1,51 @@
+// =============================================================================
+// $ Home template styles
+// =============================================================================
+
+#profile {
+
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  .profile-pages {
+    display: block;
+    position: relative;
+    padding: {
+      top: 52px;
+      left: 30px;
+    };
+
+    .page-name {
+      color: white;
+      text-transform: uppercase;
+      font: {
+        size: 2em;
+        weight: normal;
+      }
+      letter-spacing: 2px;
+      line-height: 47px;
+      margin: 0 0 27px 0;
+      display: block;
+    }
+
+    #profile-create {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    @import "form";
+    @import "view";
+
+    @media (max-width: 960px) {
+      padding: 50px 5%;
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 960px) {
+    height: auto;
+  }
+
+}

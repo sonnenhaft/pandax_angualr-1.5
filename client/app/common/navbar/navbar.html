@@ -1,15 +1,66 @@
-<nav 
-	class="navbar" 
-	flex-sm="100">
-  <div 
-  	class="logo"
-  	layout="row">
-    <h1 hide show-gt-sm><a ui-sref="home" class="logo__link">PANDA</a></h1>
-    <md-icon 
-    	md-svg-icon="/assets/images/icons/svg/ic_menu_white.svg" 
+<nav class="navbar" flex-sm="100">
+
+  <div class="logo" layout="row">
+    <div class="name" show-gt-sm flex>
+      <a ui-sref="home" class="logo__link">MINX</a>
+    </div>
+    <md-icon
+      flex
     	hide-gt-sm
-    	flex-offset-xs="90"
-    	aria-label="menu">
+    	aria-label="menu"
+      ng-click="$ctrl.mobile = !$ctrl.mobile"
+      ng-class="{mobile: $ctrl.mobile}">
     </md-icon>
   </div>
+
+  <div class="mobilemenu" ng-if="$ctrl.mobile">
+    <div class="avatar">
+      <img ng-src="{{$ctrl.avatar}}" alt=""/>
+    </div>
+
+    <div class="navigation" ng-if="$ctrl.$state.current.name !== 'profile.create'">
+      <ul>
+        <li ng-repeat="nav in $ctrl.navigation" ui-sref-active="active">
+          <a href="" ui-sref="{{nav.url}}">
+            {{nav.text}}
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="additional" ng-if="$ctrl.$state.current.name !== 'profile.create'">
+      <ul>
+        <li ng-repeat="nav in $ctrl.additional" ui-sref-active="active">
+          <a href="">
+            {{nav.text}}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div hide show-gt-sm class="avatar">
+    <img ng-src="{{$ctrl.avatar}}" alt=""/>
+  </div>
+
+  <div class="navigation" hide show-gt-sm ng-if="$ctrl.$state.current.name !== 'profile.create'">
+    <ul>
+      <li ng-repeat="nav in $ctrl.navigation" ui-sref-active="active">
+        <a href="" ui-sref="{{nav.url}}">
+          {{nav.text}}
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="additional" hide show-gt-sm ng-if="$ctrl.$state.current.name !== 'profile.create'">
+    <ul>
+      <li ng-repeat="nav in $ctrl.additional" ui-sref-active="active">
+        <a href="">
+          {{nav.text}}
+        </a>
+      </li>
+    </ul>
+  </div>
+
 </nav>

@@ -12,6 +12,7 @@ let profileModule = angular.module('profile', [
   $stateProvider
     .state('profile', {
       url: '/profile',
+      abstract: true,
       component: 'profile'
     });
 })

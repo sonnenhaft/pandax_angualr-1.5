@@ -1,13 +1,6 @@
-<md-content flex layout-padding md-colors="{color:'primary-50'}">
-	<h1>PROFILE</h1>
+<section id="profile" layout-gt-sm="row">
 
-  <form name="profileForm">
-    <div layout-gt-xs="row">
-      <md-input-container class="md-block" flex-gt-xs>
-        <label>Name</label>
-        <input ng-model="user.name">
-      </md-input-container>
-    </div>
-  </form>
+  <navbar flex="20"></navbar>
+  <ui-view flex="80" class="profile-pages"></ui-view>
 
-<md-content/>
+</section>

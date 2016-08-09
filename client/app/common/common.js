@@ -1,12 +1,14 @@
 import angular from 'angular';
 import Navbar from './navbar/navbar';
-import User from './user/user';
+import Map from './map/map';
+import profileFields from './profileFields/profile.fields';
 
 let commonModule = angular.module('app.common', [
   Navbar,
-  User
+  Map,
+  profileFields
 ])
-  
+
 .name;
 
 export default commonModule;
