@@ -1,14 +1,12 @@
 class NavbarController {
 
-  constructor (Storage, Constants, $state, $window) {
+  constructor (User, Constants, $state, $window) {
     'ngInject';
 
     _.assign(this, {Constants, $state});
 
-    this.session = Storage.getObject('MINX');
-
-    this.isCustomer = this.session.user.type === 'customer';
-    this.isProvider = this.session.user.type === 'provider';
+    this.isCustomer = User.get('role') === 'customer';
+    this.isProvider = User.get('role') === 'provider';
 
     this.avatar = this.showUserAvatar();
     this.navigation = Constants.user.navigation;

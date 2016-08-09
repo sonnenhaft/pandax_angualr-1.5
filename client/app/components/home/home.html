@@ -11,7 +11,7 @@
               <input type="email"
                      name="email"
                      ng-model="$ctrl.email"
-                     ng-keyup="$ctrl.emailError = false"
+                     ng-keyup="$ctrl.emailError = $ctrl.logignError = false"
                      required/>
               <span class="error" ng-if="$ctrl.signInEmailError">
                 {{$ctrl.signInEmailError}}
@@ -23,7 +23,7 @@
               <input type="password"
                      name="password"
                      ng-model="$ctrl.password"
-                     ng-keyup="$ctrl.passwordError = false"
+                     ng-keyup="$ctrl.passwordError = $ctrl.logignError = false"
                      autocomplete="off"
                      required />
               <span class="error" ng-if="$ctrl.signInPasswordError">
@@ -41,6 +41,9 @@
                       })">
               Log In
             </md-button>
+            <span class="sign-error" ng-if="$ctrl.logignError">
+              {{$ctrl.logignError}}
+            </span>
           </div>
         </form>
         <div class="account-ready">

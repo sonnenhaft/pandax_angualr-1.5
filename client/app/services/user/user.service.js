@@ -1,9 +1,9 @@
 export default class User {
 
-  constructor (Storage, $state) {
+  constructor (Storage, Constants, Request, $state, $http) {
     'ngInject';
 
-    _.assign(this, {Storage, $state});
+    _.assign(this, {Storage, Constants, Request, $state, $http});
 
   }
 
@@ -22,30 +22,76 @@ export default class User {
   }
 
   login (credentials) {
-    this.preAuth(credentials);
-    this.$state.go('profile');
+    return this
+      .Request
+      .send(
+        this.Constants.api.login.method,
+        this.Constants.api.login.uri,
+        {
+          email: credentials.email,
+          password: credentials.password
+        }
+      )
+      .then(
+        result => {
+          if (result.data.message) {
+            return {
+              error: result.data.message
+            };
+          }
+
+          this.create(result.data);
+        },
+        error => console.log(error)
+      );
   }
 
   register (credentials) {
-    this.preAuth(credentials);
-    this.$state.go('profile.create');
+    return this
+      .Request
+      .send(
+        this.Constants.api.signup.uri(credentials.type),
+        this.Constants.api.signup.method,
+        {
+          email: credentials.email,
+          password: credentials.password
+        }
+      )
+      .then(
+        result => console.log(result),
+        error => console.log(error)
+      );
+  }
+
+  create (user) {
+    user.data.role = user.data.role === 'client' ?
+      'customer' :
+      user.data.role;
+
+    this.Storage.setObject('MINX', {
+      token: user.token,
+      user: _.assign(user.data, {
+        auth: user.data.first_name && user.data.last_name
+      })
+    });
+
+    switch (true) {
+      case user.data.role === 'customer':
+        this.$state.go('main.order');
+        return false;
+
+      case user.data.first_name && user.data.last_name:
+        this.$state.go('main.order');
+        return false;
+
+      default:
+        this.$state.go('profile.create');
+    }
   }
 
   logout () {
     this.Storage.remove('MINX');
     this.$state.go('home');
-  }
-
-  preAuth (credentials) {
-    this.Storage.setObject('MINX', {
-      token: 'falseToken!ufhuishdfihsduf723e.rjueifgh8923yrhjo3nknhurfhg9823ornlkfn',
-      user: {
-        id: _.random(100000000),
-        email: credentials.email,
-        type: credentials.type,
-        auth: credentials.auth
-      }
-    });
   }
 
 }

@@ -1,12 +1,53 @@
 export default class Constants {
 
   constructor () {
+    'ngInject';
 
     this.profile = this.profileConstants();
     this.user = this.userConstants();
     this.order = this.orderConstants();
     this.map = this.mapConstants();
+    this.api = this.apiConstants();
 
+  }
+
+  apiConstants () {
+    const path = 'http://panda-dev.aws.isdev.info/api';
+
+    let apiConstants = {
+
+      login: {
+        uri: path + '/sessions',
+        method: 'POST'
+      },
+
+      signup: {
+        uri: user => {
+          return path + '/signup/' + user; // user is a type of user
+        },
+        method: 'POST'
+      },
+
+      profile: {
+        uri: user => {
+          return path + '/' + user + '/profile'; // user is a type of user
+        },
+        method: {
+          PATH: 'PATH', // to update profile
+          GET: 'GET' // to get profile information
+        }
+      },
+
+      photo: {
+        uri: slot_id => {
+          return path + '/' + this.User.get('role') + '/profile/photo/' + slot_id; // slot_id is an id of user
+        },
+        method: 'PUT'
+      }
+
+    };
+
+    return apiConstants;
   }
 
   mapConstants () {
@@ -121,7 +162,7 @@ export default class Constants {
       serviceTypes: [
         {
           type: '1',
-          name: 'Party Girl',
+          name: 'Dancer',
           price: 200,
           description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, deleniti doloremque harum magnam maxime neque omnis? Delectus enim fuga quod tenetur! Aut dolore dolorum earum eos eveniet omnis saepe voluptatum!',
           img: '/assets/images/services/prime_xx.png',
@@ -137,7 +178,7 @@ export default class Constants {
         },
         {
           type: '3',
-          name: 'Dancer',
+          name: 'Party Girl',
           price: 50,
           description: '',
           img: '/assets/images/services/prime.png',

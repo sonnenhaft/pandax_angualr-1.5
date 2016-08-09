@@ -7,10 +7,10 @@ export default class profileFieldsController {
 
     this.session = Storage.getObject('MINX');
 
-    this.isCustomer = User.get('type') === 'customer';
-    this.isProvider = User.get('type') === 'provider';
-    this.fields = Constants.profile.fields[User.get('type')];
-    this.images = this.Constants.profile.images[this.User.get('type')];
+    this.isCustomer = User.get('role') === 'customer';
+    this.isProvider = User.get('role') === 'provider';
+    this.fields = Constants.profile.fields[User.get('role')];
+    this.images = this.Constants.profile.images[this.User.get('role')];
 
   }
 
@@ -96,8 +96,6 @@ export default class profileFieldsController {
           _.map(this.images, 'file')
       }
     );
-
-    //console.log(this.session.user);
 
     this.Storage.setObject('MINX', this.session);
 
