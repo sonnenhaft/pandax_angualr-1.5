@@ -1,0 +1,77 @@
+#orderConfirm {
+	$width_main: 80%;
+	
+	md-content {
+		padding-left: 5%;
+		padding-right: 5%;
+	}
+	.order-information {
+		@media (max-width: 960px) {
+			padding-left: 5%;
+			padding-right: 5%;
+		}
+		&__header {
+			font-family: $oswald;
+			font-size: 24px;
+			font-weight: 400;
+			color: $white;
+			letter-spacing: 1.5px;
+			margin-top: 23px;
+			margin-bottom: 35px;
+			line-height: 40px;
+			text-align: left;
+			@media (min-width: 960px) {
+				width: $width_main;
+			}
+		}
+		&__descr {
+			margin-top: 35px;
+			margin-bottom: 34px;
+		}
+		&__cards-container {
+			margin-top: 34px;
+			margin-bottom: 49px;
+			@media (min-width: 960px) {
+				width: $width_main;
+			}
+		}
+		&__card {
+			background-color: $Charcoal;
+			border-radius: 0px;
+			margin: 0px;
+			padding: 20px;
+			.md-card-image {
+				min-height: 100px;
+				min-width: 82px;
+			}
+			md-card-title {
+				padding-top: 0px;
+    		padding-bottom: 6px;
+			}
+			md-card-title-text {
+				color: $white;
+				font: 15px $open-sans;
+				letter-spacing: 0.1px;
+				line-height: 24px;
+				text-align: left;
+			}
+			.md-subhead {
+				color: $AuroMetalSaurus;
+				font: 15px $open-sans;
+				margin-top: 10px;
+			}
+		}
+		&__submit {
+			color: $white;
+			font: 15px $oswald;
+			letter-spacing: 0.1px;
+			line-height: 24px;
+			margin: 0px;
+			padding: 17px 125px;
+			text-align: center;
+			@media (min-width: 960px) {
+				width: $width_main;
+			}
+		}
+	}
+}

@@ -2,7 +2,8 @@
 // $ Order template styles
 // =============================================================================
 
-#order {
+#order,
+#orderConfirm {
   height: 100%;
 
   @import "types";
