@@ -64,9 +64,11 @@ export default class profileFieldsController {
   }
 
   onSave (profile) {
-    this.mode = 'profile.view';
-    this.UpdateUserProfile(profile);
-    this.buildProfileModels();
+    if (this.validate(profile)) {
+      this.mode = 'profile.view';
+      this.UpdateUserProfile(profile);
+      this.buildProfileModels();
+    }
   }
 
   isProviderProfile () {
