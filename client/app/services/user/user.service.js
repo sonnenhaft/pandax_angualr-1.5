@@ -116,7 +116,7 @@ export default class User {
       );
   }
 
-  updateUserProfile (fields) {
+  UpdateUserProfile (fields) {
     return this
       .Request
       .send(

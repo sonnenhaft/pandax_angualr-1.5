@@ -15,16 +15,24 @@ export default class profileFieldsController {
   }
 
   $onChanges (changes) {
-    this.onModeChange(changes.mode.currentValue);
+    this.mode = changes.mode.currentValue;
   }
 
   $onInit () {
-    if (this.mode !== 'profile.create') {
-      this.buildProfileModels();
+    switch (this.mode) {
+      case 'profile.create':
+        this.email = this.User.get('email');
+        break;
+
+      default:
+        this.buildProfileModels();
+        break;
     }
   }
 
   buildProfileModels () {
+    this.mode = 'profile.view';
+
     _.mapValues(this.User.get(), (model, key) => {
       this[key] = model;
     });
@@ -46,70 +54,19 @@ export default class profileFieldsController {
     return true;
   }
 
-  onModeChange (mode) {
-    this.mode = mode;
-
-    switch (mode) {
-
-      case 'profile.view':
-        this.buttonName = 'Edit profile';
-        break;
-
-      case 'profile.edit':
-        this.buttonName = 'Save';
-        break;
-
-      case 'profile.create':
-        this.email = this.User.get('email');
-        this.buttonName = 'Ready';
-        break;
-
-      default:
-
-    }
-  }
-
-  onEditCancel () {
-    this.onModeChange('profile.view');
-    this.buildProfileModels();
-  }
-
-  onSubmit (profile) {
-    if (this.mode === 'profile.view') {
-      this.onModeChange('profile.edit');
-      return false;
-    }
-
+  onReady (profile) {
     if (!this.isProviderProfile() || !this.validate(profile)) {
       return false;
     }
 
-    this.session.user = _.assign(
-      this.session.user,
-      profile,
-      {
-        auth: true
-      },
-      {
-        photo: this.isCustomer ?
-          _.head(this.images).file :
-          _.map(this.images, 'file')
-      }
-    );
+    this.UpdateUserProfile(profile);
+    this.$state.go('profile.view');
+  }
 
-    this.Storage.setObject('MINX', this.session);
-
-    if (this.mode === 'profile.edit') {
-      this.onModeChange('profile.view');
-      this.buildProfileModels();
-      this.User.updateUserProfile(profile);
-      return false;
-    }
-
-    if (this.mode === 'profile.create') {
-      this.$state.go(this.isCustomer ? 'main.order' : 'main.order');
-      return false;
-    }
+  onSave (profile) {
+    this.mode = 'profile.view';
+    this.UpdateUserProfile(profile);
+    this.buildProfileModels();
   }
 
   isProviderProfile () {
@@ -124,6 +81,18 @@ export default class profileFieldsController {
     }
 
     return true;
+  }
+
+  UpdateUserProfile (profile) {
+    this.User.update(
+      _.assign(profile, {auth: true}, {
+        photo: this.isCustomer ?
+          _.head(this.images).file :
+          _.map(this.images, 'file')
+      })
+    );
+
+    this.User.UpdateUserProfile(profile);
   }
 
 }
