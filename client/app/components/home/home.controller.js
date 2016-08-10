@@ -47,28 +47,38 @@ class HomeController {
   }
 
   login (credentials) {
+    this.loginLoading = true;
     this.User
       .login(credentials)
       .then(
         result => {
+          this.loginLoading = false;
           if (result && result.error) {
             this.logignError = result.error;
           }
         },
-        error => error
+        error => {
+          console.log(error);
+          this.loginLoading = false;
+        }
       );
   }
 
   register (credentials) {
+    this.registerLoading = true;
     this.User
       .register(credentials)
       .then(
         result => {
+          this.registerLoading = false;
           if (result && result.error) {
             this.registerError = result.error;
           }
         },
-        error => error
+        error => {
+          console.log(error);
+          this.registerLoading = false;
+        }
       );
   }
 
