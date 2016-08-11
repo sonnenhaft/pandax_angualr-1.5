@@ -6,6 +6,7 @@ import Constants from '../../services/constant/constants';
 import Location from '../../services/location/location';
 import Helper from '../../services/helper/helper';
 import Validation from '../../services/validation/validation';
+import orderConfirm from './orderConfirm/orderConfirm';
 
 
 export default angular
@@ -15,7 +16,8 @@ export default angular
     Constants,
     Location,
     Helper,
-    Validation
+    Validation,
+    orderConfirm
   ])
   .config(($stateProvider) => {
     "ngInject";

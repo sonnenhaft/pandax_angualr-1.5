@@ -1,4 +1,4 @@
-class ProfileCreateController {
+export default class ProfileViewController {
 
   constructor ($state) {
     'ngInject';
@@ -8,5 +8,3 @@ class ProfileCreateController {
   }
 
 }
-
-export default ProfileCreateController;

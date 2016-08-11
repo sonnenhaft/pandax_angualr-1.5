@@ -1,5 +1,46 @@
 #profile-form {
 
+  &.edit-mode {
+    .input {
+      &.image {
+        .file-container {
+          .file {
+            &:hover {
+              border: 1px solid white;
+              background: $Charcoal;
+
+              &:before {
+                content: '';
+                z-index: 15;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                background: rgba(0, 0, 0, .5) url('../assets/images/pen.png') no-repeat center;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.view-mode {
+    .input {
+      input {
+        background: transparent;
+        color: $AuroMetalSaurus;
+        font-weight: bold;
+
+        &.first {
+          border: 0;
+        }
+      }
+    }
+  }
+
   .input {
     @import "types";
 
@@ -18,6 +59,7 @@
         }
 
         .file {
+          position: relative;
           width: 88px;
           height: 88px;
           border-radius: 50%;
@@ -55,6 +97,7 @@
       font: 0.938em $open-sans, sans-serif;
       font-weight: 600;
       border-radius: 0;
+      background: white;
 
       &.first {
         border-right: 1px solid $primary;
@@ -163,6 +206,11 @@
       &.disabled {
         background: black;
         border-color: $Davy-grey;
+      }
+
+      &.cancel {
+        background: $Charcoal;
+        border: none;
       }
     }
 

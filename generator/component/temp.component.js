@@ -6,7 +6,8 @@ let <%= name %>Component = {
   restrict: 'E',
   bindings: {},
   template,
-  controller
+  controller,
+  controllerAs: 'vm'
 };
 
 export default <%= name %>Component;

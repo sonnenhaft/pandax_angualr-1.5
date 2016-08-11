@@ -1,0 +1,38 @@
+<div id="orderConfirm" layout-gt-sm="row">
+
+  <div class="order-form animated fadeIn" flex-gt-sm="60">
+    <h1 class="page-name">Create Order</h1>
+
+    <div class="order-information" layout="column" layout-align="start stretch"> 
+	    <h3 class="order-information__header">YOUR MINX ARE CONFIRMED AND ON THEIR WAY!</h3>
+
+  	  <div class="order-information__descr text-wrapper">
+    	  <p>They will text you soon with their estimated time of the arrival. Access your order details in your 
+      		<a ui-sref="main.order">Active orders.</a>
+      	</p>
+    	</div>
+
+			<div class="order-information__cards-container">
+	      <md-card layout="row" class="order-information__card">
+	      	<div>
+					  <img ng-src="../../../../assets/images/img-in-order-ph.png" class="md-card-image">
+				  </div>
+				  <div flex="75" layout="column">
+						<md-card-title layout="column">
+							<md-card-title-text class="md-headline">Text</md-card-title-text>			
+							<p class="md-subhead">+ 1121 2233 2223</p>
+			      </md-card-title>
+			      <md-card-actions layout="row" layout-align="space-between center">
+			      	<a href="tel:+375331112233"><md-button class="md-raised md-accent">CALL</md-button></a>
+			        <a href="sms:+375331112233"><md-button class="md-raised md-accent">TEXT</md-button></a>
+			      </md-card-actions>
+			    </div>
+	      </md-card>
+	    </div>
+
+	    <md-button class="md-raised md-accent order-information__submit">MAKE NEW ORDER</md-button>
+    </div>
+
+	</div>
+
+</div>

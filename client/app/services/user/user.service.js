@@ -5,12 +5,20 @@ export default class User {
 
     _.assign(this, {Storage, $state});
 
-    this.session = this.Storage.getObject('MINX');
-
   }
 
   isAuth () {
-    return this.session.user;
+    return this.Storage.getObject('MINX').user ? true : false;
+  }
+
+  get (param) {
+    return param ?
+      this.Storage.getObject('MINX').user[param] :
+      this.Storage.getObject('MINX').user;
+  }
+
+  update (object) {
+    console.log(_.assign(this.get(), object))
   }
 
   login (credentials) {

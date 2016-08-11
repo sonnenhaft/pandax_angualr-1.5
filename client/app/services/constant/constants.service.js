@@ -87,7 +87,7 @@ export default class Constants {
         },
         {
           text: 'Profile',
-          url: 'profile.create'
+          url: 'profile.view'
         },
         {
           text: 'Payment',

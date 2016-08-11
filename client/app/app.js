@@ -1,9 +1,7 @@
 import angular from 'angular';
-import uiRouter from 'angular-ui-router';
-import Common from './common/common';
-import Components from './components/components';
-import AppComponent from './app.component';
 import angularMaterial from 'angular-material';
+import 'angular-material/angular-material.css';
+import uiRouter from 'angular-ui-router';
 import 'angular-simple-logger';
 import 'angular-google-maps';
 import 'moment';
@@ -11,7 +9,10 @@ import 'angular-moment';
 import 'lodash';
 import 'normalize.css';
 import 'animate.css';
-import 'angular-material/angular-material.css';
+
+import Common from './common/common';
+import Components from './components/components';
+import AppComponent from './app.component';
 
 angular
   .module('app', [
@@ -54,6 +55,7 @@ angular
       .accentPalette('accentMap')
       .backgroundPalette('backgroundMap');
       
+
 
     uiGmapGoogleMapApiProvider.configure({
       key: 'AIzaSyAB5JHHZnmA2C6q_b7mc2zPaXdSeRocs1E',
