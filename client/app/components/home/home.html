@@ -11,7 +11,8 @@
               <input type="email"
                      name="email"
                      ng-model="$ctrl.email"
-                     ng-keyup="$ctrl.emailError = false"
+                     ng-keyup="$ctrl.signInEmailError = $ctrl.logignError = false"
+                     ng-blur="$ctrl.validate({email: $ctrl.email})"
                      required/>
               <span class="error" ng-if="$ctrl.signInEmailError">
                 {{$ctrl.signInEmailError}}
@@ -23,7 +24,8 @@
               <input type="password"
                      name="password"
                      ng-model="$ctrl.password"
-                     ng-keyup="$ctrl.passwordError = false"
+                     ng-keyup="$ctrl.signInPasswordError = $ctrl.logignError = false"
+                     ng-blur="$ctrl.validate({password: $ctrl.password})"
                      autocomplete="off"
                      required />
               <span class="error" ng-if="$ctrl.signInPasswordError">
@@ -32,15 +34,19 @@
             </div>
           </div>
           <div class="sign-button">
-            <md-button ng-disabled="!loginForm.$valid"
-                       ng-class="{disabled: !loginForm.$valid}"
+            <md-button ng-disabled="!loginForm.$valid || $ctrl.loginLoading"
+                       ng-class="{disabled: !loginForm.$valid || $ctrl.loginLoading}"
                        type="submit"
                        ng-click="$ctrl.onSubmit({
                         email: loginForm.email.$viewValue,
                         password: loginForm.password.$viewValue
                       })">
-              Log In
+              {{!$ctrl.loginLoading ? 'Log In' : ''}}
+              <spinner input="$ctrl.loginLoading"></spinner>
             </md-button>
+            <span class="sign-error" ng-if="$ctrl.logignError">
+              {{$ctrl.logignError}}
+            </span>
           </div>
         </form>
         <div class="account-ready">
@@ -68,7 +74,7 @@
               <input type="email"
                      name="email"
                      ng-model="$ctrl.email"
-                     ng-keyup="$ctrl.signUpEmailError = false"
+                     ng-keyup="$ctrl.signUpEmailError = $ctrl.registerError = false"
                      ng-blur="$ctrl.validate({email: $ctrl.email})"
                      ng-class="{error: $ctrl.signUpEmailError}"
                      required />
@@ -81,7 +87,7 @@
               <input type="password"
                      name="password"
                      ng-model="$ctrl.password"
-                     ng-keyup="$ctrl.signUpPasswordError = false"
+                     ng-keyup="$ctrl.signUpPasswordError = $ctrl.registerError = false"
                      ng-blur="$ctrl.validate({password: $ctrl.password})"
                      ng-class="{error: $ctrl.signUpPasswordError}"
                      autocomplete="off"
@@ -104,15 +110,19 @@
             <!--</div>-->
           </div>
           <div class="sign-button">
-            <md-button ng-disabled="!registerForm.$valid"
-                       ng-class="{disabled: !registerForm.$valid}"
+            <md-button ng-disabled="!registerForm.$valid || $ctrl.registerLoading"
+                       ng-class="{disabled: !registerForm.$valid || $ctrl.registerLoading}"
                        type="submit"
                        ng-click="$ctrl.onSubmit({
                         email: registerForm.email.$viewValue,
                         password: registerForm.password.$viewValue
                       })">
-              Sign up
+              {{!$ctrl.registerLoading ? 'Sign up' : ''}}
+              <spinner input="$ctrl.registerLoading"></spinner>
             </md-button>
+            <span class="sign-error" ng-if="$ctrl.registerError">
+              {{$ctrl.registerError}}
+            </span>
           </div>
         </form>
         <div class="account-ready">

@@ -1,12 +1,58 @@
 export default class Constants {
 
   constructor () {
+    'ngInject';
 
     this.profile = this.profileConstants();
     this.user = this.userConstants();
     this.order = this.orderConstants();
     this.map = this.mapConstants();
+    this.api = this.apiConstants();
 
+  }
+
+  apiConstants () {
+    const path = 'http://dev1.panda.aws.isdev.info/api';
+
+    let apiConstants = {
+
+      login: {
+        uri: path + '/sessions',
+        method: 'POST'
+      },
+
+      signup: {
+        uri: user => {
+          return path + '/signup/' + user; // user is a type of user
+        },
+        method: 'POST'
+      },
+
+      profile: {
+        uri: user => {
+          return path + '/' + user + '/profile'; // user is a type of user
+        },
+        method: {
+          PATCH: 'PATCH', // to update profile
+          GET: 'GET' // to get profile information
+        }
+      },
+
+      photo: {
+        uri: slot_id => {
+          return path + '/' + this.User.get('role') + '/profile/photo/' + slot_id; // slot_id is an id of user
+        },
+        method: 'PUT'
+      },
+
+      order: {
+        uri: path + '/order',
+        method: 'POST'
+      }
+
+    };
+
+    return apiConstants;
   }
 
   mapConstants () {
@@ -144,26 +190,26 @@ export default class Constants {
       serviceTypes: [
         {
           type: '1',
-          name: 'Party Girl',
+          name: 'Dancer',
           price: 200,
-          description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, deleniti doloremque harum magnam maxime neque omnis? Delectus enim fuga quod tenetur! Aut dolore dolorum earum eos eveniet omnis saepe voluptatum!',
-          img: '/assets/images/services/prime_xx.png',
+          description: 'Your Minx will be topless, give lap dances, serve drinks, and socialize.',
+          img: '/assets/images/services/dancer.png',
           active: false
         },
         {
           type: '2',
           name: 'Hostess',
           price: 125,
-          description: '',
-          img: '/assets/images/services/prime.png',
+          description: 'Your Minx will be topless, serve drinks, and socialize',
+          img: '/assets/images/services/hostess.png',
           active: false
         },
         {
           type: '3',
-          name: 'Dancer',
+          name: 'Party Girl',
           price: 50,
-          description: '',
-          img: '/assets/images/services/prime.png',
+          description: 'Your Minx will be fun and flirtatious while fully clothed. She will serve drinks and socialize.',
+          img: '/assets/images/services/girl.png',
           active: false
         }
       ],

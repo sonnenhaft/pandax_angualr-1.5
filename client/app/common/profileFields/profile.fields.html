@@ -33,14 +33,14 @@
         <label>{{field.name}}</label>
         <input type="{{field.type}}"
                name="{{field.model}}"
-               required
+               ng-required="$ctrl.mode !== 'profile.view'"
                autocomplete="off"
                ng-readonly="$ctrl.mode === 'profile.view'"
                ng-model="$ctrl[field.model]"
-               ng-class="{error: $ctrl[field.model + 'Error']}"
+               ng-class="{error: $ctrl[field.model + 'Error'] && $ctrl.mode !== 'profile.view'}"
                ng-keyup="$ctrl[field.model + 'Error'] = false"
                ng-blur="$ctrl.validate({[field.model]: $ctrl[field.model]})">
-        <span class="error" ng-if="$ctrl[field.model + 'Error']">
+        <span class="error" ng-if="$ctrl[field.model + 'Error'] && $ctrl.mode !== 'profile.view'">
             {{$ctrl[field.model + 'Error']}}
           </span>
       </div>
@@ -49,14 +49,14 @@
           <label>{{combine.name}}</label>
           <input type="{{combine.type}}"
                  name="{{combine.model}}"
-                 required
+                 ng-required="$ctrl.mode !== 'profile.view'"
                  autocomplete="off"
                  ng-readonly="$ctrl.mode === 'profile.view'"
                  ng-model="$ctrl[combine.model]"
-                 ng-class="{error: $ctrl[combine.model + 'Error'], first: $index === 0}"
+                 ng-class="{error: $ctrl[combine.model + 'Error'] && $ctrl.mode !== 'profile.view', first: $index === 0}"
                  ng-keyup="$ctrl[combine.model + 'Error'] = false"
                  ng-blur="$ctrl.validate({[combine.model]: $ctrl[combine.model]})">
-          <span class="error" ng-if="$ctrl[combine.model + 'Error']">
+          <span class="error" ng-if="$ctrl[combine.model + 'Error'] && $ctrl.mode !== 'profile.view'">
               {{$ctrl[combine.model + 'Error']}}
             </span>
         </div>
@@ -68,22 +68,40 @@
     <div class="submit"
          layout="row"
          layout-align="{{$ctrl.mode === 'profile.edit' ? 'space-between center' : 'center'}}">
+      <div flex ng-if="$ctrl.mode === 'profile.view'">
+        <md-button ng-click="$ctrl.mode = 'profile.edit'">
+          Edit Profile
+        </md-button>
+      </div>
       <div flex="45" ng-if="$ctrl.mode === 'profile.edit'">
-        <md-button class="cancel" ng-click="$ctrl.onEditCancel()">
+        <md-button class="cancel" ng-click="$ctrl.buildProfileModels()">
           Cancel
         </md-button>
       </div>
-      <div flex="{{$ctrl.mode === 'profile.edit' ? 45 : ''}}">
-        <md-button ng-disabled="!profileForm.$valid"
+      <div flex="45" ng-if="$ctrl.mode !== 'profile.view'">
+        <md-button ng-disabled="!profileForm.$valid && $ctrl.mode !== 'profile.view'"
                    ng-class="{disabled: !profileForm.$valid}"
-                   ng-click="$ctrl.onSubmit({
+                   ng-if="$ctrl.mode === 'profile.edit'"
+                   ng-click="$ctrl.onSave({
                     first_name: profileForm.first_name.$viewValue,
                     last_name: profileForm.last_name.$viewValue,
                     phone: profileForm.phone.$viewValue,
                     email: profileForm.email.$viewValue
                    })"
                    type="submit">
-          {{$ctrl.buttonName}}
+          Save
+        </md-button>
+        <md-button ng-disabled="!profileForm.$valid && $ctrl.mode !== 'profile.view'"
+                   ng-class="{disabled: !profileForm.$valid}"
+                   ng-if="$ctrl.mode === 'profile.create'"
+                   ng-click="$ctrl.onReady({
+                    first_name: profileForm.first_name.$viewValue,
+                    last_name: profileForm.last_name.$viewValue,
+                    phone: profileForm.phone.$viewValue,
+                    email: profileForm.email.$viewValue
+                   })"
+                   type="submit">
+          Ready
         </md-button>
       </div>
     </div>

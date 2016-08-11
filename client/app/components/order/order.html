@@ -4,14 +4,26 @@
     <h1 class="page-name">Create Order</h1>
     <div class="provider-type" layout="row">
       <div flex ng-repeat="type in $ctrl.providers">
-        <md-button ng-click="type.active = !type.active; $ctrl.typeError = false;"
+        <md-button ng-click="$ctrl.Helper.switchObjectActivity($ctrl.providers, $index); $ctrl.typeError = false;"
                    ng-class="{active: type.active}"
                    aria-label="{{type.name}}">
           <div class="price">${{type.price}}</div>
           <div class="name">{{type.name}}</div>
-          <i class="desc-icon"></i>
-          <div class="desc animated fadeIn" ng-if="type.description">
-            {{type.description}}
+          <i class="desc-icon" ng-click="$ctrl.showDescription($event, $index)"></i>
+          <div style="visibility: hidden" ng-if="type.description">
+            <div class="md-dialog-container desc" id="typeDescr-{{$index}}">
+              <md-dialog>
+                <span class="close" ng-click="$ctrl.$mdDialog.hide()"></span>
+                <div layout-gt-sm="row" layout-align="space-between center">
+                  <div flex="35">
+                    <div class="image">
+                      <img ng-src="{{type.img}}" alt="{{type.name}}"/>
+                    </div>
+                  </div>
+                  <div flex="60"><p>{{type.description}}</p></div>
+                </div>
+              </md-dialog>
+            </div>
           </div>
         </md-button>
       </div>
@@ -77,6 +89,7 @@
           <label>Apt</label>
           <input type="text"
                  name="apt"
+                 autocomplete="off"
                  ng-model="$ctrl.apt"
                  ng-blur="$ctrl.validate({apt: $ctrl.apt})"
                  ng-keyup="$ctrl.aptError = false"
@@ -141,8 +154,8 @@
         <span>TOTAL: $ {{$ctrl.getTotalPrice()}}</span>
       </div>
       <div class="submit">
-        <md-button ng-disabled="!orderForm.$valid"
-                   ng-class="{disabled: !orderForm.$valid}"
+        <md-button ng-disabled="!orderForm.$valid || $ctrl.orderLoading"
+                   ng-class="{disabled: !orderForm.$valid || $ctrl.orderLoading}"
                    type="submit"
                    ng-click="$ctrl.onSearch({
                     hour: orderForm.hour.$viewValue,
@@ -155,7 +168,8 @@
                     date: orderForm.date.$viewValue,
                     time: orderForm.time.$viewValue
                    })">
-          SEARCH FOR MINX
+          {{!ctrl.orderLoading ? 'SEARCH FOR MINX' : ''}}
+          <spinner input="$ctrl.orderLoading"></spinner>
         </md-button>
       </div>
     </form>

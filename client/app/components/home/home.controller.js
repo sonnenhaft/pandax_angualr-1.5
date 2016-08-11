@@ -10,11 +10,9 @@ class HomeController {
     this.isCustomer = true;
     this.isProvider = false;
 
-    this.onInit();
-
   }
 
-  onInit () {
+  $onInit () {
     if (this.$stateParams.signup && this.$stateParams.user) {
       this.signIn = this.isCustomer = this.isProvider = false;
       this['is' + _.capitalize(this.$stateParams.user)] = this.signUp = true;
@@ -41,9 +39,57 @@ class HomeController {
       return false;
     }
 
+    this.logignError = false;
+
     return this.signIn ?
-      this.User.login(credentials) :
-      this.User.register(credentials);
+      this.login(credentials) :
+      this.register(credentials);
+  }
+
+  login (credentials) {
+    this.loginLoading = true;
+    this.User
+      .login(credentials)
+      .then(
+        result => {
+          this.loginLoading = false;
+          if (result && result.error) {
+            this.logignError = result.error;
+          }
+        },
+        error => {
+          console.log(error);
+          this.loginLoading = false;
+        }
+      );
+  }
+
+  register (credentials) {
+    this.registerLoading = true;
+    this.User
+      .register(credentials)
+      .then(
+        result => {
+          this.registerLoading = false;
+          if (result && result.error) {
+            this.registerError = result.error;
+          }
+        },
+        error => {
+          console.log(error);
+          this.registerLoading = false;
+        }
+      );
+  }
+
+  validate (field) {
+    if (this.Validation.error(field).length) {
+      _.map(this.Validation.error(field), error => {
+        this[(this.signIn ? 'signIn' : 'signUp') + _.capitalize(error.name) + 'Error'] = error.text;
+      });
+      return false;
+    }
+    return true;
   }
 
   validate (field) {
