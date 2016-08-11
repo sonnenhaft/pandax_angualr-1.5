@@ -12,6 +12,7 @@ import 'lodash';
 import 'normalize.css';
 import 'animate.css';
 import 'angular-material/angular-material.css';
+import 'angular-filter/dist/angular-filter.min.js';
 
 angular
   .module('app', [
@@ -20,7 +21,8 @@ angular
     Components,
     angularMaterial,
     'uiGmapgoogle-maps',
-    'angularMoment'
+    'angularMoment',
+    "angular.filter"
   ])
   .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider) => {
     "ngInject";
