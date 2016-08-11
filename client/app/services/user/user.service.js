@@ -121,7 +121,7 @@ export default class User {
       .Request
       .send(
         this.token(),
-        this.Constants.api.profile.method.PATCH,
+        this.Constants.api.profile.method.PUT,
         this.Constants.api.profile.uri(this.get('role')),
         fields
       )

@@ -12,7 +12,7 @@ export default class Constants {
   }
 
   apiConstants () {
-    const path = 'http://dev1.panda.aws.isdev.info/api';
+    const path = 'http://dev3.panda.aws.isdev.info/api';
 
     let apiConstants = {
 
@@ -33,7 +33,7 @@ export default class Constants {
           return path + '/' + user + '/profile'; // user is a type of user
         },
         method: {
-          PATCH: 'PATCH', // to update profile
+          PUT: 'PUT', // to update profile
           GET: 'GET' // to get profile information
         }
       },
