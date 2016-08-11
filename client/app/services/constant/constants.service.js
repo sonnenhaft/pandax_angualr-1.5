@@ -74,39 +74,62 @@ export default class Constants {
 
       navigation: [
         {
+          role: 'customer',
           text: 'Create order',
           url: 'main.order'
         },
         {
+          role: 'customer',
           text: 'Active orders',
           url: 'home'
         },
         {
+          role: 'customer',
           text: 'History',
           url: 'home'
         },
         {
-          text: 'Profile',
-          url: 'profile.view'
+          role: 'customer',
+          text: 'Contact Us',
+          url: 'contact'
         },
         {
-          text: 'Payment',
-          url: 'home'
+          role: 'customer',
+          text: 'Settings',
+          url: ''
         }
       ],
 
-      additionally: [
+      submenu: [
         {
+          role: 'customer',
+          parent: 'Settings',
+          text: 'Payments',
+          url: 'settings.payment'
+        },
+        {
+          role: 'customer',
+          parent: 'Settings',
           text: 'Terms',
-          url: 'home'
+          url: 'settings.terms'
         },
         {
-          text: 'Contacts',
-          url: 'home'
+          role: 'customer',
+          parent: 'Settings',
+          text: 'Change Password',
+          url: 'profile.edit'
         },
         {
-          text: 'Change password',
-          url: 'home'
+          role: 'customer',
+          parent: 'Settings',
+          text: 'Edit profile',
+          url: 'profile.edit'
+        },
+        {
+          role: 'customer',
+          parent: 'Settings',
+          text: 'Log out',
+          url: 'settings.logout'
         }
       ]
 

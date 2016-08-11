@@ -13,6 +13,7 @@ import 'animate.css';
 import Common from './common/common';
 import Components from './components/components';
 import AppComponent from './app.component';
+import 'angular-filter/dist/angular-filter.min.js';
 
 angular
   .module('app', [
@@ -21,7 +22,8 @@ angular
     Components,
     angularMaterial,
     'uiGmapgoogle-maps',
-    'angularMoment'
+    'angularMoment',
+    "angular.filter"
   ])
   .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider) => {
     "ngInject";
