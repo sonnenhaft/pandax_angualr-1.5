@@ -1,9 +1,7 @@
 import angular from 'angular';
-import uiRouter from 'angular-ui-router';
-import Common from './common/common';
-import Components from './components/components';
-import AppComponent from './app.component';
 import angularMaterial from 'angular-material';
+import 'angular-material/angular-material.css';
+import uiRouter from 'angular-ui-router';
 import 'angular-simple-logger';
 import 'angular-google-maps';
 import 'moment';
@@ -11,7 +9,11 @@ import 'angular-moment';
 import 'lodash';
 import 'normalize.css';
 import 'animate.css';
-import 'angular-material/angular-material.css';
+
+import Common from './common/common';
+import Components from './components/components';
+import AppComponent from './app.component';
+import 'angular-filter/dist/angular-filter.min.js';
 
 angular
   .module('app', [
@@ -20,7 +22,8 @@ angular
     Components,
     angularMaterial,
     'uiGmapgoogle-maps',
-    'angularMoment'
+    'angularMoment',
+    "angular.filter"
   ])
   .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider) => {
     "ngInject";
@@ -38,26 +41,28 @@ angular
     let primaryMap = $mdThemingProvider.extendPalette('grey', {
       '900': 'FFFFFF'
     });
+    let accentMap = $mdThemingProvider.extendPalette('red', {
+      'A200': 'ba192f',
+    });
     let backgroundMap = $mdThemingProvider.extendPalette('grey', {
       '50': '151520'
     });
 
     $mdThemingProvider.definePalette('primaryMap', primaryMap);
+    $mdThemingProvider.definePalette('accentMap', accentMap);
     $mdThemingProvider.definePalette('backgroundMap', backgroundMap);
 
     $mdThemingProvider.theme('default')
       .primaryPalette('primaryMap')
+      .accentPalette('accentMap')
       .backgroundPalette('backgroundMap');
+      
+
 
     uiGmapGoogleMapApiProvider.configure({
       key: 'AIzaSyAB5JHHZnmA2C6q_b7mc2zPaXdSeRocs1E',
       v: '3', //defaults to latest 3.X anyhow
       libraries: 'weather,geometry,visualization'
     });
-  })
-  .run(($rootScope, $state) => {
-    "ngInject";
-    // Add state to root scope
-    $rootScope.$state = $state;
   })
   .component('app', AppComponent);

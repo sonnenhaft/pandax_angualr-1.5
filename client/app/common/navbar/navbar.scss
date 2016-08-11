@@ -5,6 +5,15 @@
   position: relative;
   z-index: 100;
 
+  &_mobile-opened {
+    @media (max-width: 960px) {
+      position: fixed;
+      overflow: auto;
+      width: 100%;
+      z-index: 2;
+    }
+  }
+
   .logo {
     background: $Cardinal;
 
@@ -58,7 +67,6 @@
 
     ul {
       list-style: none;
-
       li {
         text-align: left;
 
@@ -77,37 +85,17 @@
           letter-spacing: 1px;
         }
       }
-    }
-  }
-
-  .additional {
-    position: absolute;
-    bottom: 34px;
-    left: 0;
-    right: 0;
-    margin: auto;
-    width: 100%;
-    max-width: 150px;
-
-    ul {
-      list-style: none;
-
-      li {
-        text-align: left;
-
-        &.active {
-          a {
-            color: white;
+      &.navigation_sub {
+        margin-left: 15px;
+        li {
+          &.active {
+            a {
+              color: $Cardinal;
+            }
           }
-        }
-
-        a {
-          display: block;
-          font-size: 1em;
-          letter-spacing: 1px;
-          line-height: 36px;
-          color: $AuroMetalSaurus;
-          text-transform: uppercase;
+          a {
+            font-size: .938em;
+          }
         }
       }
     }
@@ -146,20 +134,11 @@
       ul {
         li {
           text-align: center;
-        }
-      }
-    }
-
-    .additional {
-      position: relative;
-      bottom: 0;
-
-      ul {
-        li {
-          text-align: center;
-
-          a {
-            line-height: 47px;
+          ul.navigation_sub {
+            margin-left: 60px;
+            li {
+              text-align: left;
+            }
           }
         }
       }

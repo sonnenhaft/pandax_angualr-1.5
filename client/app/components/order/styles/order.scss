@@ -2,7 +2,11 @@
 // $ Order template styles
 // =============================================================================
 
-#order {
+@import "dialog";
+
+#order,
+#search-entertainers,
+#orderConfirm {
   height: 100%;
 
   @import "types";

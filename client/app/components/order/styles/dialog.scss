@@ -1,0 +1,54 @@
+.md-dialog-container {
+  &.desc {
+    z-index: 150;
+    font: {
+      family: $open-sans, sans-serif;
+      size: 0.938em;
+      weight: 600;
+    }
+
+    md-dialog {
+      padding: 30px 40px;
+      border-radius: 0;
+      max-width: 440px;
+
+      .close {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        width: 18px;
+        height: 20px;
+        background: url('../assets/images/close_gray.png') no-repeat center;
+        cursor: pointer;
+        outline: none;
+      }
+
+      .image {
+        width: 120px;
+        height: 120px;
+        overflow: hidden;
+        border-radius: 50%;
+
+        img {
+          display: block;
+          max-width: 100%;
+        }
+      }
+    }
+
+    @media (max-width: 960px) {
+      padding: 0 2%;
+
+      md-dialog {
+        div {
+          max-width: 100%;
+          text-align: center;
+        }
+
+        .image {
+          margin: 0 auto 28px;
+        }
+      }
+    }
+  }
+}

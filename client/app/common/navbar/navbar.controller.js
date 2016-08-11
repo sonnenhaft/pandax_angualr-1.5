@@ -3,14 +3,19 @@ class NavbarController {
   constructor (User, Constants, $state, $window) {
     'ngInject';
 
-    _.assign(this, {Constants, $state});
+    _.assign(this, {
+      Constants,
+      $state,
+      activeMenuItemUrl: '',
+      activeMenuItemOpened: false
+    });
 
     this.isCustomer = User.get('role') === 'customer';
     this.isProvider = User.get('role') === 'provider';
 
     this.avatar = this.showUserAvatar();
-    this.navigation = Constants.user.navigation;
-    this.additional = Constants.user.additionally;
+    this.navigation = _.filter(Constants.user.navigation, {role: User.get('role')});
+    this.submenu = _.filter(Constants.user.submenu, {role: User.get('role')});
     this.mobile = false;
 
     $window.addEventListener('resize', () => {
@@ -23,6 +28,11 @@ class NavbarController {
 
   showUserAvatar () {
     return this.Constants.user.avatar.empty;
+  }
+
+  switchMenuItem (menuItemUrl) {
+    this.activeMenuItemUrl = menuItemUrl;
+    this.activeMenuItemOpened = !this.activeMenuItemOpened;
   }
 
 }

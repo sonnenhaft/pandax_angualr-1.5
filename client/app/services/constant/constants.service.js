@@ -12,7 +12,7 @@ export default class Constants {
   }
 
   apiConstants () {
-    const path = 'http://panda-dev.aws.isdev.info/api';
+    const path = 'http://dev3.panda.aws.isdev.info/api';
 
     let apiConstants = {
 
@@ -33,7 +33,7 @@ export default class Constants {
           return path + '/' + user + '/profile'; // user is a type of user
         },
         method: {
-          PATCH: 'PATCH', // to update profile
+          PUT: 'PUT', // to update profile
           GET: 'GET' // to get profile information
         }
       },
@@ -43,6 +43,11 @@ export default class Constants {
           return path + '/' + this.User.get('role') + '/profile/photo/' + slot_id; // slot_id is an id of user
         },
         method: 'PUT'
+      },
+
+      order: {
+        uri: path + '/order',
+        method: 'POST'
       }
 
     };
@@ -115,39 +120,62 @@ export default class Constants {
 
       navigation: [
         {
+          role: 'customer',
           text: 'Create order',
           url: 'main.order'
         },
         {
+          role: 'customer',
           text: 'Active orders',
           url: 'home'
         },
         {
+          role: 'customer',
           text: 'History',
           url: 'home'
         },
         {
-          text: 'Profile',
-          url: 'profile.view'
+          role: 'customer',
+          text: 'Contact Us',
+          url: 'contact'
         },
         {
-          text: 'Payment',
-          url: 'home'
+          role: 'customer',
+          text: 'Settings',
+          url: ''
         }
       ],
 
-      additionally: [
+      submenu: [
         {
+          role: 'customer',
+          parent: 'Settings',
+          text: 'Payments',
+          url: 'settings.payment'
+        },
+        {
+          role: 'customer',
+          parent: 'Settings',
           text: 'Terms',
-          url: 'home'
+          url: 'settings.terms'
         },
         {
-          text: 'Contacts',
-          url: 'home'
+          role: 'customer',
+          parent: 'Settings',
+          text: 'Change Password',
+          url: 'profile.edit'
         },
         {
-          text: 'Change password',
-          url: 'home'
+          role: 'customer',
+          parent: 'Settings',
+          text: 'Edit profile',
+          url: 'profile.view'
+        },
+        {
+          role: 'customer',
+          parent: 'Settings',
+          text: 'Log out',
+          url: 'settings.logout'
         }
       ]
 
@@ -164,24 +192,24 @@ export default class Constants {
           type: '1',
           name: 'Dancer',
           price: 200,
-          description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, deleniti doloremque harum magnam maxime neque omnis? Delectus enim fuga quod tenetur! Aut dolore dolorum earum eos eveniet omnis saepe voluptatum!',
-          img: '/assets/images/services/prime_xx.png',
+          description: 'Your Minx will be topless, give lap dances, serve drinks, and socialize.',
+          img: '/assets/images/services/dancer.png',
           active: false
         },
         {
           type: '2',
           name: 'Hostess',
           price: 125,
-          description: '',
-          img: '/assets/images/services/prime.png',
+          description: 'Your Minx will be topless, serve drinks, and socialize',
+          img: '/assets/images/services/hostess.png',
           active: false
         },
         {
           type: '3',
           name: 'Party Girl',
           price: 50,
-          description: '',
-          img: '/assets/images/services/prime.png',
+          description: 'Your Minx will be fun and flirtatious while fully clothed. She will serve drinks and socialize.',
+          img: '/assets/images/services/girl.png',
           active: false
         }
       ],
