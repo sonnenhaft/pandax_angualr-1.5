@@ -39,8 +39,8 @@ export default class Constants {
       },
 
       photo: {
-        uri: slot_id => {
-          return path + '/' + this.User.get('role') + '/profile/photo/' + slot_id; // slot_id is an id of user
+        uri: (user, slot_id) => {
+          return path + '/' + user + '/profile/photo' + (user === 'provider' ? '/' + slot_id : ''); // slot_id is an index of photo
         },
         method: 'PUT'
       },

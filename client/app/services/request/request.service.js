@@ -28,6 +28,14 @@ export default class Request {
       _.unset(params, 'data');
     }
 
+    if (data && data.type) {
+      params.data = data;
+      params.headers = {
+        'Content-Type': data.type,
+        'Authorization': 'Bearer ' + token
+      }
+    }
+
     return this
       .$http(params)
       .then(

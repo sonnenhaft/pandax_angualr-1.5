@@ -10,7 +10,7 @@ export default class profileFieldsController {
     this.isCustomer = User.get('role') === 'customer';
     this.isProvider = User.get('role') === 'provider';
     this.fields = Constants.profile.fields[User.get('role')];
-    this.images = this.Constants.profile.images[this.User.get('role')];
+    this.images = this.profileImage();
 
   }
 
@@ -30,6 +30,20 @@ export default class profileFieldsController {
     }
   }
 
+  profileImage () {
+    if (!this.User.get('photo')) {
+      return this.Constants.profile.images[this.User.get('role')];
+    }
+
+    return this.isCustomer ?
+      [{file: this.User.get('photo').preview}] :
+      _.map(this.User.get('photos'), image => {
+        return {
+          file: image.preview
+        }
+      })
+  }
+
   buildProfileModels () {
     this.mode = 'profile.view';
 
@@ -37,9 +51,9 @@ export default class profileFieldsController {
       this[key] = model;
     });
 
-    if (this.User.get('photo') && this.User.get('photo').$ngfBlobUrl) {
+    if (this.User.get('photo')) {
       this.photo = {
-        background: 'url(' + this.User.get('photo').$ngfBlobUrl + ') no-repeat fixed center'
+        background: 'url(' + this.User.get('photo').original + ') no-repeat fixed center'
       };
     }
   }
@@ -65,9 +79,7 @@ export default class profileFieldsController {
 
   onSave (profile) {
     if (this.validate(profile)) {
-      this.mode = 'profile.view';
-      this.UpdateUserProfile(profile);
-      this.buildProfileModels();
+      this.UpdateUserProfile(profile, 'profile.view');
     }
   }
 
@@ -85,16 +97,30 @@ export default class profileFieldsController {
     return true;
   }
 
-  UpdateUserProfile (profile) {
-    this.User.update(
-      _.assign(profile, {auth: true}, {
-        photo: this.isCustomer ?
-          _.head(this.images).file :
-          _.map(this.images, 'file')
-      })
-    );
+  UpdateUserProfile (profile, mode) {
+    this.saveLoading = true;
+    this.User
+      .UpdateUserProfile(profile)
+      .then(
+        result => {
+          this.saveLoading = false;
 
-    this.User.UpdateUserProfile(profile);
+          this.User.update(
+            _.assign(result, {auth: true}, {
+              photo: this.isCustomer ?
+                _.head(this.images).file :
+                _.map(this.images, 'file')
+            })
+          );
+
+          this.mode = mode;
+          this.buildProfileModels();
+        },
+        error => {
+          this.saveLoading = false;
+          console.log(error);
+        }
+      );
   }
 
 }

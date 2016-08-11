@@ -18,7 +18,9 @@
                      ng-disabled="$ctrl.mode === 'profile.view'"
                      ng-model="image.file"
                      name="file"
-                     ngf-max-size="3MB"
+                     ngf-max-width="2000"
+                     ngf-max-height="1500"
+                     ngf-max-size="2MB"
                      ng-click="$ctrl.imagesError = false">
             <img ngf-src="image.file" alt=""/>
           </md-button>
@@ -78,9 +80,9 @@
           Cancel
         </md-button>
       </div>
-      <div flex="45" ng-if="$ctrl.mode !== 'profile.view'">
-        <md-button ng-disabled="!profileForm.$valid && $ctrl.mode !== 'profile.view'"
-                   ng-class="{disabled: !profileForm.$valid}"
+      <div flex="{{!$ctrl.mode === 'profile.create' ? 45 : ''}}" ng-if="$ctrl.mode !== 'profile.view'">
+        <md-button ng-disabled="!profileForm.$valid && $ctrl.mode !== 'profile.view' || $ctrl.saveLoading"
+                   ng-class="{disabled: !profileForm.$valid || $ctrl.saveLoading}"
                    ng-if="$ctrl.mode === 'profile.edit'"
                    ng-click="$ctrl.onSave({
                     first_name: profileForm.first_name.$viewValue,
@@ -89,10 +91,11 @@
                     email: profileForm.email.$viewValue
                    })"
                    type="submit">
-          Save
+          {{!$ctrl.saveLoading ? 'Save' : ''}}
+          <spinner input="$ctrl.saveLoading"></spinner>
         </md-button>
-        <md-button ng-disabled="!profileForm.$valid && $ctrl.mode !== 'profile.view'"
-                   ng-class="{disabled: !profileForm.$valid}"
+        <md-button ng-disabled="!profileForm.$valid && $ctrl.mode !== 'profile.view' || $ctrl.saveLoading"
+                   ng-class="{disabled: !profileForm.$valid || $ctrl.saveLoading}"
                    ng-if="$ctrl.mode === 'profile.create'"
                    ng-click="$ctrl.onReady({
                     first_name: profileForm.first_name.$viewValue,
@@ -101,7 +104,8 @@
                     email: profileForm.email.$viewValue
                    })"
                    type="submit">
-          Ready
+          {{!$ctrl.saveLoading ? 'Ready' : ''}}
+          <spinner input="$ctrl.saveLoading"></spinner>
         </md-button>
       </div>
     </div>

@@ -116,7 +116,10 @@ export default class User {
       );
   }
 
-  UpdateUserProfile (fields) {
+  UpdateUserProfile (fields, slot) {
+
+    slot = slot ? slot : false;
+
     return this
       .Request
       .send(
@@ -127,10 +130,33 @@ export default class User {
       )
       .then(
         result => {
-          console.log(result);
+          if (fields.photo) {
+            return this
+              .UpdateUserPhoto(fields.photo, slot)
+              .then(
+                result => result,
+                error => console.log(error)
+              );
+          }
+
+          return result.data;
         },
         error => console.log(error)
       );
+  }
+
+  UpdateUserPhoto (file, slot) {
+    return this.Request
+      .send(
+        this.token(),
+        this.Constants.api.photo.method,
+        this.Constants.api.photo.uri(this.get('role'), slot),
+        file
+      )
+      .then(
+        result => result.data,
+        error => console.log(error)
+      )
   }
 
   redirectUser () {
