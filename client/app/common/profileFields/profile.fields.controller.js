@@ -97,6 +97,15 @@ export default class profileFieldsController {
     return true;
   }
 
+  onImageChange (image, slot) {
+    this.User
+      .UpdateUserPhoto(image, slot)
+      .then(
+        result => this.User.update({[this.isCustomer ? 'photo' : 'photos']: result.photo}),
+        error => console.log(error)
+      );
+  }
+
   UpdateUserProfile (profile, mode) {
     this.saveLoading = true;
     this.User
@@ -104,15 +113,7 @@ export default class profileFieldsController {
       .then(
         result => {
           this.saveLoading = false;
-
-          this.User.update(
-            _.assign(result, {auth: true}, {
-              photo: this.isCustomer ?
-                _.head(this.images).file :
-                _.map(this.images, 'file')
-            })
-          );
-
+          this.User.update(_.assign(result, {auth: true}));
           this.mode = mode;
           this.buildProfileModels();
         },

@@ -21,6 +21,7 @@
                      ngf-max-width="2000"
                      ngf-max-height="1500"
                      ngf-max-size="2MB"
+                     ng-change="$ctrl.onImageChange(image.file, $index + 1)"
                      ng-click="$ctrl.imagesError = false">
             <img ngf-src="image.file" alt=""/>
           </md-button>
@@ -80,7 +81,7 @@
           Cancel
         </md-button>
       </div>
-      <div flex="{{!$ctrl.mode === 'profile.create' ? 45 : ''}}" ng-if="$ctrl.mode !== 'profile.view'">
+      <div flex="{{$ctrl.mode === 'profile.create' ? '' : 45}}" ng-if="$ctrl.mode !== 'profile.view'">
         <md-button ng-disabled="!profileForm.$valid && $ctrl.mode !== 'profile.view' || $ctrl.saveLoading"
                    ng-class="{disabled: !profileForm.$valid || $ctrl.saveLoading}"
                    ng-if="$ctrl.mode === 'profile.edit'"

@@ -116,10 +116,7 @@ export default class User {
       );
   }
 
-  UpdateUserProfile (fields, slot) {
-
-    slot = slot ? slot : false;
-
+  UpdateUserProfile (fields) {
     return this
       .Request
       .send(
@@ -129,18 +126,7 @@ export default class User {
         fields
       )
       .then(
-        result => {
-          if (fields.photo) {
-            return this
-              .UpdateUserPhoto(fields.photo, slot)
-              .then(
-                result => result,
-                error => console.log(error)
-              );
-          }
-
-          return result.data;
-        },
+        result => result.data,
         error => console.log(error)
       );
   }
