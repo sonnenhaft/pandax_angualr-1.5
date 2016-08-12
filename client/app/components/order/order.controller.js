@@ -1,9 +1,9 @@
 class orderController {
 
-  constructor (User, Constants, Location, Helper, Validation, Request, $q, $window, moment, $mdDialog) {
+  constructor (User, Constants, Location, Helper, Validation, Request, $q, $window, $state, moment, $mdDialog) {
     'ngInject';
 
-    _.assign(this, {User, Constants, Location, Helper, Validation, Request, $q, moment, $mdDialog});
+    _.assign(this, {User, Constants, Location, Helper, Validation, Request, $q, $state, moment, $mdDialog});
 
     this.mobile = $window.innerWidth <= 960;
 
