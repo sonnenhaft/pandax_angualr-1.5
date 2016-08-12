@@ -67,7 +67,7 @@ export default class User {
           }
 
           this.create(result.data);
-          this.getUserProfile(result.data, credentials.type);
+          this.getUserProfile(result.data, this.get('role'));
         },
         error => console.log(error)
       );

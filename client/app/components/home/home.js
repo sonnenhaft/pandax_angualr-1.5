@@ -1,13 +1,13 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import homeComponent from './home.component';
-import Validation from '../../services/validation/validation';
-import User from '../../services/user/user';
+import signIn from './signin/signin';
+import signUp from './signup/signup';
 
 let homeModule = angular.module('home', [
   uiRouter,
-  Validation,
-  User
+  signIn,
+  signUp
 ])
 
 .config(($stateProvider) => {
