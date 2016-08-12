@@ -126,11 +126,23 @@ export default class User {
         fields
       )
       .then(
-        result => {
-          console.log(result);
-        },
+        result => result.data,
         error => console.log(error)
       );
+  }
+
+  UpdateUserPhoto (file, slot) {
+    return this.Request
+      .send(
+        this.token(),
+        this.Constants.api.photo.method,
+        this.Constants.api.photo.uri(this.get('role'), slot),
+        file
+      )
+      .then(
+        result => result.data,
+        error => console.log(error)
+      )
   }
 
   redirectUser () {

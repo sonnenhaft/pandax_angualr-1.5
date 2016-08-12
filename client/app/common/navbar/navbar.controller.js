@@ -4,6 +4,7 @@ class NavbarController {
     'ngInject';
 
     _.assign(this, {
+      User,
       Constants,
       $state,
       activeMenuItemUrl: '',
@@ -27,7 +28,13 @@ class NavbarController {
   }
 
   showUserAvatar () {
-    return this.Constants.user.avatar.empty;
+    if (!this.User.get('photo')) {
+      return this.Constants.user.avatar.empty;
+    }
+
+    return this.isCustomer ?
+      this.User.get('photo').preview :
+      _.head(this.User.get('photos')).preview;
   }
 
   switchMenuItem (menuItemUrl) {

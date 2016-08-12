@@ -39,8 +39,8 @@ export default class Constants {
       },
 
       photo: {
-        uri: slot_id => {
-          return path + '/' + this.User.get('role') + '/profile/photo/' + slot_id; // slot_id is an id of user
+        uri: (user, slot_id) => {
+          return path + '/' + user + '/profile/photo' + (user === 'provider' ? '/' + slot_id : ''); // slot_id is an index of photo
         },
         method: 'PUT'
       },
@@ -189,7 +189,7 @@ export default class Constants {
 
       serviceTypes: [
         {
-          type: '1',
+          type: '3',
           name: 'Dancer',
           price: 200,
           description: 'Your Minx will be topless, give lap dances, serve drinks, and socialize.',
@@ -205,7 +205,7 @@ export default class Constants {
           active: false
         },
         {
-          type: '3',
+          type: '1',
           name: 'Party Girl',
           price: 50,
           description: 'Your Minx will be fun and flirtatious while fully clothed. She will serve drinks and socialize.',

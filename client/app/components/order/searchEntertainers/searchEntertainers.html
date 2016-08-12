@@ -1,30 +1,30 @@
 <div id="search-entertainers" layout-gt-sm="row">
 
   <md-content layout-padding class="order-form animated fadeIn search-entertainers" flex-gt-sm="50" layout="column" layout-align="start center">
-    <div 
-      layout="row" 
+    <div
+      layout="row"
       layout-align="space-between start">
       <h1 class="page-name">Create Order</h1>
-      <md-icon 
-        md-svg-icon="/assets/images/icons/svg/Close_Menu.svg" 
+      <md-icon
+        md-svg-icon="/assets/images/icons/svg/Close_Menu.svg"
         class="search-entertainers__icon_close search-entertainers__icon_close"
         disabled="disabled"></md-icon>
     </div>
 
-    <md-buttom 
-      layout="row" 
-      layout-align="end center" 
+    <md-buttom
+      layout="row"
+      layout-align="end center"
       class="pointer search-entertainers__refresh"
       ng-click="vm.OrderService.fetchEntertainers()">
       <span>REFRESH</span>
       <img
-        src="/assets/images/icons/refresh-3x.png" 
+        src="/assets/images/icons/refresh-3x.png"
         class="icon_medium search-entertainers__icon"></img>
     </md-buttom>
 
     <div layout="row" layout-align="center stretch" class="search-entertainers__manip_head">
-      <md-icon 
-        md-svg-icon="/assets/images/icons/svg/arrow_left.svg" 
+      <md-icon
+        md-svg-icon="/assets/images/icons/svg/arrow_left.svg"
         class="pointer search-entertainers__manip-arrow_left"
         ng-class="{'disabled': vm.index == 0}"
         ng-click="vm.goToEntertainerByIndex(-1)"></md-icon>
@@ -32,8 +32,8 @@
         <span class="search-entertainers__manip-name">{{vm.entertainer.name}}</span>
         <span class="search-entertainers__manip-counter">{{vm.index + 1}} / {{vm.entertainers.length}}</span>
       </div>
-      <md-icon 
-        md-svg-icon="/assets/images/icons/svg/arrow_right.svg" 
+      <md-icon
+        md-svg-icon="/assets/images/icons/svg/arrow_right.svg"
         class="pointer search-entertainers__manip-arrow_right"
         ng-class="{'disabled': (vm.index + 1) == vm.entertainers.length}"
         ng-click="vm.goToEntertainerByIndex(+1)"></md-icon>
@@ -43,7 +43,7 @@
       <span class="search-entertainers__info-raiting">
         {{vm.entertainer.raiting}}
         <img
-          src="/assets/images/icons/raiting.png" 
+          src="/assets/images/icons/raiting.png"
           class="icon_small"></img>
       </span>
       <span class="search-entertainers__info-distance">{{vm.entertainer.distance}}M AWAY</span>
@@ -54,11 +54,11 @@
         src="{{vm.photoPreviewSrc}}"></img>
     </div>
 
-    <div 
-      layout="row" 
-      layout-align="space-between stretch" 
+    <div
+      layout="row"
+      layout-align="space-between stretch"
       class="search-entertainers__switch-foto">
-      <div 
+      <div
         class="search-entertainers__preview_small"
         ng-repeat="photo_small in vm.entertainer.photo_small track by $index"
         ng-class="{'photo_active': vm.photoPreviewSrc === photo_small}"
@@ -68,7 +68,7 @@
       </div>
     </div>
 
-    <md-button class="md-raised md-accent search-entertainers__invite">INVITE</md-button>    
+    <md-button class="md-raised md-accent search-entertainers__invite">INVITE</md-button>
 
   </md-content>
 

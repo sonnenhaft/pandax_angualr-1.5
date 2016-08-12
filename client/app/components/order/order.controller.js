@@ -1,9 +1,9 @@
 class orderController {
 
-  constructor (User, Constants, Location, Helper, Validation, Request, $q, $window, moment, $mdDialog) {
+  constructor (User, Constants, Location, Helper, Validation, Request, $q, $window, $state, moment, $mdDialog) {
     'ngInject';
 
-    _.assign(this, {User, Constants, Location, Helper, Validation, Request, $q, moment, $mdDialog});
+    _.assign(this, {User, Constants, Location, Helper, Validation, Request, $q, $state, moment, $mdDialog});
 
     this.mobile = $window.innerWidth <= 960;
 
@@ -91,12 +91,12 @@ class orderController {
     this.orderLoading = true;
 
     let data = {
-      service_type: _.head(this.Helper.getActiveObjectFromArray(this.providers)).type,
-      length: parseFloat(form.hour),
+      service_type: Number(_.head(this.Helper.getActiveObjectFromArray(this.providers)).type),
+      length: parseFloat(form.hour).toString(),
       location: this.searchText,
       coordinates: {
-        lat: this.location.coords.latitude,
-        long: this.location.coords.longitude
+        lat: this.location.coords.latitude.toString(),
+        long: this.location.coords.longitude.toString()
       },
       location_notes: form.notes ? form.notes : '',
       apartment: form.apt,
@@ -104,9 +104,9 @@ class orderController {
       datetime: form.asap ?
         this.moment() :
         this.moment(new Date(this.moment(form.date).format('YYYY/MM/DD') + ' ' + form.time)),
-      entertainers_number: form.entertainer,
-      guests_number: form.guest,
-      cost: this.getTotalPrice()
+      entertainers_number: Number(form.entertainer),
+      guests_number: form.guest.toString(),
+      cost: this.getTotalPrice().toString()
     };
 
     this.Request
