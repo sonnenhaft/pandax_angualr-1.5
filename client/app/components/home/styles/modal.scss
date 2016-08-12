@@ -1,0 +1,32 @@
+.success {
+
+  md-dialog {
+    padding: 34px 50px;
+    border-radius: 0;
+
+    p {
+      width: 100%;
+      clear: both;
+      margin-bottom: 34px;
+    }
+
+    button {
+      width: 50%;
+      height: 54px;
+      margin: 0 auto;
+      padding: 0;
+      color: white;
+      background: $Cardinal;
+      font-size: 0.938em;
+
+      .md-ripple-container {
+        border-radius: 0;
+      }
+
+      &:not([disabled]):hover {
+        background: $Cardinal;
+      }
+    }
+  }
+
+}

@@ -22,16 +22,23 @@ export default class Constants {
       },
 
       signup: {
-        uri: user => {
-          return path + '/signup/' + user; // user is a type of user
-        },
+        uri: user => path + '/signup/' + user, // user is a type of user,
         method: 'POST'
       },
 
-      profile: {
-        uri: user => {
-          return path + '/' + user + '/profile'; // user is a type of user
+      password: {
+        restore: {
+          uri: path + '/sessions/password/reset',
+          method: 'POST'
         },
+        change: {
+          uri: token => path + '/sessions/password/' + token,
+          method: 'PUT'
+        }
+      },
+
+      profile: {
+        uri: user => path + '/' + user + '/profile', // user is a type of user,
         method: {
           PUT: 'PUT', // to update profile
           GET: 'GET' // to get profile information
@@ -39,9 +46,7 @@ export default class Constants {
       },
 
       photo: {
-        uri: (user, slot_id) => {
-          return path + '/' + user + '/profile/photo' + (user === 'provider' ? '/' + slot_id : ''); // slot_id is an index of photo
-        },
+        uri: (user, slot_id) => path + '/' + user + '/profile/photo' + (user === 'provider' ? '/' + slot_id : ''), // slot_id is an index of photo,
         method: 'PUT'
       },
 

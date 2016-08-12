@@ -67,7 +67,7 @@ export default class User {
           }
 
           this.create(result.data);
-          this.getUserProfile(result.data, credentials.type);
+          return this.getUserProfile(result.data, this.get('role'));
         },
         error => console.log(error)
       );
@@ -93,7 +93,53 @@ export default class User {
             };
           }
 
-          this.login(credentials);
+          return this.login(credentials);
+        },
+        error => console.log(error)
+      );
+  }
+
+  restore (email) {
+    return this
+      .Request
+      .send(
+        false,
+        this.Constants.api.password.restore.method,
+        this.Constants.api.password.restore.uri,
+        email
+      )
+      .then(
+        result => {
+          if (result.data.detail) {
+            return {
+              error: result.data.detail
+            };
+          }
+
+          return result;
+        },
+        error => console.log(error)
+      );
+  }
+
+  reset (password, token) {
+    return this
+      .Request
+      .send(
+        false,
+        this.Constants.api.password.change.method,
+        this.Constants.api.password.change.uri(token),
+        password
+      )
+      .then(
+        result => {
+          if (result.data.detail) {
+            return {
+              error: result.data.detail
+            };
+          }
+
+          return result;
         },
         error => console.log(error)
       );
@@ -111,6 +157,7 @@ export default class User {
         result => {
           this.update(result.data);
           this.redirectUser();
+          return true;
         },
         error => console.log(error)
       );
