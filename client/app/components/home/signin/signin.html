@@ -2,20 +2,21 @@
   <form name="loginForm" class="animated fadeIn">
     <div class="credentials">
       <div class="input">
-        <label>E-mail <i>*</i></label>
+        <label>E-mail</label>
         <input type="email"
                name="email"
                ng-model="$ctrl.email"
                ng-class="{error: $ctrl.emailError}"
                ng-keyup="$ctrl.emailError = $ctrl.logignError = false"
                ng-blur="$ctrl.validate({email: $ctrl.email})"
+               maxlength="100"
                required/>
         <span class="error" ng-if="$ctrl.emailError">
           {{$ctrl.emailError}}
         </span>
       </div>
       <div class="input">
-        <label>Password <i>*</i></label>
+        <label>Password</label>
         <a href="" ng-click="$ctrl.output({view: 'restore'})" class="forgot">Forgot ?</a>
         <input type="password"
                name="password"

@@ -12,6 +12,7 @@
                ng-model="$ctrl.email"
                ng-keyup="$ctrl.emailError = $ctrl.logignError = false"
                ng-blur="$ctrl.validate({email: $ctrl.email})"
+               maxlength="100"
                required/>
         <span class="error" ng-if="$ctrl.emailError">
           {{$ctrl.emailError}}

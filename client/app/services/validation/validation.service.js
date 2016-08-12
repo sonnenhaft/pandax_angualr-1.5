@@ -36,19 +36,36 @@ export default class Validation {
   }
 
   email (str) {
-    if (str && str.length) {
-      let validation = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(str.toLowerCase());
-      return this.message('email', validation, 'Email is not valid.');
+    switch (true) {
+      case !str:
+        return this.message('email', false, 'This field is required.');
+
+      case !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(str.toLowerCase()):
+        return this.message('email', false, 'Email is not valid.');
+
+      default:
+        return this.message('email', true);
     }
-    return this.message('email', false, 'Email is not valid.');
   }
 
   password (str) {
-    return this.message('password', str && str.length >= 6, '6-character minimum.');
+    switch (true) {
+      case !str:
+        return this.message('password', false, 'This field is required.');
+
+      default:
+        return this.message('password', str && str.length >= 6, '6-character minimum.');
+    }
   }
 
   repeater (pass, repeater) {
-    return this.message('repeater', pass === repeater, 'Password doesn’t match.');
+    switch (true) {
+      case !repeater:
+        return this.message('repeater', false, 'This field is required.');
+
+      default:
+        return this.message('repeater', pass === repeater, 'Password doesn’t match.');
+    }
   }
 
   images (arr) {
@@ -65,11 +82,20 @@ export default class Validation {
   }
 
   phone (number) {
-    return this.message('phone', /(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}/.test(number), 'Phone number is invalid.');
+    switch (true) {
+      case !number:
+        return this.message('phone', false, 'This field is required.');
+
+      case !/(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}/.test(number):
+        return this.message('phone', false, 'Phone number is invalid.');
+
+      default:
+        return this.message('phone', true)
+    }
   }
 
   isEmpty (field, value) {
-    return this.message(field, !_.isEmpty(value), 'Field is empty.');
+    return this.message(field, !_.isEmpty(value), 'This field is required.');
   }
 
 }
