@@ -2,6 +2,8 @@
 // $ Home template styles
 // =============================================================================
 
+@import "modal";
+
 #home {
 
   width: 100%;
@@ -85,6 +87,24 @@
 
         a {
           color: $Cardinal;
+        }
+      }
+
+      .form-info {
+        span {
+          display: block;
+          letter-spacing: 1px;
+          text-align: center;
+          text-transform: uppercase;
+          color: $AuroMetalSaurus;
+          font-size: 1.063em;
+          margin-bottom: 28px;
+        }
+
+        p {
+          margin: 0 8px 16px 8px;
+          font: 0.938em $open-sans, sans-serif;
+          line-height: 24px;
         }
       }
     }

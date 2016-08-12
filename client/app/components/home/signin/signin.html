@@ -15,7 +15,7 @@
       </div>
       <div class="input">
         <label>Password <i>*</i></label>
-        <a href="" class="forgot">Forgot ?</a>
+        <a href="" ng-click="$ctrl.output({view: 'restore'})" class="forgot">Forgot ?</a>
         <input type="password"
                name="password"
                ng-model="$ctrl.password"
@@ -39,8 +39,8 @@
         {{!$ctrl.loginLoading ? 'Log In' : ''}}
         <spinner input="$ctrl.loginLoading"></spinner>
       </md-button>
-      <span class="sign-error" ng-if="$ctrl.logignError">
-        {{$ctrl.logignError}}
+      <span class="sign-error" ng-if="$ctrl.loginError">
+        {{$ctrl.loginError}}
       </span>
     </div>
   </form>

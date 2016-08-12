@@ -1,35 +1,32 @@
 export default class Signup {
 
-  constructor (Validation, User) {
+  constructor (Validation, User, $stateParams) {
     'ngInject';
 
-    _.assign(this, {Validation, User});
+    _.assign(this, {Validation, User, $stateParams});
 
     this.isCustomer = true;
     this.isProvider = false;
 
   }
 
+  $onInit () {
+    if (this.$stateParams.signup && this.$stateParams.user) {
+      this.isCustomer = this.isProvider = false;
+      this['is' + _.capitalize(this.$stateParams.user)] = true;
+    }
+  }
+
   onSubmit (credentials) {
-    let isError, errorMessage;
-
-    isError = this.Validation.error(credentials).length;
-    errorMessage = this.Validation.error(credentials);
-    credentials = _.assign(credentials, {
-      type: this.isCustomer ? 'customer' : 'provider'
-    });
-
-    if (isError) {
-      _.map(errorMessage, error => {
-        this[error.name + 'Error'] = error.text;
+    if (this.validate(credentials)) {
+      credentials = _.assign(credentials, {
+        type: this.isCustomer ? 'customer' : 'provider'
       });
-
-      return false;
+      this.registerError = false;
+      return this.register(credentials);
     }
 
-    this.logignError = false;
-
-    return this.register(credentials);
+    return false;
   }
 
   validate (field) {

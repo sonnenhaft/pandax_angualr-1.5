@@ -8,22 +8,12 @@ export default class Signin {
   }
 
   onSubmit (credentials) {
-    let isError, errorMessage;
-
-    isError = this.Validation.error(credentials).length;
-    errorMessage = this.Validation.error(credentials);
-
-    if (isError) {
-      _.map(errorMessage, error => {
-        this[error.name + 'Error'] = error.text;
-      });
-
-      return false;
+    if (this.validate(credentials)) {
+      this.loginError = false;
+      return this.login(credentials);
     }
 
-    this.logignError = false;
-
-    return this.login(credentials);
+    return false;
   }
 
   validate (field) {
@@ -44,7 +34,7 @@ export default class Signin {
         result => {
           this.loginLoading = false;
           if (result && result.error) {
-            this.logignError = result.error;
+            this.loginError = result.error;
           }
         },
         error => {

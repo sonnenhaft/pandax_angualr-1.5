@@ -12,13 +12,23 @@ class HomeController {
 
   $onInit () {
     if (this.$stateParams.signup && this.$stateParams.user) {
-      this.signIn = this.isCustomer = this.isProvider = false;
-      this['is' + _.capitalize(this.$stateParams.user)] = this.signUp = true;
+      this.signIn = false;
+      this.signUp = true;
+    }
+
+    if (this.$stateParams.restore) {
+      this.signIn = this.signUp = false;
+      this.restore = true;
+    }
+
+    if (this.$stateParams.reset) {
+      this.signIn = this.signUp = this.restore = false;
+      this.reset = true;
     }
   }
 
   switchTo (form) {
-    this.signIn = this.signUp = false;
+    this.signIn = this.signUp = this.restore = this.reset = false;
     this[form] = true;
   }
 

@@ -99,6 +99,29 @@ export default class User {
       );
   }
 
+  restore (email) {
+    return this
+      .Request
+      .send(
+        false,
+        this.Constants.api.password.restore.method,
+        this.Constants.api.password.restore.uri,
+        email
+      )
+      .then(
+        result => {
+          if (result.data.detail) {
+            return {
+              error: result.data.detail
+            };
+          }
+
+          return result;
+        },
+        error => console.log(error)
+      )
+  }
+
   getUserProfile (user, type) {
     return this
       .Request
