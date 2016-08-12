@@ -82,8 +82,8 @@
         </md-button>
       </div>
       <div flex="{{$ctrl.mode === 'profile.create' ? '' : 45}}" ng-if="$ctrl.mode !== 'profile.view'">
-        <md-button ng-disabled="!profileForm.$valid && $ctrl.mode !== 'profile.view' || $ctrl.saveLoading"
-                   ng-class="{disabled: !profileForm.$valid || $ctrl.saveLoading}"
+        <md-button ng-disabled="$ctrl.saveLoading"
+                   ng-class="{disabled: $ctrl.saveLoading}"
                    ng-if="$ctrl.mode === 'profile.edit'"
                    ng-click="$ctrl.onSave({
                     first_name: profileForm.first_name.$viewValue,
@@ -95,8 +95,8 @@
           {{!$ctrl.saveLoading ? 'Save' : ''}}
           <spinner input="$ctrl.saveLoading"></spinner>
         </md-button>
-        <md-button ng-disabled="!profileForm.$valid && $ctrl.mode !== 'profile.view' || $ctrl.saveLoading"
-                   ng-class="{disabled: !profileForm.$valid || $ctrl.saveLoading}"
+        <md-button ng-disabled="$ctrl.saveLoading"
+                   ng-class="{disabled: $ctrl.saveLoading}"
                    ng-if="$ctrl.mode === 'profile.create'"
                    ng-click="$ctrl.onReady({
                     first_name: profileForm.first_name.$viewValue,

@@ -88,6 +88,10 @@ class orderController {
       return false;
     }
 
+    if (!this.validate({apt: form.apt, location: this.searchText})) {
+      return false;
+    }
+
     this.orderLoading = true;
 
     let data = {

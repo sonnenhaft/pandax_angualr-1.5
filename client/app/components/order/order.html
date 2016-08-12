@@ -154,8 +154,8 @@
         <span>TOTAL: $ {{$ctrl.getTotalPrice()}}</span>
       </div>
       <div class="submit">
-        <md-button ng-disabled="!orderForm.$valid || $ctrl.orderLoading"
-                   ng-class="{disabled: !orderForm.$valid || $ctrl.orderLoading}"
+        <md-button ng-disabled="$ctrl.orderLoading"
+                   ng-class="{disabled: $ctrl.orderLoading}"
                    type="submit"
                    ng-click="$ctrl.onSearch({
                     hour: orderForm.hour.$viewValue,
