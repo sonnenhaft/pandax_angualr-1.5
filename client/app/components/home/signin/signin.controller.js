@@ -32,16 +32,23 @@ export default class Signin {
       .login(credentials)
       .then(
         result => {
-          this.loginLoading = false;
           if (result && result.error) {
+            this.loginLoading = false;
             this.loginError = result.error;
           }
+
+          return true;
         },
         error => {
           console.log(error);
           this.loginLoading = false;
         }
-      );
+      )
+      .then(result => {
+        if (result) {
+          this.loginLoading = false;
+        }
+      });
   }
 
 }

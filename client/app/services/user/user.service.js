@@ -67,7 +67,7 @@ export default class User {
           }
 
           this.create(result.data);
-          this.getUserProfile(result.data, this.get('role'));
+          return this.getUserProfile(result.data, this.get('role'));
         },
         error => console.log(error)
       );
@@ -93,7 +93,7 @@ export default class User {
             };
           }
 
-          this.login(credentials);
+          return this.login(credentials);
         },
         error => console.log(error)
       );
@@ -157,6 +157,7 @@ export default class User {
         result => {
           this.update(result.data);
           this.redirectUser();
+          return true;
         },
         error => console.log(error)
       );
