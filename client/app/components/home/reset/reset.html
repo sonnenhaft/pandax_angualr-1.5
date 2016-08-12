@@ -13,6 +13,7 @@
                ng-keyup="$ctrl.passwordError = $ctrl.registerError = false"
                ng-blur="$ctrl.validate({password: $ctrl.password})"
                ng-class="{error: $ctrl.passwordError}"
+               maxlength="50"
                autocomplete="off"
                required />
         <span class="error" ng-if="$ctrl.passwordError">
@@ -26,6 +27,7 @@
                ng-model="$ctrl.repeater"
                ng-keyup="$ctrl.repeaterError = false"
                autocomplete="off"
+               maxlength="50"
                required />
         <span class="error" ng-if="$ctrl.repeaterError">
           {{$ctrl.repeaterError}}
