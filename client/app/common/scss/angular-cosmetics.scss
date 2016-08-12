@@ -1,3 +1,20 @@
 .md-button {
 	border-radius: 0px;
 }
+
+md-dialog {
+	background: none;
+	border-radius: 0px;
+  @media (max-width: 960px) {
+    max-width: 100%;
+  }
+}
+.md-dialog-container {
+	background-color: rgba($black, .9);
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;   
+}

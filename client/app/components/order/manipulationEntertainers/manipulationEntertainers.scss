@@ -1,9 +1,10 @@
 #manipulation-entertainers {
-	padding: 52px 30px 0 30px;
+	padding: 52px 30px 0px 30px;
 
   @media (max-width: 960px) {
     padding-left: 18px;
     padding-right: 18px;
+    padding-bottom: 40px;
   }
 
 	& > * {
@@ -47,3 +48,4 @@
 
 @import "./searchEntertainers/searchEntertainers";
 @import "./confirmedEntertainers/confirmedEntertainers";
+@import "./photoFullPage/photoFullPage";
