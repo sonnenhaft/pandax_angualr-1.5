@@ -1,0 +1,27 @@
+<div
+	id="confirmed-entertainers"
+	layout="column" 
+	layout-align="start stretch"
+	class="confirmed-entertainers">
+
+	<div class="confirmed-entertainers__header">
+		<h2 class="confirmed-entertainers__header-text">CONFIRMATIONS {{vm.entertainers.length}}/{{vm.entertainersInvitedCount}}</h2>
+	</div>
+
+  <md-card 
+  	class="confirmed-entertainers__card" 
+  	ng-repeat="entertainer in vm.entertainers track by $index">
+    <md-card-header class="confirmed-entertainers__card-header">
+    	<md-card-avatar
+    		class="confirmed-entertainers__avatar">
+		    <img
+		      ng-src="{{entertainer.photo}}" 
+		      class="confirmed-entertainers__avatar-img"></img>
+    	</md-card-avatar>
+      <md-card-header-text>
+        <span class="md-subhead confirmed-entertainers__name">{{entertainer.name}}</span>
+      </md-card-header-text>
+    </md-card-title>
+  </md-card>
+
+</div>

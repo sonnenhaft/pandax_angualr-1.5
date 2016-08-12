@@ -1,6 +1,6 @@
 .flex-gt-sm-75 {
   @media (min-width: 960px) {
-    width: 75% !important;
+    width: 80% !important;
   }
 }
 
@@ -9,23 +9,9 @@
 		color: $AuroMetalSaurus;
 	}
 	.search-entertainers {
-		& > * {
+		& > *,
+		&__main > * {
 			width: 100%;
-		}
-		&__icon {
-			&_close {
-	    	margin: 12px 0 0 0;
-	    }
-		}
-		&__refresh {
-			color: $TrolleyGrey;
-			font: 15px $oswald;
-			letter-spacing: 0.1px;
-			line-height: 24px;
-			text-align: center;
-			img {
-				margin-left: 8.5px;
-			}
 		}
 		&__manip {
 			&_head {

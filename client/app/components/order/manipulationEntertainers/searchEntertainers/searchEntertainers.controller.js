@@ -1,10 +1,11 @@
 class searchEntertainersController {
 
-  constructor (OrderService) {
+  constructor (OrderService, $state) {
      'ngInject';
 
      _.assign(this, {
      		OrderService, 
+        $state,
      		entertainer: null,
      		index: 0,
      		photoPreviewSrc: ''
@@ -26,6 +27,7 @@ class searchEntertainersController {
   	if (possibleIndex >= 0 && possibleIndex < this.entertainers.length) {
 	  	this.index = possibleIndex;
   		this.entertainer = this.entertainers[this.index];
+      this.photoPreviewSrc = this.entertainer.photo_small[0];
   	}
   }
 

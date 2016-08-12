@@ -78,7 +78,7 @@ class orderController {
       return false;
     }
 
-    this.$state.go('main.searchEntertainers');    
+    this.$state.go('main.manipulationEntertainers.searchEntertainers');    
 
     console.log(
       _.assign(form, {
