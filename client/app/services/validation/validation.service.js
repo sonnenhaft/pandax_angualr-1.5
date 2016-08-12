@@ -48,7 +48,7 @@ export default class Validation {
   }
 
   repeater (pass, repeater) {
-    return this.message('repeater', pass === repeater, 'Passwords do not match.');
+    return this.message('repeater', pass === repeater, 'Password doesn’t match.');
   }
 
   images (arr) {

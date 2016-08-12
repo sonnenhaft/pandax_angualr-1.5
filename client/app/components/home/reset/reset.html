@@ -1,5 +1,9 @@
 <div class="reset-form">
   <form name="resetForm" class="animated fadeIn">
+    <div class="form-info">
+      <span class="info-head">RESET YOUR PASSWORD</span>
+      <p>Enter a new password for your account.</p>
+    </div>
     <div class="credentials">
       <div class="input">
         <label>Password <i>*</i></label>
@@ -16,7 +20,7 @@
         </span>
       </div>
       <div class="input">
-        <label>Re-enter password <i>*</i></label>
+        <label>Repeat password <i>*</i></label>
         <input type="password"
                name="repeater"
                ng-model="$ctrl.repeater"
@@ -33,8 +37,8 @@
                  ng-class="{disabled: $ctrl.resetLoading}"
                  type="submit"
                  ng-click="$ctrl.onSubmit({
-                   password: restoreForm.password.$viewValue,
-                   repeater: restoreForm.repeater.$viewValue
+                   password: resetForm.password.$viewValue,
+                   repeater: resetForm.repeater.$viewValue
                  })">
         {{!$ctrl.resetLoading ? 'Reset password' : ''}}
         <spinner input="$ctrl.resetLoading"></spinner>

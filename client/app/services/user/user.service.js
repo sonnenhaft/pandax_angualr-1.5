@@ -119,7 +119,30 @@ export default class User {
           return result;
         },
         error => console.log(error)
+      );
+  }
+
+  reset (password, token) {
+    return this
+      .Request
+      .send(
+        false,
+        this.Constants.api.password.change.method,
+        this.Constants.api.password.change.uri(token),
+        password
       )
+      .then(
+        result => {
+          if (result.data.detail) {
+            return {
+              error: result.data.detail
+            };
+          }
+
+          return result;
+        },
+        error => console.log(error)
+      );
   }
 
   getUserProfile (user, type) {
