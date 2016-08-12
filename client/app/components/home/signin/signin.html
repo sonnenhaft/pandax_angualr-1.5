@@ -24,6 +24,7 @@
                ng-class="{error: $ctrl.passwordError}"
                ng-keyup="$ctrl.passwordError = $ctrl.logignError = false"
                ng-blur="$ctrl.validate({password: $ctrl.password})"
+               maxlength="50"
                autocomplete="off"
                required />
         <span class="error" ng-if="$ctrl.passwordError">
