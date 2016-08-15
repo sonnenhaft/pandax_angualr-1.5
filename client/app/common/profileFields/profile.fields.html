@@ -59,6 +59,7 @@
                  ng-class="{error: $ctrl[combine.model + 'Error'] && $ctrl.mode !== 'main.profile.view', first: $index === 0}"
                  ng-keyup="$ctrl[combine.model + 'Error'] = false"
                  ng-blur="$ctrl.validate({[combine.model]: $ctrl[combine.model]})">
+          <div class="sub-desc">{{combine.desc}}</div>
           <span class="error" ng-if="$ctrl[combine.model + 'Error'] && $ctrl.mode !== 'main.profile.view'">
               {{$ctrl[combine.model + 'Error']}}
             </span>
