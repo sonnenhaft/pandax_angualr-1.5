@@ -1,7 +1,9 @@
 export default class Constants {
 
-  constructor () {
+  constructor ($window) {
     'ngInject';
+
+    _.assign(this, {$window});
 
     this.profile = this.profileConstants();
     this.user = this.userConstants();
@@ -12,7 +14,9 @@ export default class Constants {
   }
 
   apiConstants () {
-    const path = 'http://dev3.panda.aws.isdev.info/api';
+    const path = this.$window.location.hostname != 'localhost' ?
+      this.$window.location.protocol + '//' + this.$window.location.host + '/api' :
+      'http://dev3.panda.aws.isdev.info/api';
 
     let apiConstants = {
 
