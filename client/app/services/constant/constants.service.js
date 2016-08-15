@@ -244,7 +244,8 @@ export default class Constants {
               {
                 name: 'Last Name',
                 model: 'last_name',
-                type: 'text'
+                type: 'text',
+                desc: "We won't display your last name"
               }
             ]
           },
