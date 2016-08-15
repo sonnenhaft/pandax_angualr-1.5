@@ -21,7 +21,7 @@
       <img ng-src="{{vm.avatar}}" alt=""/>
     </div>
 
-    <div class="navigation" ng-if="vm.$state.current.name !== 'profile.create'">
+    <div class="navigation" ng-if="vm.$state.current.name !== 'main.profile.create'">
       <ul>
         <li
           ng-repeat="nav in vm.navigation"
@@ -51,7 +51,7 @@
     <img ng-src="{{vm.avatar}}" alt=""/>
   </div>
 
-  <div class="navigation" hide show-gt-sm ng-if="vm.$state.current.name !== 'profile.create'">
+  <div class="navigation" hide show-gt-sm ng-if="vm.$state.current.name !== 'main.profile.create'">
     <ul>
       <li
         ng-repeat="nav in vm.navigation"

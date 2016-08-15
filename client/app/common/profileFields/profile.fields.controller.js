@@ -20,7 +20,7 @@ export default class profileFieldsController {
 
   $onInit () {
     switch (this.mode) {
-      case 'profile.create':
+      case 'main.profile.create':
         this.email = this.User.get('email');
         break;
 
@@ -45,7 +45,7 @@ export default class profileFieldsController {
   }
 
   buildProfileModels () {
-    this.mode = 'profile.view';
+    this.mode = 'main.profile.view';
 
     _.mapValues(this.User.get(), (model, key) => {
       this[key] = model;
@@ -74,12 +74,12 @@ export default class profileFieldsController {
     }
 
     this.UpdateUserProfile(profile);
-    this.$state.go('profile.view');
+    this.$state.go('main.profile.view');
   }
 
   onSave (profile) {
     if (this.validate(profile)) {
-      this.UpdateUserProfile(profile, 'profile.view');
+      this.UpdateUserProfile(profile, 'main.profile.view');
     }
   }
 

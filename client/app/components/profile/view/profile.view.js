@@ -10,7 +10,7 @@ let profileViewModule = angular.module('profileView', [
     "ngInject";
 
     $stateProvider
-      .state('profile.view', {
+      .state('main.profile.view', {
         url: '/view',
         parent: 'profile',
         component: 'profileView'

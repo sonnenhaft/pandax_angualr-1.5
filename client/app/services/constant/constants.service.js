@@ -174,7 +174,7 @@ export default class Constants {
           role: 'customer',
           parent: 'Settings',
           text: 'Edit profile',
-          url: 'profile.view'
+          url: 'main.profile.view'
         },
         {
           role: 'customer',

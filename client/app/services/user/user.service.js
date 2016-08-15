@@ -198,12 +198,12 @@ export default class User {
         this.$state.go('main.order');
         return false;
 
-      case this.get('first_name') && this.get('last_name'):
-        this.$state.go('profile.view');
+      case !this.get('first_name') || !this.get('last_name'):
+        this.$state.go('main.profile.create');
         return false;
 
       default:
-        this.$state.go('profile.create');
+        this.$state.go('main.profile.view');
     }
   }
 
