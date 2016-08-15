@@ -1,0 +1,57 @@
+<div class="reset-form">
+  <form name="resetForm" class="animated fadeIn">
+    <div class="form-info">
+      <span class="info-head">RESET YOUR PASSWORD</span>
+      <p>Enter a new password for your account.</p>
+    </div>
+    <div class="credentials">
+      <div class="input">
+        <label>Password</label>
+        <input type="password"
+               name="password"
+               ng-model="$ctrl.password"
+               ng-keyup="$ctrl.passwordError = $ctrl.registerError = false"
+               ng-blur="$ctrl.validate({password: $ctrl.password})"
+               ng-class="{error: $ctrl.passwordError}"
+               maxlength="50"
+               autocomplete="off"
+               required />
+        <span class="error" ng-if="$ctrl.passwordError">
+          {{$ctrl.passwordError}}
+        </span>
+      </div>
+      <div class="input">
+        <label>Repeat password</label>
+        <input type="password"
+               name="repeater"
+               ng-model="$ctrl.repeater"
+               ng-keyup="$ctrl.repeaterError = false"
+               autocomplete="off"
+               maxlength="50"
+               required />
+        <span class="error" ng-if="$ctrl.repeaterError">
+          {{$ctrl.repeaterError}}
+        </span>
+      </div>
+    </div>
+    <div class="sign-button">
+      <md-button ng-disabled="$ctrl.resetLoading"
+                 ng-class="{disabled: $ctrl.resetLoading}"
+                 type="submit"
+                 ng-click="$ctrl.onSubmit({
+                   password: resetForm.password.$viewValue,
+                   repeater: resetForm.repeater.$viewValue
+                 })">
+        {{!$ctrl.resetLoading ? 'Reset password' : ''}}
+        <spinner input="$ctrl.resetLoading"></spinner>
+      </md-button>
+      <span class="sign-error" ng-if="$ctrl.resetError">
+        {{$ctrl.resetError}}
+      </span>
+    </div>
+  </form>
+  <div class="account-ready">
+    Remember your password? <a href="" ng-click="$ctrl.output({view: 'signIn'})">Log In</a>
+  </div>
+</div>
+

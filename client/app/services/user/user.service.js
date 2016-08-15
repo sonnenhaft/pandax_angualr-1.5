@@ -1,14 +1,20 @@
 export default class User {
 
-  constructor (Storage, $state) {
+  constructor (Storage, Constants, Request, $state, $http) {
     'ngInject';
 
-    _.assign(this, {Storage, $state});
+    _.assign(this, {Storage, Constants, Request, $state, $http});
 
   }
 
   isAuth () {
     return this.Storage.getObject('MINX').user ? true : false;
+  }
+
+  token () {
+    if (this.isAuth()) {
+      return this.Storage.getObject('MINX').token;
+    }
   }
 
   get (param) {
@@ -18,34 +24,192 @@ export default class User {
   }
 
   update (object) {
-    console.log(_.assign(this.get(), object))
+    let session = this.Storage.getObject('MINX');
+
+    this.Storage.setObject('MINX', _.assign(
+      session, {
+        user: _.assign(session.user, object)
+      }
+    ));
+  }
+
+  create (user) {
+    user.data.role = user.data.role === 'client' ?
+      'customer' :
+      user.data.role;
+
+    this.Storage.setObject('MINX', {
+      token: user.token,
+      user: _.assign(user.data, {
+        auth: user.data.first_name && user.data.last_name
+      })
+    });
   }
 
   login (credentials) {
-    this.preAuth(credentials);
-    this.$state.go('profile');
+    return this
+      .Request
+      .send(
+        false,
+        this.Constants.api.login.method,
+        this.Constants.api.login.uri,
+        {
+          email: credentials.email,
+          password: credentials.password
+        }
+      )
+      .then(
+        result => {
+          if (result.data.message) {
+            return {
+              error: result.data.message
+            };
+          }
+
+          this.create(result.data);
+          return this.getUserProfile(result.data, this.get('role'));
+        },
+        error => console.log(error)
+      );
   }
 
   register (credentials) {
-    this.preAuth(credentials);
-    this.$state.go('profile.create');
+    return this
+      .Request
+      .send(
+        false,
+        this.Constants.api.signup.method,
+        this.Constants.api.signup.uri(credentials.type),
+        {
+          email: credentials.email,
+          password: credentials.password
+        }
+      )
+      .then(
+        result => {
+          if (result.data.detail) {
+            return {
+              error: result.data.detail
+            };
+          }
+
+          return this.login(credentials);
+        },
+        error => console.log(error)
+      );
+  }
+
+  restore (email) {
+    return this
+      .Request
+      .send(
+        false,
+        this.Constants.api.password.restore.method,
+        this.Constants.api.password.restore.uri,
+        email
+      )
+      .then(
+        result => {
+          if (result.data.detail) {
+            return {
+              error: result.data.detail
+            };
+          }
+
+          return result;
+        },
+        error => console.log(error)
+      );
+  }
+
+  reset (password, token) {
+    return this
+      .Request
+      .send(
+        false,
+        this.Constants.api.password.change.method,
+        this.Constants.api.password.change.uri(token),
+        password
+      )
+      .then(
+        result => {
+          if (result.data.detail) {
+            return {
+              error: result.data.detail
+            };
+          }
+
+          return result;
+        },
+        error => console.log(error)
+      );
+  }
+
+  getUserProfile (user, type) {
+    return this
+      .Request
+      .send(
+        user.token,
+        this.Constants.api.profile.method.GET,
+        this.Constants.api.profile.uri(type)
+      )
+      .then(
+        result => {
+          this.update(result.data);
+          this.redirectUser();
+          return true;
+        },
+        error => console.log(error)
+      );
+  }
+
+  UpdateUserProfile (fields) {
+    return this
+      .Request
+      .send(
+        this.token(),
+        this.Constants.api.profile.method.PUT,
+        this.Constants.api.profile.uri(this.get('role')),
+        fields
+      )
+      .then(
+        result => result.data,
+        error => console.log(error)
+      );
+  }
+
+  UpdateUserPhoto (file, slot) {
+    return this.Request
+      .send(
+        this.token(),
+        this.Constants.api.photo.method,
+        this.Constants.api.photo.uri(this.get('role'), slot),
+        file
+      )
+      .then(
+        result => result.data,
+        error => console.log(error)
+      )
+  }
+
+  redirectUser () {
+    switch (true) {
+      case this.get('role') === 'customer':
+        this.$state.go('main.order');
+        return false;
+
+      case !this.get('first_name') || !this.get('last_name'):
+        this.$state.go('main.profile.create');
+        return false;
+
+      default:
+        this.$state.go('main.profile.view');
+    }
   }
 
   logout () {
     this.Storage.remove('MINX');
     this.$state.go('home');
-  }
-
-  preAuth (credentials) {
-    this.Storage.setObject('MINX', {
-      token: 'falseToken!ufhuishdfihsduf723e.rjueifgh8923yrhjo3nknhurfhg9823ornlkfn',
-      user: {
-        id: _.random(100000000),
-        email: credentials.email,
-        type: credentials.type,
-        auth: credentials.auth
-      }
-    });
   }
 
 }

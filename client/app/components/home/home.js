@@ -1,27 +1,27 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import homeComponent from './home.component';
-import Validation from '../../services/validation/validation';
-import User from '../../services/user/user';
+import signIn from './signin/signin';
+import signUp from './signup/signup';
+import Restore from './restore/restore';
+import Reset from './reset/reset';
 
-let homeModule = angular.module('home', [
-  uiRouter,
-  Validation,
-  User
-])
+export default angular
+  .module('home', [
+    uiRouter,
+    signIn,
+    signUp,
+    Restore,
+    Reset
+  ])
+  .config(($stateProvider) => {
+    "ngInject";
 
-.config(($stateProvider) => {
-  "ngInject";
-
-  $stateProvider
-    .state('home', {
-      url: '/?signup&user',
-      component: 'home'
-    });
-})
-
-.component('home', homeComponent)
-
-.name;
-
-export default homeModule;
+    $stateProvider
+      .state('home', {
+        url: '/?signup&user&restore&reset',
+        component: 'home'
+      });
+  })
+  .component('home', homeComponent)
+  .name;

@@ -40,9 +40,14 @@
 
   span {
     &.error {
-      text-align: center;
+      color: $Cardinal;
       display: block;
-      margin-top: 10px;
+      line-height: 24px;
+      margin: {
+        top: 8px;
+        left: 8px;
+      };
+      font: 0.938em $open-sans, sans-serif;
     }
   }
 

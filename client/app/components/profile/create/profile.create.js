@@ -10,7 +10,7 @@ let profileCreateModule = angular.module('profileCreate', [
     "ngInject";
 
     $stateProvider
-      .state('profile.create', {
+      .state('main.profile.create', {
         url: '/create',
         parent: 'profile',
         component: 'profileCreate'

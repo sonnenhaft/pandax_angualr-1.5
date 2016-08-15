@@ -1,12 +1,67 @@
 export default class Constants {
 
-  constructor () {
+  constructor ($window) {
+    'ngInject';
+
+    _.assign(this, {$window});
 
     this.profile = this.profileConstants();
     this.user = this.userConstants();
     this.order = this.orderConstants();
     this.map = this.mapConstants();
+    this.api = this.apiConstants();
 
+  }
+
+  apiConstants () {
+    const path = this.$window.location.hostname != 'localhost' ?
+      this.$window.location.protocol + '//' + this.$window.location.host + '/api' :
+      'http://dev3.panda.aws.isdev.info/api';
+
+    let apiConstants = {
+
+      login: {
+        uri: path + '/sessions',
+        method: 'POST'
+      },
+
+      signup: {
+        uri: user => path + '/signup/' + user, // user is a type of user,
+        method: 'POST'
+      },
+
+      password: {
+        restore: {
+          uri: path + '/sessions/password/reset',
+          method: 'POST'
+        },
+        change: {
+          uri: token => path + '/sessions/password/' + token,
+          method: 'PUT'
+        }
+      },
+
+      profile: {
+        uri: user => path + '/' + user + '/profile', // user is a type of user,
+        method: {
+          PUT: 'PUT', // to update profile
+          GET: 'GET' // to get profile information
+        }
+      },
+
+      photo: {
+        uri: (user, slot_id) => path + '/' + user + '/profile/photo' + (user === 'provider' ? '/' + slot_id : ''), // slot_id is an index of photo,
+        method: 'PUT'
+      },
+
+      order: {
+        uri: path + '/order',
+        method: 'POST'
+      }
+
+    };
+
+    return apiConstants;
   }
 
   mapConstants () {
@@ -123,7 +178,7 @@ export default class Constants {
           role: 'customer',
           parent: 'Settings',
           text: 'Edit profile',
-          url: 'profile.edit'
+          url: 'main.profile.view'
         },
         {
           role: 'customer',
@@ -143,27 +198,27 @@ export default class Constants {
 
       serviceTypes: [
         {
-          type: '1',
-          name: 'Party Girl',
+          type: '3',
+          name: 'Dancer',
           price: 200,
-          description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, deleniti doloremque harum magnam maxime neque omnis? Delectus enim fuga quod tenetur! Aut dolore dolorum earum eos eveniet omnis saepe voluptatum!',
-          img: '/assets/images/services/prime_xx.png',
+          description: 'Your Minx will be topless, give lap dances, serve drinks, and socialize.',
+          img: '/assets/images/services/dancer.png',
           active: false
         },
         {
           type: '2',
           name: 'Hostess',
           price: 125,
-          description: '',
-          img: '/assets/images/services/prime.png',
+          description: 'Your Minx will be topless, serve drinks, and socialize',
+          img: '/assets/images/services/hostess.png',
           active: false
         },
         {
-          type: '3',
-          name: 'Dancer',
+          type: '1',
+          name: 'Party Girl',
           price: 50,
-          description: '',
-          img: '/assets/images/services/prime.png',
+          description: 'Your Minx will be fun and flirtatious while fully clothed. She will serve drinks and socialize.',
+          img: '/assets/images/services/girl.png',
           active: false
         }
       ],
