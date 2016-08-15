@@ -1,5 +1,6 @@
 .md-dialog-container {
   &.desc {
+    background-color: rgba($black, .3);
     z-index: 150;
     font: {
       family: $open-sans, sans-serif;
@@ -11,6 +12,7 @@
       padding: 30px 40px;
       border-radius: 0;
       max-width: 440px;
+      background: white;
 
       .close {
         position: absolute;
