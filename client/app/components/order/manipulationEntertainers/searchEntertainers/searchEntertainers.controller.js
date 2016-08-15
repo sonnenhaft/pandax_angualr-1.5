@@ -57,6 +57,13 @@ class searchEntertainersController {
       });
   }
 
+  goToNextStep() {    
+    if (this.OrderService.fetchEntertainersInvitedCount() == 1) {
+      this.$state.go('main.billing', {from: 'main.manipulationEntertainers'})
+    } else {
+      this.$state.go('main.searchEntertainers.confirmedEntertainers')
+    }
+  }
 
 }
 

@@ -31,7 +31,7 @@ export default class Order {
             '/assets/images/photos/photo2.png',
             '/assets/images/photos/photo3.png'
         ]
-    },{
+    }/*,{
         id: 2,
         name: 'Marla',
         descr: 'Description 2',
@@ -53,7 +53,7 @@ export default class Order {
             '/assets/images/photos/photo2.png',
             '/assets/images/photos/photo2.png'
         ]
-    }]
+    }*/]
   }
 
   getEntertainers() {
@@ -73,11 +73,11 @@ export default class Order {
         id: 1,
         name: 'Elaize',
         photo: '/assets/images/photos/photo3.png'
-    },{
+    }/*,{
         id: 2,
         name: 'Sundra',
         photo: '/assets/images/photos/photo3.png'
-    }]
+    }*/]
   }
 
   getEntertainersConfirmed() {
@@ -91,7 +91,7 @@ export default class Order {
     /*
     ToDo: fetch from server
      */
-    return this.entertainersInvitedCount = 3;
+    return this.entertainersInvitedCount = 1;
   }
 
   getEntertainersInvitedCount() {

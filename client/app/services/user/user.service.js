@@ -48,4 +48,24 @@ export default class User {
     });
   }
 
+  fetchBillingInfo () {
+    /*
+    ToDo: replace with real server request
+     */
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          // переведёт промис в состояние fulfilled с результатом "result"
+          resolve([{
+            first_name: 'Barry',
+            last_name: 'Bom',
+            mobile: '+123456789',
+            cards: [{
+              id: 1,
+              name: 'Card 1'
+            }]
+          }]);
+        }, 2000);
+    })
+  }
+
 }

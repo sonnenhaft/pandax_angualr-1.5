@@ -2,11 +2,13 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import searchEntertainersComponent from './searchEntertainers.component';
 import OrderService from '../../../../services/orderService/orderService';
+import billing from '../../../profile/billing/billing';
 
 export default angular
   .module('searchEntertainers', [
     uiRouter,
-    OrderService
+    OrderService,
+    billing
   ])
 
   .component('searchEntertainers', searchEntertainersComponent)
