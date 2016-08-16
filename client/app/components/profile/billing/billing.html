@@ -175,7 +175,8 @@
     <md-button 
     	flex="50" 
     	class="md-raised md-accent form_1__button"
-    	ng-disabled="personalInformationForm.$invalid || billingInformationForm.$invalid">
+    	ng-disabled="personalInformationForm.$invalid || billingInformationForm.$invalid"
+    	ng-click="vm.saveInfo()">
     	Continue
     </md-button>
 	</section>

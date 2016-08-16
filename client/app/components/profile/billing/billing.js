@@ -1,6 +1,7 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import billingComponent from './billing.component';
+import User from '../../../services/user/user';
 
 let billingModule = angular.module('billing', [
   uiRouter
@@ -16,7 +17,7 @@ let billingModule = angular.module('billing', [
         template: '<billing \
                     billing-info="billingInfo" \
                   </billing>',
-        controller: function ($scope, billingInfo) {
+        controller: function ($scope, billingInfo, User) {
           $scope.billingInfo = billingInfo;
         },
         resolve: {

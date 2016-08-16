@@ -1,12 +1,21 @@
 class BillingController {
 
-  constructor ($state) {
+  constructor ($state, User, $stateParams) {
     'ngInject';
 
     _.assign(this, {
-    	$state
+    	$state,
+    	User,
+    	$stateParams
     });
-console.log('bi:', this.billingInfo, this.$state);
+console.log('modify in controller:', this.User.billingInfo, this.$stateParams);
+  }
+
+  saveInfo () {
+  	this.User.saveBillingInfo()
+  		.then((data) => {
+  			this.$state.go(this.$stateParams.from);
+  		});
   }
 
 }
