@@ -6,7 +6,7 @@ class BillingController {
     _.assign(this, {
     	$state
     });
-console.log('bi:', this.billingInfo);
+console.log('bi:', this.billingInfo, this.$state);
   }
 
 }

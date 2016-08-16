@@ -1,5 +1,8 @@
 .md-button {
 	border-radius: 0px;
+  &.md-accent[disabled] {
+    color: $white;
+  }
 }
 
 md-dialog {

@@ -62,7 +62,7 @@ export default class User {
             cards: [{
               id: 1,
               name: 'Card 1',
-              number: '1111 2222 3333 4444',
+              number: 1111222233334444,
               expiry: '19/21',
               cvc: 123
             }]
