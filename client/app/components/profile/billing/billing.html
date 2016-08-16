@@ -1,95 +1,123 @@
-<div id="billing" class="animated fadeIn">
-  <span class="page-name">Billing</span>
+<div 
+	id="billing" 
+	class="billing animated fadeIn"
+	layout="column">
 
 
-	<form name="billingForm"
-	      class="billing-form">
-	      
-	  <div class="basic-data">
-	    <div class="input image">
-	      <label ng-if="$ctrl.mode === 'profile.create'">Add photo</label>
-	      <div layout="row">
-	        <div class="file-container"
-	             flex
-	             ng-repeat="image in $ctrl.images"
-	             ng-class="{first: $index === 0, last: $index === 2}">
-	          <md-button class="file"
-	                     aria-label="file"
-	                     ngf-select
-	                     ng-disabled="$ctrl.mode === 'profile.view'"
-	                     ng-model="image.file"
-	                     name="file"
-	                     ngf-max-size="3MB"
-	                     ng-click="$ctrl.imagesError = false">
-	            <img ngf-src="image.file" alt=""/>
-	          </md-button>
-	        </div>
-	      </div>
-	      <span class="error" ng-if="$ctrl.imagesError">
-	          {{$ctrl.imagesError}}
-	        </span>
-	    </div>
-	    <div class="input-container" ng-repeat="field in $ctrl.fields">
-	      <div class="input" ng-if="!field.combined">
-	        <label>{{field.name}}</label>
-	        <input type="{{field.type}}"
-	               name="{{field.model}}"
-	               required
-	               autocomplete="off"
-	               ng-readonly="$ctrl.mode === 'profile.view'"
-	               ng-model="$ctrl[field.model]"
-	               ng-class="{error: $ctrl[field.model + 'Error']}"
-	               ng-keyup="$ctrl[field.model + 'Error'] = false"
-	               ng-blur="$ctrl.validate({[field.model]: $ctrl[field.model]})">
-	        <span class="error" ng-if="$ctrl[field.model + 'Error']">
-	            {{$ctrl[field.model + 'Error']}}
-	          </span>
-	      </div>
-	      <div class="input name" ng-if="field.combined" layout="row">
-	        <div ng-repeat="combine in field.combined" flex>
-	          <label>{{combine.name}}</label>
-	          <input type="{{combine.type}}"
-	                 name="{{combine.model}}"
-	                 required
-	                 autocomplete="off"
-	                 ng-readonly="$ctrl.mode === 'profile.view'"
-	                 ng-model="$ctrl[combine.model]"
-	                 ng-class="{error: $ctrl[combine.model + 'Error'], first: $index === 0}"
-	                 ng-keyup="$ctrl[combine.model + 'Error'] = false"
-	                 ng-blur="$ctrl.validate({[combine.model]: $ctrl[combine.model]})">
-	          <span class="error" ng-if="$ctrl[combine.model + 'Error']">
-	              {{$ctrl[combine.model + 'Error']}}
-	            </span>
-	        </div>
-	      </div>
-	    </div>
-	    <div class="terms" ng-if="$ctrl.isProvider">
-	      By clicking Ready you agree to the <a href="">Terms and Privacy</a>
-	    </div>
-	    <div class="submit"
-	         layout="row"
-	         layout-align="{{$ctrl.mode === 'profile.edit' ? 'space-between center' : 'center'}}">
-	      <div flex="45" ng-if="$ctrl.mode === 'profile.edit'">
-	        <md-button class="cancel" ng-click="$ctrl.onEditCancel()">
-	          Cancel
-	        </md-button>
-	      </div>
-	      <div flex="{{$ctrl.mode === 'profile.edit' ? 45 : ''}}">
-	        <md-button ng-disabled="!billingForm.$valid"
-	                   ng-class="{disabled: !billingForm.$valid}"
-	                   ng-click="$ctrl.onSubmit({
-	                    first_name: billingForm.first_name.$viewValue,
-	                    last_name: billingForm.last_name.$viewValue,
-	                    phone: billingForm.phone.$viewValue,
-	                    email: billingForm.email.$viewValue
-	                   })"
-	                   type="submit">
-	          {{$ctrl.buttonName}}
-	        </md-button>
-	      </div>
-	    </div>
-	  </div>
+  <span class="page-name">CREATE ORDER</span>
+
+	<h4 class="personal-information__title">PERSONAL INFORMATION</h4>
+
+	<form 
+		name="personalInformationForm"
+		layout="column"
+		class="personal-information-form form_1">
+		
+
+		<div
+			layout="row"
+			layout-align="space-between">
+			<div 
+				class="form_1-field__container" 
+				layout="column"
+				flex="50">
+				<label class="form_1__label">First Name</label>
+				<input 
+					type="text" 
+					name="first_name" 
+					class="form_1__input" 
+					value="{{vm.billingInfo.first_name}}" />
+			</div>
+			<div 
+				class="form_1-field__container" 
+				layout="column"
+				flex="50">
+				<label class="form_1__label">Last Name</label>
+				<input 
+					type="text" 
+					name="first_name" 
+					class="form_1__input" 
+					value="{{vm.billingInfo.last_name}}" />
+			</div>
+		</div>
+
+		<div
+			layout="row"
+			class="form_1__row_2">
+			<div 
+				class="form_1-field__container" 
+				layout="column"
+				flex="100">
+				<label class="form_1__label">Mobile Number</label>
+				<input 
+					type="text" 
+					name="mobile" 
+					class="form_1__input" 
+					value="{{vm.billingInfo.mobile}}" />
+			</div>
+		</div>
+
 	</form>
 
+
+	<h4 class="billing-information__title">BILLING INFORMATION</h4>	      
+
+	<form 
+		name="billing-information-form"
+		layout="column"
+		class="billing-information-form">
+
+		<div
+			layout="row">
+			<div 
+				class="form_1-field__container" 
+				layout="column"
+				flex="100">
+				<label class="form_1__label">Card Number</label>
+				<input 
+					type="text" 
+					name="card_number" 
+					class="form_1__input" 
+					value="{{vm.billingInfo.cards[0].number}}" />
+			</div>
+		</div>
+
+		<div
+			layout="row"
+			layout-align="space-between"
+			class="form_1__row_2">
+			<div 
+				class="form_1-field__container" 
+				layout="column"
+				flex="50">
+				<label class="form_1__label">Expiry</label>
+				<input 
+					type="text" 
+					name="expiry" 
+					class="form_1__input" 
+					value="{{vm.billingInfo.cards[0].expiry}}" />
+			</div>
+			<div 
+				class="form_1-field__container"
+				layout="column" 
+				flex="50">
+				<label class="form_1__label">CVC</label>
+				<input 
+					type="text" 
+					name="cvc" 
+					class="form_1__input" 
+					value="{{vm.billingInfo.cards[0].cvc}}" />
+			</div>
+		</div>
+
+	</form>
+
+	<section 
+		class="billing__buttons-group"
+		layout="row"
+		layout-align="space-between">
+    <md-button flex="50" class="md-raised form_1__button form_1__button_primary">Cancel</md-button>
+    <md-button flex="50" class="md-raised md-accent form_1__button">Continue</md-button>
+	</section>
 
 </div>

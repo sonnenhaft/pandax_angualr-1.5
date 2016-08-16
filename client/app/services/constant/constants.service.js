@@ -6,6 +6,7 @@ export default class Constants {
     this.user = this.userConstants();
     this.order = this.orderConstants();
     this.map = this.mapConstants();
+    this.billing = this.billingConstants();
 
   }
 
@@ -219,6 +220,48 @@ export default class Constants {
     };
 
     return profileConstants;
+  }
+
+  billingConstants () {
+    const billingConstants = {
+
+      fields: {
+        customer: [
+          {
+            combined: [
+              {
+                name: 'First Name',
+                model: 'first_name',
+                type: 'text'
+              },
+              {
+                name: 'Last Name',
+                model: 'last_name',
+                type: 'text'
+              }
+            ]
+          },
+          {
+            name: 'Phone Number',
+            model: 'phone',
+            type: 'tel'
+          }
+        ],
+        provider: function () {
+          this.provider = _.union([
+            {
+              name: 'Display Name',
+              model: 'displaying_name',
+              type: 'text'
+            }
+          ], this.customer);
+          return this;
+        }
+      }.provider()
+
+    };
+
+    return billingConstants;
   }
 
 }

@@ -55,16 +55,19 @@ export default class User {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
           // переведёт промис в состояние fulfilled с результатом "result"
-          resolve([{
+          resolve({
             first_name: 'Barry',
             last_name: 'Bom',
             mobile: '+123456789',
             cards: [{
               id: 1,
-              name: 'Card 1'
+              name: 'Card 1',
+              number: '1111 2222 3333 4444',
+              expiry: '19/21',
+              cvc: 123
             }]
-          }]);
-        }, 2000);
+          });
+        }, 1000);
     })
   }
 
