@@ -26,7 +26,15 @@
 					type="text" 
 					name="first_name" 
 					class="form_1__input" 
-					value="{{vm.billingInfo.first_name}}" />
+					ng-model="vm.billingInfo.first_name" 
+					required/>
+			  <div 
+			  	ng-messages="personalInformationForm.first_name.$error" 
+			  	ng-show="personalInformationForm.first_name.$touched"
+			  	class="validation-messages"
+			  	role="alert">
+			    <div ng-messages-include="/app/common/messages/messages.html"></div>
+			  </div>
 			</div>
 			<div 
 				class="form_1-field__container" 
@@ -35,9 +43,16 @@
 				<label class="form_1__label">Last Name</label>
 				<input 
 					type="text" 
-					name="first_name" 
+					name="last_name" 
 					class="form_1__input" 
-					value="{{vm.billingInfo.last_name}}" />
+					ng-model="vm.billingInfo.last_name"/>
+			  <div 
+			  	ng-messages="personalInformationForm.last_name.$error" 
+			  	ng-show="personalInformationForm.last_name.$touched"
+			  	class="validation-messages"
+			  	role="alert">
+			    <div ng-messages-include="/app/common/messages/messages.html"></div>
+			  </div>
 			</div>
 		</div>
 
@@ -53,7 +68,14 @@
 					type="text" 
 					name="mobile" 
 					class="form_1__input" 
-					value="{{vm.billingInfo.mobile}}" />
+					ng-model="vm.billingInfo.mobile"/>
+			  <div 
+			  	ng-messages="personalInformationForm.mobile.$error" 
+			  	ng-show="personalInformationForm.mobile.$touched"
+			  	class="validation-messages"
+			  	role="alert">
+			    <div ng-messages-include="/app/common/messages/messages.html"></div>
+			  </div>
 			</div>
 		</div>
 
@@ -78,7 +100,14 @@
 					type="text" 
 					name="card_number" 
 					class="form_1__input" 
-					value="{{vm.billingInfo.cards[0].number}}" />
+					ng-model="vm.billingInfo.cards[0].number"/>
+			  <div 
+			  	ng-messages="personalInformationForm.card_number.$error" 
+			  	ng-show="personalInformationForm.card_number.$touched"
+			  	class="validation-messages"
+			  	role="alert">
+			    <div ng-messages-include="/app/common/messages/messages.html"></div>
+			  </div>
 			</div>
 		</div>
 
@@ -95,7 +124,14 @@
 					type="text" 
 					name="expiry" 
 					class="form_1__input" 
-					value="{{vm.billingInfo.cards[0].expiry}}" />
+					ng-model="vm.billingInfo.cards[0].expiry"/>
+			  <div 
+			  	ng-messages="personalInformationForm.expiry.$error" 
+			  	ng-show="personalInformationForm.expiry.$touched"
+			  	class="validation-messages"
+			  	role="alert">
+			    <div ng-messages-include="/app/common/messages/messages.html"></div>
+			  </div>
 			</div>
 			<div 
 				class="form_1-field__container"
@@ -106,7 +142,14 @@
 					type="text" 
 					name="cvc" 
 					class="form_1__input" 
-					value="{{vm.billingInfo.cards[0].cvc}}" />
+					ng-model="vm.billingInfo.cards[0].cvc"/>
+			  <div 
+			  	ng-messages="personalInformationForm.cvc.$error" 
+			  	ng-show="personalInformationForm.cvc.$touched"
+			  	class="validation-messages"
+			  	role="alert">
+			    <div ng-messages-include="/app/common/messages/messages.html"></div>
+			  </div>
 			</div>
 		</div>
 

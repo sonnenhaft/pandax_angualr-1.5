@@ -9,6 +9,7 @@ import 'angular-moment';
 import 'lodash';
 import 'normalize.css';
 import 'animate.css';
+import angularMessages from 'angular-messages';
 
 import Common from './common/common';
 import Components from './components/components';
@@ -23,7 +24,8 @@ angular
     angularMaterial,
     'uiGmapgoogle-maps',
     'angularMoment',
-    "angular.filter"
+    "angular.filter",
+    angularMessages
   ])
   .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider) => {
     "ngInject";
