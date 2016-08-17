@@ -73,15 +73,19 @@ export default class profileFieldsController {
       return false;
     }
 
+    profile = _.assign(profile, {                             // maybe, should be replace with better logic
+      displaying_name: this.displaying_name                   //
+    });                                                       //
+    
     this.UpdateUserProfile(profile);
     this.$state.go('main.profile.view');
   }
 
   onSave (profile) {
     if (this.validate(profile)) {
-      if (this.displaying_name) {                             // maybe, should be replace with better logic
-        profile.displaying_name = this.displaying_name;       //
-      }                                                       //
+      profile = _.assign(profile, {                             // maybe, should be replace with better logic
+        displaying_name: this.displaying_name                   //
+      });                                                       //
       this.UpdateUserProfile(profile, 'main.profile.view');
     }
   }
