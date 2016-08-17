@@ -1,16 +1,16 @@
 export default class profileFieldsController {
 
-  constructor (User, Constants, Validation, Storage, $state) {
+  constructor (User, Constants, Validation, Storage, $state, $q) {
     'ngInject';
 
-    _.assign(this, {User, Constants, Validation, Storage, $state});
+    _.assign(this, {User, Constants, Validation, Storage, $state, images: [], backupModel: {}, photosBuffer: [], $q});
 
     this.session = Storage.getObject('MINX');
 
     this.isCustomer = User.get('role') === 'customer';
     this.isProvider = User.get('role') === 'provider';
     this.fields = Constants.profile.fields[User.get('role')];
-    this.images = this.profileImage();
+    this.profileImage();
 
   }
 
@@ -22,6 +22,7 @@ export default class profileFieldsController {
     switch (this.mode) {
       case 'main.profile.create':
         this.email = this.User.get('email');
+        this.backupModel.email = this.email;
         break;
 
       default:
@@ -31,17 +32,30 @@ export default class profileFieldsController {
   }
 
   profileImage () {
-    if (!this.User.get('photo')) {
-      return this.Constants.profile.images[this.User.get('role')];
-    }
+    let role = this.User.get('role');
 
-    return this.isCustomer ?
-      [{file: this.User.get('photo').preview}] :
-      _.map(this.User.get('photos'), image => {
-        return {
-          file: image.preview
+    this.User.getUserProfile(
+          Object.assign(this.session.user, 
+                        {token: this.User.token()}),
+          role, 
+          false)
+      .then((data) => {
+        if (data.photo) {
+          this.images.push({file: data.photo.preview});
+        } else if (data.photos && data.photos.length) {
+          _.each(data.photos, (photo) => {
+            this.images.push({file: photo.preview});
+          })
+        } else {
+          this.images = this.Constants.profile.images[role];
         }
       })
+      .then(() => {
+        this.backupModel.photo = angular.copy(this.images[0]);
+        this.backupModel.images = angular.copy(this.images);
+      });
+
+    this.photo = this.images[0];
   }
 
   buildProfileModels () {
@@ -49,13 +63,16 @@ export default class profileFieldsController {
 
     _.mapValues(this.User.get(), (model, key) => {
       this[key] = model;
+      this.backupModel[key] = angular.copy(model);
     });
+  }
 
-    if (this.User.get('photo')) {
-      this.photo = {
-        background: 'url(' + this.User.get('photo').original + ') no-repeat fixed center'
-      };
-    }
+  rebuildProfileModelsFromBackup () {
+    this.mode = 'main.profile.view';
+
+    _.mapValues(this.backupModel, (model, key) => {
+      this[key] = model;
+    });
   }
 
   validate (field) {
@@ -76,7 +93,7 @@ export default class profileFieldsController {
     profile = _.assign(profile, {                             // maybe, should be replace with better logic
       displaying_name: this.displaying_name                   //
     });                                                       //
-    
+
     this.UpdateUserProfile(profile);
     this.$state.go('main.profile.view');
   }
@@ -105,12 +122,31 @@ export default class profileFieldsController {
   }
 
   onImageChange (image, slot) {
-    this.User
-      .UpdateUserPhoto(image, slot)
-      .then(
-        result => this.User.update({[this.isCustomer ? 'photo' : 'photos']: result.photo}),
-        error => console.log(error)
-      );
+    if (image) {
+      this.photosBuffer.push({image: image, slot: slot});
+    }
+  }
+
+  UpdateUserPhotos () {
+    if (this.photosBuffer.length == 0) {
+      return false;
+    }
+
+    let promises = [];
+
+    _.each(this.photosBuffer, (photo) => {
+      let query = this.User
+        .UpdateUserPhoto(photo.image, photo.slot)
+        .then(
+          result => this.User.update({[this.isCustomer ? 'photo' : 'photos']: result.photo}),
+          error => console.log(error)
+        );
+      promises.push(query);
+    })
+
+    this.$q.all(promises).then((data) => {
+      this.photosBuffer = [];
+    })
   }
 
   UpdateUserProfile (profile, mode) {
@@ -129,6 +165,7 @@ export default class profileFieldsController {
           console.log(error);
         }
       );
+    this.UpdateUserPhotos();
   }
 
 }

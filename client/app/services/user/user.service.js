@@ -145,7 +145,7 @@ export default class User {
       );
   }
 
-  getUserProfile (user, type) {
+  getUserProfile (user, type, redirectUser = true) {
     return this
       .Request
       .send(
@@ -156,8 +156,11 @@ export default class User {
       .then(
         result => {
           this.update(result.data);
-          this.redirectUser();
-          return true;
+          if (redirectUser == true) {
+            this.redirectUser();
+          }
+          // return true;
+          return result.data;
         },
         error => console.log(error)
       );
