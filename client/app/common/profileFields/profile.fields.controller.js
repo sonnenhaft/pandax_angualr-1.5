@@ -79,6 +79,9 @@ export default class profileFieldsController {
 
   onSave (profile) {
     if (this.validate(profile)) {
+      if (this.displaying_name) {                             // maybe, should be replace with better logic
+        profile.displaying_name = this.displaying_name;       //
+      }                                                       //
       this.UpdateUserProfile(profile, 'main.profile.view');
     }
   }
