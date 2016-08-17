@@ -8,12 +8,11 @@ class BillingController {
     	User,
     	$stateParams
     });
-console.log('modify in controller:', this.User.billingInfo, this.$stateParams);
   }
 
   saveInfo () {
   	this.User.saveBillingInfo()
-  		.then((data) => {
+  		.then((_data) => {
   			this.$state.go(this.$stateParams.from);
   		});
   }
