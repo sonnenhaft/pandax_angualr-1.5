@@ -1,64 +1,34 @@
 class HomeController {
 
-  constructor ($stateParams, Validation, User) {
+  constructor ($stateParams) {
     'ngInject';
 
-    _.assign(this, {$stateParams, Validation, User});
+    _.assign(this, {$stateParams});
 
     this.signIn = true;
     this.signUp = false;
-    this.isCustomer = true;
-    this.isProvider = false;
-
-    this.onInit();
 
   }
 
-  onInit () {
+  $onInit () {
     if (this.$stateParams.signup && this.$stateParams.user) {
-      this.signIn = this.isCustomer = this.isProvider = false;
-      this['is' + _.capitalize(this.$stateParams.user)] = this.signUp = true;
-    }
-  }
-
-  onSubmit (credentials) {
-    let isError, errorMessage;
-
-    isError = this.Validation.error(credentials).length;
-    errorMessage = this.Validation.error(credentials);
-    credentials = _.assign(credentials, {
-      type: this.isCustomer ? 'customer' : 'provider',
-      auth: this.signIn
-    });
-
-    if (isError) {
-      _.map(errorMessage, error => {
-        this[
-          (this.signIn ? 'signIn' : 'signUp') + _.capitalize(error.name) + 'Error'
-        ] = error.text;
-      });
-
-      return false;
+      this.signIn = false;
+      this.signUp = true;
     }
 
-    return this.signIn ?
-      this.User.login(credentials) :
-      this.User.register(credentials);
-  }
-
-  validate (field) {
-    if (this.Validation.error(field).length) {
-      _.map(this.Validation.error(field), error => {
-        this[(this.signIn ? 'signIn' : 'signUp') + _.capitalize(error.name) + 'Error'] = error.text;
-      });
-      return false;
+    if (this.$stateParams.restore) {
+      this.signIn = this.signUp = false;
+      this.restore = true;
     }
-    return true;
+
+    if (this.$stateParams.reset) {
+      this.signIn = this.signUp = this.restore = false;
+      this.reset = true;
+    }
   }
 
   switchTo (form) {
-    this.signIn = this.signUp = false;
-    this.email = this.password = '';
+    this.signIn = this.signUp = this.restore = this.reset = false;
     this[form] = true;
   }
 

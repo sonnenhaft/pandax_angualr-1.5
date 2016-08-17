@@ -13,7 +13,7 @@ export default class Order {
   }
 
   /* 
-    Seatch entertainers 
+    Search entertainers 
   */
   fetchEntertainers() {
     /*

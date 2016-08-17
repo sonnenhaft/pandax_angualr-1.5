@@ -1,37 +1,59 @@
 export default class profileFieldsController {
 
-  constructor (User, Constants, Validation, Storage, $state, $timeout) {
+  constructor (User, Constants, Validation, Storage, $state) {
     'ngInject';
 
-    _.assign(this, {User, Constants, Validation, Storage, $state, $timeout});
+    _.assign(this, {User, Constants, Validation, Storage, $state});
 
     this.session = Storage.getObject('MINX');
 
-    this.isCustomer = User.get('type') === 'customer';
-    this.isProvider = User.get('type') === 'provider';
-    this.fields = Constants.profile.fields[User.get('type')];
-    this.images = this.Constants.profile.images[this.User.get('type')];
+    this.isCustomer = User.get('role') === 'customer';
+    this.isProvider = User.get('role') === 'provider';
+    this.fields = Constants.profile.fields[User.get('role')];
+    this.images = this.profileImage();
 
   }
 
   $onChanges (changes) {
-    this.onModeChange(changes.mode.currentValue);
+    this.mode = changes.mode.currentValue;
   }
 
   $onInit () {
-    if (this.mode !== 'profile.create') {
-      this.buildProfileModels();
+    switch (this.mode) {
+      case 'main.profile.create':
+        this.email = this.User.get('email');
+        break;
+
+      default:
+        this.buildProfileModels();
+        break;
     }
   }
 
+  profileImage () {
+    if (!this.User.get('photo')) {
+      return this.Constants.profile.images[this.User.get('role')];
+    }
+
+    return this.isCustomer ?
+      [{file: this.User.get('photo').preview}] :
+      _.map(this.User.get('photos'), image => {
+        return {
+          file: image.preview
+        }
+      })
+  }
+
   buildProfileModels () {
+    this.mode = 'main.profile.view';
+
     _.mapValues(this.User.get(), (model, key) => {
       this[key] = model;
     });
 
-    if (this.User.get('photo') && this.User.get('photo').$ngfBlobUrl) {
+    if (this.User.get('photo')) {
       this.photo = {
-        background: 'url(' + this.User.get('photo').$ngfBlobUrl + ') no-repeat fixed center'
+        background: 'url(' + this.User.get('photo').original + ') no-repeat fixed center'
       };
     }
   }
@@ -46,70 +68,18 @@ export default class profileFieldsController {
     return true;
   }
 
-  onModeChange (mode) {
-    this.mode = mode;
-
-    switch (mode) {
-
-      case 'profile.view':
-        this.buttonName = 'Edit profile';
-        break;
-
-      case 'profile.edit':
-        this.buttonName = 'Save';
-        break;
-
-      case 'profile.create':
-        this.email = this.User.get('email');
-        this.buttonName = 'Ready';
-        break;
-
-      default:
-
-    }
-  }
-
-  onEditCancel () {
-    this.onModeChange('profile.view');
-    this.buildProfileModels();
-  }
-
-  onSubmit (profile) {
-    if (this.mode === 'profile.view') {
-      this.onModeChange('profile.edit');
-      return false;
-    }
-
+  onReady (profile) {
     if (!this.isProviderProfile() || !this.validate(profile)) {
       return false;
     }
 
-    this.session.user = _.assign(
-      this.session.user,
-      profile,
-      {
-        auth: true
-      },
-      {
-        photo: this.isCustomer ?
-          _.head(this.images).file :
-          _.map(this.images, 'file')
-      }
-    );
+    this.UpdateUserProfile(profile);
+    this.$state.go('main.profile.view');
+  }
 
-    //console.log(this.session.user);
-
-    this.Storage.setObject('MINX', this.session);
-
-    if (this.mode === 'profile.edit') {
-      this.onModeChange('profile.view');
-      this.buildProfileModels();
-      return false;
-    }
-
-    if (this.mode === 'profile.create') {
-      this.$state.go(this.isCustomer ? 'main.order' : 'main.order');
-      return false;
+  onSave (profile) {
+    if (this.validate(profile)) {
+      this.UpdateUserProfile(profile, 'main.profile.view');
     }
   }
 
@@ -125,6 +95,33 @@ export default class profileFieldsController {
     }
 
     return true;
+  }
+
+  onImageChange (image, slot) {
+    this.User
+      .UpdateUserPhoto(image, slot)
+      .then(
+        result => this.User.update({[this.isCustomer ? 'photo' : 'photos']: result.photo}),
+        error => console.log(error)
+      );
+  }
+
+  UpdateUserProfile (profile, mode) {
+    this.saveLoading = true;
+    this.User
+      .UpdateUserProfile(profile)
+      .then(
+        result => {
+          this.saveLoading = false;
+          this.User.update(_.assign(result, {auth: true}));
+          this.mode = mode;
+          this.buildProfileModels();
+        },
+        error => {
+          this.saveLoading = false;
+          console.log(error);
+        }
+      );
   }
 
 }

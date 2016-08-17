@@ -1,9 +1,9 @@
 class orderController {
 
-  constructor (Constants, Location, Helper, Validation, $q, $window, moment, $state) {
+  constructor (User, Constants, Location, Helper, Validation, Request, $q, $window, $state, moment, $mdDialog) {
     'ngInject';
 
-    _.assign(this, {Constants, Location, Helper, Validation, $q, moment, $state});
+    _.assign(this, {User, Constants, Location, Helper, Validation, Request, $q, $state, moment, $mdDialog});
 
     this.mobile = $window.innerWidth <= 960;
 
@@ -20,6 +20,16 @@ class orderController {
 
     this.time = this.Helper.getNearestTime('time');
     this.range = this.Helper.getNearestTime('range');
+  }
+
+  showDescription (event, index) {
+    this.$mdDialog
+      .show({
+        contentElement: '#typeDescr-' + index,
+        parent: document.body,
+        targetEvent: event,
+        clickOutsideToClose: true
+      });
   }
 
   getLocation (str) {
@@ -78,15 +88,49 @@ class orderController {
       return false;
     }
 
-    this.$state.go('main.manipulationEntertainers.searchEntertainers');    
+    if (!this.validate({apt: form.apt, location: this.searchText})) {
+      return false;
+    }
 
-    console.log(
-      _.assign(form, {
-        location: this.location,
-        service: this.Helper.getActiveObjectFromArray(this.providers)
-      })
-    );
+    this.orderLoading = true;
 
+    let data = {
+      service_type: Number(_.head(this.Helper.getActiveObjectFromArray(this.providers)).type),
+      length: parseFloat(form.hour).toString(),
+      location: this.searchText,
+      coordinates: {
+        lat: this.location.coords.latitude.toString(),
+        long: this.location.coords.longitude.toString()
+      },
+      location_notes: form.notes ? form.notes : '',
+      apartment: form.apt,
+      asap: form.asap,
+      datetime: form.asap ?
+        this.moment() :
+        this.moment(new Date(this.moment(form.date).format('YYYY/MM/DD') + ' ' + form.time)),
+      entertainers_number: Number(form.entertainer),
+      guests_number: form.guest.toString(),
+      cost: this.getTotalPrice().toString()
+    };
+
+    this.Request
+      .send(
+        this.User.token(),
+        this.Constants.api.order.method,
+        this.Constants.api.order.uri,
+        data
+      )
+      .then(
+        result => {
+          this.orderLoading = false;
+          this.$state.go('main.manipulationEntertainers.searchEntertainers');
+          console.log(result);
+        },
+        error => {
+          this.orderLoading = false;
+          console.log(error);
+        }
+      );
   }
 
 }

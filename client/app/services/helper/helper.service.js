@@ -11,6 +11,10 @@ export default class Helper {
     return _.filter(arr, object => object.active === true);
   }
 
+  switchObjectActivity (arr, index) {
+    return _.map(arr, (object, i) => object.active = index === i);
+  }
+
   getNearestTime (type, newDate) {
     let date, round, current, time, hours, halfhours, range, object;
 
@@ -47,6 +51,11 @@ export default class Helper {
       .map(hour => this.moment(date + ' ' + hour).format('h:mm A'))
       .uniq()
       .value();
+
+    if (this.moment(newDate).format('YYYY-MM-DD') === date) {
+      range = _.slice(range, 4, range.length);
+      time = _.head(range);
+    }
 
     object = {time, range, hours, halfhours};
 

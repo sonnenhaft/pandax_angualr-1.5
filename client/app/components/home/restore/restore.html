@@ -1,0 +1,48 @@
+<div class="restore-form">
+  <form name="restoreForm" class="animated fadeIn">
+    <div class="form-info">
+      <span class="info-head">Forgot Password?</span>
+      <p>Enter your e-mail address and we’ll send you a link to reset your password.</p>
+    </div>
+    <div class="credentials">
+      <div class="input">
+        <label>E-mail</label>
+        <input type="email"
+               name="email"
+               ng-model="$ctrl.email"
+               ng-keyup="$ctrl.emailError = $ctrl.logignError = false"
+               ng-blur="$ctrl.validate({email: restoreForm.email.$viewValue})"
+               maxlength="100"
+               required/>
+        <span class="error" ng-if="$ctrl.emailError">
+          {{$ctrl.emailError}}
+        </span>
+      </div>
+    </div>
+    <div class="sign-button">
+      <md-button ng-disabled="$ctrl.restoreLoading"
+                 ng-class="{disabled: $ctrl.restoreLoading}"
+                 type="submit"
+                 ng-click="$ctrl.onSubmit({
+                   email: restoreForm.email.$viewValue
+                 }, $event)">
+        {{!$ctrl.restoreLoading ? 'Send' : ''}}
+        <spinner input="$ctrl.restoreLoading"></spinner>
+      </md-button>
+      <span class="sign-error" ng-if="$ctrl.restoreError">
+        {{$ctrl.restoreError}}
+      </span>
+    </div>
+  </form>
+  <div style="visibility: hidden">
+    <div class="md-dialog-container success" id="restore-success">
+      <md-dialog>
+        <p>We've sent you an email with a link to reset your password.</p>
+        <md-button ng-click="$ctrl.hideMessage()">OK</md-button>
+      </md-dialog>
+    </div>
+  </div>
+  <div class="account-ready">
+    Remember your password? <a href="" ng-click="$ctrl.output({view: 'signIn'})">Log In</a>
+  </div>
+</div>
