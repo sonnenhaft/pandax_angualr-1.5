@@ -1,7 +1,14 @@
 class mainController {
 
-  constructor () {
+  constructor (User) {
+    'ngInject';
 
+    _.assign(this, {
+      User,
+      userAvatarSrc: ''
+    });
+
+    this.User.fetchUserAvatarSrc();
   }
 
 }

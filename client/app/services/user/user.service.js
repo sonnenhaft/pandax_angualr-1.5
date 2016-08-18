@@ -1,9 +1,9 @@
 export default class User {
 
-  constructor (Storage, Constants, Request, $state, $http) {
+  constructor (Storage, Constants, Request, $state, $http, Helper) {
     'ngInject';
 
-    _.assign(this, {Storage, Constants, Request, $state, $http});
+    _.assign(this, {Storage, Constants, Request, $state, $http, Helper, userAvatarSrc: ''});
 
   }
 
@@ -190,7 +190,12 @@ export default class User {
         file
       )
       .then(
-        result => result.data,
+        result => {
+          if (slot == 1) {
+            this.setUserAvatarSrc(result.data)
+          }
+          return result.data;
+        },
         error => console.log(error)
       )
   }
@@ -213,6 +218,32 @@ export default class User {
   logout () {
     this.Storage.remove('MINX');
     this.$state.go('home');
+  }
+
+  /*
+    User avatar section
+   */
+  fetchUserAvatarSrc () {  
+    return this.getUserProfile(_.assign(this.get(), {token: this.token()}), this.get('role'), false)
+      .then(data => {
+        return this.setUserAvatarSrc(data);
+      });
+  }
+
+  setUserAvatarSrc (data = {}) {
+    let photoSrc = '';
+
+    if (data.photo) {
+      photoSrc = data.photo.preview;
+    } else if (data.photos && data.photos[0] && data.photos[0].preview) {
+      photoSrc = data.photos[0].preview;
+    }
+
+    return this.userAvatarSrc = photoSrc + '?' + this.Helper.getUniqueNumberByTime();
+  }
+
+  getUserAvatarSrc () {
+    return this.userAvatarSrc;
   }
 
 }

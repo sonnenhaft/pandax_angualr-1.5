@@ -1,3 +1,5 @@
+var config = require('config');
+
 export default class Constants {
 
   constructor ($window) {
@@ -14,9 +16,7 @@ export default class Constants {
   }
 
   apiConstants () {
-    const path = this.$window.location.hostname != 'localhost' ?
-      this.$window.location.protocol + '//' + this.$window.location.host + '/api' :
-      'http://dev3.panda.aws.isdev.info/api';
+    const path = config.API_URL;
 
     let apiConstants = {
 

@@ -3,7 +3,9 @@ import controller from './navbar.controller';
 
 let navbarComponent = {
   restrict: 'E',
-  bindings: {},
+  bindings: {
+  	userAvatarSrc: '='
+  },
   template,
   controller,
   controllerAs: 'vm'

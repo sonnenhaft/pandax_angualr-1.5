@@ -1,9 +1,9 @@
 export default class profileFieldsController {
 
-  constructor (User, Constants, Validation, Storage, $state, $q) {
+  constructor (User, Constants, Validation, Storage, $state, $q, Helper) {
     'ngInject';
 
-    _.assign(this, {User, Constants, Validation, Storage, $state, images: [], backupModel: {}, photosBuffer: [], $q});
+    _.assign(this, {User, Constants, Validation, Storage, $state, $q, Helper, images: [], backupModel: {}, photosBuffer: []});
 
     this.session = Storage.getObject('MINX');
 
@@ -11,7 +11,6 @@ export default class profileFieldsController {
     this.isProvider = User.get('role') === 'provider';
     this.fields = Constants.profile.fields[User.get('role')];
     this.profileImage();
-
   }
 
   $onChanges (changes) {
@@ -34,28 +33,54 @@ export default class profileFieldsController {
   profileImage () {
     let role = this.User.get('role');
 
+    this.images = this.Constants.profile.images[role];
+
     this.User.getUserProfile(
           Object.assign(this.session.user, 
                         {token: this.User.token()}),
           role, 
           false)
       .then((data) => {
-        if (data.photo) {
-          this.images.push({file: data.photo.preview});
-        } else if (data.photos && data.photos.length) {
-          _.each(data.photos, (photo) => {
-            this.images.push({file: photo.preview});
-          })
-        } else {
-          this.images = this.Constants.profile.images[role];
-        }
-      })
-      .then(() => {
-        this.backupModel.photo = angular.copy(this.images[0]);
-        this.backupModel.images = angular.copy(this.images);
-      });
+        let photoSrc = '';
 
-    this.photo = this.images[0];
+        if (data.photo) {
+          photoSrc = data.photo.original;
+          this.images[0] = {file: data.photo.preview};
+        } else if (data.photos && data.photos.length > 0) {
+          photoSrc = data.photos[0] && data.photos[0].original;
+          _.each(data.photos, (photo, i) => {
+            if (photo) {
+              this.images[i] = {file: photo.preview};
+            }
+          })
+        }
+
+        this.backupPhotos();
+        this.profilePhoto(photoSrc);
+
+        return data;
+      });
+  }
+
+  profilePhoto (photoSrc = '') {
+    this.photo = {
+      background: 'url(' + photoSrc + '?' + this.Helper.getUniqueNumberByTime() + ') no-repeat fixed center'     // add string to tell browser 
+    };                                                                                              // to send request, instead of get image from cache
+
+    this.backupModel.photo = angular.copy(this.photo);
+  }
+
+  backupPhotos (photos = this.images) {
+    this.backupModel.images = [];
+    _.each(photos, (photo, i) => {
+      this.backupPhoto(photo, i);
+    });
+  }
+
+  backupPhoto (photo, i) {
+    this.backupModel.images[i] = {
+      file: photo.file + '?' + this.Helper.getUniqueNumberByTime()
+    }; 
   }
 
   buildProfileModels () {
@@ -71,7 +96,7 @@ export default class profileFieldsController {
     this.mode = 'main.profile.view';
 
     _.mapValues(this.backupModel, (model, key) => {
-      this[key] = model;
+      this[key] = angular.copy(model);
     });
   }
 
@@ -94,8 +119,10 @@ export default class profileFieldsController {
       displaying_name: this.displaying_name                   //
     });                                                       //
 
-    this.UpdateUserProfile(profile);
-    this.$state.go('main.profile.view');
+    this.UpdateUserProfile(profile)
+      .then(() => {
+        this.$state.go('main.profile.view');
+      });
   }
 
   onSave (profile) {
@@ -138,7 +165,17 @@ export default class profileFieldsController {
       let query = this.User
         .UpdateUserPhoto(photo.image, photo.slot)
         .then(
-          result => this.User.update({[this.isCustomer ? 'photo' : 'photos']: result.photo}),
+          result => {
+            let photoResult = result.photo ? result.photo : result.photos[0];
+
+            if (photo.slot == 1) {
+              this.profilePhoto(photoResult.original);
+            }
+
+            this.backupPhoto({file: photoResult.preview}, photo.slot - 1);
+
+            return this.User.update({[this.isCustomer ? 'photo' : 'photos']: result.photo})
+          },
           error => console.log(error)
         );
       promises.push(query);
@@ -151,7 +188,8 @@ export default class profileFieldsController {
 
   UpdateUserProfile (profile, mode) {
     this.saveLoading = true;
-    this.User
+    this.UpdateUserPhotos();
+    return this.User
       .UpdateUserProfile(profile)
       .then(
         result => {
@@ -165,7 +203,6 @@ export default class profileFieldsController {
           console.log(error);
         }
       );
-    this.UpdateUserPhotos();
   }
 
 }
