@@ -10,6 +10,7 @@ import Validation from '../../services/validation/validation';
 import orderConfirm from './orderConfirm/orderConfirm';
 import manipulationEntertainers from './manipulationEntertainers/manipulationEntertainers';
 import Request from '../../services/request/request';
+import orderTerms from './orderTerms/orderTerms';
 
 
 export default angular
@@ -23,7 +24,8 @@ export default angular
     Validation,
     orderConfirm,
     manipulationEntertainers,
-    Request
+    Request,
+    orderTerms
   ])
   .config(($stateProvider) => {
     "ngInject";
