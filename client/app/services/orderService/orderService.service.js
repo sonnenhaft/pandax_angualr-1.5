@@ -12,9 +12,6 @@ export default class Order {
 
   }
 
-  /* 
-    Search entertainers 
-  */
   fetchEntertainers() {
     /*
     ToDo: fetch from server
@@ -111,7 +108,4 @@ export default class Order {
   getEntertainersConfirmedCount() {
     return this.entertainersConfirmedCount;
   }
-
-
-
 }

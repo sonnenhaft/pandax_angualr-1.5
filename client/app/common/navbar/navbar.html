@@ -18,7 +18,7 @@
 
   <div class="mobilemenu" ng-if="vm.mobile">
     <div class="avatar">
-      <img ng-src="{{vm.avatar}}" alt=""/>
+      <img ng-src="{{vm.userAvatarSrc}}" alt=""/>
     </div>
 
     <div class="navigation" ng-if="vm.$state.current.name !== 'main.profile.create'">
@@ -48,7 +48,7 @@
   </div>
 
   <div hide show-gt-sm class="avatar">
-    <img ng-src="{{vm.avatar}}" alt=""/>
+    <img ng-src="{{vm.userAvatarSrc}}" alt=""/>
   </div>
 
   <div class="navigation" hide show-gt-sm ng-if="vm.$state.current.name !== 'main.profile.create'">

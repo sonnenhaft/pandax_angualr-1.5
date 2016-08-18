@@ -40,7 +40,7 @@ export default class Validation {
       case !str:
         return this.message('email', false, 'This field is required.');
 
-      case str.length >= 100:
+      case str.length > 100:
         return this.message('email', false, 'Max 100 characters allowed.');
 
       case !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(str.toLowerCase()):

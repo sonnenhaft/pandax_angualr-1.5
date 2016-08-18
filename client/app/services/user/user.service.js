@@ -1,10 +1,9 @@
 export default class User {
 
-  constructor (Storage, Constants, Request, $state, $http) {
+  constructor (Storage, Constants, Request, $state, $http, Helper) {
     'ngInject';
 
-    _.assign(this, {Storage, Constants, Request, $state, $http, billingInfo: {}});
-
+    _.assign(this, {Storage, Constants, Request, $state, $http, Helper, userAvatarSrc: '', billingInfo: {}});
   }
 
   isAuth () {
@@ -145,7 +144,8 @@ export default class User {
       );
   }
 
-  getUserProfile (user, type) {
+
+  getUserProfile (user, type, redirectUser = true) {
     return this
       .Request
       .send(
@@ -156,8 +156,11 @@ export default class User {
       .then(
         result => {
           this.update(result.data);
-          this.redirectUser();
-          return true;
+          if (redirectUser == true) {
+            this.redirectUser();
+          }
+          // return true;
+          return result.data;
         },
         error => console.log(error)
       );
@@ -187,7 +190,12 @@ export default class User {
         file
       )
       .then(
-        result => result.data,
+        result => {
+          if (slot == 1) {
+            this.setUserAvatarSrc(result.data)
+          }
+          return result.data;
+        },
         error => console.log(error)
       )
   }
@@ -212,16 +220,30 @@ export default class User {
     this.$state.go('home');
   }
 
-  preAuth (credentials) {
-    this.Storage.setObject('MINX', {
-      token: 'falseToken!ufhuishdfihsduf723e.rjueifgh8923yrhjo3nknhurfhg9823ornlkfn',
-      user: {
-        id: _.random(100000000),
-        email: credentials.email,
-        type: credentials.type,
-        auth: credentials.auth
-      }
-    });
+  /*
+    User avatar section
+   */
+  fetchUserAvatarSrc () {  
+    return this.getUserProfile(_.assign(this.get(), {token: this.token()}), this.get('role'), false)
+      .then(data => {
+        return this.setUserAvatarSrc(data);
+      });
+  }
+
+  setUserAvatarSrc (data = {}) {
+    let photoSrc = '';
+
+    if (data.photo) {
+      photoSrc = data.photo.preview;
+    } else if (data.photos && data.photos[0] && data.photos[0].preview) {
+      photoSrc = data.photos[0].preview;
+    }
+
+    return this.userAvatarSrc = photoSrc + '?' + this.Helper.getUniqueNumberByTime();
+  }
+
+  getUserAvatarSrc () {
+    return this.userAvatarSrc;
   }
 
   fetchBillingInfo () {

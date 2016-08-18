@@ -62,4 +62,7 @@ export default class Helper {
     return type ? object[type] : object;
   }
 
+  getUniqueNumberByTime () {
+    return Date.parse(new Date());
+  }
 }
