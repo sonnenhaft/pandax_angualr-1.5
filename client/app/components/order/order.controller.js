@@ -31,6 +31,16 @@ class orderController {
 
     this.time = this.Helper.getNearestTime('time');
     this.range = this.Helper.getNearestTime('range');
+
+    if (this.User.get('is_newcomer')) {
+      this.entertainers = _.slice(this.entertainers, 1);
+      this.entertainer = _.head(this.entertainers);
+    }
+
+    if (!this.User.get('is_newcomer')) {
+      this.hours = _.slice(this.hours, 1);
+      this.hour = _.head(this.hours);
+    }
   }
 
   showDescription (event, index) {
