@@ -11,13 +11,14 @@ export default class Constants {
     this.map = this.mapConstants();
     this.billing = this.billingConstants();
     this.api = this.apiConstants();
+    this.terms = this.termsConstants();
 
   }
 
   apiConstants () {
     const path = this.$window.location.hostname != 'localhost' ?
       this.$window.location.protocol + '//' + this.$window.location.host + '/api' :
-      'http://dev3.panda.aws.isdev.info/api';
+      'http://dev3-panda-aws.isdev.info/api';
 
     let apiConstants = {
 
@@ -119,6 +120,17 @@ export default class Constants {
     };
 
     return orderConstants;
+  }
+
+  termsConstants () {
+    const termsConstants = [
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+    ];
+
+    return termsConstants;
   }
 
   userConstants () {

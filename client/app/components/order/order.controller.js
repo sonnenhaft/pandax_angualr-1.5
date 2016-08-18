@@ -3,7 +3,18 @@ class orderController {
   constructor (User, Constants, Location, Helper, Validation, Request, $q, $window, $state, moment, $mdDialog) {
     'ngInject';
 
-    _.assign(this, {User, Constants, Location, Helper, Validation, Request, $q, $state, moment, $mdDialog});
+    _.assign(this, {
+      User,
+      Constants,
+      Location,
+      Helper,
+      Validation,
+      Request,
+      $q,
+      $state,
+      moment,
+      $mdDialog
+    });
 
     this.mobile = $window.innerWidth <= 960;
 
@@ -113,6 +124,11 @@ class orderController {
       cost: this.getTotalPrice().toString()
     };
 
+    if (this.User.get('is_newcomer')) {
+      this.$state.go('main.accept', {order: data});
+      return false;
+    }
+
     this.Request
       .send(
         this.User.token(),
@@ -123,8 +139,8 @@ class orderController {
       .then(
         result => {
           this.orderLoading = false;
-          this.$state.go('main.manipulationEntertainers.searchEntertainers');
-          console.log(result);
+          this.User.update(result.data.customer);
+          this.$state.go('main.manipulationEntertainers');
         },
         error => {
           this.orderLoading = false;
