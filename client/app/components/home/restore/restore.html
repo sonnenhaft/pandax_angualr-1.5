@@ -10,13 +10,17 @@
         <input type="email"
                name="email"
                ng-model="$ctrl.email"
-               ng-keyup="$ctrl.emailError = $ctrl.logignError = false"
+               ng-class="{error: $ctrl.restoreError || $ctrl.emailError}"
+               ng-change="$ctrl.emailError = $ctrl.restoreError = false"
                ng-blur="$ctrl.validate({email: restoreForm.email.$viewValue})"
                maxlength="100"
                required/>
         <span class="error" ng-if="$ctrl.emailError">
           {{$ctrl.emailError}}
         </span>
+        <span class="error" ng-if="$ctrl.restoreError">
+        {{$ctrl.restoreError}}
+      </span>
       </div>
     </div>
     <div class="sign-button">
@@ -29,9 +33,6 @@
         {{!$ctrl.restoreLoading ? 'Send' : ''}}
         <spinner input="$ctrl.restoreLoading"></spinner>
       </md-button>
-      <span class="sign-error" ng-if="$ctrl.restoreError">
-        {{$ctrl.restoreError}}
-      </span>
     </div>
   </form>
   <div style="visibility: hidden">
