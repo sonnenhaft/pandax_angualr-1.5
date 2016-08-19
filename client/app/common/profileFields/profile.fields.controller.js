@@ -166,7 +166,7 @@ export default class profileFieldsController {
         .UpdateUserPhoto(photo.image, photo.slot)
         .then(
           result => {
-            let photoResult = result.photo ? result.photo : result.photos[0];
+            let photoResult = result.photo ? result.photo : result.photos[photo.slot - 1];
 
             if (photo.slot == 1) {
               this.profilePhoto(photoResult.original);

@@ -3,8 +3,7 @@ export default class User {
   constructor (Storage, Constants, Request, $state, $http, Helper) {
     'ngInject';
 
-    _.assign(this, {Storage, Constants, Request, $state, $http, Helper, userAvatarSrc: ''});
-
+    _.assign(this, {Storage, Constants, Request, $state, $http, Helper, userAvatarSrc: '', billingInfo: {}});
   }
 
   isAuth () {
@@ -145,6 +144,7 @@ export default class User {
       );
   }
 
+
   getUserProfile (user, type, redirectUser = true) {
     return this
       .Request
@@ -244,6 +244,54 @@ export default class User {
 
   getUserAvatarSrc () {
     return this.userAvatarSrc;
+  }
+
+  fetchBillingInfo () {
+    /*
+    ToDo: replace with real server request
+     */
+    return new Promise((resolve, reject) => {
+          this.billingInfo = Object.assign(this.billingInfo, {
+            first_name: 'Barry',
+            last_name: 'Bom',
+            mobile: '+123456789',
+            cards: [{
+              id: 1,
+              name: 'Card 1',
+              number: 1111222233334444,
+              expiry: '19/21',
+              cvc: 123
+            }]
+          });
+
+        setTimeout(() => {
+          resolve(this.billingInfo);
+        }, 1000);
+    })
+  }
+
+  saveBillingInfo () {
+    /*
+    ToDo: replace with real server request
+     */
+    return new Promise((resolve, reject) => {
+          this.billingInfo = Object.assign(this.billingInfo, {
+            first_name: 'Barry edit',
+            last_name: 'Bom edit',
+            mobile: '+123456789',
+            cards: [{
+              id: 1,
+              name: 'Card 1',
+              number: 1111222233334444,
+              expiry: '19/21',
+              cvc: 123
+            }]
+          });
+
+        setTimeout(() => {
+          resolve(this.billingInfo);
+        }, 1000);
+    })
   }
 
 }

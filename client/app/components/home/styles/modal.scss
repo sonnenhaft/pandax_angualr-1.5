@@ -1,8 +1,10 @@
 .success {
+  background-color: rgba($black, .3);
 
   md-dialog {
     padding: 34px 50px;
     border-radius: 0;
+    background: white;
 
     p {
       width: 100%;

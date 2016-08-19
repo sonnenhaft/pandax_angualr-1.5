@@ -8,7 +8,9 @@ import Location from '../../services/location/location';
 import Helper from '../../services/helper/helper';
 import Validation from '../../services/validation/validation';
 import orderConfirm from './orderConfirm/orderConfirm';
+import manipulationEntertainers from './manipulationEntertainers/manipulationEntertainers';
 import Request from '../../services/request/request';
+import orderTerms from './orderTerms/orderTerms';
 
 
 export default angular
@@ -21,7 +23,9 @@ export default angular
     Helper,
     Validation,
     orderConfirm,
-    Request
+    manipulationEntertainers,
+    Request,
+    orderTerms
   ])
   .config(($stateProvider) => {
     "ngInject";

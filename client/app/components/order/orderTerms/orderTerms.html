@@ -1,0 +1,26 @@
+<div class="order-terms animated fadeIn" layout="row">
+  <div class="order-terms-container" flex="50">
+    <h1 class="page-name">TERMS OF SERVICE</h1>
+    <p class="sub-head">YOU AGREE TO THE FOLLOWING TERMS<br/> AND CONDITIONS:</p>
+
+    <ul>
+      <li ng-repeat="term in $ctrl.Constants.terms track by $index" layout="row">
+        <div flex="5" class="suffix">{{$index + 1}}.</div>
+        <div flex="90" class="terms-text">{{term}}</div>
+      </li>
+    </ul>
+
+    <div class="accept">
+      <md-checkbox aria-label="Agree" ng-model="$ctrl.accepted">
+        I am 18 years old
+      </md-checkbox>
+      <md-button ng-click="$ctrl.onAccept()"
+                 ng-disabled="$ctrl.orderLoading"
+                 ng-class="{disabled: $ctrl.orderLoading}">
+        {{!$ctrl.orderLoading ? 'Accept' : ''}}
+        <spinner input="$ctrl.orderLoading"></spinner>
+      </md-button>
+      <a href="" ui-sref="main.order">I don’t accept the rules</a>
+    </div>
+  </div>
+</div>
