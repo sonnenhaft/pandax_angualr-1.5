@@ -42,7 +42,7 @@
                ng-readonly="$ctrl.mode === 'main.profile.view'"
                ng-model="$ctrl[field.model]"
                ng-class="{error: $ctrl[field.model + 'Error'] && $ctrl.mode !== 'main.profile.view'}"
-               ng-keyup="$ctrl[field.model + 'Error'] = false"
+               ng-change="$ctrl[field.model + 'Error'] = false"
                ng-blur="$ctrl.validate({[field.model]: $ctrl[field.model]})">
         <span class="error" ng-if="$ctrl[field.model + 'Error'] && $ctrl.mode !== 'main.profile.view'">
             {{$ctrl[field.model + 'Error']}}
@@ -58,7 +58,7 @@
                  ng-readonly="$ctrl.mode === 'main.profile.view'"
                  ng-model="$ctrl[combine.model]"
                  ng-class="{error: $ctrl[combine.model + 'Error'] && $ctrl.mode !== 'main.profile.view', first: $index === 0}"
-                 ng-keyup="$ctrl[combine.model + 'Error'] = false"
+                 ng-change="$ctrl[combine.model + 'Error'] = false"
                  ng-blur="$ctrl.validate({[combine.model]: $ctrl[combine.model]})">
           <div class="sub-desc">{{combine.desc}}</div>
           <span class="error" ng-if="$ctrl[combine.model + 'Error'] && $ctrl.mode !== 'main.profile.view'">

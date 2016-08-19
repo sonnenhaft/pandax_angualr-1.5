@@ -10,7 +10,7 @@
         <input type="email"
                name="email"
                ng-model="$ctrl.email"
-               ng-keyup="$ctrl.emailError = $ctrl.logignError = false"
+               ng-change="$ctrl.emailError = $ctrl.logignError = false"
                ng-blur="$ctrl.validate({email: restoreForm.email.$viewValue})"
                maxlength="100"
                required/>
