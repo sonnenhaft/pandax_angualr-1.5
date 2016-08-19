@@ -57,6 +57,11 @@ export default class Constants {
       order: {
         uri: path + '/order',
         method: 'POST'
+      },
+
+      service: {
+        uri: path + '/service-type',
+        method: 'GET'
       }
 
     };
@@ -109,7 +114,6 @@ export default class Constants {
     const orderConstants = {
 
       models: {
-        providers: _.reverse(this.profile.serviceTypes),
         date: new Date(),
         currentDate: new Date(),
         entertainers: _.range(1, 7),
@@ -201,33 +205,6 @@ export default class Constants {
 
   profileConstants () {
     const profileConstants = {
-
-      serviceTypes: [
-        {
-          type: '3',
-          name: 'Dancer',
-          price: 200,
-          description: 'Your Minx will be topless, give lap dances, serve drinks, and socialize.',
-          img: '/assets/images/services/dancer.png',
-          active: false
-        },
-        {
-          type: '2',
-          name: 'Hostess',
-          price: 125,
-          description: 'Your Minx will be topless, serve drinks, and socialize',
-          img: '/assets/images/services/hostess.png',
-          active: false
-        },
-        {
-          type: '1',
-          name: 'Party Girl',
-          price: 50,
-          description: 'Your Minx will be fun and flirtatious while fully clothed. She will serve drinks and socialize.',
-          img: '/assets/images/services/girl.png',
-          active: false
-        }
-      ],
 
       images: {
         customer: [{file: ''}],
