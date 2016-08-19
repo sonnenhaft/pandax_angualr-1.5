@@ -3,7 +3,8 @@
       ng-class="{
         'view-mode': $ctrl.mode === 'main.profile.view',
         'edit-mode': $ctrl.mode === 'profile.edit'
-      }">
+      }"
+      novalidate>
   <div class="basic-data">
     <div class="input image">
       <label ng-if="$ctrl.mode === 'main.profile.create'">Add photo</label>
