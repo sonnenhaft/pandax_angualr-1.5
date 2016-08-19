@@ -6,13 +6,8 @@ class NavbarController {
     _.assign(this, {
       User,
       Constants,
-      $state,
-      activeMenuItemUrl: '',
-      activeMenuItemOpened: false
+      $state
     });
-
-    this.isCustomer = User.get('role') === 'customer';
-    this.isProvider = User.get('role') === 'provider';
 
     this.navigation = _.filter(Constants.user.navigation, {role: User.get('role')});
     this.submenu = _.filter(Constants.user.submenu, {role: User.get('role')});
@@ -24,11 +19,6 @@ class NavbarController {
       }
     });
 
-  }
-
-  switchMenuItem (menuItemUrl) {
-    this.activeMenuItemUrl = menuItemUrl;
-    this.activeMenuItemOpened = !this.activeMenuItemOpened;
   }
 }
 
