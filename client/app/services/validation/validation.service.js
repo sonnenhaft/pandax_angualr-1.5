@@ -38,13 +38,13 @@ export default class Validation {
   email (str) {
     switch (true) {
       case !str:
-        return this.message('email', false, 'This field is required.');
+        return this.message('email', false, 'This field is required');
 
       case str.length > 100:
-        return this.message('email', false, 'Max 100 characters allowed.');
+        return this.message('email', false, 'Max 100 characters allowed');
 
       case !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(str.toLowerCase()):
-        return this.message('email', false, 'Email is not valid.');
+        return this.message('email', false, 'Email is not valid');
 
       default:
         return this.message('email', true);
@@ -54,20 +54,20 @@ export default class Validation {
   password (str) {
     switch (true) {
       case !str:
-        return this.message('password', false, 'This field is required.');
+        return this.message('password', false, 'This field is required');
 
       default:
-        return this.message('password', str && str.length >= 6, '6-character minimum.');
+        return this.message('password', str && str.length >= 6, '6-character minimum');
     }
   }
 
   repeater (pass, repeater) {
     switch (true) {
       case !repeater:
-        return this.message('repeater', false, 'This field is required.');
+        return this.message('repeater', false, 'This field is required');
 
       default:
-        return this.message('repeater', pass === repeater, 'Password doesn’t match.');
+        return this.message('repeater', pass === repeater, 'Password doesn’t match');
     }
   }
 
@@ -81,16 +81,16 @@ export default class Validation {
       .filter(boolean => boolean === false)
       .value();
 
-    return this.message('images', validation.length === 3, 'Please upload 3 photos.')
+    return this.message('images', validation.length === 3, 'Please upload 3 photos')
   }
 
   phone (number) {
     switch (true) {
       case !number:
-        return this.message('phone', false, 'This field is required.');
+        return this.message('phone', false, 'This field is required');
 
       case !/(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}/.test(number):
-        return this.message('phone', false, 'Phone number is invalid.');
+        return this.message('phone', false, 'Phone number is invalid');
 
       default:
         return this.message('phone', true)
@@ -98,7 +98,7 @@ export default class Validation {
   }
 
   isEmpty (field, value) {
-    return this.message(field, !_.isEmpty(value), 'This field is required.');
+    return this.message(field, !_.isEmpty(value), 'This field is required');
   }
 
 }
