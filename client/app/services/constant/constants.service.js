@@ -67,6 +67,12 @@ export default class Constants {
   mapConstants () {
     const mapConstants = {
 
+      options: {
+        disableDefaultUI: false,
+        streetViewControl: false,
+        mapTypeControl: false
+      },
+
       position: {
         default: {
           location: {
