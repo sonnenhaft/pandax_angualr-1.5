@@ -34,7 +34,31 @@ export default angular
       .state('main.order', {
         url: '/order',
         parent: 'main',
-        component: 'order'
+        controller: (providers, $scope) => {
+          $scope.providers = providers;
+        },
+        template: '<order providers="providers"></order>',
+        resolve: {
+          providers: (Constants, Request, User) => {
+            return Request
+              .send(
+                User.token(),
+                Constants.api.service.method,
+                Constants.api.service.uri
+              )
+              .then(
+                result => {
+                  return _.map(result.data, provider => {
+                    return _.assign(provider, {
+                      price: _.round(provider.price),
+                      img: '/assets/images/services/' + provider.name.toLowerCase() + '.png'
+                    });
+                  });
+                },
+                error => console.log(error)
+              )
+          }
+        }
       });
   })
   .component('order', orderComponent)
