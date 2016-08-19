@@ -43,12 +43,7 @@ export default class Signin {
           console.log(error);
           this.loginLoading = false;
         }
-      )
-      .then(result => {
-        if (result) {
-          this.loginLoading = false;
-        }
-      });
+      );
   }
 
 }
