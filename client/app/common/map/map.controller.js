@@ -63,6 +63,7 @@ class MpaController {
     return {
       events: {
         tilesloaded: map => {
+          this.$window.google.maps.event.trigger(map, 'resize');
           map.setOptions({
             zoomControlOptions: {
               position: this
