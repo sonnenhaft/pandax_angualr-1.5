@@ -239,6 +239,10 @@ export default class User {
       photoSrc = data.photos[0].preview;
     }
 
+    if (!photoSrc || photoSrc.length == 0) {
+      photoSrc = this.Constants.user.avatar.empty;
+    }
+
     return this.userAvatarSrc = photoSrc + '?' + this.Helper.getUniqueNumberByTime();
   }
 
