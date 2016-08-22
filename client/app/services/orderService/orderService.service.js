@@ -3,7 +3,10 @@ export default class Order {
   constructor () {
     // 'ngInject';
 
-    _.assign(this, {list: []});
+    _.assign(this, {
+      list: [],
+      providers: []
+    });
 
   }
 
@@ -38,6 +41,10 @@ export default class Order {
 
   getEntertainers() {
     return this.list;
+  }
+
+  getProviders() {
+    return this.providers;
   }
 
 }

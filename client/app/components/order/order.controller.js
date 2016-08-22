@@ -1,10 +1,23 @@
 class orderController {
 
-  constructor (User, Constants, Location, Helper, Validation, Request, $q, $window, $state, moment, $mdDialog) {
+  constructor (User, Constants, Location, Helper, Validation, OrderService, Request, $q, $window, $state, moment, $mdDialog) {
     'ngInject';
 
-    _.assign(this, {User, Constants, Location, Helper, Validation, Request, $q, $state, moment, $mdDialog});
+    _.assign(this, {
+      User,
+      Constants,
+      Location,
+      Helper,
+      Validation,
+      OrderService,
+      Request,
+      $q,
+      $state,
+      moment,
+      $mdDialog
+    });
 
+    this.providers = OrderService.getProviders();
     this.mobile = $window.innerWidth <= 960;
 
     $window.addEventListener('resize', () => {
@@ -20,6 +33,16 @@ class orderController {
 
     this.time = this.Helper.getNearestTime('time');
     this.range = this.Helper.getNearestTime('range');
+
+    if (this.User.get('is_newcomer')) {
+      this.entertainers = _.slice(this.entertainers, 1);
+      this.entertainer = _.head(this.entertainers);
+    }
+
+    if (!this.User.get('is_newcomer')) {
+      this.hours = _.slice(this.hours, 1);
+      this.hour = _.head(this.hours);
+    }
   }
 
   showDescription (event, index) {

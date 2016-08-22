@@ -95,7 +95,7 @@ class MpaController {
       options: {
         draggable: true,
         icon: {
-          url: '../assets/images/pin_map.png',
+          url: require('../../../assets/images/pin_map.png'),
           anchor: {
             x: 25,
             y: 25
