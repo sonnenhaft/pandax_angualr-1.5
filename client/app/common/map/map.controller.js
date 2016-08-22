@@ -20,7 +20,6 @@ class MpaController {
       this.blocked = false;
       this.$timeout(() => {
         this.position = changes.input.currentValue.coords;
-        this.zoom = 15;
       });
     }
   }

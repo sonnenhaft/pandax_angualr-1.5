@@ -5,9 +5,8 @@
            ng-model="$ctrl.locationName"
            ng-change="$ctrl.getLocation($ctrl.locationName)"
            ng-class="{error: $ctrl.locationError}"
-           ng-blur="$ctrl.validate({location: $ctrl.location})"
-           class="first"
-           minlength="2">
+           ng-blur="$ctrl.checkLocation()"
+           class="first">
     <ul ng-if="$ctrl.locations" class="location-drop">
       <li ng-repeat="location in $ctrl.locations" ng-click="$ctrl.setLocation(location)">
         {{location.formatted_address}}

@@ -78,6 +78,7 @@ class orderController {
     this.orderLoading = true;
 
     if (!this.validate({apt: form.apt, location: this.inputLocation})) {
+      this.location = false;
       this.orderLoading = false;
       return false;
     }

@@ -13,27 +13,31 @@ export default class findLocation {
   }
 
   $onChanges (changes) {
+
+    if (_.isBoolean(changes.input.currentValue)) {
+      this.validate({location: this.location});
+    }
+
     if (changes.input.currentValue) {
       this.locationName = changes.input.currentValue.location.formatted_address;
       this.location = changes.input.currentValue;
       this.output({location: this.location});
       this.locations = this.locationError = false;
     }
+
   }
 
   getLocation (str) {
-    if (str && str.length >= 2) {
-      this.location = str;
-      this.loading = true;
-      this.locations = this.locationError = false;
-      this.Location
-        .getLocationByString(str, locations => {
-          this.$timeout(() => {
-            this.loading = false;
-            this.locations = locations.length ? locations : false;
-          });
+    this.location = str;
+    this.loading = true;
+    this.locations = this.locationError = false;
+    this.Location
+      .getLocationByString(str, locations => {
+        this.$timeout(() => {
+          this.loading = false;
+          this.locations = locations.length ? locations : false;
         });
-    }
+      });
   }
 
   setLocation (item) {
@@ -54,6 +58,15 @@ export default class findLocation {
     this.locationName = '';
     this.locations = this.location = false;
     this.output({location: this.location});
+    this.validate({location: this.location});
+  }
+
+  checkLocation () {
+    if (this.locations.length) {
+      this.setLocation(_.head(this.locations));
+      return true;
+    }
+
     this.validate({location: this.location});
   }
 
