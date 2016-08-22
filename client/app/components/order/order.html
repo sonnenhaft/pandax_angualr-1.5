@@ -57,33 +57,9 @@
         </div>
       </div>
       <div class="location" layout-gt-sm="row">
-        <div class="input" flex="60">
-          <label>Location</label>
-          <md-autocomplete
-            required
-            md-selected-item="$ctrl.selectedItem"
-            md-search-text="$ctrl.searchText"
-            md-items="item in $ctrl.getLocation($ctrl.searchText)"
-            md-item-text="item.formatted_address"
-            md-min-length="2"
-            md-search-text-change="$ctrl.validate({location: $ctrl.searchText})"
-            ng-class="{error: $ctrl.locationError}"
-            ng-keyup="$ctrl.locationError = false">
-            <md-item-template>
-              <span ng-click="$ctrl.setLocation(item)" md-highlight-text="$ctrl.searchText" md-highlight-flags="^i">
-                {{item.formatted_address}}
-              </span>
-            </md-item-template>
-            <md-not-found>
-              No states matching "{{$ctrl.searchText}}" were found.
-            </md-not-found>
-          </md-autocomplete>
-          <span class="error" ng-if="$ctrl.locationError">
-            {{$ctrl.locationError}}
-          </span>
-        </div>
+        <find-location flex="60" input="$ctrl.location" output="$ctrl.inputLocation = location"></find-location>
         <div class="map" ng-if="$ctrl.mobile">
-          <map input="$ctrl.location" output="$ctrl.markerLocation(location)"></map>
+          <map input="$ctrl.inputLocation" output="$ctrl.location = location"></map>
         </div>
         <div class="input" flex="40">
           <label>Apt</label>
@@ -176,7 +152,7 @@
   </div>
 
   <div class="order-map animated fadeInRight" flex ng-if="!$ctrl.mobile">
-    <map input="$ctrl.location" output="$ctrl.markerLocation(location)"></map>
+    <map input="$ctrl.inputLocation" output="$ctrl.location = location"></map>
   </div>
 
 </div>
