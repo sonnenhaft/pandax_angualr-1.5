@@ -16,7 +16,6 @@ export default class Validation {
       case 'first_name':
       case 'last_name':
       case 'displaying_name':
-      case 'location':
       case 'apt':
         return this.isEmpty(field, credentials[field]);
 
@@ -33,6 +32,19 @@ export default class Validation {
     });
 
     return _.remove(messages, undefined);
+  }
+
+  location (point) {
+    switch (true) {
+      case _.isEmpty(point):
+        return this.message('location', false, 'This field is required');
+
+      case !_.isObject(point):
+        return this.message('location', false, 'We don’t recognize the address');
+
+      default:
+        return this.message('location', true);
+    }
   }
 
   email (str) {

@@ -15,29 +15,6 @@
         min-height: 24px;
       }
 
-      md-autocomplete {
-        border-radius: 0;
-        height: 34px;
-        min-width: 100%;
-        border-right: 1px solid $primary;
-
-        &.error {
-          input {
-            border: 2px solid $Cardinal;
-          }
-        }
-
-        md-autocomplete-wrap {
-          box-shadow: 0 0 0 0;
-          height: 34px;
-
-          input {
-            padding-right: 25px;
-            background: white url('../assets/images/pin.png') no-repeat center right 9px;
-          }
-        }
-      }
-
       md-datepicker {
         button {
           &.md-datepicker-button {

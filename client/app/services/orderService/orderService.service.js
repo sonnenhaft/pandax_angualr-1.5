@@ -1,14 +1,16 @@
 export default class Order {
 
-  constructor () {
-    // 'ngInject';
+  constructor (Helper, moment) {
+    'ngInject';
 
     _.assign(this, {
         list: [],
         listConfirmed: [],
         providers: [],
         entertainersInvitedCount: 0,
-        entertainersConfirmedCount: 0
+        entertainersConfirmedCount: 0,
+        Helper,
+        moment
     });
 
   }
@@ -111,5 +113,26 @@ export default class Order {
 
   getEntertainersConfirmedCount() {
     return this.entertainersConfirmedCount;
+  }
+
+  buildOrder (form) {
+    return {
+      service_type: Number(_.head(this.Helper.getActiveObjectFromArray(this.getProviders())).type),
+      length: parseFloat(form.hour).toString(),
+      location: form.geo.location.formatted_address,
+      coordinates: {
+        lat: form.geo.coords.latitude.toString(),
+        long: form.geo.coords.longitude.toString()
+      },
+      location_notes: form.notes ? form.notes : '',
+      apartment: form.apt,
+      asap: form.asap,
+      datetime: form.asap ?
+        this.moment() :
+        this.moment(new Date(this.moment(form.date).format('YYYY/MM/DD') + ' ' + form.time)),
+      entertainers_number: Number(form.entertainer),
+      guests_number: form.guest.toString(),
+      cost: form.price.toString()
+    }
   }
 }
