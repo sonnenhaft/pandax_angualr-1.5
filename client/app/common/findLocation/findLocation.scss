@@ -61,6 +61,8 @@
     border: 1px solid $primary;
     border-left: none;
     border-top: 3px solid $Cardinal;
+    max-height: 300px;
+    overflow-y: scroll;
 
     &:active {
       display: block;
