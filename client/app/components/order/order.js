@@ -44,10 +44,11 @@ export default angular
               )
               .then(
                 result => {
-                  return _.map(result.data, provider => {
+                  return _.map(result.data, (provider, index) => {
                     return _.assign(provider, {
+                      active: index === 0,
                       price: _.round(provider.price),
-                      img: '/assets/images/services/' + provider.name.toLowerCase() + '.png'
+                      img: '../assets/images/services/' + provider.name.toLowerCase() + '.png'
                     });
                   });
                 },
