@@ -35,7 +35,7 @@ export default class Reset {
           this.resetLoading = false;
 
           if (result && result.error) {
-            this.resetLoading = result.error;
+            this.resetError = result.error;
             return false;
           }
 

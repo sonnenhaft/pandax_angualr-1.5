@@ -223,7 +223,7 @@ export default class User {
   /*
     User avatar section
    */
-  fetchUserAvatarSrc () {  
+  fetchUserAvatarSrc () {
     return this.getUserProfile(_.assign(this.get(), {token: this.token()}), this.get('role'), false)
       .then(data => {
         return this.setUserAvatarSrc(data);
