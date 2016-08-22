@@ -64,6 +64,11 @@ export default class Constants {
       service: {
         uri: path + '/service-type',
         method: 'GET'
+      },
+
+      searchEntertainers: {
+        uri: (orderId) => path + `/orders/${orderId}/entertainers/search`,
+        method: 'GET'
       }
 
     };

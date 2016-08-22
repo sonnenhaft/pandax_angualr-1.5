@@ -16,6 +16,7 @@ import Common from './common/common';
 import Components from './components/components';
 import AppComponent from './app.component';
 import 'angular-filter/dist/angular-filter.min.js';
+import JWT from 'angular-jwt';
 
 angular
   .module('app', [
@@ -27,9 +28,10 @@ angular
     'uiGmapgoogle-maps',
     'angularMoment',
     "angular.filter",
-    angularMessages
+    angularMessages,
+    JWT
   ])
-  .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider) => {
+  .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider, $httpProvider, jwtInterceptorProvider) => {
     "ngInject";
     // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions
     // #how-to-configure-your-server-to-work-with-html5mode
@@ -68,5 +70,12 @@ angular
       v: '3', //defaults to latest 3.X anyhow
       libraries: 'weather,geometry,visualization'
     });
+
+    //JWT interceptor will take care of sending the JWT in every request (More info: https://github.com/auth0/angular-jwt#jwtinterceptor)
+    jwtInterceptorProvider.tokenGetter = function () {
+      return this.Storage.getObject('MINX').token;
+    };
+
+    $httpProvider.interceptors.push('jwtInterceptor');
   })
   .component('app', AppComponent);

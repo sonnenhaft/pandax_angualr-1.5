@@ -17,7 +17,7 @@ export default angular
 
     $stateProvider
       .state('main.manipulationEntertainers', {
-        url: '/manipulationEntertainers',
+        url: '/:orderId/manipulationEntertainers',
         parent: 'main',
         template: '<manipulation-entertainers \
                     entertainers-invited-count="entertainersInvitedCount" \
@@ -32,8 +32,11 @@ export default angular
           $scope.entertainersConfirmedCount = entertainersConfirmedCount;
         },
         resolve: {
-          entertainers: function (OrderService) {
-            return OrderService.fetchEntertainers();
+          orderId: function ($stateParams) {
+            return $stateParams['orderId'] || 0;
+          },
+          entertainers: function (OrderService, orderId) {
+            return OrderService.fetchEntertainers(orderId);
           },
           entertainersConfirmed: function (OrderService) {
             return OrderService.fetchEntertainersConfirmed();

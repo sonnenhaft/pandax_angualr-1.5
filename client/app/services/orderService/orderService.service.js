@@ -1,9 +1,12 @@
 export default class Order {
 
-  constructor () {
-    // 'ngInject';
+  constructor (User, Constants, Request) {
+    'ngInject';
 
     _.assign(this, {
+        User,
+        Constants,
+        Request,
         list: [],
         listConfirmed: [],
         entertainersInvitedCount: 0,
@@ -12,45 +15,21 @@ export default class Order {
 
   }
 
-  fetchEntertainers() {
-    /*
-    ToDo: fetch from server
-     */
-    this.entertainersInvitedCount = 3;
-    return this.list = [{
-        id: 1,
-        name: 'Karla',
-        descr: 'Description',
-        distance: 3,
-        raiting: 8.2,
-        photo_small: [
-            '/assets/images/photos/photo2.png',
-            '/assets/images/photos/photo2.png',
-            '/assets/images/photos/photo3.png'
-        ]
-    }/*,{
-        id: 2,
-        name: 'Marla',
-        descr: 'Description 2',
-        distance: 2,
-        rate: 4.2,
-        photo_small: [
-            '/assets/images/photos/photo3.png',
-            '/assets/images/photos/photo3.png',
-            '/assets/images/photos/photo2.png'
-        ]
-    },{
-        id: 3,
-        name: 'Sandra',
-        descr: 'Description 3',
-        distance: 3,
-        rate: 2.2,
-        photo_small: [
-            '/assets/images/photos/photo3.png',
-            '/assets/images/photos/photo2.png',
-            '/assets/images/photos/photo2.png'
-        ]
-    }*/]
+  fetchEntertainers(orderId) {
+    return this
+      .Request
+      .send(
+        null,
+        this.Constants.api.searchEntertainers.method,
+        this.Constants.api.searchEntertainers.uri(orderId)
+      )
+      .then(
+        result => {
+          this.entertainersInvitedCount = result.data.length;
+          return result.data;
+        },
+        error => console.log(error)
+      );
   }
 
   getEntertainers() {
