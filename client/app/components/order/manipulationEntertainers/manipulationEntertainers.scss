@@ -1,0 +1,51 @@
+#manipulation-entertainers {
+	padding: 52px 30px 0px 30px;
+
+  @media (max-width: 960px) {
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-bottom: 40px;
+  }
+
+	& > * {
+		padding: 0px;
+	}
+
+	& > *,
+	&__main > * {
+		width: 100%;
+	}
+	
+	.manipulation-entertainers {
+
+		&__header {
+		}
+
+		&__icon {
+			&_close {
+	    	margin: 12px 0 0 0;
+	    }
+		}
+
+		&__refresh {
+			&-image {
+				margin-left: 8.5px;
+			}
+		}
+
+		&__head-link {
+			color: $TrolleyGrey;
+			font: 15px $oswald;
+			letter-spacing: 0.1px;
+			line-height: 24px;
+			text-align: center;
+			&_active {
+				color: $white;
+			}
+		}
+	}
+}
+
+@import "./searchEntertainers/searchEntertainers";
+@import "./confirmedEntertainers/confirmedEntertainers";
+@import "./photoFullPage/photoFullPage";

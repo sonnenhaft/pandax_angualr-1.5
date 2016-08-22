@@ -11,7 +11,9 @@ export default class Constants {
     this.user = this.userConstants();
     this.order = this.orderConstants();
     this.map = this.mapConstants();
+    this.billing = this.billingConstants();
     this.api = this.apiConstants();
+    this.terms = this.termsConstants();
 
   }
 
@@ -117,17 +119,34 @@ export default class Constants {
         date: new Date(),
         currentDate: new Date(),
         entertainers: _.range(1, 7),
-        entertainer: 1,
+        entertainer: function () {
+          this.entertainer = _.head(this.entertainers);
+          return this;
+        },
         hours: ['0.5 H', '1 H', '1.5 H', '2 H', '2.5 H', '3 H', '3.5 H', '4 H'],
-        hour: '0.5 H',
+        hour: function () {
+          this.hour = _.head(this.hours);
+          return this;
+        },
         guests: ['1', '2-3', '4-5', '5-10', '10-15'],
         guest: 1,
         asap: true
-      }
+      }.hour().entertainer()
 
     };
 
     return orderConstants;
+  }
+
+  termsConstants () {
+    const termsConstants = [
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+    ];
+
+    return termsConstants;
   }
 
   userConstants () {
@@ -258,6 +277,48 @@ export default class Constants {
     };
 
     return profileConstants;
+  }
+
+  billingConstants () {
+    const billingConstants = {
+
+      fields: {
+        customer: [
+          {
+            combined: [
+              {
+                name: 'First Name',
+                model: 'first_name',
+                type: 'text'
+              },
+              {
+                name: 'Last Name',
+                model: 'last_name',
+                type: 'text'
+              }
+            ]
+          },
+          {
+            name: 'Phone Number',
+            model: 'phone',
+            type: 'tel'
+          }
+        ],
+        provider: function () {
+          this.provider = _.union([
+            {
+              name: 'Display Name',
+              model: 'displaying_name',
+              type: 'text'
+            }
+          ], this.customer);
+          return this;
+        }
+      }.provider()
+
+    };
+
+    return billingConstants;
   }
 
 }

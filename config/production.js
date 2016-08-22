@@ -1,5 +1,5 @@
 module.exports = {
-  API_URL: 'api',
+  API_URL: window.location.protocol + '//' + window.location.host + '/api',
   COPYRIGHT: `${(new Date()).getFullYear()} Panda`,
   VERSION: '0.0.1'
 };

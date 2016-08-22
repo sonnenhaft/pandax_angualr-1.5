@@ -2,6 +2,7 @@ import angular from 'angular';
 import angularMaterial from 'angular-material';
 import 'angular-material/angular-material.css';
 import uiRouter from 'angular-ui-router';
+import 'angular-ui-router/release/stateEvents.js';    // enable All state events, (i.e. $stateChange* and friends), due to https://github.com/angular-ui/ui-router/releases/tag/1.0.0alpha0
 import 'angular-simple-logger';
 import 'angular-google-maps';
 import 'moment';
@@ -9,6 +10,7 @@ import 'angular-moment';
 import 'lodash';
 import 'normalize.css';
 import 'animate.css';
+import angularMessages from 'angular-messages';
 
 import Common from './common/common';
 import Components from './components/components';
@@ -18,12 +20,14 @@ import 'angular-filter/dist/angular-filter.min.js';
 angular
   .module('app', [
     uiRouter,
+    'ui.router.state.events',
     Common,
     Components,
     angularMaterial,
     'uiGmapgoogle-maps',
     'angularMoment',
-    "angular.filter"
+    "angular.filter",
+    angularMessages
   ])
   .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider) => {
     "ngInject";

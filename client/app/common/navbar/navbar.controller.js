@@ -6,9 +6,7 @@ class NavbarController {
     _.assign(this, {
       User,
       Constants,
-      $state,
-      activeMenuItemUrl: '',
-      activeMenuItemOpened: false
+      $state
     });
 
     this.isCustomer = User.get('role') === 'customer';

@@ -69,13 +69,6 @@
       list-style: none;
       li {
         text-align: left;
-
-        &.active {
-          a {
-            color: white;
-          }
-        }
-
         a {
           display: block;
           color: $AuroMetalSaurus;
@@ -83,18 +76,28 @@
           text-transform: uppercase;
           font-size: 1.063em;
           letter-spacing: 1px;
+          &.active {
+            color: $white;
+          }
+        }
+
+        &.opened-subitems {
+          .navigation_sub {
+            display: block;
+          }
         }
       }
+
       &.navigation_sub {
+        display: none;
         margin-left: 15px;
         li {
-          &.active {
-            a {
+          a {
+            color: $AuroMetalSaurus;
+            font-size: .938em;
+            &.active {
               color: $Cardinal;
             }
-          }
-          a {
-            font-size: .938em;
           }
         }
       }
