@@ -6,6 +6,7 @@ export default class Order {
     _.assign(this, {
         list: [],
         listConfirmed: [],
+        providers: [],
         entertainersInvitedCount: 0,
         entertainersConfirmedCount: 0
     });
@@ -57,9 +58,12 @@ export default class Order {
     return this.list;
   }
 
+  getProviders() {
+    return this.providers;
+  }
 
-  /* 
-    Confirmed entertainers 
+  /*
+    Confirmed entertainers
   */
   fetchEntertainersConfirmed() {
     /*
@@ -81,7 +85,7 @@ export default class Order {
     return this.listConfirmed;
   }
 
-  /* 
+  /*
     Invited entertainers count
   */
   fetchEntertainersInvitedCount() {
@@ -95,7 +99,7 @@ export default class Order {
     return this.entertainersInvitedCount;
   }
 
-  /* 
+  /*
     Confirmed entertainers count
   */
   fetchEntertainersConfirmedCount() {

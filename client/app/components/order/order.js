@@ -7,11 +7,11 @@ import Constants from '../../services/constant/constants';
 import Location from '../../services/location/location';
 import Helper from '../../services/helper/helper';
 import Validation from '../../services/validation/validation';
+import OrderService from '../../services/orderService/orderService';
 import orderConfirm from './orderConfirm/orderConfirm';
 import manipulationEntertainers from './manipulationEntertainers/manipulationEntertainers';
 import Request from '../../services/request/request';
 import orderTerms from './orderTerms/orderTerms';
-
 
 export default angular
   .module('order', [
@@ -22,6 +22,7 @@ export default angular
     Location,
     Helper,
     Validation,
+    OrderService,
     orderConfirm,
     manipulationEntertainers,
     Request,
@@ -34,32 +35,7 @@ export default angular
       .state('main.order', {
         url: '/order',
         parent: 'main',
-        controller: (providers, $scope) => {
-          $scope.providers = providers;
-        },
-        template: '<order providers="providers"></order>',
-        resolve: {
-          providers: (Constants, Request, User) => {
-            return Request
-              .send(
-                User.token(),
-                Constants.api.service.method,
-                Constants.api.service.uri
-              )
-              .then(
-                result => {
-                  return _.map(result.data, (provider, index) => {
-                    return _.assign(provider, {
-                      active: index === 0,
-                      price: _.round(provider.price),
-                      img: '../assets/images/services/' + provider.name.toLowerCase() + '.png'
-                    });
-                  });
-                },
-                error => console.log(error)
-              )
-          }
-        }
+        component: 'order'
       });
   })
   .component('order', orderComponent)
