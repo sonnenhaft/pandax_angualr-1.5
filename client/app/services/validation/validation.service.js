@@ -46,7 +46,7 @@ export default class Validation {
       case _.isEmpty(point):
         return this.message('location', false, 'This field is required');
 
-      case !_.isObject(point):
+      case !_.isObject(point) || !point.location:
         return this.message('location', false, 'We don’t recognize the address');
 
       default:
