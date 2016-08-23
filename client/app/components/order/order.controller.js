@@ -53,7 +53,10 @@ class orderController {
   }
 
   onDateChange (date) {
-    this.range = this.Helper.getNearestTime('range', date);
+    this.dateError = false;
+    if (this.validate({date})) {
+      this.range = this.Helper.getNearestTime('range', date);
+    }
   }
 
   getTotalPrice () {

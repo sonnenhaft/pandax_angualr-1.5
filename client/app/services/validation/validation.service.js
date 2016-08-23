@@ -1,5 +1,12 @@
 export default class Validation {
 
+  constructor (moment) {
+    'ngInject';
+
+    _.assign(this, {moment});
+
+  }
+
   message (field, bool, txt) {
     return {
       name: field,
@@ -44,6 +51,19 @@ export default class Validation {
 
       default:
         return this.message('location', true);
+    }
+  }
+
+  date (date) {
+    switch (true) {
+      case !date:
+        return this.message('date', false, 'This field is required');
+
+      case !this.moment(date, 'MMMM DD, YYYY').isValid():
+        return this.message('date', false, 'Wrong date format');
+
+      default:
+        return this.message('date', true);
     }
   }
 
