@@ -150,7 +150,12 @@ export default class profileFieldsController {
 
   onImageChange (image, slot) {
     if (image) {
-      this.photosBuffer.push({image: image, slot: slot});
+      let indexFounded = _.findIndex(this.photosBuffer, {slot: slot});
+      if (indexFounded >= 0) {
+        this.photosBuffer[indexFounded] = {image: image, slot: slot};
+      } else {
+        this.photosBuffer.push({image: image, slot: slot});
+      }
     }
   }
 
