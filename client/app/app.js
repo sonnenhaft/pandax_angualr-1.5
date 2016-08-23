@@ -29,7 +29,7 @@ angular
     "angular.filter",
     angularMessages
   ])
-  .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider) => {
+  .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider, $mdDateLocaleProvider, moment) => {
     "ngInject";
     // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions
     // #how-to-configure-your-server-to-work-with-html5mode
@@ -60,8 +60,8 @@ angular
       .primaryPalette('primaryMap')
       .accentPalette('accentMap')
       .backgroundPalette('backgroundMap');
-      
 
+    $mdDateLocaleProvider.formatDate = date => moment(date).format('MMMM DD, YYYY');
 
     uiGmapGoogleMapApiProvider.configure({
       key: 'AIzaSyAB5JHHZnmA2C6q_b7mc2zPaXdSeRocs1E',

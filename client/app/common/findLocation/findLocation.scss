@@ -1,0 +1,90 @@
+#location-container {
+  position: relative;
+
+  .location-input {
+    position: relative;
+
+    &.text {
+      input {
+        background-position: center right 30px !important;
+        padding-right: 50px !important;
+      }
+    }
+
+    input {
+      background: white url('../assets/images/pin.png') no-repeat center right 9px !important;
+      padding-right: 30px !important;
+
+      &:focus + .location-drop {
+        display: block;
+      }
+    }
+
+    button {
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      right: 6px;
+      top: 7px;
+      min-width: 20px;
+      min-height: 20px;
+      width: 20px;
+      height: 20px;
+      background: white url('../assets/images/close_gray.png') no-repeat center;
+      border-radius: 50%;
+
+      .md-ripple-container {
+        border-radius: 50%;
+      }
+    }
+
+    md-progress-linear {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      border-right: 1px solid $primary;
+
+      ._md-bar {
+        background-color: $Cardinal;
+      }
+    }
+  }
+
+  .location-drop {
+    display: none;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 34px;
+    background-color: white;
+    z-index: 50;
+    border: 1px solid $primary;
+    border-left: none;
+    border-top: 3px solid $Cardinal;
+    max-height: 300px;
+    overflow-y: scroll;
+
+    &:active {
+      display: block;
+    }
+
+    li {
+      display: block;
+      padding: 10px 15px;
+      font: 0.938em $open-sans, sans-serif;
+      font-weight: 600;
+      width: 100%;
+      cursor: pointer;
+
+      &:hover {
+        color: white;
+        background-color: $Cardinal;
+      }
+    }
+
+    @media (max-width: 960px) {
+      border-left: 1px solid $primary;
+    }
+  }
+
+}

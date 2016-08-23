@@ -20,7 +20,6 @@ class MpaController {
       this.blocked = false;
       this.$timeout(() => {
         this.position = changes.input.currentValue.coords;
-        this.zoom = 15;
       });
     }
   }
@@ -95,7 +94,7 @@ class MpaController {
       options: {
         draggable: true,
         icon: {
-          url: '/assets/images/pin_map.png',
+          url: require('../../../assets/images/pin_map.png'),
           anchor: {
             x: 25,
             y: 25

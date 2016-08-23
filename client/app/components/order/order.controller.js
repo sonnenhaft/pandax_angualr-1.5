@@ -1,21 +1,20 @@
 class orderController {
 
-  constructor (User, Constants, Location, Helper, Validation, Request, $q, $window, $state, moment, $mdDialog) {
+  constructor (User, Constants, Helper, Validation, OrderService, Request, $window, $state, $mdDialog) {
     'ngInject';
 
     _.assign(this, {
       User,
       Constants,
-      Location,
       Helper,
       Validation,
+      OrderService,
       Request,
-      $q,
       $state,
-      moment,
       $mdDialog
     });
 
+    this.providers = OrderService.getProviders();
     this.mobile = $window.innerWidth <= 960;
 
     $window.addEventListener('resize', () => {
@@ -53,36 +52,11 @@ class orderController {
       });
   }
 
-  getLocation (str) {
-    let deferred = this.$q.defer();
-
-    this.Location
-      .getLocationByString(str, location => {
-        deferred.resolve(location);
-      });
-
-    return deferred.promise;
-  }
-
-  setLocation (item) {
-    this.location = {
-      coords: {
-        latitude: item.geometry.location.lat(),
-        longitude: item.geometry.location.lng()
-      },
-      location: item
-    }
-  }
-
-  markerLocation ($event) {
-    if ($event) {
-      this.location = $event;
-      this.searchText = $event.location.formatted_address;
-    }
-  }
-
   onDateChange (date) {
-    this.range = this.Helper.getNearestTime('range', date);
+    this.dateError = false;
+    if (this.validate({date})) {
+      this.range = this.Helper.getNearestTime('range', date);
+    }
   }
 
   getTotalPrice () {
@@ -104,38 +78,11 @@ class orderController {
   }
 
   onSearch (form) {
-    if (!this.Helper.getActiveObjectFromArray(this.providers).length) {
-      this.typeError = true;
-      return false;
-    }
-
-    if (!this.validate({apt: form.apt, location: this.searchText})) {
-      return false;
-    }
-
     this.orderLoading = true;
 
-    let data = {
-      service_type: Number(_.head(this.Helper.getActiveObjectFromArray(this.providers)).type),
-      length: parseFloat(form.hour).toString(),
-      location: this.searchText,
-      coordinates: {
-        lat: this.location.coords.latitude.toString(),
-        long: this.location.coords.longitude.toString()
-      },
-      location_notes: form.notes ? form.notes : '',
-      apartment: form.apt,
-      asap: form.asap,
-      datetime: form.asap ?
-        this.moment() :
-        this.moment(new Date(this.moment(form.date).format('YYYY/MM/DD') + ' ' + form.time)),
-      entertainers_number: Number(form.entertainer),
-      guests_number: form.guest.toString(),
-      cost: this.getTotalPrice().toString()
-    };
-
-    if (this.User.get('is_newcomer')) {
-      this.$state.go('main.accept', {order: data});
+    if (!this.validate({apt: form.apt, location: this.inputLocation})) {
+      this.location = false;
+      this.orderLoading = false;
       return false;
     }
 
@@ -144,7 +91,7 @@ class orderController {
         this.User.token(),
         this.Constants.api.order.method,
         this.Constants.api.order.uri,
-        data
+        this.orderData(form)
       )
       .then(
         result => {
@@ -156,6 +103,17 @@ class orderController {
           this.orderLoading = false;
           console.log(error);
         }
+      );
+  }
+
+  orderData (form) {
+    return this
+      .OrderService
+      .buildOrder(
+        _.assign(form, {
+          geo: this.inputLocation,
+          price: this.getTotalPrice()
+        })
       );
   }
 
