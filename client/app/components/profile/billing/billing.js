@@ -2,9 +2,13 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import billingComponent from './billing.component';
 import User from '../../../services/user/user';
+import personalInformation from '../../../common/profileFields/personalInformation/personalInformation';
+import cardList from '../../../common/profileFields/cardList/cardList';
 
 let billingModule = angular.module('billing', [
-  uiRouter
+  uiRouter,
+  personalInformation,
+  cardList
 ])
 
   .config(($stateProvider) => {

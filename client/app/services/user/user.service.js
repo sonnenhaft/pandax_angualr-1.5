@@ -258,9 +258,16 @@ export default class User {
             cards: [{
               id: 1,
               name: 'Card 1',
-              number: 1111222233334444,
+              number: 4444,
               expiry: '19/21',
               cvc: 123
+            },{
+              id: 2,
+              name: 'Card 2',
+              number: 3333,
+              expiry: '10/22',
+              cvc: 456,
+              default: true
             }]
           });
 

@@ -2,7 +2,6 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import orderComponent from './order.component';
 import User from '../../services/user/user';
-import searchEntertainers from './searchEntertainers/searchEntertainers';
 import Constants from '../../services/constant/constants';
 import Location from '../../services/location/location';
 import Helper from '../../services/helper/helper';
@@ -17,7 +16,6 @@ export default angular
   .module('order', [
     uiRouter,
     User,
-    searchEntertainers,
     Constants,
     Location,
     Helper,
