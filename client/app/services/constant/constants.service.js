@@ -174,7 +174,7 @@ export default class Constants {
           role: 'customer',
           parent: 'Settings',
           text: 'Payments',
-          url: 'settings.payment'
+          url: 'main.payments'
         },
         {
           role: 'customer',
@@ -186,7 +186,7 @@ export default class Constants {
           role: 'customer',
           parent: 'Settings',
           text: 'Change Password',
-          url: 'profile.edit'
+          url: 'profile.view.edit'
         },
         {
           role: 'customer',

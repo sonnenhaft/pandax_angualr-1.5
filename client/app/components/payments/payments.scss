@@ -1,0 +1,26 @@
+// =============================================================================
+// $ Payments template styles
+// =============================================================================
+
+#payments {
+  height: 100%;
+
+  .payments-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding: 52px 30px 0 30px;
+
+    .page-name {
+      margin-bottom: 50px;
+    }
+
+    @import "./styles/control";
+    @import "./styles/cards";
+
+    @media (max-width: 960px) {
+      max-width: 100%;
+    }
+  }
+
+}
