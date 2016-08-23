@@ -231,9 +231,9 @@ export default class User {
   }
 
   setUserAvatarSrc (data = {}) {
-    let photoSrc = '';
+    let photoSrc = this.Constants.user.avatar.empty;
 
-    if (data.photo) {
+    if (data.photo && data.photo.preview) {
       photoSrc = data.photo.preview;
     } else if (data.photos && data.photos[0] && data.photos[0].preview) {
       photoSrc = data.photos[0].preview;
