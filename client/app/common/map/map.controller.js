@@ -20,6 +20,7 @@ class MpaController {
       this.blocked = false;
       this.$timeout(() => {
         this.position = changes.input.currentValue.coords;
+        this.zoom = changes.input.currentValue.zoom;
       });
     }
   }
@@ -38,7 +39,7 @@ class MpaController {
         position => {
           this.$timeout(() => {
             this.progress = false;
-            this.zoom = 15;
+            this.zoom = 19;
 
             this.position = {
               latitude: position.coords.latitude,

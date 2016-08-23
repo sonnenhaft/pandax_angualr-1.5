@@ -79,8 +79,8 @@ class orderController {
 
   onSearch (form) {
     this.orderLoading = true;
-
-    if (!this.validate({apt: form.apt, location: this.inputLocation})) {
+    console.log(this.inputLocation);
+    if (!this.validate({apt: form.apt, location: this.inputLocation, date: form.date})) {
       this.location = false;
       this.orderLoading = false;
       return false;
