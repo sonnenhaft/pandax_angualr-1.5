@@ -14,7 +14,6 @@ class orderController {
       $mdDialog
     });
 
-    this.providers = OrderService.getProviders();
     this.mobile = $window.innerWidth <= 960;
 
     $window.addEventListener('resize', () => {
@@ -24,6 +23,11 @@ class orderController {
   }
 
   $onInit () {
+    this.providers = _.map(this.OrderService.getProviders(), provider => {
+      provider.active = false;
+      return provider;
+    });
+
     _.mapValues(this.Constants.order.models, (model, key) => {
       this[key] = model;
     });
@@ -79,8 +83,20 @@ class orderController {
 
   onSearch (form) {
     this.orderLoading = true;
-    console.log(this.inputLocation);
-    if (!this.validate({apt: form.apt, location: this.inputLocation, date: form.date})) {
+
+    if (!this.Helper.getActiveObjectFromArray(this.providers).length) {
+      this.typeError = true;
+      this.orderLoading = false;
+      return false;
+    }
+
+    if (
+      !this.validate({
+        apt: form.apt,
+        location: this.inputLocation,
+        date: form.date
+      })
+    ) {
       this.location = false;
       this.orderLoading = false;
       return false;
