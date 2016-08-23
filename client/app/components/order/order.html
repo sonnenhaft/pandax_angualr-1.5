@@ -106,17 +106,23 @@
           </md-button>
         </div>
       </div>
-      <div class="input" layout="row" ng-if="!$ctrl.asap">
+      <div class="input datepicker animated"
+           layout="row"
+           ng-class="{hidden: $ctrl.asap, fadeIn: !$ctrl.asap, fadeOut: $ctrl.asap}">
         <div flex>
           <label>Date</label>
           <md-datepicker ng-model="$ctrl.date"
                          ng-change="$ctrl.onDateChange($ctrl.date)"
+                         ng-class="{error: $ctrl.dateError}"
                          md-placeholder="Enter date"
                          md-min-date="$ctrl.currentDate"
                          md-max-date=""
                          aria-readonly="true"
                          name="date">
           </md-datepicker>
+          <span class="error" ng-if="$ctrl.dateError">
+            {{$ctrl.dateError}}
+          </span>
         </div>
         <div flex>
           <label></label>

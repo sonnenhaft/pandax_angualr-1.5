@@ -19,5 +19,13 @@ md-dialog {
   -khtml-user-select: none;    /* Konqueror */
   -moz-user-select: none;      /* Firefox */
   -ms-user-select: none;       /* Internet Explorer/Edge */
-  user-select: none;   
+  user-select: none;
+}
+
+@mixin transition($type, $duration, $mode) {
+  -webkit-transition: $type $duration $mode;
+  -moz-transition: $type $duration $mode;
+  -ms-transition: $type $duration $mode;
+  -o-transition: $type $duration $mode;
+  transition: $type $duration $mode;
 }

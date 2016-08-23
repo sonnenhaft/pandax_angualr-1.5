@@ -15,7 +15,27 @@
         min-height: 24px;
       }
 
+      &.datepicker {
+        overflow: visible;
+        max-height: 1000px;
+        @include transition(all, .5s, ease);
+
+        &.hidden {
+          overflow: hidden;
+          max-height: 0;
+        }
+      }
+
       md-datepicker {
+
+        &.error {
+          .md-datepicker-input-container {
+            input {
+              border: 2px solid $Cardinal;
+            }
+          }
+        }
+
         button {
           &.md-datepicker-button {
             display: none;
