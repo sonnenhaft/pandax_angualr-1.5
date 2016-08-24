@@ -7,6 +7,7 @@ import ProfileCreate from './profile/create/profile.create';
 import ProfileView from './profile/view/profile.view';
 import Order from './order/order';
 import Payments from './payments/payments';
+import History from './history/history';
 
 let componentModule = angular.module('app.components', [
   Home,
@@ -16,7 +17,8 @@ let componentModule = angular.module('app.components', [
   ProfileCreate,
   ProfileView,
   Order,
-  Payments
+  Payments,
+  History
 ])
 
 .name;

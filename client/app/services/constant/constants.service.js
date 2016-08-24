@@ -149,13 +149,8 @@ export default class Constants {
         },
         {
           role: 'customer',
-          text: 'Active orders',
-          url: 'home'
-        },
-        {
-          role: 'customer',
-          text: 'History',
-          url: 'home'
+          text: 'Orders',
+          url: 'main.history'
         },
         {
           role: 'customer',
