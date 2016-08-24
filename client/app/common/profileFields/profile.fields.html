@@ -20,7 +20,7 @@
                      ng-model="image.file"
                      name="file"
                      ngf-capture="'camera'"
-                     ngf-max-size="10KB"
+                     ngf-max-size="10MB"
                      ngf-model-invalid="$ctrl.invalidFiles"
                      ng-change="$ctrl.onImageChange(image.file, $index + 1)"
                      ng-click="$ctrl.imagesError = false">
