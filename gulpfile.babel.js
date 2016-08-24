@@ -82,6 +82,7 @@ gulp.task('serve', () => {
     port: process.env.PORT || 3000,
     open: false,
     server: {baseDir: root},
+    https: true,
     middleware: [
       historyApiFallback(),
       webpackDevMiddelware(compiler, {
@@ -128,8 +129,8 @@ gulp.task('clean', (cb) => {
 gulp.task('build', ['webpack', 'copy_images'], () => {
 
   return gulp.src('./dist/**')
-     // .pipe(tar('build.tar'))
-     // .pipe(gzip())
+     .pipe(tar('build.tar'))
+     .pipe(gzip())
      .pipe(gulp.dest('./builds/'));
 });
 
