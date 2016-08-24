@@ -4,7 +4,8 @@ let cardInfoComponent = {
   restrict: 'E',
   bindings: {
     formObject: '=',
-    model: '='
+    model: '=',
+    output: '&'
   },
   template,
   controllerAs: 'vm'

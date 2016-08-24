@@ -1,10 +1,12 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import paymentsComponent from './payments.component';
+import User from '../../services/user/user';
 
 export default angular
   .module('payments', [
-    uiRouter
+    uiRouter,
+    User
   ])
   .config(($stateProvider) => {
     "ngInject";

@@ -34,7 +34,7 @@ md-radio-button ._md-container:before {
   background-color: $white;
 }
 
-md-radio-button.md-default-theme.md-checked ._md-off, 
+md-radio-button.md-default-theme.md-checked ._md-off,
 md-radio-button.md-checked ._md-off {
   border: none;
 }
@@ -44,12 +44,4 @@ md-radio-button ._md-on,
 md-radio-button ._md-off {
   height: 16px;
   width: 16px;
-}
-
-@mixin transition($type, $duration, $mode) {
-  -webkit-transition: $type $duration $mode;
-  -moz-transition: $type $duration $mode;
-  -ms-transition: $type $duration $mode;
-  -o-transition: $type $duration $mode;
-  transition: $type $duration $mode;
 }

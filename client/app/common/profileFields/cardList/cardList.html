@@ -4,23 +4,23 @@
 	ng-change="vm.setDefaultCard()"
 	ng-model="vm.defaultCardId">
 
-	<div 
+	<div
 		layout="row"
 		layout-align="space-between"
-		class="card" 
+		class="card"
 		ng-repeat="card in vm.cards">
 
 		<div flex="10" class="card-manipulation_left">
-      <md-radio-button 
-      	ng-model="card.default" 
+      <md-radio-button
+      	ng-model="card.default"
       	ng-value="card.id"
       	ng-change="vm.test()"
       	aria-label="Set default card"></md-radio-button>
 		</div>
 
-		<div 
+		<div
 			layout="column"
-			flex="90" 
+			flex="90"
 			class="card-information">
 			<div class="card-information__top">
 				<span class="card-information__name">{{card.name}}</span>
@@ -32,7 +32,7 @@
 		</div>
 
 		<div class="card-manipulation_right">
-			<img 
+			<img
 				src="/assets/images/icons/trash-3x.png"
 				class="icon_medium card-icon_trash"></img>
 		</div>

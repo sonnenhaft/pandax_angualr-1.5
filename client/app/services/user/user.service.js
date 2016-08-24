@@ -247,34 +247,7 @@ export default class User {
   }
 
   fetchBillingInfo () {
-    /*
-    ToDo: replace with real server request
-     */
-    return new Promise((resolve, reject) => {
-          this.billingInfo = Object.assign(this.billingInfo, {
-            first_name: 'Barry',
-            last_name: 'Bom',
-            mobile: '+123456789',
-            cards: [{
-              id: 1,
-              name: 'Card 1',
-              number: 4444,
-              expiry: '19/21',
-              cvc: 123
-            },{
-              id: 2,
-              name: 'Card 2',
-              number: 3333,
-              expiry: '10/22',
-              cvc: 456,
-              default: true
-            }]
-          });
-
-        setTimeout(() => {
-          resolve(this.billingInfo);
-        }, 1000);
-    })
+    return this.billingInfo;
   }
 
   saveBillingInfo () {
