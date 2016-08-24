@@ -1,6 +1,11 @@
 export default class pastOrdersController {
 
-  constructor () {
+  constructor (OrderService) {
+    'ngInject';
+
+    _.assign(this, {OrderService});
+
+    this.history = OrderService.getPastOrders();
 
   }
 

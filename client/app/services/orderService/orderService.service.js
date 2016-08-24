@@ -7,6 +7,7 @@ export default class Order {
         list: [],
         listConfirmed: [],
         providers: [],
+        history: [],
         entertainersInvitedCount: 0,
         entertainersConfirmedCount: 0,
         Helper,
@@ -62,6 +63,18 @@ export default class Order {
 
   getProviders() {
     return this.providers;
+  }
+
+  getProviderById(id) {
+    return _.find(this.providers, provider => provider.type === id);
+  }
+
+  getPastOrders() {
+    return this.history.past;
+  }
+
+  getFutureOrders() {
+    return this.history.future;
   }
 
   /*
