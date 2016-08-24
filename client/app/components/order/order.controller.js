@@ -102,6 +102,11 @@ class orderController {
       return false;
     }
 
+    if (this.User.get('is_newcomer')) {
+      this.$state.go('main.accept', {order: this.orderData(form)});
+      return false;
+    }
+
     this.Request
       .send(
         this.User.token(),
