@@ -29,7 +29,7 @@ angular
     "angular.filter",
     angularMessages
   ])
-  .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider, $mdDateLocaleProvider, moment, $mdGestureProvider ) => {
+  .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider, $mdDateLocaleProvider, moment, $mdGestureProvider, $httpProvider) => {
     "ngInject";
     // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions
     // #how-to-configure-your-server-to-work-with-html5mode
@@ -75,6 +75,24 @@ angular
       let $state = $injector.get("$state");
 
       return $state.go('home');
+    });
+
+    $httpProvider.interceptors.push(function ($q, $injector) {
+      return {
+        'responseError': function (rejection) {
+          var defer = $q.defer();
+
+          if (rejection.status == 401) {
+            var User = $injector.get("User");
+            User.logout();
+            return;
+          }
+
+          defer.reject(rejection);
+
+          return defer.promise;
+        }
+      };
     });
 
   })
