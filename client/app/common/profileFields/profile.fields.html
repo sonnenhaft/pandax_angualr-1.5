@@ -19,9 +19,9 @@
                      ng-disabled="$ctrl.mode === 'main.profile.view'"
                      ng-model="image.file"
                      name="file"
-                     ngf-max-width="2000"
-                     ngf-max-height="1500"
-                     ngf-max-size="2MB"
+                     ngf-capture="'camera'"
+                     ngf-max-size="10KB"
+                     ngf-model-invalid="$ctrl.invalidFiles"
                      ng-change="$ctrl.onImageChange(image.file, $index + 1)"
                      ng-click="$ctrl.imagesError = false">
             <img ngf-src="image.file" alt=""/>
@@ -30,6 +30,9 @@
       </div>
       <span class="error" ng-if="$ctrl.imagesError">
           {{$ctrl.imagesError}}
+        </span>
+      <span class="error" ng-if="$ctrl.invalidFiles">
+          The file size should be less than 10MB
         </span>
     </div>
     <div class="input-container" ng-repeat="field in $ctrl.fields">
