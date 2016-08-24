@@ -66,15 +66,15 @@ export default class Order {
   }
 
   getProviderById(id) {
-    return _.find(this.providers, provider => provider.type === id);
+    return _.find(this.providers, ['type', id]);
   }
 
   getPastOrders() {
-    return this.history.past;
+    return _.sortBy(this.history.past, order => order.datetime);
   }
 
   getFutureOrders() {
-    return this.history.future;
+    return _.sortBy(this.history.future, order => order.datetime);
   }
 
   /*

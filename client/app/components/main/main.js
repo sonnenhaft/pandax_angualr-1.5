@@ -101,7 +101,7 @@ export default angular
                   guests: 1,
                   duration: '2h',
                   initial_price: 800,
-                  final_price: 800,
+                  final_price: 600,
                   provider: [
                     {
                       name: 'Lil',
@@ -112,7 +112,7 @@ export default angular
                     {
                       name: 'Sara',
                       duration: '2h',
-                      price: 400,
+                      price: 200,
                       img: ''
                     }
                   ]
