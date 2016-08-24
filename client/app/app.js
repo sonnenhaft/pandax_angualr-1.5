@@ -33,7 +33,7 @@ angular
     "ngInject";
     // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions
     // #how-to-configure-your-server-to-work-with-html5mode
-    $locationProvider.html5Mode(true).hashPrefix('!');
+    $locationProvider.html5Mode(false);
 
     $urlRouterProvider.otherwise($injector => {
       /*
@@ -70,5 +70,12 @@ angular
     });
 
     $mdGestureProvider.skipClickHijack(); // without this line tap on 'md-button' with 'ng-file-upload' not working in iPhone https://github.com/danialfarid/ng-file-upload/issues/1049
+
+    $urlRouterProvider.otherwise(function ($injector) {
+      let $state = $injector.get("$state");
+
+      return $state.go('home');
+    });
+
   })
   .component('app', AppComponent);
