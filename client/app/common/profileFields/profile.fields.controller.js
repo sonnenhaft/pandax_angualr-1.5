@@ -150,15 +150,16 @@ export default class profileFieldsController {
 
   onImageChange (image, slot) {
     if (image) {
-      this.photosBuffer.push({image: image, slot: slot});
+      let indexFounded = _.findIndex(this.photosBuffer, {slot: slot});
+      if (indexFounded >= 0) {
+        this.photosBuffer[indexFounded] = {image: image, slot: slot};
+      } else {
+        this.photosBuffer.push({image: image, slot: slot});
+      }
     }
   }
 
   UpdateUserPhotos () {
-    if (this.photosBuffer.length == 0) {
-      return false;
-    }
-
     let promises = [];
 
     _.each(this.photosBuffer, (photo) => {
@@ -168,11 +169,12 @@ export default class profileFieldsController {
           result => {
             let photoResult = result.photo ? result.photo : result.photos[photo.slot - 1];
 
-            if (photo.slot == 1) {
-              this.profilePhoto(photoResult.original);
+            if (photoResult) {
+              this.backupPhoto({file: photoResult.preview}, photo.slot - 1);
+              if (photo.slot == 1) {
+                this.profilePhoto(photoResult.original);
+              }
             }
-
-            this.backupPhoto({file: photoResult.preview}, photo.slot - 1);
 
             return this.User.update({[this.isCustomer ? 'photo' : 'photos']: result.photo})
           },
@@ -181,28 +183,32 @@ export default class profileFieldsController {
       promises.push(query);
     })
 
-    this.$q.all(promises).then((data) => {
+    return this.$q.all(promises).then((data) => {
       this.photosBuffer = [];
     })
   }
 
   UpdateUserProfile (profile, mode) {
     this.saveLoading = true;
-    this.UpdateUserPhotos();
-    return this.User
-      .UpdateUserProfile(profile)
-      .then(
-        result => {
-          this.saveLoading = false;
-          this.User.update(_.assign(result, {auth: true}));
-          this.mode = mode;
-          this.buildProfileModels();
-        },
-        error => {
-          this.saveLoading = false;
-          console.log(error);
-        }
-      );
+    
+    let query = this.User
+        .UpdateUserProfile(profile)
+        .then(
+          result => {
+            this.User.update(_.assign(result, {auth: true}));
+            this.mode = mode;
+            this.buildProfileModels();
+          },
+          error => {
+            console.log(error);
+          }
+        )
+
+    return this.$q.all([this.UpdateUserPhotos(), query])
+            .then((data) => {
+              this.saveLoading = false;
+              return data;
+            });
   }
 
 }

@@ -159,7 +159,7 @@ export default class User {
           if (redirectUser == true) {
             this.redirectUser();
           }
-          // return true;
+          this.setUserAvatarSrc(result.data);
           return result.data;
         },
         error => console.log(error)
@@ -231,9 +231,9 @@ export default class User {
   }
 
   setUserAvatarSrc (data = {}) {
-    let photoSrc = '';
+    let photoSrc = this.Constants.user.avatar.empty;
 
-    if (data.photo) {
+    if (data.photo && data.photo.preview) {
       photoSrc = data.photo.preview;
     } else if (data.photos && data.photos[0] && data.photos[0].preview) {
       photoSrc = data.photos[0].preview;
@@ -258,9 +258,16 @@ export default class User {
             cards: [{
               id: 1,
               name: 'Card 1',
-              number: 1111222233334444,
+              number: 4444,
               expiry: '19/21',
               cvc: 123
+            },{
+              id: 2,
+              name: 'Card 2',
+              number: 3333,
+              expiry: '10/22',
+              cvc: 456,
+              default: true
             }]
           });
 
