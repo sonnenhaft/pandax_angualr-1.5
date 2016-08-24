@@ -159,7 +159,7 @@ export default class User {
           if (redirectUser == true) {
             this.redirectUser();
           }
-          // return true;
+          this.setUserAvatarSrc(result.data);
           return result.data;
         },
         error => console.log(error)
