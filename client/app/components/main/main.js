@@ -35,7 +35,7 @@ export default angular
                   return _.map(result.data, provider => {
                     return _.assign(provider, {
                       price: _.round(provider.price),
-                      img: require('../../../assets/images/services/' + provider.name.replace(/\s/g, '').toLowerCase() + '.png')
+                      img: require('../../../assets/images/services/' + provider.name.toLowerCase().replace(/\s+/g, '_') + '.png')
                     });
                   });
                 },

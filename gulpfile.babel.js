@@ -125,12 +125,17 @@ gulp.task('clean', (cb) => {
   })
 });
 
-gulp.task('build', ['webpack'], () => {
-    
+gulp.task('build', ['webpack', 'copy_images'], () => {
+
   return gulp.src('./dist/**')
-     .pipe(tar('build.tar'))
-     .pipe(gzip())
+     // .pipe(tar('build.tar'))
+     // .pipe(gzip())
      .pipe(gulp.dest('./builds/'));
+});
+
+gulp.task('copy_images', ['clean'], () => {
+  return gulp.src('./client/assets/images/**/*.+(png|jpg|jpeg|svg)')
+    .pipe(gulp.dest('./dist/assets/images/'))
 });
 
 gulp.task('default', ['watch']);
