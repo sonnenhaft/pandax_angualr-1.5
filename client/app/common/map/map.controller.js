@@ -20,7 +20,7 @@ class MpaController {
       this.blocked = false;
       this.$timeout(() => {
         this.position = changes.input.currentValue.coords;
-        this.zoom = 15;
+        this.zoom = changes.input.currentValue.zoom;
       });
     }
   }
@@ -39,7 +39,7 @@ class MpaController {
         position => {
           this.$timeout(() => {
             this.progress = false;
-            this.zoom = 15;
+            this.zoom = 19;
 
             this.position = {
               latitude: position.coords.latitude,
@@ -95,7 +95,7 @@ class MpaController {
       options: {
         draggable: true,
         icon: {
-          url: '/assets/images/pin_map.png',
+          url: require('../../../assets/images/pin_map.png'),
           anchor: {
             x: 25,
             y: 25

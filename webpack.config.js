@@ -11,7 +11,7 @@ module.exports = {
       { test: /\.html$/, loader: 'raw' },
       { test: /\.scss$/, loader: 'style!css?sourceMap!sass?sourceMa' },
       { test: /\.css$/, loader: 'style!css' },
-      {test: /\.(eot|woff|woff2|ttf|svg)$/, loader: 'url-loader?limit=30000&name=assets/fonts/[name]-[hash].[ext]'},
+      {test: /\.(eot|woff|woff2|ttf|svg)$/i, loader: 'url-loader?limit=30000&name=assets/fonts/[name]-[hash].[ext]'},
       {test: /\.(jpg|png)$/, loader: 'file-loader?limit=30000&name=assets/images/[name]-[hash].[ext]'},
       {
         test: /\.svg$/,
