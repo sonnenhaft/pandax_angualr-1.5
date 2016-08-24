@@ -6,8 +6,8 @@
 
   <span class="page-name">CREATE ORDER</span>
 
-	<h4 class="personal-information__title">PERSONAL INFORMATION</h4>
 
+	<h4 class="personal-information__title">PERSONAL INFORMATION</h4>
 	<form
 	name="personalInformationForm"
 	layout="column"
@@ -16,81 +16,14 @@
 		<personal-information form-object="personalInformationForm" model="vm.billingInfo"></personal-information>
 	</form>
 
-	<h4 class="billing-information__title">BILLING INFORMATION</h4>
 
+	<h4 class="billing-information__title">BILLING INFORMATION</h4>
 	<form
 		name="billingInformationForm"
 		layout="column"
 		class="billing-information-form"
     novalidate>
-
-		<div
-			layout="row">
-			<div
-				class="form_1-field__container"
-				layout="column"
-				flex="100">
-				<label class="form_1__label">Card Number</label>
-				<input
-					type="number"
-					name="card_number"
-					class="form_1__input"
-					ng-model="vm.card.number"
-					required/>
-			  <div
-			  	ng-messages="billingInformationForm.card_number.$error"
-			  	ng-show="billingInformationForm.card_number.$touched"
-			  	class="validation-messages"
-			  	role="alert">
-			    <div ng-messages-include="/app/common/messages/messages.html"></div>
-			  </div>
-			</div>
-		</div>
-
-		<div
-			layout="row"
-			layout-align="space-between"
-			class="form_1__row_2">
-			<div
-				class="form_1-field__container"
-				layout="column"
-				flex="50">
-				<label class="form_1__label">Expiry</label>
-				<input
-					type="text"
-					name="expiry"
-					class="form_1__input"
-					ng-model="vm.card.expiry"
-					required/>
-			  <div
-			  	ng-messages="billingInformationForm.expiry.$error"
-			  	ng-show="billingInformationForm.expiry.$touched"
-			  	class="validation-messages"
-			  	role="alert">
-			    <div ng-messages-include="/app/common/messages/messages.html"></div>
-			  </div>
-			</div>
-			<div
-				class="form_1-field__container"
-				layout="column"
-				flex="50">
-				<label class="form_1__label">CVC</label>
-				<input
-					type="text"
-					name="cvc"
-					class="form_1__input"
-					ng-model="vm.card.cvc"
-					required/>
-			  <div
-			  	ng-messages="billingInformationForm.cvc.$error"
-			  	ng-show="billingInformationForm.cvc.$touched"
-			  	class="validation-messages"
-			  	role="alert">
-			    <div ng-messages-include="/app/common/messages/messages.html"></div>
-			  </div>
-			</div>
-		</div>
-
+		<card-info form-object="billingInformationForm" model="vm.newCard"></card-info>
 	</form>
 
 
@@ -114,5 +47,6 @@
     	Continue
     </md-button>
 	</section>
+
 
 </div>
