@@ -14,12 +14,16 @@ export default class findLocation {
 
   $onChanges (changes) {
 
-    if (_.isBoolean(changes.input.currentValue)) {
+    if (
+      _.isBoolean(changes.input.currentValue) ||
+      (changes.input.currentValue && !changes.input.currentValue.location)
+    ) {
       this.validate({location: this.location});
     }
 
     if (changes.input.currentValue) {
-      this.locationName = changes.input.currentValue.location.formatted_address;
+      this.locationName = changes.input.currentValue.location ?
+        changes.input.currentValue.location.formatted_address : 'Unknown place';
       this.location = changes.input.currentValue;
       this.output({location: this.location});
       this.locations = this.locationError = false;
@@ -35,7 +39,7 @@ export default class findLocation {
       .getLocationByString(str, locations => {
         this.$timeout(() => {
           this.loading = false;
-          this.locations = locations.length ? locations : false;
+          this.locations = locations && locations.length ? locations : false;
         });
       });
   }
@@ -51,22 +55,21 @@ export default class findLocation {
     };
 
     this.locationName = item.formatted_address;
-    this.output({location: this.location});
+    this.output({location: _.assign(this.location, {zoom: 19})});
   }
 
   clearLocation () {
     this.locationName = '';
     this.locations = this.location = false;
     this.output({location: this.location});
-    this.validate({location: this.location});
   }
 
   checkLocation () {
-    if (this.locations.length) {
+    if (this.locations && this.locations.length) {
       this.setLocation(_.head(this.locations));
-      return true;
+      return false;
     }
-
+    this.output({location: this.location});
     this.validate({location: this.location});
   }
 

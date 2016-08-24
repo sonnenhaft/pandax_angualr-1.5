@@ -8,7 +8,9 @@
            ng-blur="$ctrl.checkLocation()"
            class="first">
     <ul ng-if="$ctrl.locations" class="location-drop">
-      <li ng-repeat="location in $ctrl.locations" ng-click="$ctrl.setLocation(location)">
+      <li ng-repeat="location in $ctrl.locations"
+          ng-click="$ctrl.setLocation(location)"
+          ng-if="location.formatted_address">
         {{location.formatted_address}}
       </li>
     </ul>
