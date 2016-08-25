@@ -8,6 +8,7 @@ import ProfileView from './profile/view/profile.view';
 import Order from './order/order';
 import Payments from './payments/payments';
 import History from './history/history';
+import HistoryMinx from './historyMinx/historyMinx';
 
 let componentModule = angular.module('app.components', [
   Home,
@@ -18,7 +19,8 @@ let componentModule = angular.module('app.components', [
   ProfileView,
   Order,
   Payments,
-  History
+  History,
+  HistoryMinx
 ])
 
 .name;

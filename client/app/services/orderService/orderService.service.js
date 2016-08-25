@@ -77,6 +77,10 @@ export default class Order {
     return _.sortBy(this.history.future, order => order.datetime);
   }
 
+  getOrdersWithParam(id, type) {
+    return _.find(this.history[type], ['id', Number(id)]);
+  }
+
   /*
     Confirmed entertainers
   */

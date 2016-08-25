@@ -18,6 +18,9 @@ export default angular
     $stateProvider
       .state('main.history', {
         url: '/orders-history',
+        params: {
+          type: ''
+        },
         parent: 'main',
         component: 'history'
       });
