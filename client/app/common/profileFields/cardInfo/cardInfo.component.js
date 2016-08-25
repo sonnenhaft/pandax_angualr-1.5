@@ -6,8 +6,7 @@ let cardInfoComponent = {
   bindings: {
     formObject: '=',
     model: '=',
-    output: '&',
-    messages: '='
+    output: '&'
   },
   template,
   controller,
