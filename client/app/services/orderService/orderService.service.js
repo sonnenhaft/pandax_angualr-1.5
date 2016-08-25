@@ -70,7 +70,7 @@ export default class Order {
   }
 
   getPastOrders() {
-    return _.sortBy(this.history.past, order => order.datetime);
+    return _.orderBy(this.history.past, order => order.datetime, 'desc');
   }
 
   getFutureOrders() {

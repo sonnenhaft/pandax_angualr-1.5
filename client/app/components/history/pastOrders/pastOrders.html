@@ -1,6 +1,6 @@
 <div class="list past-orders">
 
-  <ul>
+  <ul ng-if="$ctrl.history.length">
     <li ng-repeat="order in $ctrl.history">
       <div class="order-information">
         <span class="date">{{order.datetime | amDateFormat:'h:mm A, MMM DD (dddd)'}}</span>
@@ -27,5 +27,9 @@
       </div>
     </li>
   </ul>
+
+  <div class="empty-history" ng-if="!$ctrl.history.length">
+    <p>You don't have any past orders</p>
+  </div>
 
 </div>
