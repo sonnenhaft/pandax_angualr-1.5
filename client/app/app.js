@@ -11,11 +11,14 @@ import 'lodash';
 import 'normalize.css';
 import 'animate.css';
 import angularMessages from 'angular-messages';
+import 'angular-filter/dist/angular-filter.min.js';
+import angularStripe from 'angular-stripe';
 
 import Common from './common/common';
 import Components from './components/components';
 import AppComponent from './app.component';
-import 'angular-filter/dist/angular-filter.min.js';
+
+let config = require('config');
 
 angular
   .module('app', [
@@ -27,9 +30,10 @@ angular
     'uiGmapgoogle-maps',
     'angularMoment',
     "angular.filter",
-    angularMessages
+    angularMessages,
+    angularStripe
   ])
-  .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider, $mdDateLocaleProvider, moment, $mdGestureProvider, $httpProvider) => {
+  .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider, $mdDateLocaleProvider, moment, $mdGestureProvider, $httpProvider, stripeProvider) => {
     "ngInject";
     // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions
     // #how-to-configure-your-server-to-work-with-html5mode
@@ -89,5 +93,7 @@ angular
       };
     });
 
+    // Stripe integration
+    stripeProvider.setPublishableKey(config.STRIPE.PUBLIC_KEY);
   })
   .component('app', AppComponent);
