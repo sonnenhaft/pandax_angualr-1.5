@@ -1,20 +1,23 @@
 class BillingController {
 
-  constructor ($state, User, $stateParams) {
+  constructor ($state, User, $stateParams, Resolve) {
     'ngInject';
 
     _.assign(this, {
     	$state,
     	User,
-    	$stateParams
+    	$stateParams,
+      Resolve
     });
   }
 
   saveInfo () {
-  	this.User.saveBillingInfo()
+    let card
+    this.Resolve.stripeCreateToken(this.newCard)
+/*  	this.User.saveBillingInfo()
   		.then((_data) => {
   			this.$state.go(this.$stateParams.from);
-  		});
+  		});*/
   }
 
 }

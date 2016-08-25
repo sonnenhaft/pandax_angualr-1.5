@@ -1,6 +1,6 @@
 export default class Resolve {
 
-  constructor (User, OrderService, Constants, Request, $timeout) {
+  constructor (User, OrderService, Constants, Request, $timeout, stripe) {
     'ngInject';
 
     _.assign(this, {
@@ -8,7 +8,8 @@ export default class Resolve {
       OrderService,
       Constants,
       Request,
-      $timeout
+      $timeout,
+      stripe
     });
 
   }
@@ -141,6 +142,13 @@ export default class Resolve {
 
       ]
     };
+  }
+
+  /*
+    Stripe communication
+   */
+  stripeCreateToken (card) {
+    this.stripe.card.createToken(card)
   }
 
 }
