@@ -2,6 +2,7 @@ import angular from 'angular';
 import angularMaterial from 'angular-material';
 import 'angular-material/angular-material.css';
 import uiRouter from 'angular-ui-router';
+import 'angular-ui-router/release/stateEvents.js';    // enable All state events, (i.e. $stateChange* and friends), due to https://github.com/angular-ui/ui-router/releases/tag/1.0.0alpha0
 import 'angular-simple-logger';
 import 'angular-google-maps';
 import 'moment';
@@ -19,6 +20,7 @@ import 'angular-filter/dist/angular-filter.min.js';
 angular
   .module('app', [
     uiRouter,
+    'ui.router.state.events',
     Common,
     Components,
     angularMaterial,
@@ -27,17 +29,11 @@ angular
     "angular.filter",
     angularMessages
   ])
-  .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider, $mdDateLocaleProvider, moment) => {
+  .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider, $mdDateLocaleProvider, moment, $mdGestureProvider, $httpProvider) => {
     "ngInject";
     // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions
     // #how-to-configure-your-server-to-work-with-html5mode
-    $locationProvider.html5Mode(true).hashPrefix('!');
-
-    $urlRouterProvider.otherwise($injector => {
-      /*
-      ToDo: autoLogout when user is not authorized
-       */
-    });
+    $locationProvider.html5Mode(false);
 
     // Extend the default angular 'grey' theme
     let primaryMap = $mdThemingProvider.extendPalette('grey', {
@@ -66,5 +62,32 @@ angular
       v: '3', //defaults to latest 3.X anyhow
       libraries: 'weather,geometry,visualization'
     });
+
+    $mdGestureProvider.skipClickHijack(); // without this line tap on 'md-button' with 'ng-file-upload' not working in iPhone https://github.com/danialfarid/ng-file-upload/issues/1049
+
+    $urlRouterProvider.otherwise(function ($injector) {
+      let $state = $injector.get("$state");
+
+      return $state.go('home');
+    });
+
+    $httpProvider.interceptors.push(function ($q, $injector) {
+      return {
+        'responseError': function (rejection) {
+          var defer = $q.defer();
+
+          if (rejection.status == 401) {
+            var User = $injector.get("User");
+            User.logout();
+            return;
+          }
+
+          defer.reject(rejection);
+
+          return defer.promise;
+        }
+      };
+    });
+
   })
   .component('app', AppComponent);

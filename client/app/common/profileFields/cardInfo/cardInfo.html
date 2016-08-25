@@ -1,0 +1,66 @@
+<div
+	layout="row">
+	<div
+		class="form_1-field__container"
+		layout="column"
+		flex="100">
+		<label class="form_1__label">Card Number</label>
+		<input
+			type="text"
+			name="card_number"
+			class="form_1__input"
+			ng-model="vm.model.number"
+			required/>
+	  <div
+	  	ng-messages="vm.formObject.card_number.$error"
+	  	ng-show="vm.formObject.card_number.$touched"
+	  	class="validation-messages"
+	  	role="alert">
+	    <div ng-messages-include="/app/common/messages/messages.html"></div>
+	  </div>
+	</div>
+</div>
+
+<div
+	layout="row"
+	layout-align="space-between"
+	class="form_1__row_2">
+	<div
+		class="form_1-field__container"
+		layout="column"
+		flex="50">
+		<label class="form_1__label">Expiry</label>
+		<input
+			type="text"
+			name="expiry"
+			class="form_1__input"
+			ng-model="vm.model.expiry"
+			required/>
+	  <div
+	  	ng-messages="vm.formObject.expiry.$error"
+	  	ng-show="vm.formObject.expiry.$touched"
+	  	class="validation-messages"
+	  	role="alert">
+	    <div ng-messages-include="/app/common/messages/messages.html"></div>
+	  </div>
+	</div>
+	<div
+		class="form_1-field__container"
+		layout="column"
+		flex="50">
+		<label class="form_1__label">CVC</label>
+		<input
+			type="text"
+			name="cvc"
+			class="form_1__input"
+			ng-model="vm.model.cvc"
+			required/>
+	  <div
+	  	ng-messages="vm.formObject.cvc.$error"
+	  	ng-show="vm.formObject.cvc.$touched"
+	  	class="validation-messages"
+	  	role="alert">
+	    <div ng-messages-include="/app/common/messages/messages.html"></div>
+	  </div>
+	</div>
+</div>

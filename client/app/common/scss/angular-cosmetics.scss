@@ -29,3 +29,19 @@ md-dialog {
   -o-transition: $type $duration $mode;
   transition: $type $duration $mode;
 }
+
+md-radio-button ._md-container:before {
+  background-color: $white;
+}
+
+md-radio-button.md-default-theme.md-checked ._md-off,
+md-radio-button.md-checked ._md-off {
+  border: none;
+}
+
+md-radio-button ._md-container,
+md-radio-button ._md-on,
+md-radio-button ._md-off {
+  height: 16px;
+  width: 16px;
+}

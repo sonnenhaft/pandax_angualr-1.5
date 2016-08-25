@@ -159,7 +159,7 @@ export default class User {
           if (redirectUser == true) {
             this.redirectUser();
           }
-          // return true;
+          this.setUserAvatarSrc(result.data);
           return result.data;
         },
         error => console.log(error)
@@ -231,9 +231,9 @@ export default class User {
   }
 
   setUserAvatarSrc (data = {}) {
-    let photoSrc = '';
+    let photoSrc = this.Constants.user.avatar.empty;
 
-    if (data.photo) {
+    if (data.photo && data.photo.preview) {
       photoSrc = data.photo.preview;
     } else if (data.photos && data.photos[0] && data.photos[0].preview) {
       photoSrc = data.photos[0].preview;
@@ -247,27 +247,7 @@ export default class User {
   }
 
   fetchBillingInfo () {
-    /*
-    ToDo: replace with real server request
-     */
-    return new Promise((resolve, reject) => {
-          this.billingInfo = Object.assign(this.billingInfo, {
-            first_name: 'Barry',
-            last_name: 'Bom',
-            mobile: '+123456789',
-            cards: [{
-              id: 1,
-              name: 'Card 1',
-              number: 1111222233334444,
-              expiry: '19/21',
-              cvc: 123
-            }]
-          });
-
-        setTimeout(() => {
-          resolve(this.billingInfo);
-        }, 1000);
-    })
+    return this.billingInfo;
   }
 
   saveBillingInfo () {
