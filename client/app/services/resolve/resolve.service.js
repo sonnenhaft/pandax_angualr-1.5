@@ -27,13 +27,13 @@ export default class Resolve {
           cards: [{
             id: 1,
             name: 'Card 1',
-            number: 4444,
-            expiry: '19/21',
+            number: 4242424242424242,
+            expiry: '02/21',
             cvc: 123
           },{
             id: 2,
             name: 'Card 2',
-            number: 3333,
+            number: 4242424242424242,
             expiry: '10/22',
             cvc: 456,
             default: true
@@ -148,7 +148,7 @@ export default class Resolve {
     Stripe communication
    */
   stripeCreateToken (card) {
-    this.stripe.card.createToken(card)
+    return this.stripe.card.createToken(card)
   }
 
 }

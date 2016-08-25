@@ -10,10 +10,11 @@
 			name="card_number"
 			class="form_1__input"
 			ng-model="vm.model.number"
+			ng-change="vm.checkCardNumber()"
 			required/>
 	  <div
 	  	ng-messages="vm.formObject.card_number.$error"
-	  	ng-show="vm.formObject.card_number.$touched"
+	  	ng-show="vm.formObject.card_number.$touched && vm.formObject.card_number.$invalid"
 	  	class="validation-messages"
 	  	role="alert">
 	    <div ng-messages-include="/app/common/messages/messages.html"></div>
@@ -35,10 +36,11 @@
 			name="expiry"
 			class="form_1__input"
 			ng-model="vm.model.expiry"
+			ng-change="vm.checkCardExpiry()"
 			required/>
 	  <div
 	  	ng-messages="vm.formObject.expiry.$error"
-	  	ng-show="vm.formObject.expiry.$touched"
+	  	ng-show="vm.formObject.expiry.$touched && vm.formObject.expiry.$invalid"
 	  	class="validation-messages"
 	  	role="alert">
 	    <div ng-messages-include="/app/common/messages/messages.html"></div>
@@ -54,10 +56,11 @@
 			name="cvc"
 			class="form_1__input"
 			ng-model="vm.model.cvc"
+			ng-change="vm.checkCardCvc()"
 			required/>
 	  <div
 	  	ng-messages="vm.formObject.cvc.$error"
-	  	ng-show="vm.formObject.cvc.$touched"
+	  	ng-show="vm.formObject.cvc.$touched && vm.formObject.cvc.$invalid"
 	  	class="validation-messages"
 	  	role="alert">
 	    <div ng-messages-include="/app/common/messages/messages.html"></div>

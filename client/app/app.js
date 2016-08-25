@@ -95,6 +95,5 @@ angular
 
     // Stripe integration
     stripeProvider.setPublishableKey(config.STRIPE.PUBLIC_KEY);
-console.log('config', config.STRIPE.PUBLIC_KEY);
   })
   .component('app', AppComponent);

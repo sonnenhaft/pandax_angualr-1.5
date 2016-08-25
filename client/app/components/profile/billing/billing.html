@@ -42,10 +42,17 @@
     <md-button
     	flex="50"
     	class="md-raised md-accent form_1__button"
-    	ng-disabled="personalInformationForm.$invalid || billingInformationForm.$invalid"
-    	ng-click="vm.saveInfo()">
+    	ng-disabled="personalInformationForm.$invalid || billingInformationForm.$invalid || vm.saveLoading"
+    	ng-click="vm.saveInfo(personalInformationForm, billingInformationForm)">
     	Continue
+	    <md-progress-circular 
+	    	md-mode="indeterminate" 
+	    	md-diameter="30" 
+	    	class="md-progress-circular_absolute md-progress-circular_dark"
+	    	ng-if="vm.saveLoading">
+	    </md-progress-circular>
     </md-button>
+
 	</section>
 
 
