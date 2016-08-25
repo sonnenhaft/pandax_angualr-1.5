@@ -35,12 +35,6 @@ angular
     // #how-to-configure-your-server-to-work-with-html5mode
     $locationProvider.html5Mode(false);
 
-    $urlRouterProvider.otherwise($injector => {
-      /*
-      ToDo: autoLogout when user is not authorized
-       */
-    });
-
     // Extend the default angular 'grey' theme
     let primaryMap = $mdThemingProvider.extendPalette('grey', {
       '900': 'FFFFFF'
