@@ -1,0 +1,31 @@
+<div class="list past-orders">
+
+  <ul>
+    <li ng-repeat="order in $ctrl.history">
+      <div class="order-information">
+        <span class="date">{{order.datetime | amDateFormat:'h:mm A, MMM DD (dddd)'}}</span>
+        <span class="minx">{{$ctrl.OrderService.getProviderById(order.service_type).name}}</span>
+        <span class="address">{{order.address}}</span>
+        <div layout="row">
+          <span flex="15" class="guest">{{order.guests}}</span>
+          <span flex="15" class="minx">{{order.provider.length}}</span>
+        </div>
+        <span class="time">{{order.duration}}</span>
+        <div layout="row" class="price">
+          <div flex>
+            <span class="initial">${{order.initial_price}}</span>
+            <p>Initial</p>
+          </div>
+          <div flex>
+            <span class="final">${{order.final_price}}</span>
+            <p>Final</p>
+          </div>
+        </div>
+      </div>
+      <div class="order-minx">
+        <span class="minx">MINX ({{order.provider.length}})</span>
+      </div>
+    </li>
+  </ul>
+
+</div>

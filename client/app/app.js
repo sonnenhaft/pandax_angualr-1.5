@@ -11,12 +11,16 @@ import 'lodash';
 import 'normalize.css';
 import 'animate.css';
 import angularMessages from 'angular-messages';
+import 'angular-filter/dist/angular-filter.min.js';
+import JWT from 'angular-jwt';
+import angularStripe from 'angular-stripe';
 
 import Common from './common/common';
 import Components from './components/components';
 import AppComponent from './app.component';
-import 'angular-filter/dist/angular-filter.min.js';
-import JWT from 'angular-jwt';
+
+let config = require('config');
+
 
 angular
   .module('app', [
@@ -29,19 +33,14 @@ angular
     'angularMoment',
     "angular.filter",
     angularMessages,
-    JWT
+    JWT,
+    angularStripe
   ])
-  .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider, $httpProvider, jwtInterceptorProvider) => {
+  .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider, $mdDateLocaleProvider, moment, $mdGestureProvider, jwtInterceptorProvider, $httpProvider, stripeProvider) => {
     "ngInject";
     // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions
     // #how-to-configure-your-server-to-work-with-html5mode
-    $locationProvider.html5Mode(true).hashPrefix('!');
-
-    $urlRouterProvider.otherwise($injector => {
-      /*
-      ToDo: autoLogout when user is not authorized
-       */
-    });
+    $locationProvider.html5Mode(false);
 
     // Extend the default angular 'grey' theme
     let primaryMap = $mdThemingProvider.extendPalette('grey', {
@@ -62,7 +61,9 @@ angular
       .primaryPalette('primaryMap')
       .accentPalette('accentMap')
       .backgroundPalette('backgroundMap');
-      
+
+
+    $mdDateLocaleProvider.formatDate = date => moment(date).format('MMMM DD, YYYY');
 
 
     uiGmapGoogleMapApiProvider.configure({
@@ -71,11 +72,48 @@ angular
       libraries: 'weather,geometry,visualization'
     });
 
+
     //JWT interceptor will take care of sending the JWT in every request (More info: https://github.com/auth0/angular-jwt#jwtinterceptor)
     jwtInterceptorProvider.tokenGetter = function () {
-      return this.Storage.getObject('MINX').token;
+      /*
+        ToDo: look for better solution without directly localStorage manipulation
+       */
+      let minx = localStorage.getItem('MINX');
+      return minx ? minx.token : '';
     };
-
     $httpProvider.interceptors.push('jwtInterceptor');
+
+
+    // without this line tap on 'md-button' with 'ng-file-upload' not working in iPhone https://github.com/danialfarid/ng-file-upload/issues/1049
+    $mdGestureProvider.skipClickHijack(); 
+
+
+    $urlRouterProvider.otherwise(function ($injector) {
+      let $state = $injector.get("$state");
+      return $state.go('home');
+    });
+
+
+    $httpProvider.interceptors.push(function ($q, $injector) {
+      return {
+        'responseError': function (rejection) {
+          var defer = $q.defer();
+
+          if ([401, -1].indexOf(rejection.status) >= 0) {
+            let User = $injector.get("User");
+            User.logout();
+            return;
+          }
+
+          defer.reject(rejection);
+
+          return defer.promise;
+        }
+      };
+    });
+
+
+    // Stripe integration
+    stripeProvider.setPublishableKey(config.STRIPE.PUBLIC_KEY);
   })
   .component('app', AppComponent);

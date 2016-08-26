@@ -95,22 +95,7 @@ export default class Constants {
         }
       },
 
-      styles: [
-        {
-          stylers: [
-            { hue: '#890000' },
-            { visibility: 'simplified' },
-            { gamma: 0.5 },
-            { weight: 0.5 }
-          ]
-        },
-        {
-          featureType: 'water',
-          stylers: [
-            { color: '#ba192f' }
-          ]
-        }
-      ]
+      styles: [{"stylers":[{"saturation":-100},{"gamma":1}]},{"elementType":"labels.text.stroke","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"poi.place_of_worship","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"poi.place_of_worship","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"geometry","stylers":[{"visibility":"simplified"}]},{"featureType":"water","stylers":[{"visibility":"on"},{"saturation":-50},{"gamma":0},{"hue":"#bdbdca"}]},{"featureType":"administrative.neighborhood","elementType":"labels.text.fill","stylers":[{"color":"#333333"}]},{"featureType":"road.local","elementType":"labels.text","stylers":[{"weight":0.5},{"color":"#a0a0ac"}]},{"featureType":"transit.station","elementType":"labels.icon","stylers":[{"gamma":1},{"saturation":50}]}]
 
     };
 
@@ -169,13 +154,8 @@ export default class Constants {
         },
         {
           role: 'customer',
-          text: 'Active orders',
-          url: 'home'
-        },
-        {
-          role: 'customer',
-          text: 'History',
-          url: 'home'
+          text: 'Orders',
+          url: 'main.history'
         },
         {
           role: 'customer',
@@ -194,7 +174,7 @@ export default class Constants {
           role: 'customer',
           parent: 'Settings',
           text: 'Payments',
-          url: 'settings.payment'
+          url: 'main.payments'
         },
         {
           role: 'customer',
@@ -206,7 +186,7 @@ export default class Constants {
           role: 'customer',
           parent: 'Settings',
           text: 'Change Password',
-          url: 'profile.edit'
+          url: 'profile.view.edit'
         },
         {
           role: 'customer',

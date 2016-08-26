@@ -15,8 +15,8 @@
         I am 18 years old
       </md-checkbox>
       <md-button ng-click="$ctrl.onAccept()"
-                 ng-disabled="$ctrl.orderLoading"
-                 ng-class="{disabled: $ctrl.orderLoading}">
+                 ng-disabled="$ctrl.orderLoading || !$ctrl.accepted"
+                 ng-class="{disabled: $ctrl.orderLoading || !$ctrl.accepted}">
         {{!$ctrl.orderLoading ? 'Accept' : ''}}
         <spinner input="$ctrl.orderLoading"></spinner>
       </md-button>

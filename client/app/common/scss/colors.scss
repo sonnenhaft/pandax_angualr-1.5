@@ -11,6 +11,17 @@ $accent: #9BB59C;
 $Cardinal: #ba192f;
 $Davy-grey: #434043;
 $Charcoal: #313846;
+$DarkCharcoal: #222530;
 $TrolleyGrey: #797e88;
 $AuroMetalSaurus: #747984;
 $CharcoalDarker: #38404f;
+$DarkJungleGreen: #151520;
+
+@mixin gradient($from, $to) {
+  background: -ms-linear-gradient(top left, $from 0%, $to 185%);
+  background: -moz-linear-gradient(top left, $from 0%, $to 185%);
+  background: -o-linear-gradient(top left, $from 0%, $to 185%);
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0, $from), color-stop(185, $to));
+  background: -webkit-linear-gradient(top left, $from 0%, $to 185%);
+  background: linear-gradient(to bottom right, $from 0%, $to 185%);
+}
