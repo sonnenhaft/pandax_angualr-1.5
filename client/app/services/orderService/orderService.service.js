@@ -70,11 +70,15 @@ export default class Order {
   }
 
   getPastOrders() {
-    return _.sortBy(this.history.past, order => order.datetime);
+    return _.orderBy(this.history.past, order => order.datetime, 'desc');
   }
 
   getFutureOrders() {
     return _.sortBy(this.history.future, order => order.datetime);
+  }
+
+  getOrdersWithParam(id, type) {
+    return _.find(this.history[type], ['id', Number(id)]);
   }
 
   /*

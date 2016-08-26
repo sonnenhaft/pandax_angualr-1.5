@@ -24,6 +24,10 @@
         &.guest { @include image('guest'); }
         &.time { @include image('time'); }
         &.initial { @include image('price'); }
+        &.active {
+          color: $active;
+          @include image('active');
+        }
 
         &.final {
           padding-left: 0;
@@ -74,6 +78,31 @@
       }
     }
 
+  }
+
+  &.future-orders {
+    ul {
+      li {
+        .order-information {
+          .price {
+            div {
+              &:last-child {
+                p {
+                  padding-left: 21px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .empty-history {
+    p {
+      text-align: center;
+      font: 0.938em $open-sans, sans-serif;
+    }
   }
 
 }

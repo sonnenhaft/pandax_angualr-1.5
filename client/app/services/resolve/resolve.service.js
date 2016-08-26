@@ -1,6 +1,6 @@
 export default class Resolve {
 
-  constructor (User, OrderService, Constants, Request, $timeout, stripe) {
+  constructor (User, OrderService, Constants, Request, moment, $timeout, stripe) {
     'ngInject';
 
     _.assign(this, {
@@ -8,6 +8,7 @@ export default class Resolve {
       OrderService,
       Constants,
       Request,
+      moment,
       $timeout,
       stripe
     });
@@ -71,7 +72,7 @@ export default class Resolve {
       past: [
         {
           id: 1,
-          datetime: new Date(),
+          datetime: this.moment(new Date('08-24-2016 15:00')),
           service_type: 1,
           address: 'Santa Monica Fwy 1110',
           guests: 3,
@@ -115,7 +116,7 @@ export default class Resolve {
         },
         {
           id: 2,
-          datetime: new Date(),
+          datetime: this.moment(new Date('07-21-2016 12:30')),
           service_type: 3,
           address: '365 W Craig Rd #123, North Las Vegas, NV 89032, USA',
           guests: 1,
@@ -139,7 +140,95 @@ export default class Resolve {
         }
       ],
       future: [
-
+        {
+          id: 1,
+          datetime: this.moment(new Date('09-10-2016 18:30')),
+          service_type: 1,
+          address: 'Santa Monica Fwy 1110',
+          guests: 3,
+          duration: '1h 30m',
+          initial_price: 250,
+          provider: [
+            {
+              name: 'Agnes',
+              duration: '1h 30m',
+              price: 100,
+              img: ''
+            },
+            {
+              name: 'Kimberly',
+              duration: null,
+              price: 50,
+              img: ''
+            },
+            {
+              name: 'Rebecca',
+              duration: null,
+              price: 0,
+              img: ''
+            },
+            {
+              name: 'Agnes',
+              duration: '1h 30m',
+              price: 100,
+              img: ''
+            },
+            {
+              name: 'Agnes',
+              duration: '45m',
+              price: 100,
+              img: ''
+            }
+          ]
+        },
+        {
+          id: 2,
+          active: true,
+          datetime: new Date(),
+          service_type: 3,
+          address: '365 W Craig Rd #123, North Las Vegas, NV 89032, USA',
+          guests: 1,
+          duration: '2h',
+          initial_price: 800,
+          provider: [
+            {
+              name: 'Lil',
+              duration: '2h',
+              price: 400,
+              img: ''
+            },
+            {
+              name: 'Sara',
+              duration: '2h',
+              price: 200,
+              img: ''
+            }
+          ]
+        },
+        {
+          id: 3,
+          asap: true,
+          datetime: new Date(),
+          service_type: 2,
+          address: '1, 22262 Mission Blvd, Hayward, CA 94541, USA',
+          guests: '2-3',
+          duration: '1h',
+          initial_price: 250,
+          provider: [
+            {
+              name: 'Lil',
+              duration: '1h',
+              price: 125,
+              img: ''
+            },
+            {
+              name: 'Sara',
+              duration: '1h',
+              price: 125,
+              img: ''
+            }
+          ]
+        }
       ]
     };
   }

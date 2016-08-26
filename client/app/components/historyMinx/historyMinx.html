@@ -1,0 +1,31 @@
+<div id="history-minx" layout-gt-sm="row" class="animated fadeIn">
+
+  <div class="history-container" flex="50">
+    <h1 class="page-name">Orders</h1>
+
+    <div class="minx-back">
+      <button ui-sref="main.history({type: $ctrl.type})">
+        Other MINX ({{$ctrl.minx.length}})
+      </button>
+    </div>
+
+    <div class="minx-list">
+      <ul>
+        <li ng-repeat="provider in $ctrl.minx" layout="row" layout-align="space-between">
+          <div class="minx-img" flex="20">
+            <img ng-src="/assets/images/photos/photo0.png" alt="{{provider.name}}"/>
+          </div>
+          <div class="minx-info" flex="75">
+            <span class="name">{{provider.name}}</span>
+            <span class="cancel" ng-if="provider.rejected">Cancelled by me</span>
+            <span class="cancel" ng-if="provider.declined">Cancelled</span>
+            <span class="duration" ng-if="provider.duration">{{provider.duration}}</span>
+            <span class="price">${{provider.price}}</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>

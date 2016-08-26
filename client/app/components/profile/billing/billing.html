@@ -45,9 +45,9 @@
     	ng-disabled="personalInformationForm.$invalid || billingInformationForm.$invalid || vm.saveLoading"
     	ng-click="vm.saveInfo(personalInformationForm, billingInformationForm)">
 			Continue
-	    <md-progress-circular 
-	    	md-mode="indeterminate" 
-	    	md-diameter="30" 
+	    <md-progress-circular
+	    	md-mode="indeterminate"
+	    	md-diameter="30"
 	    	class="md-progress-circular_absolute md-progress-circular_dark"
 	    	ng-if="vm.saveLoading">
 	    </md-progress-circular>

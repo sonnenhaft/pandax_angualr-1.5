@@ -1,6 +1,6 @@
 <div class="list past-orders">
 
-  <ul>
+  <ul ng-if="$ctrl.history.length">
     <li ng-repeat="order in $ctrl.history">
       <div class="order-information">
         <span class="date">{{order.datetime | amDateFormat:'h:mm A, MMM DD (dddd)'}}</span>
@@ -23,9 +23,13 @@
         </div>
       </div>
       <div class="order-minx">
-        <span class="minx">MINX ({{order.provider.length}})</span>
+        <span class="minx" ui-sref="main.minx({type: 'past', id: order.id})">MINX ({{order.provider.length}})</span>
       </div>
     </li>
   </ul>
+
+  <div class="empty-history" ng-if="!$ctrl.history.length">
+    <p>You don't have any past orders</p>
+  </div>
 
 </div>
