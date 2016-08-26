@@ -23,7 +23,7 @@ class searchEntertainersController {
      if (this.entertainers.length > 0) {
      		this.index = 0;
      		this.entertainer = this.entertainers[this.index];
-     		this.photoPreviewSrc = this.entertainer.photo_small[0];
+     		this.photoPreviewSrc = this.entertainer.photos[0].preview;
      }
   }
 
@@ -32,7 +32,7 @@ class searchEntertainersController {
   	if (possibleIndex >= 0 && possibleIndex < this.entertainers.length) {
 	  	this.index = possibleIndex;
   		this.entertainer = this.entertainers[this.index];
-      this.photoPreviewSrc = this.entertainer.photo_small[0];
+      this.photoPreviewSrc = this.entertainer.photos[0].preview;
   	}
   }
 
@@ -51,8 +51,8 @@ class searchEntertainersController {
         targetEvent: ev,
         bindToController: true,
         locals: {
-          photos: this.entertainer.photo_small,
-          photoIndexActive: this.entertainer.photo_small.indexOf(this.photoPreviewSrc)
+          photos: this.entertainer.photos,
+          photoIndexActive: _.findIndex(this.entertainer.photos, {original: this.photoPreviewSrc})
         }
       });
   }
