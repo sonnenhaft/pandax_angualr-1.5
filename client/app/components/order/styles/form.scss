@@ -164,6 +164,12 @@
           }
         }
       }
+
+      span {
+        &.error {
+          color: $Cardinal;
+        }
+      }
     }
 
     .total {
