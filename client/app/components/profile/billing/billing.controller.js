@@ -20,7 +20,8 @@ class BillingController {
           number: this.newCard.number,
           cvc: this.newCard.cvc,
           exp_month: exp[0],
-          exp_year: exp[1]
+          exp_year: exp[1],
+          address_zip: this.newCard.zip
         };
 
     this.saveLoading = true;
@@ -29,7 +30,7 @@ class BillingController {
       .then((data) => {
 console.log('data:', data);
         /*
-          Send request to save toket (id)
+          Send request to save token (id)
          */
       })
       .catch((err) => {

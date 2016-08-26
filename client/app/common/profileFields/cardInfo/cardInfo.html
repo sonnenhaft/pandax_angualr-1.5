@@ -29,7 +29,7 @@
 	<div
 		class="form_1-field__container"
 		layout="column"
-		flex="50">
+		flex="33">
 		<label class="form_1__label">Expiry</label>
 		<input
 			type="text"
@@ -49,7 +49,7 @@
 	<div
 		class="form_1-field__container"
 		layout="column"
-		flex="50">
+		flex="33">
 		<label class="form_1__label">CVC</label>
 		<input
 			type="text"
@@ -61,6 +61,25 @@
 	  <div
 	  	ng-messages="vm.formObject.cvc.$error"
 	  	ng-show="vm.formObject.cvc.$touched && vm.formObject.cvc.$invalid"
+	  	class="validation-messages"
+	  	role="alert">
+	    <div ng-messages-include="/app/common/messages/messages.html"></div>
+	  </div>
+	</div>
+	<div
+		class="form_1-field__container"
+		layout="column"
+		flex="33">
+		<label class="form_1__label">Zip Code</label>
+		<input
+			type="text"
+			name="zip"
+			class="form_1__input"
+			ng-model="vm.model.zip"
+			required/>
+	  <div
+	  	ng-messages="vm.formObject.zip.$error"
+	  	ng-show="vm.formObject.zip.$touched && vm.formObject.zip.$invalid"
 	  	class="validation-messages"
 	  	role="alert">
 	    <div ng-messages-include="/app/common/messages/messages.html"></div>
