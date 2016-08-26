@@ -9,7 +9,7 @@ export default class orderTermsController {
       Request,
       $state
     });
-
+console.log('this.order:', this.order);
   }
 
   onAccept () {
@@ -25,8 +25,10 @@ export default class orderTermsController {
         .then(
           result => {
             this.orderLoading = false;
-            this.User.update(result.data.customer);
-            this.$state.go('main.manipulationEntertainers');
+            if (result.status == 200) {
+              this.User.update(result.data.customer);
+              this.$state.go('main.manipulationEntertainers', {orderId: result.data.id});
+            }
           },
           error => {
             this.orderLoading = false;

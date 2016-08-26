@@ -12,7 +12,7 @@
         ng-class="{'disabled': vm.index == 0}"
         ng-click="vm.goToEntertainerByIndex(-1)"></md-icon>
       <div flex="80" layout="row" layout-align="space-between center">
-        <span class="search-entertainers__manip-name">{{vm.entertainer.name}}</span>
+        <span class="search-entertainers__manip-name">{{vm.entertainer.displaying_name}}</span>
         <span class="search-entertainers__manip-counter">{{vm.index + 1}} / {{vm.entertainers.length}}</span>
       </div>
       <md-icon 
@@ -45,11 +45,11 @@
       class="search-entertainers__switch-foto">
       <div 
         class="search-entertainers__preview_small"
-        ng-repeat="photo_small in vm.entertainer.photo_small track by $index"
-        ng-class="{'photo_active': vm.photoPreviewSrc === photo_small}"
-        ng-click="vm.setPhotoPreview(photo_small)">
+        ng-repeat="photo in vm.entertainer.photos track by $index"
+        ng-class="{'photo_active': vm.photoPreviewSrc === photo.preview}"
+        ng-click="vm.setPhotoPreview(photo.original)">
         <img
-          src="{{photo_small}}"></img>
+          src="{{photo.preview}}"></img>
       </div>
     </div>
 

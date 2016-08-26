@@ -12,6 +12,7 @@ import 'normalize.css';
 import 'animate.css';
 import angularMessages from 'angular-messages';
 import 'angular-filter/dist/angular-filter.min.js';
+import JWT from 'angular-jwt';
 import angularStripe from 'angular-stripe';
 
 import Common from './common/common';
@@ -19,6 +20,7 @@ import Components from './components/components';
 import AppComponent from './app.component';
 
 let config = require('config');
+
 
 angular
   .module('app', [
@@ -31,9 +33,10 @@ angular
     'angularMoment',
     "angular.filter",
     angularMessages,
+    JWT,
     angularStripe
   ])
-  .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider, $mdDateLocaleProvider, moment, $mdGestureProvider, $httpProvider, stripeProvider) => {
+  .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider, $mdDateLocaleProvider, moment, $mdGestureProvider, jwtInterceptorProvider, $httpProvider, stripeProvider) => {
     "ngInject";
     // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions
     // #how-to-configure-your-server-to-work-with-html5mode
@@ -59,7 +62,9 @@ angular
       .accentPalette('accentMap')
       .backgroundPalette('backgroundMap');
 
+
     $mdDateLocaleProvider.formatDate = date => moment(date).format('MMMM DD, YYYY');
+
 
     uiGmapGoogleMapApiProvider.configure({
       key: 'AIzaSyAB5JHHZnmA2C6q_b7mc2zPaXdSeRocs1E',
@@ -67,21 +72,35 @@ angular
       libraries: 'weather,geometry,visualization'
     });
 
-    $mdGestureProvider.skipClickHijack(); // without this line tap on 'md-button' with 'ng-file-upload' not working in iPhone https://github.com/danialfarid/ng-file-upload/issues/1049
+
+    //JWT interceptor will take care of sending the JWT in every request (More info: https://github.com/auth0/angular-jwt#jwtinterceptor)
+    jwtInterceptorProvider.tokenGetter = function () {
+      /*
+        ToDo: look for better solution without directly localStorage manipulation
+       */
+      let minx = localStorage.getItem('MINX');
+      return minx ? minx.token : '';
+    };
+    $httpProvider.interceptors.push('jwtInterceptor');
+
+
+    // without this line tap on 'md-button' with 'ng-file-upload' not working in iPhone https://github.com/danialfarid/ng-file-upload/issues/1049
+    $mdGestureProvider.skipClickHijack(); 
+
 
     $urlRouterProvider.otherwise(function ($injector) {
       let $state = $injector.get("$state");
-
       return $state.go('home');
     });
+
 
     $httpProvider.interceptors.push(function ($q, $injector) {
       return {
         'responseError': function (rejection) {
           var defer = $q.defer();
 
-          if (rejection.status == 401) {
-            var User = $injector.get("User");
+          if ([401, -1].indexOf(rejection.status) >= 0) {
+            let User = $injector.get("User");
             User.logout();
             return;
           }
@@ -92,6 +111,7 @@ angular
         }
       };
     });
+
 
     // Stripe integration
     stripeProvider.setPublishableKey(config.STRIPE.PUBLIC_KEY);

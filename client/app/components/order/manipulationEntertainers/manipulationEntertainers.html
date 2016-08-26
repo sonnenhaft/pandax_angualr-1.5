@@ -46,9 +46,7 @@
         <a
           flex="25"
           class="pointer manipulation-entertainers__head-link"
-          ng-click="vm.OrderService.fetchEntertainers()"
-          ui-sref="main.manipulationEntertainers"
-          ui-sref-opts="{reload: true}">
+          ng-click="vm.OrderService.fetchEntertainers(vm.$stateParams.orderId)">
           <span>REFRESH</span>
           <img
             src="/assets/images/icons/refresh-3x.png" 
@@ -59,26 +57,39 @@
   </div>
 
 
-
   <div
     layout="row" 
     layout-align="space-between"
     layout-wrap>
 
-    <search-entertainers 
-      entertainers="vm.entertainers"
-      flex="100"
-      flex-gt-sm="50"
-      ng-hide="vm.showComponentOnly.length > 0 && vm.showComponentOnly !== 'searchEntertainers'">
-    </search-entertainers>
+    <div flex="100" flex-gt-sm="50">
+      <search-entertainers 
+        entertainers="vm.entertainers"
+        flex="100"
+        flex-gt-sm="50"
+        ng-if="vm.entertainers.length > 0 && vm.showComponentOnly.length > 0 && vm.showComponentOnly !== 'searchEntertainers'">
+      </search-entertainers>
+      <md-button 
+        md-no-ink class="md-primary"
+        ng-show="vm.entertainers.length == 0"
+        ng-click="vm.OrderService.fetchEntertainers(vm.$stateParams.orderId)">
+        No entertainers are available
+      </md-button>
+    </div>
 
-    <confirmed-entertainers 
-      entertainers="vm.entertainersConfirmed"
-      entertainers-invited-count="vm.entertainersInvitedCount"
-      flex="100"
-      flex-gt-sm="50"
-      ng-show="vm.$mdMedia('gt-sm') || vm.showComponentOnly === 'confirmedEntertainers'">
-    </confirmed-entertainers>
+    <div flex="100" flex-gt-sm="50">
+      <confirmed-entertainers 
+        entertainers="vm.entertainersConfirmed"
+        entertainers-invited-count="vm.entertainersInvitedCount"
+        ng-if="vm.entertainersConfirmed.length > 0 && (vm.$mdMedia('gt-sm') || vm.showComponentOnly === 'confirmedEntertainers')">
+      </confirmed-entertainers>
+      <md-button 
+        md-no-ink class="md-primary"
+        ng-show="vm.entertainersConfirmed.length == 0"
+        ng-click="vm.OrderService.fetchEntertainersConfirmed(vm.$stateParams.orderId)">
+        No confirmed entertainers
+      </md-button>
+    </div>
 
   </div>
 
