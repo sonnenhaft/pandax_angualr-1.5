@@ -13,6 +13,9 @@ let profileViewModule = angular.module('profileView', [
       .state('main.profile.view', {
         url: '/view',
         parent: 'profile',
+        params: {
+          mode: null
+        },
         component: 'profileView'
       });
   })
