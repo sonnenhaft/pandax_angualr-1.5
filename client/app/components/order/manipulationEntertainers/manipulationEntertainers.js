@@ -38,8 +38,8 @@ export default angular
           entertainers: function (OrderService, orderId) {
             return OrderService.fetchEntertainers(orderId);
           },
-          entertainersConfirmed: function (OrderService) {
-            return OrderService.fetchEntertainersConfirmed();
+          entertainersConfirmed: function (OrderService, orderId) {
+            return OrderService.fetchEntertainersConfirmed(orderId);
           },
           entertainersInvitedCount: function (OrderService) {
             return OrderService.entertainersInvitedCount;

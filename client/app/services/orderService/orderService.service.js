@@ -30,7 +30,6 @@ export default class Order {
       )
       .then(
         result => {
-          this.entertainersInvitedCount = result.data.length;
           return result.data;
         },
         error => console.log(error)

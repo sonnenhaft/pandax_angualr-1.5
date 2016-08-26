@@ -8,7 +8,6 @@ class photoFullPageController {
         $mdDialog,
         len: 0
      	});
-console.log('===', this.photoIndexActive);
      this.len = this.photos.length;
   }
 
