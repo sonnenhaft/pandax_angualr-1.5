@@ -17,7 +17,7 @@ export default class cardInfoController {
     this.formObject.expiry.$setValidity('invalid_card_expiry', this.stripe.card.validateExpiry(this.model.expiry));
   }
 
-  checkCvc () {
+  checkCardCvc () {
     this.formObject.cvc.$setValidity('invalid_card_cvc', this.stripe.card.validateCVC(this.model.cvc));
   }
 
