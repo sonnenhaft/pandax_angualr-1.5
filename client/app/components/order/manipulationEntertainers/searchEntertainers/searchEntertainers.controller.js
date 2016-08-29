@@ -3,7 +3,7 @@ import photoFullPageCtrl from '../photoFullPage/photoFullPage.controller.js';
 
 class searchEntertainersController {
 
-  constructor (OrderService, $state, $mdDialog, $mdMedia) {
+  constructor (OrderService, $state, $mdDialog, $mdMedia, $stateParams) {
      'ngInject';
 
      _.assign(this, {
@@ -11,6 +11,7 @@ class searchEntertainersController {
         $state,
         $mdDialog,
         $mdMedia,
+        $stateParams,
      		entertainer: null,
      		index: 0,
      		photoPreviewSrc: ''
@@ -59,7 +60,7 @@ class searchEntertainersController {
 
   goToNextStep() {    
     if (this.OrderService.fetchEntertainersInvitedCount() == 1) {
-      this.$state.go('main.billing', {from: 'main.manipulationEntertainers'})
+      this.$state.go('main.billing', {orderId: this.$stateParams.orderId, from: 'main.manipulationEntertainers'})
     } else {
       this.$state.go('main.searchEntertainers.confirmedEntertainers')
     }
