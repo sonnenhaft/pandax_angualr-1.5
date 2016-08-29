@@ -67,6 +67,9 @@
 				}
 			}
 			&_small {
+				&:not(:first-child) {
+    			margin-left: 14px;
+				}
 				img {
 					height: auto;
 					min-height: 82px;

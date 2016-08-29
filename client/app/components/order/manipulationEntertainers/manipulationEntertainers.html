@@ -67,7 +67,7 @@
         entertainers="vm.entertainers"
         flex="100"
         flex-gt-sm="50"
-        ng-if="vm.entertainers.length > 0 && vm.showComponentOnly.length > 0 && vm.showComponentOnly !== 'searchEntertainers'">
+        ng-if="vm.entertainers.length > 0 && (vm.showComponentOnly.length == 0 || vm.showComponentOnly == 'searchEntertainers')">
       </search-entertainers>
       <md-button 
         md-no-ink class="md-primary"

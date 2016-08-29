@@ -30,7 +30,7 @@ export default class Order {
       )
       .then(
         result => {
-          return result.data;
+          return this.list = result.data;
         },
         error => console.log(error)
       );
