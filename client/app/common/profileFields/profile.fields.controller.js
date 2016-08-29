@@ -128,10 +128,11 @@ export default class profileFieldsController {
   }
 
   onSave (profile) {
+    profile = _.assign(profile, {                             // maybe, should be replace with better logic
+      displaying_name: this.displaying_name                   //
+    });                                                       //
+
     if (this.validate(profile)) {
-      profile = _.assign(profile, {                             // maybe, should be replace with better logic
-        displaying_name: this.displaying_name                   //
-      });                                                       //
       this.UpdateUserProfile(profile, 'main.profile.view');
     }
   }
