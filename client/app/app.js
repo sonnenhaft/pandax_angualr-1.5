@@ -95,19 +95,22 @@ angular
 
 
     $httpProvider.interceptors.push(function ($q, $injector) {
+      let responseHandler = (response) => {
+        let defer = $q.defer();
+
+        if (response.status == 401) {
+          let User = $injector.get("User");
+          User.logout();
+        }
+
+        defer.reject(response);
+
+        return defer.promise;
+      };
+
       return {
         'responseError': function (rejection) {
-          var defer = $q.defer();
-
-          if ([401, -1].indexOf(rejection.status) >= 0) {
-            let User = $injector.get("User");
-            User.logout();
-            return;
-          }
-
-          defer.reject(rejection);
-
-          return defer.promise;
+          return responseHandler(rejection);
         }
       };
     });

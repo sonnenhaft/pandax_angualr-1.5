@@ -18,18 +18,27 @@ let billingModule = angular.module('billing', [
 
     $stateProvider
       .state('main.billing', {
-        url: '/billing?from',
+        url: '/billing/:orderId?from',
         parent: 'main',
         template: '<billing \
                     billing-info="billingInfo" \
+                    order-details="orderDetails" \
                   </billing>',
-        controller: function ($scope, billingInfo, User) {
+        controller: function ($scope, billingInfo, orderDetails) {
           $scope.billingInfo = billingInfo;
+          $scope.orderDetails = orderDetails;
         },
         resolve: {
+          orderId: function ($stateParams) {
+            return $stateParams['orderId'] || 0;
+          },
           billingInfo: function (User) {
             return User.fetchBillingInfo();
+          },
+          orderDetails: function (OrderService, orderId) {
+            return OrderService.fetchOrderDetails(orderId);
           }
+
         }
       });
   })

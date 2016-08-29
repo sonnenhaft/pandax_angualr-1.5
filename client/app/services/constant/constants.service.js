@@ -69,6 +69,11 @@ export default class Constants {
       searchEntertainers: {
         uri: (orderId) => path + `/orders/${orderId}/entertainers/search`,
         method: 'GET'
+      },
+
+      orderDetails: {
+        uri: (orderId) => path + `/orders/${orderId}/details`,
+        method: 'GET'
       }
 
     };
