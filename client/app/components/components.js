@@ -9,6 +9,7 @@ import Order from './order/order';
 import Payments from './payments/payments';
 import History from './history/history';
 import HistoryMinx from './historyMinx/historyMinx';
+import Password from './password/password';
 
 let componentModule = angular.module('app.components', [
   Home,
@@ -20,7 +21,8 @@ let componentModule = angular.module('app.components', [
   Order,
   Payments,
   History,
-  HistoryMinx
+  HistoryMinx,
+  Password
 ])
 
 .name;
