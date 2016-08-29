@@ -153,10 +153,10 @@ export default class Order {
      */
     return new Promise((resolve, reject) => {
           this.orderDetails = Object.assign(this.orderDetails, {
-            service_type: 'Party Girl',
+            service_type: 1,
             minx_count: 4,
             rate: 125,
-            booking_length: '1 h 30 m',
+            booking_length: '1h 30m',
             address: 'Santa Monica Fwy 1110',
             apartment: 12,
             cost: 250

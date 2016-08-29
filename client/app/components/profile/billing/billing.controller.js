@@ -12,10 +12,11 @@ class BillingController {
       newCard: {},   //temporary
       saveLoading: false
     });
+
   }
 
   saveInfo (_personalInformationForm, billingInformationForm) {
-    let exp = this.newCard.expiry.split('/'), 
+    let exp = this.newCard.expiry.split('/'),
         card = {
           number: this.newCard.number,
           cvc: this.newCard.cvc,
