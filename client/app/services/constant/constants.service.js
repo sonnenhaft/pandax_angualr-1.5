@@ -153,22 +153,22 @@ export default class Constants {
 
       navigation: [
         {
-          role: 'customer',
+          role: ['customer'],
           text: 'Create order',
           url: 'main.order'
         },
         {
-          role: 'customer',
+          role: ['customer', 'provider'],
           text: 'Orders',
           url: 'main.history'
         },
         {
-          role: 'customer',
+          role: ['customer'],
           text: 'Contact Us',
           url: 'contact'
         },
         {
-          role: 'customer',
+          role: ['customer'],
           text: 'Settings',
           url: ''
         }
@@ -176,31 +176,31 @@ export default class Constants {
 
       submenu: [
         {
-          role: 'customer',
+          role: ['customer'],
           parent: 'Settings',
           text: 'Payments',
           url: 'main.payments'
         },
         {
-          role: 'customer',
+          role: ['customer'],
           parent: 'Settings',
           text: 'Terms',
           url: 'settings.terms'
         },
         {
-          role: 'customer',
+          role: ['customer'],
           parent: 'Settings',
           text: 'Change Password',
           url: 'main.password'
         },
         {
-          role: 'customer',
+          role: ['customer'],
           parent: 'Settings',
           text: 'Edit profile',
           url: "main.profile.view({mode: 'profile.edit'})"
         },
         {
-          role: 'customer',
+          role: ['customer'],
           parent: 'Settings',
           text: 'Log out',
           url: 'settings.logout'
