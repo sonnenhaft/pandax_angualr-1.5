@@ -17,7 +17,7 @@
         layout-align="space-between start">
         <h1 class="page-name">Create Order</h1>
         <md-icon 
-          flex="10"
+          flex="1"
           md-svg-icon="/assets/images/icons/svg/Close_Menu.svg" 
           class="manipulation-entertainers__icon_close manipulation-entertainers__icon_close"
           disabled="disabled"></md-icon>
@@ -69,12 +69,11 @@
         flex-gt-sm="50"
         ng-if="vm.entertainers.length > 0 && (vm.showComponentOnly.length == 0 || vm.showComponentOnly == 'searchEntertainers')">
       </search-entertainers>
-      <md-button 
-        md-no-ink class="md-primary"
-        ng-show="vm.entertainers.length == 0"
-        ng-click="vm.OrderService.fetchEntertainers(vm.$stateParams.orderId)">
-        No entertainers are available
-      </md-button>
+      <h2 
+        class="no-items-text"
+        ng-if="vm.entertainers.length == 0">
+        NO ENTARNAINERS ARE AVAILABLE
+      </h2>
     </div>
 
     <div flex="100" flex-gt-sm="50">
@@ -83,12 +82,11 @@
         entertainers-invited-count="vm.entertainersInvitedCount"
         ng-if="vm.entertainersConfirmed.length > 0 && (vm.$mdMedia('gt-sm') || vm.showComponentOnly === 'confirmedEntertainers')">
       </confirmed-entertainers>
-      <md-button 
-        md-no-ink class="md-primary"
-        ng-show="vm.entertainersConfirmed.length == 0"
-        ng-click="vm.OrderService.fetchEntertainersConfirmed(vm.$stateParams.orderId)">
-        No confirmed entertainers
-      </md-button>
+      <h2 
+        class="no-items-text"
+        ng-if="vm.entertainersConfirmed.length == 0">
+        NO ENTARNAINERS ARE AVAILABLE
+      </h2>
     </div>
 
   </div>

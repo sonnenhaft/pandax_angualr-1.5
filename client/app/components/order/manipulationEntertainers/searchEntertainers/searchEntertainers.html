@@ -6,20 +6,24 @@
 
   <div flex="100" layout="column" layout-align="start center" class="search-entertainers__main">
     <div layout="row" layout-align="center stretch" class="search-entertainers__manip_head">
-      <md-icon 
-        md-svg-icon="/assets/images/icons/svg/arrow_left.svg" 
-        class="pointer search-entertainers__manip-arrow_left"
-        ng-class="{'disabled': vm.index == 0}"
-        ng-click="vm.goToEntertainerByIndex(-1)"></md-icon>
+      <div flex="10" layout="row" layout-align="end">
+        <md-icon 
+          md-svg-icon="/assets/images/icons/svg/arrow_left.svg" 
+          class="pointer search-entertainers__manip-arrow_left"
+          ng-class="{'disabled': vm.index == 0}"
+          ng-click="vm.goToEntertainerByIndex(-1)"></md-icon>
+      </div>
       <div flex="80" layout="row" layout-align="space-between center">
         <span class="search-entertainers__manip-name">{{vm.entertainer.displaying_name}}</span>
         <span flex="25" class="search-entertainers__manip-counter">{{vm.index + 1}} / {{vm.entertainers.length}}</span>
       </div>
-      <md-icon 
-        md-svg-icon="/assets/images/icons/svg/arrow_right.svg" 
-        class="pointer search-entertainers__manip-arrow_right"
-        ng-class="{'disabled': (vm.index + 1) == vm.entertainers.length}"
-        ng-click="vm.goToEntertainerByIndex(+1)"></md-icon>
+      <div flex="10" layout="row" layout-align="end">
+        <md-icon 
+          md-svg-icon="/assets/images/icons/svg/arrow_right.svg" 
+          class="pointer search-entertainers__manip-arrow search-entertainers__manip-arrow_right"
+          ng-class="{'disabled': (vm.index + 1) == vm.entertainers.length}"
+          ng-click="vm.goToEntertainerByIndex(+1)"></md-icon>
+      </div>
     </div>
 
     <div class="search-entertainers__info">
@@ -32,11 +36,10 @@
       <span class="search-entertainers__info-distance">{{vm.entertainer.distance}}M AWAY</span>
     </div>
 
-    <div class="search-entertainers__preview_medium">
-      <img
-        src="{{vm.photoPreviewSrc}}"
-        class="pointer"
-        ng-click="vm.showPopup($event)"></img>
+    <div 
+      class="search-entertainers__preview search-entertainers__preview_medium pointer"
+      ng-style="{'background-image': 'url(' + vm.photoPreviewSrc + ')'}"
+      ng-click="vm.showPopup($event)">
     </div>
 
     <div 
@@ -45,12 +48,11 @@
       class="search-entertainers__switch-foto">
       <div 
         flex="50"
-        class="search-entertainers__preview_small"
+        class="search-entertainers__preview search-entertainers__preview_small"
         ng-repeat="photo in vm.entertainer.photos track by $index"
         ng-class="{'photo_active': vm.photoPreviewSrc === photo.preview}"
+        ng-style="{'background-image': 'url(' + photo.original + ')'}"
         ng-click="vm.setPhotoPreview(photo.original)">
-        <img
-          src="{{photo.preview}}"></img>
       </div>
     </div>
 

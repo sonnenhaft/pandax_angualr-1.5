@@ -45,6 +45,7 @@ class searchEntertainersController {
     this.$mdDialog.show({
         controller: photoFullPageCtrl,
         controllerAs: 'vm',
+        clickOutsideToClose: true,
         template: '<div layout="row" layout-align="end" class="icon_modal-close">\
                     <div class="icon_modal-close__image" ng-click="vm.$mdDialog.hide()"></div>\
                   </div>' + 
