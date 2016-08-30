@@ -22,14 +22,14 @@ export default angular
         template: '<manipulation-entertainers \
                     entertainers-invited-count="entertainersInvitedCount" \
                     entertainers-confirmed-count="entertainersConfirmedCount" \
-                    entertainers="entertainers" \
+                    entertainers="OrderService.list" \
                     entertainers-confirmed="entertainersConfirmed">\
                   </manipulation-entertainers>',
-        controller: function ($scope, entertainers, entertainersConfirmed, entertainersInvitedCount, entertainersConfirmedCount) {
-          $scope.entertainers = entertainers;
+        controller: function ($scope, entertainersConfirmed, entertainersInvitedCount, entertainersConfirmedCount, OrderService) {
           $scope.entertainersConfirmed = entertainersConfirmed;
           $scope.entertainersInvitedCount = entertainersInvitedCount;
           $scope.entertainersConfirmedCount = entertainersConfirmedCount;
+          $scope.OrderService = OrderService;
         },
         resolve: {
           orderId: function ($stateParams) {

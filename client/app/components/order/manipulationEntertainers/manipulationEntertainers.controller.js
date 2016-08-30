@@ -10,6 +10,7 @@ class manipulationEntertainersController {
         OrderService,
         showComponentOnly: ''
      	});
+
   }
 }
 
