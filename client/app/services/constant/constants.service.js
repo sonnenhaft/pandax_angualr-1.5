@@ -168,7 +168,7 @@ export default class Constants {
           url: 'contact'
         },
         {
-          role: ['customer'],
+          role: ['customer', 'provider'],
           text: 'Settings',
           url: ''
         }
@@ -198,6 +198,12 @@ export default class Constants {
           parent: 'Settings',
           text: 'Edit profile',
           url: "main.profile.view({mode: 'profile.edit'})"
+        },
+        {
+          role: ['provider'],
+          parent: 'Settings',
+          text: 'View profile',
+          url: "main.profile.view"
         },
         {
           role: ['customer'],
