@@ -25,7 +25,14 @@
             <md-button class="cancel" ng-click="$ctrl.add = false">Cancel</md-button>
           </div>
           <div flex="45">
-            <md-button ng-click="$ctrl.addCard($ctrl.newCard)" type="submit">Add</md-button>
+            <md-button ng-class="{disabled: $ctrl.saveLoading}"
+                       ng-disabled="$ctrl.saveLoading"
+                       ng-click="$ctrl.addCard($ctrl.newCard)"
+                       class="submit"
+                       type="submit">
+              {{!$ctrl.saveLoading ? 'Add' : ''}}
+              <spinner input="$ctrl.saveLoading"></spinner>
+            </md-button>
           </div>
         </div>
       </form>

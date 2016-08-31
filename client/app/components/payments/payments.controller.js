@@ -1,33 +1,44 @@
 export default class Payments {
 
-  constructor (User) {
+  constructor (User, Cards, $mdToast) {
     'ngInject';
 
-    _.assign(this, {User});
+    _.assign(this, {User, Cards, $mdToast});
 
     this.cards = User.billingInfo.cards;
 
   }
 
   addCard (card) {
-    this.cards = _
-      .chain(this.cards)
-      .map(card => {
-        card.default = false;
-        return card;
-      })
-      .union([{
-        id: this.cards.length + 1,
-        cvc: card.cvc,
-        expiry: card.expiry,
-        number: card.number,
-        name: 'Card ' + (this.cards.length + 1),
-        default: true
-      }])
-      .value();
+    this.saveLoading = true;
+    this.Cards
+      .add(card)
+      .then(cards => {
 
-    this.User.billingInfo = _.assign(this.User.billingInfo, {cards: this.cards});
-    this.add = false;
+        if (!cards.message) {
+          this.cards = cards;
+          this.add = false;
+        }
+
+        this.saveLoading = false;
+
+        return cards;
+      })
+      .then(result => {
+        if (result.message) {
+          this.showError(result.message);
+        }
+      });
+  }
+
+  showError (message) {
+    this.$mdToast.show(
+      this.$mdToast.simple()
+        .content(message || message.type)
+        .position('top right')
+        .hideDelay(200000)
+        .action('OK')
+    );
   }
 
 }
