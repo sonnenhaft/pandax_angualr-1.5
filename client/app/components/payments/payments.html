@@ -39,10 +39,10 @@
     </div>
 
     <div class="payments-cards">
-      <p class="no-cards" ng-if="!$ctrl.cards">
-        No payment cards have been added.
+      <p class="no-cards" ng-if="!$ctrl.cards.length">
+        No cards available
       </p>
-      <card-list cards="$ctrl.cards" ng-if="$ctrl.cards"></card-list>
+      <card-list cards="$ctrl.cards" ng-if="$ctrl.cards.length"></card-list>
     </div>
 
   </div>
