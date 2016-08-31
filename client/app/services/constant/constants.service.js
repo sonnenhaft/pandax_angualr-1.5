@@ -191,13 +191,13 @@ export default class Constants {
           role: 'customer',
           parent: 'Settings',
           text: 'Change Password',
-          url: 'profile.view.edit'
+          url: 'main.password'
         },
         {
           role: 'customer',
           parent: 'Settings',
           text: 'Edit profile',
-          url: 'main.profile.view'
+          url: "main.profile.view({mode: 'profile.edit'})"
         },
         {
           role: 'customer',

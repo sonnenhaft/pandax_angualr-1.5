@@ -1,6 +1,5 @@
 import angular from 'angular';
 import Home from './home/home';
-import About from './about/about';
 import Main from './main/main';
 import Profile from './profile/profile';
 import ProfileCreate from './profile/create/profile.create';
@@ -9,10 +8,10 @@ import Order from './order/order';
 import Payments from './payments/payments';
 import History from './history/history';
 import HistoryMinx from './historyMinx/historyMinx';
+import Password from './password/password';
 
 let componentModule = angular.module('app.components', [
   Home,
-  About,
   Main,
   Profile,
   ProfileCreate,
@@ -20,7 +19,8 @@ let componentModule = angular.module('app.components', [
   Order,
   Payments,
   History,
-  HistoryMinx
+  HistoryMinx,
+  Password
 ])
 
 .name;

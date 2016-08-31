@@ -13,7 +13,7 @@
         ng-click="vm.goToEntertainerByIndex(-1)"></md-icon>
       <div flex="80" layout="row" layout-align="space-between center">
         <span class="search-entertainers__manip-name">{{vm.entertainer.displaying_name}}</span>
-        <span class="search-entertainers__manip-counter">{{vm.index + 1}} / {{vm.entertainers.length}}</span>
+        <span flex="25" class="search-entertainers__manip-counter">{{vm.index + 1}} / {{vm.entertainers.length}}</span>
       </div>
       <md-icon 
         md-svg-icon="/assets/images/icons/svg/arrow_right.svg" 
@@ -44,6 +44,7 @@
       layout-align="space-between stretch" 
       class="search-entertainers__switch-foto">
       <div 
+        flex="50"
         class="search-entertainers__preview_small"
         ng-repeat="photo in vm.entertainer.photos track by $index"
         ng-class="{'photo_active': vm.photoPreviewSrc === photo.preview}"
