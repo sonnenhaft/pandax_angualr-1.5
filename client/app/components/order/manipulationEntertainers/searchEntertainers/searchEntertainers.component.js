@@ -5,6 +5,7 @@ let searchEntertainersComponent = {
   restrict: 'E',
   bindings: {
   	entertainers: '=',
+  	itemActiveIndex: '=',
   	entertainersInvitedCount: '=',
   	entertainersConfirmedCount: '='
   },

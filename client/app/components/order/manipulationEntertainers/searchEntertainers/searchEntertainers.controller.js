@@ -12,33 +12,16 @@ class searchEntertainersController {
         $mdDialog,
         $mdMedia,
         $stateParams,
-     		entertainer: null,
-     		index: 0,
+     		photoActiveIndex: 0,
      		photoPreviewSrc: ''
      	});
-
-     this.init();
-  }
-
-  init () {
-     if (this.entertainers.length > 0) {
-     		this.index = 0;
-     		this.entertainer = this.entertainers[this.index];
-     		this.photoPreviewSrc = this.entertainer.photos[0].preview;
-     }
   }
 
   goToEntertainerByIndex(direction) {
-  	let possibleIndex = this.index + direction;
+  	let possibleIndex = this.itemActiveIndex + direction;
   	if (possibleIndex >= 0 && possibleIndex < this.entertainers.length) {
-	  	this.index = possibleIndex;
-  		this.entertainer = this.entertainers[this.index];
-      this.photoPreviewSrc = this.entertainer.photos[0].preview;
+      this.itemActiveIndex = possibleIndex;
   	}
-  }
-
-  setPhotoPreview(src) {
-  	this.photoPreviewSrc = src;
   }
 
   showPopup(ev) {
@@ -53,8 +36,8 @@ class searchEntertainersController {
         targetEvent: ev,
         bindToController: true,
         locals: {
-          photos: this.entertainer.photos,
-          photoIndexActive: _.findIndex(this.entertainer.photos, {original: this.photoPreviewSrc})
+          photos: this.entertainers[this.itemActiveIndex].photos,
+          photoIndexActive: this.photoActiveIndex
         }
       });
   }
