@@ -113,13 +113,13 @@ export default class profileFieldsController {
   }
 
   onReady (profile) {
-    if (!this.isProviderProfile() || !this.validate(profile)) {
-      return false;
-    }
-
     profile = _.assign(profile, {                             // maybe, should be replace with better logic
       displaying_name: this.displaying_name                   //
     });                                                       //
+
+    if (!this.isProviderProfile() || !this.validate(profile)) {
+      return false;
+    }
 
     this.UpdateUserProfile(profile)
       .then(() => {
