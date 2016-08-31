@@ -4,13 +4,15 @@ import historyComponent from './history.component';
 import futureOrders from './futureOrders/futureOrders';
 import pastOrders from './pastOrders/pastOrders';
 import OrderService from '../../services/orderService/orderService';
+import pastOrdersProvider from './pastOrdersProvider/pastOrdersProvider';
 
 export default angular
   .module('history', [
     uiRouter,
     futureOrders,
     pastOrders,
-    OrderService
+    OrderService,
+    pastOrdersProvider
   ])
   .config(($stateProvider) => {
     "ngInject";

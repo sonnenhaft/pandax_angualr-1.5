@@ -1,0 +1,83 @@
+@import "../../../common/scss/colors";
+@import "../../../common/scss/fonts";
+
+#provider-past-orders {
+
+	.order-information {
+		width: 100%;
+
+		&-wrapper {
+			display: flex;
+		}
+
+		&__header {
+			border-bottom: 2px solid $DarkJungleGreen;
+			padding-bottom: 14px;
+			margin-bottom: 15px;
+		}
+
+		&-customer {
+			&-photo {
+				background-repeat: no-repeat;
+				background-size: cover;
+				background-position: center;
+				height: 54px;
+				min-height: 54px;
+				min-width: 54px;
+				width: 54px;
+			}
+
+  		&-info {
+  			padding-left: 18px;
+			}			
+
+  		&-name {
+  			font: {
+  				family: $oswald !important;
+  				size: 21px  !important;
+  				weight: 400 !important;
+  			}
+				letter-spacing: 1.4px !important;
+				line-height: 24px !important;
+  			padding-left: 0px !important;
+  			text-transform: uppercase;
+			}			
+
+			&-tel {
+				margin-top: 4px;
+				&__icon {
+			    svg {
+			      fill: $AuroMetalSaurus;
+			    }
+				}
+    		&__value {
+    			color: $AuroMetalSaurus;
+	  			font: {
+	  				family: $open-sans !important;
+	  				size: 15px  !important;
+	  				weight: 300 !important;
+	  			}
+					letter-spacing: .4px !important;
+					line-height: 24px !important;
+    			padding-left: 8.5px !important;
+				}
+			}
+
+			&-raiting {
+				&__value {
+					padding: 0px !important;
+					padding-right: 5px !important;
+					margin: 0 !important;
+				}
+				&__icon {
+					height: 17px;
+					width: 23px;
+				}
+			}
+		}
+	}
+
+	 .initial-text {
+	 	padding-left: 21px !important;
+	 }
+}
