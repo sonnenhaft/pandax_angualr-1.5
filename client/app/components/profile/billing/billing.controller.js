@@ -1,6 +1,6 @@
 class BillingController {
 
-  constructor ($state, User, $stateParams, Resolve, $mdToast) {
+  constructor ($state, User, Cards, $stateParams, Resolve, $mdToast) {
     'ngInject';
 
     _.assign(this, {
@@ -8,6 +8,7 @@ class BillingController {
     	User,
     	$stateParams,
       Resolve,
+      Cards,
       $mdToast,
       newCard: {},   //temporary
       saveLoading: false
@@ -16,37 +17,28 @@ class BillingController {
   }
 
   saveInfo (_personalInformationForm, billingInformationForm) {
-    let exp = this.newCard.expiry.split('/'),
-        card = {
-          number: this.newCard.number,
-          cvc: this.newCard.cvc,
-          exp_month: exp[0],
-          exp_year: exp[1],
-          address_zip: this.newCard.zip
-        };
-
     this.saveLoading = true;
 
-    return this.Resolve.stripeCreateToken(card)
-      .then((data) => {
-console.log('data:', data);
-        /*
-          Send request to save token (id)
-         */
-      })
-      .catch((err) => {
-console.log('error:', err);
-        this.$mdToast.show(
-          this.$mdToast.simple()
-            .content(err.message || err.type)
-            .position('top right')
-            .hideDelay(200000)
-            .action('OK')
-        );
-      })
-      .then((_data) => {
+    return this
+      .Cards
+      .add(this.newCard)
+      .then(card => {
+        if (card.message) {
+          this.showError(card.message);
+        }
+
         this.saveLoading = false;
-      })
+      });
+  }
+
+  showError (message) {
+    this.$mdToast.show(
+      this.$mdToast.simple()
+        .content(message || message.type)
+        .position('top right')
+        .hideDelay(200000)
+        .action('OK')
+    );
   }
 
 }

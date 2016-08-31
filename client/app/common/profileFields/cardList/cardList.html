@@ -23,11 +23,11 @@
 			flex="90"
 			class="card-information">
 			<div class="card-information__top">
-				<span class="card-information__name">{{card.name}}</span>
-				<span class="card-information__default" ng-if="card.default == true">(default)</span>
+				<span class="card-information__name">{{card.brand}}</span>
+				<span class="card-information__default" ng-if="card.is_default == true">(default)</span>
 			</div>
 			<div class="card-information__bottom">
-				**** **** **** {{card.number}}
+				**** **** **** {{card.last4}}
 			</div>
 		</div>
 

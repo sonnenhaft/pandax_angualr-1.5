@@ -1,14 +1,14 @@
 <div
-  id="search-entertainers" 
-  layout="row" 
+  id="search-entertainers"
+  layout="row"
   layout-align="space-between"
   layout-wrap>
 
   <div flex="100" layout="column" layout-align="start center" class="search-entertainers__main">
     <div layout="row" layout-align="center stretch" class="search-entertainers__manip_head">
       <div flex="10" layout="row" layout-align="end">
-        <md-icon 
-          md-svg-icon="/assets/images/icons/svg/arrow_left.svg" 
+        <md-icon
+          md-svg-icon="/assets/images/icons/svg/arrow_left.svg"
           class="pointer search-entertainers__manip-arrow_left"
           ng-class="{'disabled': vm.index == 0}"
           ng-click="vm.goToEntertainerByIndex(-1)"></md-icon>
@@ -18,8 +18,8 @@
         <span flex="25" class="search-entertainers__manip-counter">{{vm.index + 1}} / {{vm.entertainers.length}}</span>
       </div>
       <div flex="10" layout="row" layout-align="end">
-        <md-icon 
-          md-svg-icon="/assets/images/icons/svg/arrow_right.svg" 
+        <md-icon
+          md-svg-icon="/assets/images/icons/svg/arrow_right.svg"
           class="pointer search-entertainers__manip-arrow search-entertainers__manip-arrow_right"
           ng-class="{'disabled': (vm.index + 1) == vm.entertainers.length}"
           ng-click="vm.goToEntertainerByIndex(+1)"></md-icon>
@@ -30,23 +30,23 @@
       <span class="search-entertainers__info-raiting">
         {{vm.entertainer.raiting}}
         <img
-          src="/assets/images/icons/raiting.png" 
+          src="/assets/images/icons/raiting.png"
           class="icon_small"></img>
       </span>
       <span class="search-entertainers__info-distance">{{vm.entertainer.distance}}M AWAY</span>
     </div>
 
-    <div 
+    <div
       class="search-entertainers__preview search-entertainers__preview_medium pointer"
       ng-style="{'background-image': 'url(' + vm.photoPreviewSrc + ')'}"
       ng-click="vm.showPopup($event)">
     </div>
 
-    <div 
-      layout="row" 
-      layout-align="space-between stretch" 
+    <div
+      layout="row"
+      layout-align="space-between stretch"
       class="search-entertainers__switch-foto">
-      <div 
+      <div
         flex="50"
         class="search-entertainers__preview search-entertainers__preview_small"
         ng-repeat="photo in vm.entertainer.photos track by $index"
@@ -56,11 +56,11 @@
       </div>
     </div>
 
-    <md-button 
+    <md-button
       class="md-raised md-accent search-entertainers__invite"
       ng-click="vm.goToNextStep()">
       INVITE
-    </md-button>    
+    </md-button>
   </div>
 
 </div>

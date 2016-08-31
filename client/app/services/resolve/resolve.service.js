@@ -1,6 +1,6 @@
 export default class Resolve {
 
-  constructor (User, OrderService, Constants, Request, moment, $timeout, stripe) {
+  constructor (User, OrderService, Constants, Request, moment, $timeout) {
     'ngInject';
 
     _.assign(this, {
@@ -9,39 +9,31 @@ export default class Resolve {
       Constants,
       Request,
       moment,
-      $timeout,
-      stripe
+      $timeout
     });
 
   }
 
   billing () {
-    /*
-     ToDo: replace with real server request
-     */
-    return new Promise((resolve, reject) => {
-      this.$timeout(() => {
-        resolve({
-          first_name: 'Barry',
-          last_name: 'Bom',
-          mobile: '+123456789',
-          cards: [{
-            id: 1,
-            name: 'Card 1',
-            number: 4242424242424242,
-            expiry: '02/21',
-            cvc: 123
-          },{
-            id: 2,
-            name: 'Card 2',
-            number: 4242424242424242,
-            expiry: '10/22',
-            cvc: 456,
-            default: true
-          }]
-        });
-      }, 1000);
-    }).then(billingInfo => this.User.billingInfo = billingInfo);
+    return this
+      .Request
+      .send(
+        this.User.token(),
+        this.Constants.api.cards.get.method,
+        this.Constants.api.cards.get.uri(this.User.get('role'))
+      )
+      .then(
+        cards => {
+          return {
+            first_name: this.User.get('first_name'),
+            last_name: this.User.get('last_name'),
+            mobile: this.User.get('phone'),
+            cards: cards.data
+          };
+        },
+        error => console.log(error)
+      )
+      .then(billingInfo => this.User.billingInfo = billingInfo);
   }
 
   providers () {
@@ -231,13 +223,6 @@ export default class Resolve {
         }
       ]
     };
-  }
-
-  /*
-    Stripe communication
-   */
-  stripeCreateToken (card) {
-    return this.stripe.card.createToken(card)
   }
 
 }
