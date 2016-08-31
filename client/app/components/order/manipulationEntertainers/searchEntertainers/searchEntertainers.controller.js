@@ -43,11 +43,17 @@ class searchEntertainersController {
   }
 
   goToNextStep() {    
-    if (this.OrderService.fetchEntertainersInvitedCount() == 1) {
-      this.$state.go('main.billing', {orderId: this.$stateParams.orderId, from: 'main.manipulationEntertainers'})
-    } else {
-      this.$state.go('main.searchEntertainers.confirmedEntertainers')
-    }
+    this.OrderService.inviteEntertainer(this.$stateParams.orderId, this.entertainers[this.itemActiveIndex].id)
+      .then((data) => {
+        if (!data) {
+          return 0;
+        }
+        if (data.invitations_count == 1) {
+          this.$state.go('main.billing', {orderId: this.$stateParams.orderId, from: 'main.manipulationEntertainers'})
+        } else {
+          this.$state.go('main.searchEntertainers.confirmedEntertainers')
+        }
+      })
   }
 
 }

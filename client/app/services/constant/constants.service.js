@@ -74,6 +74,11 @@ export default class Constants {
       orderDetails: {
         uri: (orderId) => path + `/orders/${orderId}/details`,
         method: 'GET'
+      },
+
+      inviteEntertainer: {
+        uri: (orderId, entertainerId) => path + `/orders/${orderId}/entertainers/${entertainerId}/invite`,
+        method: 'POST'
       }
 
     };
