@@ -12,8 +12,7 @@ class searchEntertainersController {
         $mdDialog,
         $mdMedia,
         $stateParams,
-     		photoActiveIndex: 0,
-     		photoPreviewSrc: ''
+     		photoActiveIndex: 0
      	});
   }
 
@@ -21,6 +20,7 @@ class searchEntertainersController {
   	let possibleIndex = this.itemActiveIndex + direction;
   	if (possibleIndex >= 0 && possibleIndex < this.entertainers.length) {
       this.itemActiveIndex = possibleIndex;
+      this.photoActiveIndex = 0;
   	}
   }
 
