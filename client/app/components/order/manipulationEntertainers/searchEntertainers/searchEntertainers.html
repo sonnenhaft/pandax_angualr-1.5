@@ -51,7 +51,7 @@
         class="search-entertainers__preview search-entertainers__preview_small"
         ng-repeat="photo in vm.entertainers[vm.itemActiveIndex].photos track by $index"
         ng-class="{'photo_active': vm.photoActiveIndex === $index}"
-        ng-style="{'background-image': 'url(' + photo.original + ')'}"
+        ng-style="{'background-image': 'url(' + photo.preview + ')'}"
         ng-click="vm.photoActiveIndex = $index">
       </div>
     </div>
