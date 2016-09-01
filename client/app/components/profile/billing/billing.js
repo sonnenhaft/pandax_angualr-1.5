@@ -34,8 +34,12 @@ let billingModule = angular.module('billing', [
           orderId: function ($stateParams) {
             return $stateParams['orderId'] || 0;
           },
-          billingInfo: function (User) {
-            return User.fetchBillingInfo();
+          billingInfo: function (User, Cards) {
+            let billingInfo = User.get();
+            return Cards.getCards()
+                    .then((data) => {
+                      return billingInfo = _.assign(billingInfo, {cards: data});
+                    });
           },
           orderDetails: function (OrderService, orderId) {
             return OrderService.fetchOrderDetails(orderId);

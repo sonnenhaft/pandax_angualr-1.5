@@ -11,7 +11,7 @@
     layout-align="start"
     class="manipulation-entertainers__header">
 
-    <div flex="100" flex-gt-sm="50">       
+    <div flex="100" flex-gt-sm="50" class="manipulation-entertainers__header_left">
       <div 
         layout="row" 
         layout-align="space-between start">
@@ -46,7 +46,7 @@
         <a
           flex="25"
           class="pointer manipulation-entertainers__head-link"
-          ng-click="vm.OrderService.fetchEntertainers(vm.$stateParams.orderId)">
+          ng-click="vm.OrderService.fetchEntertainers(vm.$stateParams.orderId); vm.itemActiveIndex = 0;">
           <span>REFRESH</span>
           <img
             src="/assets/images/icons/refresh-3x.png" 
@@ -62,9 +62,10 @@
     layout-align="space-between"
     layout-wrap>
 
-    <div flex="100" flex-gt-sm="50">
+    <div flex="100" flex-gt-sm="50" class="manipulation-entertainers__search-entertainers-wrapper">
       <search-entertainers 
         entertainers="vm.entertainers"
+        item-active-index="vm.itemActiveIndex"
         flex="100"
         flex-gt-sm="50"
         ng-if="vm.entertainers.length > 0 && (vm.showComponentOnly.length == 0 || vm.showComponentOnly == 'searchEntertainers')">
@@ -76,7 +77,7 @@
       </h2>
     </div>
 
-    <div flex="100" flex-gt-sm="50">
+    <div flex="100" flex-gt-sm="50" class="manipulation-entertainers__confirmed-entertainers-wrapper">
       <confirmed-entertainers 
         entertainers="vm.entertainersConfirmed"
         entertainers-invited-count="vm.entertainersInvitedCount"

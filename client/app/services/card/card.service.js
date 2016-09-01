@@ -78,4 +78,19 @@ export default class Cards {
     return this.stripe.card.createToken(card)
   }
 
+
+  getCards () {
+    return this
+      .Request
+      .send(
+        this.User.token(),
+        this.Constants.api.cards.get.method,
+        this.Constants.api.cards.get.uri(this.User.get('role'))
+      )
+      .then(
+        result => result.data,
+        error => console.log(error)
+      );
+  }
+
 }

@@ -53,16 +53,19 @@
 		layout="column"
 		flex="100">
 		<label class="form_1__label">Mobile Number</label>
+		<!-- 
+			ToDo: add validation (look at Validation service)
+		-->
 		<input
 			type="text"
-			name="mobile"
+			name="phone"
 			class="form_1__input"
-			ng-model="vm.model.mobile"
-			ng-maxlength="50"
+			ng-model="vm.model.phone"
+			ng-maxlength="16"
 			required/>
 	  <div
-	  	ng-messages="vm.formObject.mobile.$error"
-	  	ng-show="vm.formObject.mobile.$touched"
+	  	ng-messages="vm.formObject.phone.$error"
+	  	ng-show="vm.formObject.phone.$touched"
 	  	class="validation-messages"
 	  	role="alert">
 	    <div ng-messages-include="/app/common/messages/messages.html"></div>

@@ -306,7 +306,25 @@ export default class Order {
 
   }
 
-  getProviderPastOrders() {
+  getProviderPastOrders () {
     return _.orderBy(this.historyProvider.past, order => order.datetime, 'desc');
   }
+
+  inviteEntertainer (orderId, entertainerId) {
+    return this
+      .Request
+      .send(
+        null,
+        this.Constants.api.inviteEntertainer.method,
+        this.Constants.api.inviteEntertainer.uri(orderId, entertainerId)
+      )
+      .then(
+        result => {
+          this.entertainersInvitedCount = result.data.invitations_count;
+          return result.data;
+        },
+        error => console.log(error)
+      );
+  }
+
 }
