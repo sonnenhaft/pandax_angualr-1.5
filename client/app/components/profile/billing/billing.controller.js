@@ -1,6 +1,6 @@
 class BillingController {
 
-  constructor ($state, User, $stateParams, Resolve, $mdToast) {
+  constructor ($state, User, Cards, $stateParams, Resolve, $mdToast, $q) {
     'ngInject';
 
     _.assign(this, {
@@ -8,45 +8,76 @@ class BillingController {
     	User,
     	$stateParams,
       Resolve,
+      Cards,
       $mdToast,
+      $q,
       newCard: {},   //temporary
-      saveLoading: false
+      saveLoading: false,
+      defaultCardId: 0
     });
 
+    this.defaultCardId = this.getDefaultCardId();
   }
 
-  saveInfo (_personalInformationForm, billingInformationForm) {
-    let exp = this.newCard.expiry.split('/'),
-        card = {
-          number: this.newCard.number,
-          cvc: this.newCard.cvc,
-          exp_month: exp[0],
-          exp_year: exp[1],
-          address_zip: this.newCard.zip
-        };
+  saveInfo (personalInformationForm, billingInformationForm) {
+    let promises = [];
 
     this.saveLoading = true;
 
-    return this.Resolve.stripeCreateToken(card)
-      .then((data) => {
-console.log('data:', data);
+    if (personalInformationForm) {      // should save personal information
+      let query = this.User
+        .UpdateUserProfile(this.billingInfo);
         /*
-          Send request to save token (id)
+          ToDo: add error catching
          */
-      })
-      .catch((err) => {
-console.log('error:', err);
-        this.$mdToast.show(
-          this.$mdToast.simple()
-            .content(err.message || err.type)
-            .position('top right')
-            .hideDelay(200000)
-            .action('OK')
-        );
-      })
-      .then((_data) => {
-        this.saveLoading = false;
-      })
+      promises.push(query);
+    }
+
+
+    if (billingInformationForm) {
+      let query = this.Cards
+        .add(this.newCard)
+        .then(card => {
+          if (card.message) {
+            this.showError(card.message);
+          }
+        });
+      promises.push(query);
+    } else {
+      if (this.defaultCardId != this.getDefaultCardId()) {
+        /*
+          ToDo: send request to change default card
+          promises.push(query);
+         */
+      }
+    }
+
+    return this.$q.all(promises).then((_data) => {
+      this.saveLoading = false;
+      this.$state.go(this.$stateParams.from, {orderId: this.$stateParams.orderId})
+    })
+    .catch((data) => {
+      console.log('errors', data);
+    })
+  }
+
+  getDefaultCardId () {
+    let result = 0;
+    if (this.billingInfo.cards && this.billingInfo.cards.length > 0) {
+      let defaultCardIndex = _.findIndex(this.billingInfo.cards, {is_default: true});
+      result = defaultCardIndex >= 0 ? this.billingInfo.cards[defaultCardIndex].id : 0;
+    }
+    return result;
+  }
+
+  showError (message) {
+    this.$mdToast.show(
+      this.$mdToast.simple()
+        .content(message || message.type)
+        .position('top right')
+        .hideDelay(200000)
+        .action('OK')
+    );
   }
 
 }

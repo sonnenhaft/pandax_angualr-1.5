@@ -18,8 +18,17 @@
         background: $Charcoal;
       }
 
+      &.submit {
+        border: 1px solid $Cardinal;
+      }
+
       .md-ripple-container {
         border-radius: 0;
+      }
+
+      &.disabled {
+        background: black;
+        border-color: $Davy-grey;
       }
     }
   }

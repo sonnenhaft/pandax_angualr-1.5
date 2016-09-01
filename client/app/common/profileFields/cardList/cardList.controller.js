@@ -7,13 +7,15 @@ export default class cardListController {
   }
 
   $onChanges (changes) {
-    if (changes.cards.currentValue) {
+    if (changes.cards.currentValue && changes.cards.currentValue.length) {
       this.defaultCardId = this.findDefaultCard();
     }
   }
 
   $onInit () {
-    this.defaultCardId = this.findDefaultCard();
+    if (this.cards.length) {
+      this.defaultCardId = this.findDefaultCard();
+    }
   }
 
   setDefaultCard () {
@@ -24,7 +26,7 @@ export default class cardListController {
   }
 
   findDefaultCard () {
-    return _.find(this.cards, {default: true}).id;
+    return _.find(this.cards, {is_default: true}).id;
   }
 
 }
