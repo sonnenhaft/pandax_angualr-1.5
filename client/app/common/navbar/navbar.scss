@@ -3,7 +3,7 @@
   color: $white;
   height: 100%;
   position: relative;
-  z-index: 100;
+  z-index: 80;
 
   &_mobile-opened {
     @media (max-width: 960px) {
@@ -48,6 +48,7 @@
     margin: 55px auto 0;
     background: $Charcoal;
     overflow: hidden;
+    cursor: pointer;
 
     img {
       display: block;

@@ -8,8 +8,10 @@ class manipulationEntertainersController {
         $mdMedia,
         $stateParams,
         OrderService,
-        showComponentOnly: ''
+        showComponentOnly: '',
+        itemActiveIndex: 0
      	});
+
   }
 }
 

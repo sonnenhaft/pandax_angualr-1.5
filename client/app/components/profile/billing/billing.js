@@ -2,6 +2,7 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import billingComponent from './billing.component';
 import User from '../../../services/user/user';
+import Cards from '../../../services/card/card';
 import personalInformation from '../../../common/profileFields/personalInformation/personalInformation';
 import cardList from '../../../common/profileFields/cardList/cardList';
 import cardInfo from '../../../common/profileFields/cardInfo/cardInfo';
@@ -10,7 +11,8 @@ let billingModule = angular.module('billing', [
   uiRouter,
   personalInformation,
   cardList,
-  cardInfo
+  cardInfo,
+  Cards
 ])
 
   .config(($stateProvider) => {
@@ -32,8 +34,12 @@ let billingModule = angular.module('billing', [
           orderId: function ($stateParams) {
             return $stateParams['orderId'] || 0;
           },
-          billingInfo: function (User) {
-            return User.fetchBillingInfo();
+          billingInfo: function (User, Cards) {
+            let billingInfo = User.get();
+            return Cards.getCards()
+                    .then((data) => {
+                      return billingInfo = _.assign(billingInfo, {cards: data});
+                    });
           },
           orderDetails: function (OrderService, orderId) {
             return OrderService.fetchOrderDetails(orderId);

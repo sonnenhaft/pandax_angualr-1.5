@@ -74,6 +74,22 @@ export default class Constants {
       orderDetails: {
         uri: (orderId) => path + `/orders/${orderId}/details`,
         method: 'GET'
+      },
+
+      cards: {
+        add: {
+          uri: user => `${path}/${user}/cards/add`,
+          method: 'POST'
+        },
+        get: {
+          uri: user => `${path}/${user}/cards`,
+          method: 'GET'
+        }
+      },
+
+      inviteEntertainer: {
+        uri: (orderId, entertainerId) => path + `/orders/${orderId}/entertainers/${entertainerId}/invite`,
+        method: 'POST'
       }
 
     };
@@ -153,22 +169,22 @@ export default class Constants {
 
       navigation: [
         {
-          role: 'customer',
+          role: ['customer'],
           text: 'Create order',
           url: 'main.order'
         },
         {
-          role: 'customer',
+          role: ['customer', 'provider'],
           text: 'Orders',
           url: 'main.history'
         },
         {
-          role: 'customer',
+          role: ['customer'],
           text: 'Contact Us',
           url: 'contact'
         },
         {
-          role: 'customer',
+          role: ['customer', 'provider'],
           text: 'Settings',
           url: ''
         }
@@ -176,31 +192,37 @@ export default class Constants {
 
       submenu: [
         {
-          role: 'customer',
+          role: ['customer'],
           parent: 'Settings',
           text: 'Payments',
           url: 'main.payments'
         },
         {
-          role: 'customer',
+          role: ['customer'],
           parent: 'Settings',
           text: 'Terms',
           url: 'settings.terms'
         },
         {
-          role: 'customer',
+          role: ['customer'],
           parent: 'Settings',
           text: 'Change Password',
-          url: 'profile.view.edit'
+          url: 'main.password'
         },
         {
-          role: 'customer',
+          role: ['customer'],
           parent: 'Settings',
           text: 'Edit profile',
-          url: 'main.profile.view'
+          url: "main.profile.view({mode: 'profile.edit'})"
         },
         {
-          role: 'customer',
+          role: ['provider'],
+          parent: 'Settings',
+          text: 'View profile',
+          url: "main.profile.view"
+        },
+        {
+          role: ['customer'],
           parent: 'Settings',
           text: 'Log out',
           url: 'settings.logout'

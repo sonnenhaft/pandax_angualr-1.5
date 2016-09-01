@@ -1,9 +1,9 @@
 export default class profileFieldsController {
 
-  constructor (User, Constants, Validation, Storage, $state, $q, Helper) {
+  constructor (User, Constants, Validation, Storage, $state, $q, $timeout, Helper) {
     'ngInject';
 
-    _.assign(this, {User, Constants, Validation, Storage, $state, $q, Helper, images: [], backupModel: {}, photosBuffer: []});
+    _.assign(this, {User, Constants, Validation, Storage, $state, $q, $timeout, Helper, images: [], backupModel: {}, photosBuffer: []});
 
     this.session = Storage.getObject('MINX');
 
@@ -14,7 +14,9 @@ export default class profileFieldsController {
   }
 
   $onChanges (changes) {
-    this.mode = changes.mode.currentValue;
+    this.$timeout(() => {
+      this.mode = changes.mode.currentValue;
+    });
   }
 
   $onInit () {
@@ -36,9 +38,9 @@ export default class profileFieldsController {
     this.images = this.Constants.profile.images[role];
 
     this.User.getUserProfile(
-          Object.assign(this.session.user, 
+          Object.assign(this.session.user,
                         {token: this.User.token()}),
-          role, 
+          role,
           false)
       .then((data) => {
         let photoSrc = '';
@@ -64,7 +66,7 @@ export default class profileFieldsController {
 
   profilePhoto (photoSrc = '') {
     this.photo = {
-      background: 'url(' + photoSrc + '?' + this.Helper.getUniqueNumberByTime() + ') no-repeat fixed center'     // add string to tell browser 
+      background: 'url(' + photoSrc + '?' + this.Helper.getUniqueNumberByTime() + ') no-repeat fixed center'     // add string to tell browser
     };                                                                                              // to send request, instead of get image from cache
 
     this.backupModel.photo = angular.copy(this.photo);
@@ -80,7 +82,7 @@ export default class profileFieldsController {
   backupPhoto (photo, i) {
     this.backupModel.images[i] = {
       file: photo.file + '?' + this.Helper.getUniqueNumberByTime()
-    }; 
+    };
   }
 
   buildProfileModels () {
@@ -111,13 +113,13 @@ export default class profileFieldsController {
   }
 
   onReady (profile) {
-    if (!this.isProviderProfile() || !this.validate(profile)) {
-      return false;
-    }
-
     profile = _.assign(profile, {                             // maybe, should be replace with better logic
       displaying_name: this.displaying_name                   //
     });                                                       //
+
+    if (!this.isProviderProfile() || !this.validate(profile)) {
+      return false;
+    }
 
     this.UpdateUserProfile(profile)
       .then(() => {
@@ -126,10 +128,11 @@ export default class profileFieldsController {
   }
 
   onSave (profile) {
+    profile = _.assign(profile, {                             // maybe, should be replace with better logic
+      displaying_name: this.displaying_name                   //
+    });                                                       //
+
     if (this.validate(profile)) {
-      profile = _.assign(profile, {                             // maybe, should be replace with better logic
-        displaying_name: this.displaying_name                   //
-      });                                                       //
       this.UpdateUserProfile(profile, 'main.profile.view');
     }
   }
@@ -190,7 +193,7 @@ export default class profileFieldsController {
 
   UpdateUserProfile (profile, mode) {
     this.saveLoading = true;
-    
+
     let query = this.User
         .UpdateUserProfile(profile)
         .then(

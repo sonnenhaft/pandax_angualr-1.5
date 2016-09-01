@@ -5,11 +5,13 @@
 
     <div id="history-tabs-wrapper">
       <md-tabs md-dynamic-height md-selected="$ctrl.tab">
-        <md-tab label="Future">
-          <future-orders></future-orders>
+        <md-tab label="Future"> 
+          <future-orders ng-if="$ctrl.User.get('role') == 'customer'"></future-orders>
+          <!-- <future-orders-provider ng-if="$ctrl.User.get('role') == 'provider'"></future-orders-provider> -->
         </md-tab>
         <md-tab label="History">
-          <past-orders></past-orders>
+          <past-orders ng-if="$ctrl.User.get('role') == 'customer'"></past-orders>
+          <past-orders-provider ng-if="$ctrl.User.get('role') == 'provider'"></past-orders-provider>
         </md-tab>
       </md-tabs>
     </div>

@@ -6,18 +6,18 @@
 
   <md-icon 
     md-svg-icon="/assets/images/icons/svg/arrow_left.svg" 
-    class="pointer photo-full-page__manip-arrow_left"
+    class="pointer photo-full-page__manip-arrow photo-full-page__manip-arrow_left"
     ng-class="{'disabled': vm.photoIndexActive == 0}"
     ng-click="vm.goToPhotoByIndex(-1)"></md-icon>
-
-  <img 
-    ng-src="{{vm.photos[vm.photoIndexActive].original}}"
+  <div
     flex="90"
-    class="photo-full-page__image">
+    class="photo-full-page__image"
+    ng-style="{'background-image': 'url(' + vm.photos[vm.photoIndexActive].original + ')'}">   
+  </div>
 
   <md-icon 
     md-svg-icon="/assets/images/icons/svg/arrow_right.svg" 
-    class="pointer photo-full-page__manip-arrow_right"
+    class="pointer photo-full-page__manip-arrow photo-full-page__manip-arrow_right"
     ng-class="{'disabled': (vm.photoIndexActive + 1) == vm.len}"
     ng-click="vm.goToPhotoByIndex(+1)"></md-icon>
 

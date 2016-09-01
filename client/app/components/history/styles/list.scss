@@ -24,9 +24,15 @@
         &.guest { @include image('guest'); }
         &.time { @include image('time'); }
         &.initial { @include image('price'); }
+        &.apt { @include image('apt'); }
         &.active {
           color: $active;
           @include image('active');
+        }
+
+        &.descr {
+          color: $AuroMetalSaurus;
+          font-size: 0.813em;
         }
 
         &.final {

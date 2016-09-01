@@ -105,7 +105,7 @@
       }
 
       &.error {
-        border: 2px solid $Cardinal;
+        border: 1px solid $Cardinal;
       }
 
       &.location {
@@ -137,7 +137,7 @@
 
     span {
       &.error {
-        color: white;
+        color: $Cardinal;
         display: block;
         margin: {
           left: 8px;

@@ -67,7 +67,7 @@ angular
 
 
     uiGmapGoogleMapApiProvider.configure({
-      key: 'AIzaSyAB5JHHZnmA2C6q_b7mc2zPaXdSeRocs1E',
+      key: 'AIzaSyCLBp2BxSpyfnqC_dhDKidNXDuHQTR-DYQ',
       v: '3', //defaults to latest 3.X anyhow
       libraries: 'weather,geometry,visualization'
     });
@@ -85,7 +85,7 @@ angular
 
 
     // without this line tap on 'md-button' with 'ng-file-upload' not working in iPhone https://github.com/danialfarid/ng-file-upload/issues/1049
-    $mdGestureProvider.skipClickHijack(); 
+    $mdGestureProvider.skipClickHijack();
 
 
     $urlRouterProvider.otherwise(function ($injector) {

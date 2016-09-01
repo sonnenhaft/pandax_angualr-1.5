@@ -3,6 +3,6 @@ module.exports = {
   COPYRIGHT: (new Date()).getFullYear() + 'Panda',
   VERSION: '0.0.1',
   STRIPE: {
-  	PUBLIC_KEY: 'pk_test_zIQEFYI4KvmET5Kq0CIqWwIs'
+  	PUBLIC_KEY: 'pk_test_53uGNlHfMPbElFTnPN8sXQ9N'
   }
 };
