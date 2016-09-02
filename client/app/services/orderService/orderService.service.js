@@ -326,5 +326,4 @@ export default class Order {
         error => console.log(error)
       );
   }
-
 }

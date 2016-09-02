@@ -78,7 +78,6 @@ export default class Cards {
     return this.stripe.card.createToken(card)
   }
 
-
   getCards () {
     return this
       .Request
@@ -92,5 +91,4 @@ export default class Cards {
         error => console.log(error)
       );
   }
-
 }
