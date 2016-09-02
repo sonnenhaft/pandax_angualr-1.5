@@ -7,9 +7,9 @@
   <span class="page-name">CREATE ORDER</span>
 
 
-	<h4 ng-if="!vm.billingInfo.first_name" class="personal-information__title">PERSONAL INFORMATION</h4>
+	<h4 ng-show="!vm.billingInfo.first_name" class="personal-information__title">PERSONAL INFORMATION</h4>
 	<form
-	 	ng-if="!vm.billingInfo.first_name"
+	 	ng-show="!vm.billingInfo.first_name"
 		name="personalInformationForm"
 		layout="column"
 		class="personal-information-form form_1"
@@ -23,9 +23,9 @@
 	<order-details order="vm.orderDetails"></order-details>
 
 
-	<h4 ng-if="vm.billingInfo.cards.length == 0" class="billing-information__title">BILLING INFORMATION</h4>
+	<h4 ng-show="vm.billingInfo.cards.length == 0" class="billing-information__title">BILLING INFORMATION</h4>
 	<form
-		ng-if="vm.billingInfo.cards.length == 0"
+		ng-show="vm.billingInfo.cards.length == 0"
 		name="billingInformationForm"
 		layout="column"
 		class="billing-information-form"

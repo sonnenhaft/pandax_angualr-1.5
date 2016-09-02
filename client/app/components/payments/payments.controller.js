@@ -26,7 +26,7 @@ export default class Payments {
       })
       .then(result => {
         if (result.message) {
-          this.showError(result.message);
+          this.showError(result.message.message || result.message);
         }
       });
   }

@@ -11,7 +11,9 @@ export default class Cards {
     return this
       .stripeCreateToken(this.makeCard(card))
       .then((data) => data.id)
-      .catch(error => error)
+      .catch(error => {
+        throw error;
+      })
       .then(token => {
 
         return this
@@ -24,7 +26,7 @@ export default class Cards {
           )
           .then(
             card => {
-              if (card.data.detail) {
+              if (card.data && card.data.detail) {
                 return card.data.detail;
               }
 
@@ -36,6 +38,10 @@ export default class Cards {
       })
       .catch(error => error)
       .then(card => {
+
+        if (!card) {
+          return {message: 'Something went wrong with server communication'};
+        }
 
         if (card.id) {
           this.User.billingInfo = _.assign(

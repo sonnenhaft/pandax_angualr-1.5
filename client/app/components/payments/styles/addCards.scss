@@ -11,14 +11,17 @@
       padding: 0;
       width: 100%;
       height: 54px;
-      background: $Cardinal;
       color: white;
+
+      &:not[disabled] {
+        background: $Cardinal;
+      }
 
       &.cancel {
         background: $Charcoal;
       }
 
-      &.submit {
+      &:not[disabled].submit {
         border: 1px solid $Cardinal;
       }
 

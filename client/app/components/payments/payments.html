@@ -26,9 +26,9 @@
           </div>
           <div flex="45">
             <md-button ng-class="{disabled: $ctrl.saveLoading}"
-                       ng-disabled="$ctrl.saveLoading"
+                       ng-disabled="$ctrl.saveLoading || billingInformationForm.$invalid"
                        ng-click="$ctrl.addCard($ctrl.newCard)"
-                       class="submit"
+                       class="submit md-raised md-accent form_1__button"
                        type="submit">
               {{!$ctrl.saveLoading ? 'Add' : ''}}
               <spinner input="$ctrl.saveLoading"></spinner>

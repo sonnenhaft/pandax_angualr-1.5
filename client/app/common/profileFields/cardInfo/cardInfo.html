@@ -17,7 +17,8 @@
 	  	ng-show="vm.formObject.card_number.$touched && vm.formObject.card_number.$invalid"
 	  	class="validation-messages"
 	  	role="alert">
-	    <div ng-messages-include="/app/common/messages/messages.html"></div>
+	    <!-- <div ng-messages-include="/app/common/messages/messages.html"></div> -->
+	    <messages></messages>	    
 	  </div>
 	</div>
 </div>
@@ -43,7 +44,7 @@
 	  	ng-show="vm.formObject.expiry.$touched && vm.formObject.expiry.$invalid"
 	  	class="validation-messages"
 	  	role="alert">
-	    <div ng-messages-include="/app/common/messages/messages.html"></div>
+	    <messages></messages>
 	  </div>
 	</div>
 	<div
@@ -63,7 +64,7 @@
 	  	ng-show="vm.formObject.cvc.$touched && vm.formObject.cvc.$invalid"
 	  	class="validation-messages"
 	  	role="alert">
-	    <div ng-messages-include="/app/common/messages/messages.html"></div>
+	    <messages></messages>
 	  </div>
 	</div>
 	<div
@@ -82,7 +83,7 @@
 	  	ng-show="vm.formObject.zip.$touched && vm.formObject.zip.$invalid"
 	  	class="validation-messages"
 	  	role="alert">
-	    <div ng-messages-include="/app/common/messages/messages.html"></div>
+	    <messages></messages>
 	  </div>
 	</div>
 </div>

@@ -34,12 +34,12 @@ class BillingController {
     }
 
 
-    if (billingInformationForm) {
+    if (billingInformationForm) {      // should add card
       let query = this.Cards
         .add(this.newCard)
         .then(card => {
           if (card.message) {
-            this.showError(card.message);
+            return card;
           }
         });
       promises.push(query);
@@ -52,9 +52,16 @@ class BillingController {
       }
     }
 
-    return this.$q.all(promises).then((_data) => {
+    return this.$q.all(promises).then((data) => {
+      let errorMessages = _.chain(data).filter('message').map('message').value();
+
       this.saveLoading = false;
-      this.$state.go(this.$stateParams.from, {orderId: this.$stateParams.orderId})
+
+      if (errorMessages.length) {
+         this.showError(errorMessages.join(' ,'));
+      } else {
+        this.$state.go(this.$stateParams.from, {orderId: this.$stateParams.orderId})
+      }
     })
     .catch((data) => {
       console.log('errors', data);
