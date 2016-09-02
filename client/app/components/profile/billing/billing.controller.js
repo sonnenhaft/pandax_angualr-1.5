@@ -13,18 +13,20 @@ class BillingController {
       $q,
       newCard: {},   //temporary
       saveLoading: false,
-      defaultCardId: 0
+      defaultCardId: 0,
+      hasPersonalInfo: false
     });
 
     this.defaultCardId = this.getDefaultCardId();
+    this.hasPersonalInfo = this.billingInfo && this.billingInfo.first_name;
   }
 
-  saveInfo (personalInformationForm, billingInformationForm) {
+  saveInfo () {
     let promises = [];
 
     this.saveLoading = true;
 
-    if (personalInformationForm) {      // should save personal information
+    if (!this.hasPersonalInfo) {                                          // should save personal information
       let query = this.User
         .UpdateUserProfile(this.billingInfo);
         /*
@@ -34,7 +36,7 @@ class BillingController {
     }
 
 
-    if (billingInformationForm) {      // should add card
+    if (!this.billingInfo.cards || !this.billingInfo.cards.length) {      // should add card
       let query = this.Cards
         .add(this.newCard)
         .then(card => {

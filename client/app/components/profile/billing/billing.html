@@ -7,9 +7,9 @@
   <span class="page-name">CREATE ORDER</span>
 
 
-	<h4 ng-show="!vm.billingInfo.first_name" class="personal-information__title">PERSONAL INFORMATION</h4>
+	<h4 ng-show="!vm.hasPersonalInfo" class="personal-information__title">PERSONAL INFORMATION</h4>
 	<form
-	 	ng-show="!vm.billingInfo.first_name"
+	 	ng-show="!vm.hasPersonalInfo"
 		name="personalInformationForm"
 		layout="column"
 		class="personal-information-form form_1"
@@ -23,9 +23,9 @@
 	<order-details order="vm.orderDetails"></order-details>
 
 
-	<h4 ng-show="vm.billingInfo.cards.length == 0" class="billing-information__title">BILLING INFORMATION</h4>
+	<h4 ng-show="!vm.billingInfo.cards || vm.billingInfo.cards.length == 0" class="billing-information__title">BILLING INFORMATION</h4>
 	<form
-		ng-show="vm.billingInfo.cards.length == 0"
+		ng-show="!vm.billingInfo.cards || vm.billingInfo.cards.length == 0"
 		name="billingInformationForm"
 		layout="column"
 		class="billing-information-form"
@@ -49,8 +49,10 @@
     <md-button
     	flex="50"
     	class="md-raised md-accent form_1__button"
-    	ng-disabled="(!vm.billingInfo.first_name && personalInformationForm.$invalid) || (vm.billingInfo.cards.length == 0 && billingInformationForm.$invalid) || vm.saveLoading"
-    	ng-click="vm.saveInfo(personalInformationForm, billingInformationForm)">
+    	ng-disabled="(!vm.hasPersonalInfo && personalInformationForm.$invalid) || 
+    							 ((!vm.billingInfo.cards || vm.billingInfo.cards.length == 0) && billingInformationForm.$invalid) || 
+    							 vm.saveLoading"
+    	ng-click="vm.saveInfo()">
 			Continue
 	    <md-progress-circular
 	    	md-mode="indeterminate"
