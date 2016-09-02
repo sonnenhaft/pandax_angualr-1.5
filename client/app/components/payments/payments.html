@@ -22,7 +22,7 @@
 
         <div class="buttons" layout="row" layout-align="space-between center">
           <div flex="45">
-            <md-button class="cancel" ng-click="$ctrl.add = false">Cancel</md-button>
+            <md-button class="cancel" ng-click="$ctrl.resetCardInfo(); $ctrl.add = false">Cancel</md-button>
           </div>
           <div flex="45">
             <md-button ng-class="{disabled: $ctrl.saveLoading}"
