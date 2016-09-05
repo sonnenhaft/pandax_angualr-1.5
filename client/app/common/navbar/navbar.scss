@@ -1,8 +1,151 @@
 .navbar {
-  background-color: $primaryDarker;
+  background-color: black;
   color: $white;
   height: 100%;
-  padding: 1rem;
-  top: 0px;
-  left: 0px;
+  position: relative;
+  z-index: 80;
+
+  &_mobile-opened {
+    @media (max-width: 960px) {
+      position: fixed;
+      overflow: auto;
+      width: 100%;
+      z-index: 2;
+    }
+  }
+
+  .logo {
+    background: $Cardinal;
+
+    .name {
+      margin: 33px auto 20px;
+      letter-spacing: 3px;
+      line-height: 36px;
+      text-align: center;
+      font: {
+        size: 1.625em;
+        weight: bold;
+      }
+    }
+
+    md-icon {
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      background: url('../assets/images/menu.png') no-repeat center;
+
+      &.mobile {
+        background: url('../assets/images/close.png') no-repeat center;
+      }
+    }
+  }
+
+  .avatar {
+    position: relative;
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    margin: 55px auto 0;
+    background: $Charcoal;
+    overflow: hidden;
+    cursor: pointer;
+
+    img {
+      display: block;
+      max-width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+    }
+  }
+
+  .navigation {
+    margin: 38px auto 0;
+    max-width: 150px;
+
+    ul {
+      list-style: none;
+      li {
+        text-align: left;
+        a {
+          display: block;
+          color: $AuroMetalSaurus;
+          line-height: 47px;
+          text-transform: uppercase;
+          font-size: 1.063em;
+          letter-spacing: 1px;
+          &.active {
+            color: $white;
+          }
+        }
+
+        &.opened-subitems {
+          .navigation_sub {
+            display: block;
+          }
+        }
+      }
+
+      &.navigation_sub {
+        display: none;
+        margin-left: 15px;
+        li {
+          a {
+            color: $AuroMetalSaurus;
+            font-size: .938em;
+            &.active {
+              color: $Cardinal;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .mobilemenu {
+    position: absolute;
+    top: 66px;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: black;
+    padding-bottom: 30px;
+
+    .avatar {
+      margin: 41px auto 25px;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .logo {
+      padding: 15px 20px;
+
+      .name {
+        margin: 0;
+        text-align: left;
+      }
+
+      md-icon {
+        max-width: 24px;
+        outline: none;
+      }
+    }
+
+    .navigation {
+      ul {
+        li {
+          text-align: center;
+          ul.navigation_sub {
+            margin-left: 60px;
+            li {
+              text-align: left;
+            }
+          }
+        }
+      }
+    }
+  }
 }

@@ -1,0 +1,50 @@
+<div id="payments" layout-gt-sm="row" class="animated fadeIn">
+
+  <div class="payments-container" flex="50">
+    <h1 class="page-name">Settings</h1>
+
+    <div class="payments-control" layout="row" layout-align="space-between center">
+      <div class="name" flex="50">
+        <h2>Payments</h2>
+      </div>
+      <div class="button" flex="50">
+        <button ng-click="$ctrl.add = true">Add new card</button>
+      </div>
+    </div>
+
+    <div class="payments-add-card" ng-if="$ctrl.add">
+      <form name="billingInformationForm"
+        layout="column"
+        class="billing-information-form"
+        novalidate>
+
+        <card-info form-object="billingInformationForm" model="$ctrl.newCard"></card-info>
+
+        <div class="buttons" layout="row" layout-align="space-between center">
+          <div flex="45">
+            <md-button class="cancel" ng-click="$ctrl.resetCardInfo(); $ctrl.add = false">Cancel</md-button>
+          </div>
+          <div flex="45">
+            <md-button ng-class="{disabled: $ctrl.saveLoading}"
+                       ng-disabled="$ctrl.saveLoading || billingInformationForm.$invalid"
+                       ng-click="$ctrl.addCard($ctrl.newCard)"
+                       class="submit md-raised md-accent form_1__button"
+                       type="submit">
+              {{!$ctrl.saveLoading ? 'Add' : ''}}
+              <spinner input="$ctrl.saveLoading"></spinner>
+            </md-button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="payments-cards">
+      <p class="no-cards" ng-if="!$ctrl.cards.length">
+        No cards available
+      </p>
+      <card-list cards="$ctrl.cards" ng-if="$ctrl.cards.length"></card-list>
+    </div>
+
+  </div>
+
+</div>

@@ -1,12 +1,20 @@
 import angular from 'angular';
 import Navbar from './navbar/navbar';
-import User from './user/user';
+import Map from './map/map';
+import profileFields from './profileFields/profile.fields';
+import Spinner from './spinner/spinner';
+import findLocation from './findLocation/findLocation';
+import orderDetails from './orderDetails/orderDetails';
 
 let commonModule = angular.module('app.common', [
   Navbar,
-  User
+  Map,
+  profileFields,
+  Spinner,
+  findLocation,
+  orderDetails
 ])
-  
+
 .name;
 
 export default commonModule;

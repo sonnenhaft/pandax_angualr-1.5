@@ -1,0 +1,54 @@
+<div class="login-form">
+  <form name="loginForm" class="animated fadeIn" novalidate>
+    <div class="credentials">
+      <div class="input">
+        <label>E-mail</label>
+        <input type="email"
+               name="email"
+               ng-model="$ctrl.email"
+               ng-class="{error: $ctrl.emailError}"
+               ng-change="$ctrl.emailError = $ctrl.logignError = false"
+               ng-blur="$ctrl.validate({email: loginForm.email.$viewValue})"
+               maxlength="100"
+               required/>
+        <span class="error" ng-if="$ctrl.emailError">
+          {{$ctrl.emailError}}
+        </span>
+      </div>
+      <div class="input">
+        <label>Password</label>
+        <a href="" ng-click="$ctrl.output({view: 'restore'})" class="forgot">Forgot ?</a>
+        <input type="password"
+               name="password"
+               ng-model="$ctrl.password"
+               ng-class="{error: $ctrl.passwordError}"
+               ng-change="$ctrl.passwordError = $ctrl.logignError = false"
+               ng-blur="$ctrl.validate({password: $ctrl.password})"
+               maxlength="50"
+               autocomplete="off"
+               required />
+        <span class="error" ng-if="$ctrl.passwordError">
+          {{$ctrl.passwordError}}
+        </span>
+      </div>
+    </div>
+    <div class="sign-button">
+      <md-button ng-disabled="$ctrl.loginLoading"
+                 ng-class="{disabled: $ctrl.loginLoading}"
+                 type="submit"
+                 ng-click="$ctrl.onSubmit({
+                        email: loginForm.email.$viewValue,
+                        password: loginForm.password.$viewValue
+                      })">
+        {{!$ctrl.loginLoading ? 'Log In' : ''}}
+        <spinner input="$ctrl.loginLoading"></spinner>
+      </md-button>
+      <span class="sign-error" ng-if="$ctrl.loginError">
+        {{$ctrl.loginError}}
+      </span>
+    </div>
+  </form>
+  <div class="account-ready">
+    Don't have an account? <a href="" ng-click="$ctrl.output({view: 'signUp'})">Sign Up</a>
+  </div>
+</div>

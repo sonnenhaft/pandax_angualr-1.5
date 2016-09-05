@@ -1,0 +1,62 @@
+<div id="provider-past-orders" class="list past-orders">
+
+  <ul ng-if="$ctrl.history.length">
+    <li ng-repeat="order in $ctrl.history" class="order-information-wrapper">
+      <div class="order-information">
+        
+        <div 
+          layout="row"
+          layout-align="space-between start"
+          class="order-information__header">
+          <div class="order-information-customer-photo" ng-style="{'background-image': 'url(' + order.customer.photo + ')'}"></div>
+          <div 
+            flex="90"
+            layout="column"
+            layout-align="start start"
+            class="order-information-customer-info">
+            <span class="order-information-customer-name">{{order.customer.name}}</span>
+            <div 
+              layout="row"
+              layout-align="start start"
+              class="order-information-customer-tel">
+              <md-icon 
+                md-svg-icon="/assets/images/icons/svg/ic_phone_black.svg" 
+                class="order-information-customer-tel__icon icon_medium"
+                disabled="disabled"></md-icon>
+              <span class="order-information-customer-tel__value">{{order.customer.tel}}</span>
+            </div>
+          </div>
+          <div 
+            layout="row"
+            layout-align="start center"
+            class="order-information-customer-raiting">
+            <span class="order-information-customer-raiting__value">{{order.customer.rating}}</span>
+            <img
+              src="/assets/images/icons/raiting.png" 
+              class="icon_small order-information-customer-raiting__icon"></img>
+          </div>
+        </div>
+
+
+        <span class="date">{{order.datetime | amDateFormat:'h:mm A, MMM DD (dddd)'}}</span>
+        <span class="minx">{{$ctrl.OrderService.getProviderById(order.service_type).name}}</span>
+        <span class="address">{{order.address}}</span>
+        <div layout="row">
+          <span flex="15" class="guest">{{order.guests}}</span>
+        </div>
+        <span class="time">{{order.duration}}</span>
+        <div layout="row" class="price">
+          <div flex>
+            <span class="initial">{{order.initial_price}}</span>
+            <p class="initial-text">Initial</p>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <div class="empty-history" ng-if="!$ctrl.history.length">
+    <p>You don't have any past orders</p>
+  </div>
+
+</div>

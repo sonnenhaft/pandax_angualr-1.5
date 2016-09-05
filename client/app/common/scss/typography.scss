@@ -1,16 +1,30 @@
-h1 {
-	font: 26px $avenir-regular;
-}
-
-h2 {
-	font: 20px $avenir-regular;
-	line-height: 24px;
-}
-
-
 .logo {
 	color: $white;
 	&__link {
 		color: $white;
 	}
+}
+
+.text-wrapper {
+	font: 15px $open-sans;
+	color: $AuroMetalSaurus;
+	letter-spacing: 0.1px;
+	line-height: 24px;
+	text-align: left;
+	a {
+		color: $white;
+	}
+}
+
+.no-items-text {
+	color: $white;
+	font: {
+		family: $oswald;
+		size: 24px;
+		weight: 400;
+	}
+	margin-top: 26px;
+	letter-spacing: 1.3px;
+	line-height: 40px;	
+	text-align: left;
 }

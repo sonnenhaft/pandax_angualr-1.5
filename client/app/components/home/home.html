@@ -1,3 +1,16 @@
-<md-content flex layout-padding md-colors="{color:'primary-50'}">
-  
-<md-content/>
+<section id="home" flex md-colors="{color:'primary-50'}">
+  <div id="form">
+    <h1>MINX</h1>
+    <div class="enter-form">
+
+      <sign-in ng-if="$ctrl.signIn" output="$ctrl.switchTo(view)"></sign-in>
+      <sign-up ng-if="$ctrl.signUp" output="$ctrl.switchTo(view)"></sign-up>
+      <restore ng-if="$ctrl.restore" output="$ctrl.switchTo(view)"></restore>
+      <reset ng-if="$ctrl.reset" output="$ctrl.switchTo(view)"></reset>
+
+    </div>
+  </div>
+  <div id="copyright">
+    Copyright
+  </div>
+</section>

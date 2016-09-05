@@ -3,9 +3,12 @@ import controller from './navbar.controller';
 
 let navbarComponent = {
   restrict: 'E',
-  bindings: {},
+  bindings: {
+  	userAvatarSrc: '='
+  },
   template,
-  controller
+  controller,
+  controllerAs: 'vm'
 };
 
 export default navbarComponent;

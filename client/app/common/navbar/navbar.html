@@ -1,15 +1,72 @@
-<nav 
-	class="navbar" 
-	flex-sm="100">
-  <div 
-  	class="logo"
-  	layout="row">
-    <h1 hide show-gt-sm><a ui-sref="home" class="logo__link">PANDA</a></h1>
-    <md-icon 
-    	md-svg-icon="/assets/images/icons/svg/ic_menu_white.svg" 
+<nav
+  class="navbar"
+  ng-class="{'navbar_mobile-opened': vm.mobile == true}"
+  flex-sm="100">
+
+  <div class="logo" layout="row">
+    <div class="name" show-gt-sm flex>
+      <a ui-sref="home" class="logo__link">MINX</a>
+    </div>
+    <md-icon
+      flex
     	hide-gt-sm
-    	flex-offset-xs="90"
-    	aria-label="menu">
+    	aria-label="menu"
+      ng-click="vm.mobile = !vm.mobile"
+      ng-class="{mobile: vm.mobile}">
     </md-icon>
   </div>
+
+  <div class="mobilemenu" ng-if="vm.mobile">
+    <div class="avatar" ui-sref="main.profile.view({mode: 'main.profile.view'})">
+      <img ng-src="{{vm.userAvatarSrc}}" alt=""/>
+    </div>
+
+    <div class="navigation" ng-if="vm.$state.current.name !== 'main.profile.create'">
+      <ul active-menu-item>
+        <li
+          ng-repeat="nav in vm.navigation"
+          ng-click="vm.mobile = (nav.url.length > 0 ? false : true)">
+          <a href="" ui-sref="{{nav.url.length > 0 ? nav.url : '#'}}" ui-sref-active="active">
+            {{nav.text}}
+          </a>
+          <ul
+            class="navigation_sub">
+            <li
+              ng-repeat="subnav in vm.submenu | filterBy: ['parent']: nav.text"
+              ng-click="vm.mobile = false">
+              <a href="" ui-sref="{{subnav.url}}" ui-sref-active="active">
+                {{subnav.text}}
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div hide show-gt-sm class="avatar" ui-sref="main.profile.view({mode: 'main.profile.view'})">
+    <img ng-src="{{vm.userAvatarSrc}}" alt=""/>
+  </div>
+
+  <div class="navigation" hide show-gt-sm ng-if="vm.$state.current.name !== 'main.profile.create'">
+    <ul active-menu-item>
+      <li
+        ng-repeat="nav in vm.navigation">
+        <a href="" ui-sref="{{nav.url.length > 0 ? nav.url : '#'}}" ui-sref-active="active">
+          {{nav.text}}
+        </a>
+        <ul
+          class="navigation_sub">
+          <li
+            ng-repeat="subnav in vm.submenu | filterBy: ['parent']: nav.text">
+            <a href="" ui-sref="{{subnav.url}}" ui-sref-active="active">
+              {{subnav.text}}
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
 </nav>

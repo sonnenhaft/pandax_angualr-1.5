@@ -1,7 +1,11 @@
 class ProfileController {
-  constructor() {
-    this.name = 'profile';
+
+  constructor () {
+
   }
+
+
+
 }
 
 export default ProfileController;

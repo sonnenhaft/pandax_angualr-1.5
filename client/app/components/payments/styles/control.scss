@@ -1,0 +1,33 @@
+.payments-control {
+  padding-bottom: 31px;
+
+  .name {
+    h2 {
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      line-height: 40px;
+      font: {
+        size: 1.500em;
+        weight: normal;
+      }
+    }
+  }
+
+  .button {
+    text-align: right;
+
+    button {
+      border: none;
+      text-transform: uppercase;
+      color: $AuroMetalSaurus;
+      font-size: 0.938em;
+      width: 100%;
+      max-width: 120px;
+      height: 40px;
+      border-radius: 0;
+      background: transparent url('../assets/images/plus.png') no-repeat center right;
+    }
+  }
+
+}

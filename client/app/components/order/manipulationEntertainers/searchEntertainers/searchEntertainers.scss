@@ -1,0 +1,96 @@
+.flex-gt-sm-75 {
+  @media (min-width: 960px) {
+    width: 274px !important;
+  }
+}
+
+#search-entertainers {
+	md-buttom {
+		color: $AuroMetalSaurus;
+	}
+	.search-entertainers {
+		& > *,
+		&__main > * {
+			width: 100%;
+		}
+		&__manip {
+			&_head {
+				font: 32px $oswald;
+				color: $white;
+				letter-spacing: 0.1px;
+				line-height: 30px;
+				margin-top: 41px;
+			}
+			&-name {
+			}
+			&-counter {
+				font: 16px $oswald;
+				color: $white;
+				letter-spacing: 0.1px;
+				line-height: 30px;
+				text-align: right;
+			}
+			&-arrow {
+				min-width: 16px;
+				width: 16px;
+				&_left {
+					margin-left: 0px;
+				}
+				&_right {
+					margin-right: 0px;
+				}
+			}
+		}
+
+		&__info {
+			@extend .flex-gt-sm-75;
+			color: $TrolleyGrey;
+			margin-top: 16px;
+			font: 13px $oswald;
+			letter-spacing: 0.1px;
+			line-height: 24px;
+			text-align: left;
+			&-distance {
+				margin-left: 6px;
+			}
+		}
+
+		&__preview {
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: center;
+			&_medium {
+				@extend .flex-gt-sm-75;
+				margin-top: 14px;
+				height: 372px;
+				min-height: 372px;
+				min-width: 274px;
+				width: 274px;
+			}
+			&_small {
+				&:not(:first-child) {
+    			margin-left: 14px;
+				}
+				height: 82px;
+				min-height: 82px;
+				min-width: 82px;
+				width: 82px;
+			}
+		}
+
+		&__switch-foto {
+			@extend .flex-gt-sm-75;
+			margin-top: 20px;
+		}
+
+		&__invite {
+			color: $white;
+			font: 15px $oswald;
+			letter-spacing: 0.1px;
+			line-height: 24px;
+			margin: 40px 0px 0px 0px;
+			padding: 17px 125px;
+			text-align: center;
+		}
+	}
+}

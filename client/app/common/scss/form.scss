@@ -1,3 +1,101 @@
-form {
-  color: $white;
+.mobile-number {
+	white-space: nowrap;
+}
+
+
+.form {
+
+
+	&_1 {
+
+		&__row {
+			&_2 {
+				margin-top: 25px;
+			}
+		}
+
+		&__label {
+			color: $white;
+			font: 15px $open-sans;
+			letter-spacing: .1px;
+			line-height: 24px;
+			margin-left: 8px;
+			margin-bottom: 14px;
+			text-align: left;
+		}
+
+		&__input {
+			color: $CharcoalDarker;
+			font: {
+				family: $open-sans;
+				size: 15px;
+				weight: 600;
+			}
+			letter-spacing: .1px;
+			line-height: 24px;
+			margin-bottom: 8px;
+			padding: 4px 9px;
+			text-align: left;
+			&.ng-invalid.ng-touched {
+				border: 2px solid $Cardinal;
+			}
+		}
+
+		&__button {
+			color: $white;
+			font: {
+				family: $oswald;
+				size: 15px;
+				weight: 400;
+			}
+			letter-spacing: 0.1px;
+			line-height: 24px;
+			margin: 0px;
+			padding-top: 13px;
+			padding-bottom: 17px;
+			text-align: center;
+
+			&:not(:first-child) {
+				margin-left: 10px;
+			}
+
+			&_primary.md-button {
+				color: $white;
+				background-color: $CharcoalDarker;
+			}
+
+			&[disabled].md-button {
+        background: $black;
+				border: 1px solid $Davy-grey;
+			}
+		}
+
+		&__notify {
+			display: block;
+			color: $AuroMetalSaurus;
+			font: {
+				family: $open-sans;
+				size: 13px;
+			}
+			letter-spacing: .1px;
+			line-height: 17px;
+			margin-top: 15px;
+			margin-left: 8px;
+			text-align: left;
+		  @media (min-width: 960px) {
+				white-space: nowrap;
+		  }
+		}
+	}
+}
+
+.validation-messages {
+	color: $Cardinal;	
+  display: block;
+  line-height: 24px;
+  margin-left: 8px;
+  font: {
+  	size: .938em;
+  	family: $open-sans;
+  }
 }

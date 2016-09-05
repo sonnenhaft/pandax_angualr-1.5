@@ -1,0 +1,79 @@
+.provider-type {
+  color: white;
+
+  div {
+    &:last-child {
+      button {
+        border-right: 0;
+      }
+    }
+
+    button {
+      border-radius: 0;
+      margin: 0;
+      padding: 0;
+      height: 89px;
+      width: 100%;
+      background: $Charcoal;
+      border-right: 2px solid $primary;
+      overflow: visible;
+
+      &.active {
+        @include gradient(rgba(24, 95, 221, 1), rgba(188, 55, 240, 1));
+
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: -5px;
+          left: 0;
+          right: 0;
+          margin: auto;
+          width: 0;
+          height: 0;
+          border-left: 5px solid transparent;
+          border-right: 5px solid transparent;
+          border-top: 5px solid rgba(24, 95, 221, 1);
+        }
+      }
+
+      .md-ripple-container {
+        border-radius: 0;
+      }
+
+      .price, .name {
+        position: absolute;
+        width: 100%;
+      }
+
+      .price {
+        top: 11px;
+        line-height: 50px;
+        font-size: 1.500em;
+      }
+
+      .name {
+        bottom: 9px;
+        line-height: 36px;
+        font-size: 1em;
+      }
+
+      .desc-icon {
+        z-index: 10;
+        position: absolute;
+        top: 10px;
+        right: 9px;
+        width: 16px;
+        height: 16px;
+        outline: none;
+        background: url('../assets/images/provider_desc.png') no-repeat center;
+      }
+    }
+  }
+}
+
+.type-error {
+  color: $Cardinal;
+  text-align: center;
+  margin-top: 10px;
+  font: 0.938em $open-sans, sans-serif;
+}

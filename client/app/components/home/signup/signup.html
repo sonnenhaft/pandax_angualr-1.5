@@ -1,0 +1,65 @@
+<div class="register-form">
+  <form name="registerForm" class="animated fadeIn" novalidate>
+    <div class="type-of-user">
+      <md-button class="customer-user"
+                 ng-class="{active: $ctrl.isCustomer}"
+                 ng-click="$ctrl.isCustomer = true; $ctrl.isProvider = false">
+        Customer
+      </md-button>
+      <md-button class="provider-user"
+                 ng-class="{active: $ctrl.isProvider}"
+                 ng-click="$ctrl.isProvider = true; $ctrl.isCustomer = false">
+        Entertainer
+      </md-button>
+    </div>
+    <div class="credentials">
+      <div class="input">
+        <label>E-mail</label>
+        <input type="email"
+               name="email"
+               ng-model="$ctrl.email"
+               ng-change="$ctrl.emailError = $ctrl.registerError = false"
+               ng-blur="$ctrl.validate({email: registerForm.email.$viewValue})"
+               ng-class="{error: $ctrl.emailError}"
+               maxlength="100"
+               required />
+        <span class="error" ng-if="$ctrl.emailError">
+          {{$ctrl.emailError}}
+        </span>
+      </div>
+      <div class="input">
+        <label>Password</label>
+        <input type="password"
+               name="password"
+               ng-model="$ctrl.password"
+               ng-change="$ctrl.passwordError = $ctrl.registerError = false"
+               ng-blur="$ctrl.validate({password: $ctrl.password})"
+               ng-class="{error: $ctrl.passwordError}"
+               maxlength="50"
+               autocomplete="off"
+               required />
+        <span class="error" ng-if="$ctrl.passwordError">
+          {{$ctrl.passwordError}}
+        </span>
+      </div>
+    </div>
+    <div class="sign-button">
+      <md-button ng-disabled="$ctrl.registerLoading"
+                 ng-class="{disabled: $ctrl.registerLoading}"
+                 type="submit"
+                 ng-click="$ctrl.onSubmit({
+                    email: registerForm.email.$viewValue,
+                    password: registerForm.password.$viewValue
+                  })">
+        {{!$ctrl.registerLoading ? 'Sign up' : ''}}
+        <spinner input="$ctrl.registerLoading"></spinner>
+      </md-button>
+      <span class="sign-error" ng-if="$ctrl.registerError">
+        {{$ctrl.registerError}}
+      </span>
+    </div>
+  </form>
+  <div class="account-ready">
+    Already have an account? <a href="" ng-click="$ctrl.output({view: 'signIn'})">Log in</a>
+  </div>
+</div>

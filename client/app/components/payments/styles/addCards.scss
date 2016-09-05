@@ -1,0 +1,38 @@
+.payments-add-card {
+  background: $DarkCharcoal;
+  padding: 13px 20px;
+
+  .buttons {
+    margin-top: 20px;
+    margin-bottom: 12px;
+
+    button {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 54px;
+      color: white;
+
+      &:not[disabled] {
+        background: $Cardinal;
+      }
+
+      &.cancel {
+        background: $Charcoal;
+      }
+
+      &:not[disabled].submit {
+        border: 1px solid $Cardinal;
+      }
+
+      .md-ripple-container {
+        border-radius: 0;
+      }
+
+      &.disabled {
+        background: black;
+        border-color: $Davy-grey;
+      }
+    }
+  }
+}
