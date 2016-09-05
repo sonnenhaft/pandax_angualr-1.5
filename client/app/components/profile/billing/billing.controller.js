@@ -18,7 +18,7 @@ class BillingController {
     });
 
     this.defaultCardId = this.getDefaultCardId();
-    this.hasPersonalInfo = this.billingInfo && this.billingInfo.first_name;
+    this.hasPersonalInfo = this.billingInfo && this.billingInfo.first_name && this.billingInfo.last_name && this.billingInfo.phone;
   }
 
   saveInfo () {
