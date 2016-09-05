@@ -8,8 +8,9 @@
   </div>
   <ui-gmap-google-map center="$ctrl.position"
                       zoom="$ctrl.zoom"
-                      options="{disableDefaultUI: true}"
-                      styles="$ctrl.styles">
+                      options="$ctrl.options"
+                      styles="$ctrl.styles"
+                      events="$ctrl.map.events">
     <ui-gmap-marker ng-if="!$ctrl.progress && !$ctrl.blocked"
                     idKey="1"
                     coords="$ctrl.position"

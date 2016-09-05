@@ -1,0 +1,43 @@
+#billing {
+	padding: 52px 30px 15px 30px;	
+
+  @media (min-width: 960px) {
+		width: 50%;
+  }
+
+	.billing {
+		&__buttons-group {
+			margin-top: 31px;
+			position: relative;
+		}
+	}
+
+	.personal-information,
+	.billing-information {
+
+		&__title {
+			color: $AuroMetalSaurus;
+			font: 15px $oswald;
+			letter-spacing: .1px;
+			text-align: left;
+		}
+
+		&-form {
+			margin-top: 19px;
+		}
+	}
+
+	.billing-information {
+
+		&-form {
+			background-color: $Charcoal;
+			padding: 13px 20px 20px;
+			margin-top: 26px;
+		}
+
+		&__title {
+			margin-top: 41px;
+		}
+	}
+
+}

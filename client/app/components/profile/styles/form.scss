@@ -79,6 +79,7 @@
     label {
       color: white;
       font: 0.938em $open-sans, sans-serif;
+      font-weight: 600;
       line-height: 24px;
       display: block;
       margin: {
@@ -104,7 +105,7 @@
       }
 
       &.error {
-        border: 2px solid $Cardinal;
+        border: 1px solid $Cardinal;
       }
 
       &.location {
@@ -125,9 +126,18 @@
       outline: none;
     }
 
+    .sub-desc {
+      position: relative;
+      top: 19px;
+      color: $AuroMetalSaurus;
+      font: 0.813em $open-sans, sans-serif;
+      margin-left: 8px;
+      line-height: 17px;
+    }
+
     span {
       &.error {
-        color: white;
+        color: $Cardinal;
         display: block;
         margin: {
           left: 8px;

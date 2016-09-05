@@ -36,6 +36,7 @@ export default class Reset {
 
           if (result && result.error) {
             this.resetLoading = result.error;
+            this.registerError = result.error;
             return false;
           }
 

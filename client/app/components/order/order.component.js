@@ -3,7 +3,9 @@ import controller from './order.controller';
 
 let orderComponent = {
   restrict: 'E',
-  bindings: {},
+  bindings: {
+    providers: '='
+  },
   template,
   controller
 };

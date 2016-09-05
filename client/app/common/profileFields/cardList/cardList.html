@@ -1,0 +1,45 @@
+<md-radio-group
+	id="cardList"
+	class="card-list"
+	ng-change="vm.setDefaultCard()"
+	ng-model="vm.defaultCardId">
+
+	<div
+		layout="row"
+		layout-align="space-between"
+		class="card"
+		ng-repeat="card in vm.cards">
+
+		<div flex="10" class="card-manipulation_left">
+      <md-radio-button
+      	ng-model="card.default"
+      	ng-value="card.id"
+      	ng-change="vm.test()"
+      	aria-label="Set default card"></md-radio-button>
+		</div>
+
+		<div
+			layout="column"
+			flex="90"
+			class="card-information">
+			<div class="card-information__top">
+				<span class="card-information__name">{{card.brand}}</span>
+				<span class="card-information__default" ng-if="card.is_default == true">(default)</span>
+			</div>
+			<div class="card-information__bottom">
+				**** **** **** {{card.last4}}
+			</div>
+			<div class="card-information__valid-thru">
+				Valid Thru: {{card.exp_month}}/{{card.exp_year ? card.exp_year.toString().substr(-2) : ''}}
+			</div>
+		</div>
+
+		<div class="card-manipulation_right">
+			<img
+				src="/assets/images/icons/trash-3x.png"
+				class="icon_medium card-icon_trash"></img>
+		</div>
+
+	</div>
+
+</md-radio-group>

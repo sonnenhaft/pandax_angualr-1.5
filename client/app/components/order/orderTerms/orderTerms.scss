@@ -1,0 +1,111 @@
+.order-terms {
+  padding: 52px 30px 0 30px;
+  height: 100%;
+
+  .order-terms-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    .page-name {
+      margin-bottom: 86px !important;
+    }
+
+    .sub-head {
+      text-transform: uppercase;
+      color: $AuroMetalSaurus;
+      font-size: 1.063em;
+      line-height: 27px;
+      letter-spacing: 1.5px;
+      margin-bottom: 41px;
+    }
+
+    ul {
+      padding-bottom: 180px;
+
+      li {
+        font: 0.938em $open-sans, sans-serif;
+        margin-bottom: 26px;
+
+        .suffix {
+          color: $AuroMetalSaurus;
+        }
+
+        .terms-text {
+          color: white;
+        }
+      }
+    }
+
+    .accept {
+      width: 100%;
+      height: 140px;
+      position: absolute;
+      bottom: 19px;
+      text-align: center;
+
+      md-checkbox {
+
+        &.md-checked {
+          ._md-icon {
+            background-color: $Cardinal;
+
+            &:after {
+              left: 34%;
+              top: 15%;
+            }
+          }
+        }
+
+        .md-ink-ripple {
+          width: 22px;
+          height: 22px;
+          top: 52%;
+
+          ._md-icon {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border-color: $Cardinal;
+          }
+        }
+
+        span {
+          font: 0.938em $open-sans, sans-serif;
+          color: white;
+        }
+      }
+
+      button {
+        width: 100%;
+        height: 54px;
+        background: $Cardinal;
+        color: white;
+        font-size: 0.938em;
+        padding: 0;
+        margin: 0 0 17px 0;
+        overflow: visible;
+        border: 1px solid $Cardinal;
+
+        .md-ripple-container {
+          border-radius: 0;
+        }
+
+        &.disabled {
+          background: black;
+          border-color: $Davy-grey;
+        }
+      }
+
+      a {
+        font: 0.938em $open-sans, sans-serif;
+        color: $AuroMetalSaurus;
+        line-height: 24px;
+      }
+    }
+
+    @media (max-width: 960px) {
+      max-width: 100%;
+    }
+  }
+}

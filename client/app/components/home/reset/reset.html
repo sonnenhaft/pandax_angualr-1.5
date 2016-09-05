@@ -1,5 +1,5 @@
 <div class="reset-form">
-  <form name="resetForm" class="animated fadeIn">
+  <form name="resetForm" class="animated fadeIn" novalidate>
     <div class="form-info">
       <span class="info-head">RESET YOUR PASSWORD</span>
       <p>Enter a new password for your account.</p>
@@ -10,7 +10,7 @@
         <input type="password"
                name="password"
                ng-model="$ctrl.password"
-               ng-keyup="$ctrl.passwordError = $ctrl.registerError = false"
+               ng-change="$ctrl.passwordError = $ctrl.registerError = false"
                ng-blur="$ctrl.validate({password: $ctrl.password})"
                ng-class="{error: $ctrl.passwordError}"
                maxlength="50"
@@ -25,7 +25,7 @@
         <input type="password"
                name="repeater"
                ng-model="$ctrl.repeater"
-               ng-keyup="$ctrl.repeaterError = false"
+               ng-change="$ctrl.repeaterError = false"
                autocomplete="off"
                maxlength="50"
                required />

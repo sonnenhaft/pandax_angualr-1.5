@@ -1,0 +1,27 @@
+#photo-full-page {
+  @media (max-width: 960px) {
+    width: 100%;
+  }
+	.photo-full-page {
+		&__image {
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: center;
+			height: 521px;
+			width: 374px;
+		}
+		&__manip-arrow {
+			width: 15px;
+			&_left {
+				@media (min-width: 960px) {
+					margin-right: 24px;
+				}
+			}
+			&_right {
+				@media (min-width: 960px) {
+					margin-left: 24px;
+				}
+			}
+		}
+	}
+}

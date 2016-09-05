@@ -1,5 +1,5 @@
 <div class="restore-form">
-  <form name="restoreForm" class="animated fadeIn">
+  <form name="restoreForm" class="animated fadeIn" novalidate>
     <div class="form-info">
       <span class="info-head">Forgot Password?</span>
       <p>Enter your e-mail address and we’ll send you a link to reset your password.</p>
@@ -10,13 +10,17 @@
         <input type="email"
                name="email"
                ng-model="$ctrl.email"
-               ng-keyup="$ctrl.emailError = $ctrl.logignError = false"
-               ng-blur="$ctrl.validate({email: $ctrl.email})"
+               ng-class="{error: $ctrl.restoreError || $ctrl.emailError}"
+               ng-change="$ctrl.emailError = $ctrl.restoreError = false"
+               ng-blur="$ctrl.validate({email: restoreForm.email.$viewValue})"
                maxlength="100"
                required/>
         <span class="error" ng-if="$ctrl.emailError">
           {{$ctrl.emailError}}
         </span>
+        <span class="error" ng-if="$ctrl.restoreError">
+        {{$ctrl.restoreError}}
+      </span>
       </div>
     </div>
     <div class="sign-button">

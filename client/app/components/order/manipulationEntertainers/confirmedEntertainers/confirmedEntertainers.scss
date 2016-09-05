@@ -1,0 +1,59 @@
+#confirmed-entertainers {
+	max-width: 374px;
+	width: 374px;
+
+	.confirmed-entertainers {
+
+		&__header {
+			margin-top: 25px;
+			padding: 8px;
+			&-text {
+				color: $white;
+				font: {
+					family: $oswald;
+					size: 16px;
+					weight: 400;
+				}
+
+				letter-spacing: 1px;
+				line-height: 47px;
+				text-align: left;
+			}
+		}
+
+		&__card {
+			background-color: $CharcoalDarker;
+			margin-top: 16px;
+			padding: 8px;
+			&-header {
+				padding: 11px;
+				md-card-header-text {
+					display: flex;
+					justify-content: center;
+				}
+			}
+		}
+
+		&__avatar {
+			margin-left: 0px;
+			margin-right: 19px;
+			&-img {				
+				min-height: 44px;
+				min-width: 44px;
+			}
+		}
+
+		&__name {
+			color: $white;
+			font: {
+				family: $open-sans;
+				size: 15px;
+				width: 100;
+			}
+			letter-spacing: 0.1px;
+			line-height: 24px;
+			text-align: left;
+		}
+
+	}
+}

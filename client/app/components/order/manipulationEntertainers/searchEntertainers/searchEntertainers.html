@@ -1,0 +1,66 @@
+<div
+  id="search-entertainers" 
+  layout="row" 
+  layout-align="space-between"
+  layout-wrap>
+
+  <div flex="100" layout="column" layout-align="start center" class="search-entertainers__main">
+    <div layout="row" layout-align="center stretch" class="search-entertainers__manip_head">
+      <div flex="10" layout="row" layout-align="end">
+        <md-icon 
+          md-svg-icon="/assets/images/icons/svg/arrow_left.svg" 
+          class="pointer search-entertainers__manip-arrow search-entertainers__manip-arrow_left"
+          ng-class="{'disabled': vm.itemActiveIndex == 0}"
+          ng-click="vm.goToEntertainerByIndex(-1)"></md-icon>
+      </div>
+      <div flex="80" layout="row" layout-align="space-between center">
+        <span class="search-entertainers__manip-name">{{vm.entertainers[vm.itemActiveIndex].displaying_name}}</span>
+        <span flex="25" class="search-entertainers__manip-counter">{{vm.itemActiveIndex + 1}} / {{vm.entertainers.length}}</span>
+      </div>
+      <div flex="10" layout="row" layout-align="end">
+        <md-icon 
+          md-svg-icon="/assets/images/icons/svg/arrow_right.svg" 
+          class="pointer search-entertainers__manip-arrow search-entertainers__manip-arrow_right"
+          ng-class="{'disabled': (vm.itemActiveIndex + 1) == vm.entertainers.length}"
+          ng-click="vm.goToEntertainerByIndex(+1)"></md-icon>
+      </div>
+    </div>
+
+    <div class="search-entertainers__info">
+      <span class="search-entertainers__info-raiting">
+        {{vm.entertainers[vm.itemActiveIndex].rating}}
+        <img
+          src="/assets/images/icons/raiting.png" 
+          class="icon_small"></img>
+      </span>
+      <span class="search-entertainers__info-distance">{{vm.entertainers[vm.itemActiveIndex].distance}}M AWAY</span>
+    </div>
+
+    <div 
+      class="search-entertainers__preview search-entertainers__preview_medium pointer"
+      ng-style="{'background-image': 'url(' + vm.entertainers[vm.itemActiveIndex].photos[vm.photoActiveIndex].original + ')'}"
+      ng-click="vm.showPopup($event)">
+    </div>
+
+    <div 
+      layout="row" 
+      layout-align="space-between stretch" 
+      class="search-entertainers__switch-foto">
+      <div 
+        flex="50"
+        class="search-entertainers__preview search-entertainers__preview_small"
+        ng-repeat="photo in vm.entertainers[vm.itemActiveIndex].photos track by $index"
+        ng-class="{'photo_active': vm.photoActiveIndex === $index}"
+        ng-style="{'background-image': 'url(' + photo.preview + ')'}"
+        ng-click="vm.photoActiveIndex = $index">
+      </div>
+    </div>
+
+    <md-button 
+      class="md-raised md-accent search-entertainers__invite"
+      ng-click="vm.goToNextStep()">
+      INVITE
+    </md-button>    
+  </div>
+
+</div>

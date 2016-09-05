@@ -3,7 +3,8 @@
       ng-class="{
         'view-mode': $ctrl.mode === 'main.profile.view',
         'edit-mode': $ctrl.mode === 'profile.edit'
-      }">
+      }"
+      novalidate>
   <div class="basic-data">
     <div class="input image">
       <label ng-if="$ctrl.mode === 'main.profile.create'">Add photo</label>
@@ -41,7 +42,7 @@
                ng-readonly="$ctrl.mode === 'main.profile.view'"
                ng-model="$ctrl[field.model]"
                ng-class="{error: $ctrl[field.model + 'Error'] && $ctrl.mode !== 'main.profile.view'}"
-               ng-keyup="$ctrl[field.model + 'Error'] = false"
+               ng-change="$ctrl[field.model + 'Error'] = false"
                ng-blur="$ctrl.validate({[field.model]: $ctrl[field.model]})">
         <span class="error" ng-if="$ctrl[field.model + 'Error'] && $ctrl.mode !== 'main.profile.view'">
             {{$ctrl[field.model + 'Error']}}
@@ -57,8 +58,9 @@
                  ng-readonly="$ctrl.mode === 'main.profile.view'"
                  ng-model="$ctrl[combine.model]"
                  ng-class="{error: $ctrl[combine.model + 'Error'] && $ctrl.mode !== 'main.profile.view', first: $index === 0}"
-                 ng-keyup="$ctrl[combine.model + 'Error'] = false"
+                 ng-change="$ctrl[combine.model + 'Error'] = false"
                  ng-blur="$ctrl.validate({[combine.model]: $ctrl[combine.model]})">
+          <div class="sub-desc">{{combine.desc}}</div>
           <span class="error" ng-if="$ctrl[combine.model + 'Error'] && $ctrl.mode !== 'main.profile.view'">
               {{$ctrl[combine.model + 'Error']}}
             </span>
@@ -77,7 +79,8 @@
         </md-button>
       </div>
       <div flex="45" ng-if="$ctrl.mode === 'profile.edit'">
-        <md-button class="cancel" ng-click="$ctrl.buildProfileModels()">
+        <!-- <md-button class="cancel" ng-click="$ctrl.buildProfileModels()"> -->
+        <md-button class="cancel" ng-click="$ctrl.rebuildProfileModelsFromBackup()">
           Cancel
         </md-button>
       </div>

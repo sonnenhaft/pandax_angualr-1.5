@@ -1,5 +1,5 @@
 <div class="register-form">
-  <form name="registerForm" class="animated fadeIn">
+  <form name="registerForm" class="animated fadeIn" novalidate>
     <div class="type-of-user">
       <md-button class="customer-user"
                  ng-class="{active: $ctrl.isCustomer}"
@@ -9,7 +9,7 @@
       <md-button class="provider-user"
                  ng-class="{active: $ctrl.isProvider}"
                  ng-click="$ctrl.isProvider = true; $ctrl.isCustomer = false">
-        Service provider
+        Entertainer
       </md-button>
     </div>
     <div class="credentials">
@@ -18,8 +18,8 @@
         <input type="email"
                name="email"
                ng-model="$ctrl.email"
-               ng-keyup="$ctrl.emailError = $ctrl.registerError = false"
-               ng-blur="$ctrl.validate({email: $ctrl.email})"
+               ng-change="$ctrl.emailError = $ctrl.registerError = false"
+               ng-blur="$ctrl.validate({email: registerForm.email.$viewValue})"
                ng-class="{error: $ctrl.emailError}"
                maxlength="100"
                required />
@@ -32,7 +32,7 @@
         <input type="password"
                name="password"
                ng-model="$ctrl.password"
-               ng-keyup="$ctrl.passwordError = $ctrl.registerError = false"
+               ng-change="$ctrl.passwordError = $ctrl.registerError = false"
                ng-blur="$ctrl.validate({password: $ctrl.password})"
                ng-class="{error: $ctrl.passwordError}"
                maxlength="50"

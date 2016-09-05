@@ -19,12 +19,7 @@
       overflow: visible;
 
       &.active {
-        background: -ms-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 185%);
-        background: -moz-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 185%);
-        background: -o-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 185%);
-        background: -webkit-gradient(linear, left top, right bottom, color-stop(0, rgba(24, 95, 221, 1)), color-stop(185, rgba(188, 55, 240, 1)));
-        background: -webkit-linear-gradient(top left, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 185%);
-        background: linear-gradient(to bottom right, rgba(24, 95, 221, 1) 0%, rgba(188, 55, 240, 1) 185%);
+        @include gradient(rgba(24, 95, 221, 1), rgba(188, 55, 240, 1));
 
         &:after {
           content: '';
@@ -77,7 +72,7 @@
 }
 
 .type-error {
-  color: white;
+  color: $Cardinal;
   text-align: center;
   margin-top: 10px;
   font: 0.938em $open-sans, sans-serif;

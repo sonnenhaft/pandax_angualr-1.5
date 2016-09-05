@@ -15,3 +15,16 @@
 		color: $white;
 	}
 }
+
+.no-items-text {
+	color: $white;
+	font: {
+		family: $oswald;
+		size: 24px;
+		weight: 400;
+	}
+	margin-top: 26px;
+	letter-spacing: 1.3px;
+	line-height: 40px;	
+	text-align: left;
+}

@@ -1,10 +1,9 @@
 export default class User {
 
-  constructor (Storage, Constants, Request, $state, $http) {
+  constructor (Storage, Constants, Request, $state, $http, Helper) {
     'ngInject';
 
-    _.assign(this, {Storage, Constants, Request, $state, $http});
-
+    _.assign(this, {Storage, Constants, Request, $state, $http, Helper, userAvatarSrc: '', billingInfo: {}});
   }
 
   isAuth () {
@@ -145,7 +144,8 @@ export default class User {
       );
   }
 
-  getUserProfile (user, type) {
+
+  getUserProfile (user, type, redirectUser = true) {
     return this
       .Request
       .send(
@@ -156,8 +156,11 @@ export default class User {
       .then(
         result => {
           this.update(result.data);
-          this.redirectUser();
-          return true;
+          if (redirectUser == true) {
+            this.redirectUser();
+          }
+          this.setUserAvatarSrc(result.data);
+          return result.data;
         },
         error => console.log(error)
       );
@@ -173,7 +176,10 @@ export default class User {
         fields
       )
       .then(
-        result => result.data,
+        result => {
+          this.update(result.data);
+          return result.data;
+        },
         error => console.log(error)
       );
   }
@@ -187,7 +193,12 @@ export default class User {
         file
       )
       .then(
-        result => result.data,
+        result => {
+          if (slot == 1) {
+            this.setUserAvatarSrc(result.data)
+          }
+          return result.data;
+        },
         error => console.log(error)
       )
   }
@@ -210,6 +221,60 @@ export default class User {
   logout () {
     this.Storage.remove('MINX');
     this.$state.go('home');
+  }
+
+  /*
+    User avatar section
+   */
+  fetchUserAvatarSrc () {
+    return this.getUserProfile(_.assign(this.get(), {token: this.token()}), this.get('role'), false)
+      .then(data => {
+        return this.setUserAvatarSrc(data);
+      });
+  }
+
+  setUserAvatarSrc (data = {}) {
+    let photoSrc = this.Constants.user.avatar.empty;
+
+    if (data.photo && data.photo.preview) {
+      photoSrc = data.photo.preview;
+    } else if (data.photos && data.photos[0] && data.photos[0].preview) {
+      photoSrc = data.photos[0].preview;
+    }
+
+    return this.userAvatarSrc = photoSrc + '?' + this.Helper.getUniqueNumberByTime();
+  }
+
+  getUserAvatarSrc () {
+    return this.userAvatarSrc;
+  }
+
+  fetchBillingInfo () {
+    return this.billingInfo;
+  }
+
+  saveBillingInfo () {
+    /*
+    ToDo: replace with real server request
+     */
+    return new Promise((resolve, reject) => {
+          this.billingInfo = Object.assign(this.billingInfo, {
+            first_name: 'Barry edit',
+            last_name: 'Bom edit',
+            mobile: '+123456789',
+            cards: [{
+              id: 1,
+              name: 'Card 1',
+              number: 1111222233334444,
+              expiry: '19/21',
+              cvc: 123
+            }]
+          });
+
+        setTimeout(() => {
+          resolve(this.billingInfo);
+        }, 1000);
+    })
   }
 
 }

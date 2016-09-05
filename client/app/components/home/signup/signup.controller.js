@@ -47,6 +47,7 @@ export default class Signup {
         result => {
           this.registerLoading = false;
           if (result && result.error) {
+            this.registerLoading = false;
             this.registerError = result.error;
           }
         },

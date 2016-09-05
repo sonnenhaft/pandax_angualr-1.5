@@ -1,0 +1,73 @@
+.left-side-size {
+	max-width: 420px;
+	padding-left: 30px;
+	padding-right: 30px;
+	width: 420px;
+	@media (max-width: 960px) {
+	  padding-left: 18px;
+	  padding-right: 18px;
+	}
+}
+
+#manipulation-entertainers {
+	padding: 52px 0px 40px 0px;
+
+/*   @media (min-width: 960px) {
+		max-width: 794px;
+		width: 794px;
+  }	 */
+
+/*   @media (max-width: 960px) {
+    padding-left: 18px;
+    padding-right: 18px;
+  } */
+
+	& > * {
+		padding: 0px;
+	}
+
+	& > *,
+	&__main > * {
+		width: 100%;
+	}
+	
+	.manipulation-entertainers {
+
+		&__header {
+			&_left {
+				@extend .left-side-size;
+			}
+		}
+
+		&__icon {
+			&_close {
+	    	margin: 12px 0 0 0;
+	    }
+		}
+
+		&__refresh {
+			&-image {
+				margin-left: 8.5px;
+			}
+		}
+
+		&__head-link {
+			color: $TrolleyGrey;
+			font: 15px $oswald;
+			letter-spacing: 0.1px;
+			line-height: 24px;
+			text-align: right;
+			&_active {
+				color: $white;
+			}
+		}
+
+		&__search-entertainers-wrapper {
+			@extend .left-side-size;
+		}
+	}
+}
+
+@import "./searchEntertainers/searchEntertainers";
+@import "./confirmedEntertainers/confirmedEntertainers";
+@import "./photoFullPage/photoFullPage";
