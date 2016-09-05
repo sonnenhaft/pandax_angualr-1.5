@@ -14,6 +14,15 @@
     }
   }
 
+  &_mobile-opened {
+    @media (max-width: 960px) {
+      position: fixed;
+      overflow: auto;
+      width: 100%;
+      z-index: 2;
+    }
+  }
+
   .logo {
     background: $Cardinal;
 
@@ -79,6 +88,19 @@
           letter-spacing: 1px;
           &.active {
             color: $white;
+          }
+        }
+      }
+      &.navigation_sub {
+        margin-left: 15px;
+        li {
+          &.active {
+            a {
+              color: $Cardinal;
+            }
+          }
+          a {
+            font-size: .938em;
           }
         }
 

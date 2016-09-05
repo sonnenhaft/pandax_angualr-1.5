@@ -45,6 +45,7 @@ export default class Signup {
       .register(credentials)
       .then(
         result => {
+          this.registerLoading = false;
           if (result && result.error) {
             this.registerLoading = false;
             this.registerError = result.error;
