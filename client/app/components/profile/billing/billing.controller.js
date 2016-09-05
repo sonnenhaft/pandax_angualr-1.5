@@ -13,18 +13,20 @@ class BillingController {
       $q,
       newCard: {},   //temporary
       saveLoading: false,
-      defaultCardId: 0
+      defaultCardId: 0,
+      hasPersonalInfo: false
     });
 
     this.defaultCardId = this.getDefaultCardId();
+    this.hasPersonalInfo = this.billingInfo && this.billingInfo.first_name && this.billingInfo.last_name && this.billingInfo.phone;
   }
 
-  saveInfo (personalInformationForm, billingInformationForm) {
+  saveInfo () {
     let promises = [];
 
     this.saveLoading = true;
 
-    if (personalInformationForm) {      // should save personal information
+    if (!this.hasPersonalInfo) {                                          // should save personal information
       let query = this.User
         .UpdateUserProfile(this.billingInfo);
         /*
@@ -34,12 +36,12 @@ class BillingController {
     }
 
 
-    if (billingInformationForm) {
+    if (!this.billingInfo.cards || !this.billingInfo.cards.length) {      // should add card
       let query = this.Cards
         .add(this.newCard)
         .then(card => {
           if (card.message) {
-            this.showError(card.message);
+            return card;
           }
         });
       promises.push(query);
@@ -52,9 +54,16 @@ class BillingController {
       }
     }
 
-    return this.$q.all(promises).then((_data) => {
+    return this.$q.all(promises).then((data) => {
+      let errorMessages = _.chain(data).filter('message').map('message').value();
+
       this.saveLoading = false;
-      this.$state.go(this.$stateParams.from, {orderId: this.$stateParams.orderId})
+
+      if (errorMessages.length) {
+         this.showError(errorMessages.join(' ,'));
+      } else {
+        this.$state.go(this.$stateParams.from, {orderId: this.$stateParams.orderId})
+      }
     })
     .catch((data) => {
       console.log('errors', data);

@@ -26,7 +26,9 @@ export default class Payments {
       })
       .then(result => {
         if (result.message) {
-          this.showError(result.message);
+          this.showError(result.message.message || result.message);
+        } else {
+          this.resetCardInfo();
         }
       });
   }
@@ -39,6 +41,10 @@ export default class Payments {
         .hideDelay(200000)
         .action('OK')
     );
+  }
+
+  resetCardInfo () {
+    this.newCard = {};
   }
 
 }

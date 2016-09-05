@@ -33,6 +33,7 @@
 			}
 			letter-spacing: .1px;
 			line-height: 24px;
+			margin-bottom: 8px;
 			padding: 4px 9px;
 			text-align: left;
 			&.ng-invalid.ng-touched {
@@ -62,6 +63,11 @@
 				color: $white;
 				background-color: $CharcoalDarker;
 			}
+
+			&[disabled].md-button {
+        background: $black;
+				border: 1px solid $Davy-grey;
+			}
 		}
 
 		&__notify {
@@ -87,7 +93,6 @@
 	color: $Cardinal;	
   display: block;
   line-height: 24px;
-  margin-top: 8px;
   margin-left: 8px;
   font: {
   	size: .938em;

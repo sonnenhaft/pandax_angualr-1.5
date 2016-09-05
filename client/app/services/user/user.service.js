@@ -176,7 +176,10 @@ export default class User {
         fields
       )
       .then(
-        result => result.data,
+        result => {
+          this.update(result.data);
+          return result.data;
+        },
         error => console.log(error)
       );
   }

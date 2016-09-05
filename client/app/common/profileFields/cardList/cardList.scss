@@ -33,11 +33,20 @@
 				color: $AuroMetalSaurus;
 				font: {
 					family: $open-sans;
-					size: 13px;
+					size: 15px;
 				}
 				margin-top: 10px;
 				letter-spacing: .1px;
 				text-align: left;
+			}
+			&__valid-thru {
+				color: $AuroMetalSaurus;
+				font: {
+					family: $open-sans;
+					size: 15px;
+				}
+				letter-spacing: .3px;
+				margin-top: 4px;
 			}
 		}
 

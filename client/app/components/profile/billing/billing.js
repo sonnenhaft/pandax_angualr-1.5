@@ -37,8 +37,11 @@ let billingModule = angular.module('billing', [
           billingInfo: function (User, Cards) {
             let billingInfo = User.get();
             return Cards.getCards()
-                    .then((data) => {
-                      return billingInfo = _.assign(billingInfo, {cards: data});
+                    .then((response) => {
+                      if (response && response.data) {
+                        billingInfo = _.assign(billingInfo, {cards: response.data});
+                      }
+                      return billingInfo;
                     });
           },
           orderDetails: function (OrderService, orderId) {
