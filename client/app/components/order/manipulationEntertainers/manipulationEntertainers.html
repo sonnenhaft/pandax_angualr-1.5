@@ -28,7 +28,6 @@
         layout="row" 
         layout-align="end center">
         <a
-          flex="10"
           hide-gt-sm
           class="pointer manipulation-entertainers__head-link"
           ng-class="{'manipulation-entertainers__head-link_active': vm.showComponentOnly.length == 0 || vm.showComponentOnly === 'searchEntertainers'}"
@@ -36,16 +35,16 @@
           <span>MINX</span>
         </a>
         <a
-          flex="65"
+          flex="60"
           hide-gt-sm
-          class="pointer manipulation-entertainers__head-link"
+          class="pointer manipulation-entertainers__head-link manipulation-entertainers__head-link_middle"
           ng-class="{'manipulation-entertainers__head-link_active': vm.showComponentOnly === 'confirmedEntertainers'}"
           ng-click="vm.showComponentOnly = 'confirmedEntertainers'">
           <span>CONFIRMATIONS {{vm.entertainersConfirmedCount}}/{{vm.entertainersInvitedCount}}</span>
         </a>
         <a
-          flex="25"
-          class="pointer manipulation-entertainers__head-link"
+          flex="30"
+          class="pointer manipulation-entertainers__head-link manipulation-entertainers__head-link_right"
           ng-click="vm.OrderService.fetchEntertainers(vm.$stateParams.orderId); vm.itemActiveIndex = 0;">
           <span>REFRESH</span>
           <img
@@ -59,7 +58,7 @@
 
   <div
     layout="row" 
-    layout-align="space-between"
+    layout-align="start"
     layout-wrap>
 
     <div flex="100" flex-gt-sm="50" class="manipulation-entertainers__search-entertainers-wrapper">

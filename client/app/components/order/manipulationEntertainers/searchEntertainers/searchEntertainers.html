@@ -26,7 +26,10 @@
       </div>
     </div>
 
-    <div class="search-entertainers__info">
+    <div 
+      flex="75" 
+      layout="row" 
+      class="search-entertainers__info">
       <span class="search-entertainers__info-raiting">
         {{vm.entertainers[vm.itemActiveIndex].rating}}
         <img
@@ -42,7 +45,8 @@
       ng-click="vm.showPopup($event)">
     </div>
 
-    <div 
+    <div
+      flex="75" 
       layout="row" 
       layout-align="space-between stretch" 
       class="search-entertainers__switch-foto">
