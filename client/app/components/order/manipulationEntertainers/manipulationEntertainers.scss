@@ -3,6 +3,16 @@
 	padding-left: 30px;
 	padding-right: 30px;
 	width: 420px;
+}
+.right-side-size {
+	max-width: 374px;
+	padding-left: 30px;
+	padding-right: 30px;
+	width: 374px;
+}
+
+.left-side-size,
+.right-side-size {
 	@media (max-width: 960px) {
 	  padding-left: 18px;
 	  padding-right: 18px;
@@ -60,6 +70,10 @@
 
 		&__search-entertainers-wrapper {
 			@extend .left-side-size;
+		}
+
+		&__confirmed-entertainers-wrapper {
+			@extend .right-side-size;
 		}
 	}
 }

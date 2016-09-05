@@ -1,12 +1,10 @@
 #confirmed-entertainers {
-	max-width: 374px;
-	width: 374px;
 
 	.confirmed-entertainers {
 
 		&__header {
 			margin-top: 25px;
-			padding: 8px;
+			padding: 8px 0px;
 			&-text {
 				color: $white;
 				font: {
@@ -23,6 +21,7 @@
 
 		&__card {
 			background-color: $CharcoalDarker;
+			margin: 0;
 			margin-top: 16px;
 			padding: 8px;
 			&-header {
