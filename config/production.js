@@ -4,5 +4,6 @@ module.exports = {
   VERSION: '0.0.1',
   STRIPE: {
   	PUBLIC_KEY: 'pk_test_53uGNlHfMPbElFTnPN8sXQ9N'
-  }
+  },
+  WS_URL: 'wss://' + window.location.host + '/ws',
 };

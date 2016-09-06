@@ -18,7 +18,8 @@ export default class Constants {
   }
 
   apiConstants () {
-    const path = config.API_URL;
+    const path = config.API_URL,
+          pathWS = config.WS_URL
 
     let apiConstants = {
 
@@ -90,6 +91,12 @@ export default class Constants {
       inviteEntertainer: {
         uri: (orderId, entertainerId) => path + `/orders/${orderId}/entertainers/${entertainerId}/invite`,
         method: 'POST'
+      },
+
+      ws: {
+        invites: {
+          uri: (channelName) => pathWS + `/orders/${channelName}/invites`
+        }
       }
 
     };

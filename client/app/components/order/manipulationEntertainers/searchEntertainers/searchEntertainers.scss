@@ -1,18 +1,21 @@
-.flex-gt-sm-75 {
-  @media (min-width: 960px) {
-    width: 274px !important;
-  }
-}
-
 #search-entertainers {
+	$width-middle-part: 274px;
+
+	.flex-gt-sm-75 {
+	  @media (min-width: 960px) {
+	    width: $width-middle-part !important;
+	  }
+	}
+
 	md-buttom {
 		color: $AuroMetalSaurus;
 	}
 	.search-entertainers {
-		& > *,
-		&__main > * {
-			width: 100%;
+
+		&__main {
+			height: 100%;
 		}
+
 		&__manip {
 			&_head {
 				font: 32px $oswald;
@@ -20,9 +23,15 @@
 				letter-spacing: 0.1px;
 				line-height: 30px;
 				margin-top: 41px;
+				width: 100%;
 			}
-			&-name {
+
+			&-info {
+				@extend .flex-gt-sm-75;
+				min-width: $width-middle-part;
+				width: $width-middle-part;
 			}
+
 			&-counter {
 				font: 16px $oswald;
 				color: $white;
@@ -30,6 +39,7 @@
 				line-height: 30px;
 				text-align: right;
 			}
+
 			&-arrow {
 				min-width: 16px;
 				width: 16px;
@@ -49,7 +59,9 @@
 			font: 13px $oswald;
 			letter-spacing: 0.1px;
 			line-height: 24px;
+			min-width: $width-middle-part;
 			text-align: left;
+			width: $width-middle-part;
 			&-distance {
 				margin-left: 6px;
 			}
@@ -64,8 +76,8 @@
 				margin-top: 14px;
 				height: 372px;
 				min-height: 372px;
-				min-width: 274px;
-				width: 274px;
+				min-width: $width-middle-part;
+				width: $width-middle-part;
 			}
 			&_small {
 				&:not(:first-child) {
@@ -91,6 +103,7 @@
 			margin: 40px 0px 0px 0px;
 			padding: 17px 125px;
 			text-align: center;
+			width: 100%;
 		}
 	}
 }
