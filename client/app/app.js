@@ -65,6 +65,7 @@ angular
 
     $mdDateLocaleProvider.formatDate = date => moment(date).format('MMMM DD, YYYY');
 
+    $mdDateLocaleProvider.formatDate = date => moment(date).format('MMMM DD, YYYY');
 
     uiGmapGoogleMapApiProvider.configure({
       key: 'AIzaSyCLBp2BxSpyfnqC_dhDKidNXDuHQTR-DYQ',
