@@ -6,164 +6,34 @@
 
   <span class="page-name">CREATE ORDER</span>
 
-	<h4 class="personal-information__title">PERSONAL INFORMATION</h4>
 
+	<h4 ng-show="!vm.hasPersonalInfo" class="personal-information__title">PERSONAL INFORMATION</h4>
 	<form
+	 	ng-show="!vm.hasPersonalInfo"
 		name="personalInformationForm"
 		layout="column"
 		class="personal-information-form form_1"
-    novalidate>
-
-
-		<div
-			layout="row"
-			layout-align="space-between">
-			<div
-				class="form_1-field__container"
-				layout="column"
-				flex="50">
-				<label class="form_1__label">First Name</label>
-				<input
-					type="text"
-					name="first_name"
-					class="form_1__input"
-					ng-model="vm.billingInfo.first_name"
-					ng-maxlength="50"
-					required/>
-			  <div
-			  	ng-messages="personalInformationForm.first_name.$error"
-			  	ng-show="personalInformationForm.first_name.$touched"
-			  	class="validation-messages"
-			  	role="alert">
-			    <div ng-messages-include="/app/common/messages/messages.html"></div>
-			  </div>
-			</div>
-			<div
-				class="form_1-field__container"
-				layout="column"
-				flex="50">
-				<label class="form_1__label">Last Name</label>
-				<input
-					type="text"
-					name="last_name"
-					class="form_1__input"
-					ng-model="vm.billingInfo.last_name"
-					ng-maxlength="50"
-					required/>
-			  <div
-			  	ng-messages="personalInformationForm.last_name.$error"
-			  	ng-show="personalInformationForm.last_name.$touched"
-			  	class="validation-messages"
-			  	role="alert">
-			    <div ng-messages-include="/app/common/messages/messages.html"></div>
-			  </div>
-			</div>
-		</div>
-
-		<div
-			layout="row"
-			class="form_1__row_2">
-			<div
-				class="form_1-field__container"
-				layout="column"
-				flex="100">
-				<label class="form_1__label">Mobile Number</label>
-				<input
-					type="text"
-					name="mobile"
-					class="form_1__input"
-					ng-model="vm.billingInfo.mobile"
-					ng-maxlength="50"
-					required/>
-			  <div
-			  	ng-messages="personalInformationForm.mobile.$error"
-			  	ng-show="personalInformationForm.mobile.$touched"
-			  	class="validation-messages"
-			  	role="alert">
-			    <div ng-messages-include="/app/common/messages/messages.html"></div>
-			  </div>
-			</div>
-		</div>
-
+  	novalidate>
+		<personal-information form-object="personalInformationForm" model="vm.billingInfo"></personal-information>
 	</form>
 
 
-	<h4 class="billing-information__title">BILLING INFORMATION</h4>
+	<order-details order="vm.orderDetails"></order-details>
 
+
+	<h4 ng-show="!vm.billingInfo.cards || vm.billingInfo.cards.length == 0" class="billing-information__title">BILLING INFORMATION</h4>
 	<form
+		ng-show="!vm.billingInfo.cards || vm.billingInfo.cards.length == 0"
 		name="billingInformationForm"
 		layout="column"
 		class="billing-information-form"
     novalidate>
-
-		<div
-			layout="row">
-			<div
-				class="form_1-field__container"
-				layout="column"
-				flex="100">
-				<label class="form_1__label">Card Number</label>
-				<input
-					type="number"
-					name="card_number"
-					class="form_1__input"
-					ng-model="vm.billingInfo.cards[0].number"
-					required/>
-			  <div
-			  	ng-messages="billingInformationForm.card_number.$error"
-			  	ng-show="billingInformationForm.card_number.$touched"
-			  	class="validation-messages"
-			  	role="alert">
-			    <div ng-messages-include="/app/common/messages/messages.html"></div>
-			  </div>
-			</div>
-		</div>
-
-		<div
-			layout="row"
-			layout-align="space-between"
-			class="form_1__row_2">
-			<div
-				class="form_1-field__container"
-				layout="column"
-				flex="50">
-				<label class="form_1__label">Expiry</label>
-				<input
-					type="text"
-					name="expiry"
-					class="form_1__input"
-					ng-model="vm.billingInfo.cards[0].expiry"
-					required/>
-			  <div
-			  	ng-messages="billingInformationForm.expiry.$error"
-			  	ng-show="billingInformationForm.expiry.$touched"
-			  	class="validation-messages"
-			  	role="alert">
-			    <div ng-messages-include="/app/common/messages/messages.html"></div>
-			  </div>
-			</div>
-			<div
-				class="form_1-field__container"
-				layout="column"
-				flex="50">
-				<label class="form_1__label">CVC</label>
-				<input
-					type="text"
-					name="cvc"
-					class="form_1__input"
-					ng-model="vm.billingInfo.cards[0].cvc"
-					required/>
-			  <div
-			  	ng-messages="billingInformationForm.cvc.$error"
-			  	ng-show="billingInformationForm.cvc.$touched"
-			  	class="validation-messages"
-			  	role="alert">
-			    <div ng-messages-include="/app/common/messages/messages.html"></div>
-			  </div>
-			</div>
-		</div>
-
+		<card-info form-object="billingInformationForm" model="vm.newCard"></card-info>
 	</form>
+
+
+  <card-list ng-if="vm.billingInfo.cards.length > 0" cards="vm.billingInfo.cards"></card-list>
+
 
 	<section
 		class="billing__buttons-group"
@@ -177,10 +47,20 @@
     <md-button
     	flex="50"
     	class="md-raised md-accent form_1__button"
-    	ng-disabled="personalInformationForm.$invalid || billingInformationForm.$invalid"
+    	ng-disabled="(!vm.hasPersonalInfo && personalInformationForm.$invalid) || 
+    							 ((!vm.billingInfo.cards || vm.billingInfo.cards.length == 0) && billingInformationForm.$invalid) || 
+    							 vm.saveLoading"
     	ng-click="vm.saveInfo()">
-    	Continue
+			Continue
+	    <md-progress-circular
+	    	md-mode="indeterminate"
+	    	md-diameter="30"
+	    	class="md-progress-circular_absolute md-progress-circular_dark"
+	    	ng-if="vm.saveLoading">
+	    </md-progress-circular>
     </md-button>
+
 	</section>
+
 
 </div>

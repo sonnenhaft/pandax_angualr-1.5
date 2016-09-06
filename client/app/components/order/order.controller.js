@@ -118,7 +118,7 @@ class orderController {
         result => {
           this.orderLoading = false;
           this.User.update(result.data.customer);
-          this.$state.go('main.manipulationEntertainers');
+          this.$state.go('main.manipulationEntertainers', {orderId: result.data.id});
         },
         error => {
           this.orderLoading = false;

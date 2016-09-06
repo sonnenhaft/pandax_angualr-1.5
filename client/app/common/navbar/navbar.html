@@ -9,34 +9,32 @@
     </div>
     <md-icon
       flex
-    	hide-gt-sm
-    	aria-label="menu"
+      hide-gt-sm
+      aria-label="menu"
       ng-click="vm.mobile = !vm.mobile"
       ng-class="{mobile: vm.mobile}">
     </md-icon>
   </div>
 
   <div class="mobilemenu" ng-if="vm.mobile">
-    <div class="avatar">
+    <div class="avatar" ui-sref="main.profile.view({mode: 'main.profile.view'})">
       <img ng-src="{{vm.userAvatarSrc}}" alt=""/>
     </div>
 
     <div class="navigation" ng-if="vm.$state.current.name !== 'main.profile.create'">
-      <ul>
+      <ul active-menu-item>
         <li
           ng-repeat="nav in vm.navigation"
-          ng-click="vm.switchMenuItem(nav.url)"
-          ui-sref-active="active">
-          <a href="" ui-sref="{{nav.url.length > 0 ? nav.url : '#'}}">
+          ng-click="vm.mobile = (nav.url.length > 0 ? false : true)">
+          <a href="" ui-sref="{{nav.url.length > 0 ? nav.url : '#'}}" ui-sref-active="active">
             {{nav.text}}
           </a>
           <ul
-            class="navigation_sub"
-            ng-show="vm.activeMenuItemUrl === nav.url && vm.activeMenuItemOpened === true">
+            class="navigation_sub">
             <li
               ng-repeat="subnav in vm.submenu | filterBy: ['parent']: nav.text"
-              ui-sref-active="active">
-              <a href="" ui-sref="{{subnav.url}}">
+              ng-click="vm.mobile = false">
+              <a href="" ui-sref="{{subnav.url}}" ui-sref-active="active">
                 {{subnav.text}}
               </a>
             </li>
@@ -47,26 +45,22 @@
 
   </div>
 
-  <div hide show-gt-sm class="avatar">
+  <div hide show-gt-sm class="avatar" ui-sref="main.profile.view({mode: 'main.profile.view'})">
     <img ng-src="{{vm.userAvatarSrc}}" alt=""/>
   </div>
 
   <div class="navigation" hide show-gt-sm ng-if="vm.$state.current.name !== 'main.profile.create'">
-    <ul>
+    <ul active-menu-item>
       <li
-        ng-repeat="nav in vm.navigation"
-        ng-click="vm.switchMenuItem(nav.url)"
-        ui-sref-active="active">
-        <a href="" ui-sref="{{nav.url.length > 0 ? nav.url : '#'}}">
+        ng-repeat="nav in vm.navigation">
+        <a href="" ui-sref="{{nav.url.length > 0 ? nav.url : '#'}}" ui-sref-active="active">
           {{nav.text}}
         </a>
         <ul
-          class="navigation_sub"
-          ng-show="vm.activeMenuItemUrl === nav.url && vm.activeMenuItemOpened === true">
+          class="navigation_sub">
           <li
-            ng-repeat="subnav in vm.submenu | filterBy: ['parent']: nav.text"
-            ui-sref-active="active">
-            <a href="" ui-sref="{{subnav.url}}">
+            ng-repeat="subnav in vm.submenu | filterBy: ['parent']: nav.text">
+            <a href="" ui-sref="{{subnav.url}}" ui-sref-active="active">
               {{subnav.text}}
             </a>
           </li>

@@ -1,0 +1,24 @@
+<div id="order-details">
+  <div class="list">
+    <ul>
+      <li>
+        <div class="$ctrl.order-information">
+          <div layout="row">
+            <span class="minx" flex>
+              {{$ctrl.OrderService.getProviderById($ctrl.order.service_type).name}}
+              ({{$ctrl.order.minx_count}})
+            </span>
+            <span class="initial" flex>{{$ctrl.order.cost / $ctrl.order.minx_count}} / hour</span>
+          </div>
+          <div layout="row">
+            <span class="time" flex>{{$ctrl.order.booking_length}}</span>
+            <span flex class="descr">50% off after first hour</span>
+          </div>
+          <span class="address">{{$ctrl.order.address}}</span>
+          <span class="apt">{{$ctrl.order.apartment}}</span>
+          <span class="initial cost">${{$ctrl.order.cost}}</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

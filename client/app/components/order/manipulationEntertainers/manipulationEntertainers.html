@@ -11,13 +11,13 @@
     layout-align="start"
     class="manipulation-entertainers__header">
 
-    <div flex="100" flex-gt-sm="50">       
+    <div flex="100" flex-gt-sm="50" class="manipulation-entertainers__header_left">
       <div 
         layout="row" 
         layout-align="space-between start">
         <h1 class="page-name">Create Order</h1>
         <md-icon 
-          flex="10"
+          flex="1"
           md-svg-icon="/assets/images/icons/svg/Close_Menu.svg" 
           class="manipulation-entertainers__icon_close manipulation-entertainers__icon_close"
           disabled="disabled"></md-icon>
@@ -46,9 +46,7 @@
         <a
           flex="25"
           class="pointer manipulation-entertainers__head-link"
-          ng-click="vm.OrderService.fetchEntertainers()"
-          ui-sref="main.manipulationEntertainers"
-          ui-sref-opts="{reload: true}">
+          ng-click="vm.OrderService.fetchEntertainers(vm.$stateParams.orderId); vm.itemActiveIndex = 0;">
           <span>REFRESH</span>
           <img
             src="/assets/images/icons/refresh-3x.png" 
@@ -59,26 +57,38 @@
   </div>
 
 
-
   <div
     layout="row" 
     layout-align="space-between"
     layout-wrap>
 
-    <search-entertainers 
-      entertainers="vm.entertainers"
-      flex="100"
-      flex-gt-sm="50"
-      ng-hide="vm.showComponentOnly.length > 0 && vm.showComponentOnly !== 'searchEntertainers'">
-    </search-entertainers>
+    <div flex="100" flex-gt-sm="50" class="manipulation-entertainers__search-entertainers-wrapper">
+      <search-entertainers 
+        entertainers="vm.entertainers"
+        item-active-index="vm.itemActiveIndex"
+        flex="100"
+        flex-gt-sm="50"
+        ng-if="vm.entertainers.length > 0 && (vm.showComponentOnly.length == 0 || vm.showComponentOnly == 'searchEntertainers')">
+      </search-entertainers>
+      <h2 
+        class="no-items-text"
+        ng-if="vm.entertainers.length == 0">
+        NO ENTARNAINERS ARE AVAILABLE
+      </h2>
+    </div>
 
-    <confirmed-entertainers 
-      entertainers="vm.entertainersConfirmed"
-      entertainers-invited-count="vm.entertainersInvitedCount"
-      flex="100"
-      flex-gt-sm="50"
-      ng-show="vm.$mdMedia('gt-sm') || vm.showComponentOnly === 'confirmedEntertainers'">
-    </confirmed-entertainers>
+    <div flex="100" flex-gt-sm="50" class="manipulation-entertainers__confirmed-entertainers-wrapper">
+      <confirmed-entertainers 
+        entertainers="vm.entertainersConfirmed"
+        entertainers-invited-count="vm.entertainersInvitedCount"
+        ng-if="vm.entertainersConfirmed.length > 0 && (vm.$mdMedia('gt-sm') || vm.showComponentOnly === 'confirmedEntertainers')">
+      </confirmed-entertainers>
+      <h2 
+        class="no-items-text"
+        ng-if="vm.entertainersConfirmed.length == 0">
+        NO ENTARNAINERS ARE AVAILABLE
+      </h2>
+    </div>
 
   </div>
 

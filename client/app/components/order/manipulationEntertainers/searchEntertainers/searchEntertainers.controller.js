@@ -3,7 +3,7 @@ import photoFullPageCtrl from '../photoFullPage/photoFullPage.controller.js';
 
 class searchEntertainersController {
 
-  constructor (OrderService, $state, $mdDialog, $mdMedia) {
+  constructor (OrderService, $state, $mdDialog, $mdMedia, $stateParams) {
      'ngInject';
 
      _.assign(this, {
@@ -11,39 +11,23 @@ class searchEntertainersController {
         $state,
         $mdDialog,
         $mdMedia,
-     		entertainer: null,
-     		index: 0,
-     		photoPreviewSrc: ''
+        $stateParams,
+     		photoActiveIndex: 0
      	});
-
-     this.init();
-  }
-
-  init () {
-     if (this.entertainers.length > 0) {
-     		this.index = 0;
-     		this.entertainer = this.entertainers[this.index];
-     		this.photoPreviewSrc = this.entertainer.photo_small[0];
-     }
   }
 
   goToEntertainerByIndex(direction) {
-  	let possibleIndex = this.index + direction;
+  	let possibleIndex = this.itemActiveIndex + direction;
   	if (possibleIndex >= 0 && possibleIndex < this.entertainers.length) {
-	  	this.index = possibleIndex;
-  		this.entertainer = this.entertainers[this.index];
-      this.photoPreviewSrc = this.entertainer.photo_small[0];
+      this.itemActiveIndex = possibleIndex;
   	}
-  }
-
-  setPhotoPreview(src) {
-  	this.photoPreviewSrc = src;
   }
 
   showPopup(ev) {
     this.$mdDialog.show({
         controller: photoFullPageCtrl,
         controllerAs: 'vm',
+        clickOutsideToClose: true,
         template: '<div layout="row" layout-align="end" class="icon_modal-close">\
                     <div class="icon_modal-close__image" ng-click="vm.$mdDialog.hide()"></div>\
                   </div>' + 
@@ -51,18 +35,24 @@ class searchEntertainersController {
         targetEvent: ev,
         bindToController: true,
         locals: {
-          photos: this.entertainer.photo_small,
-          photoIndexActive: this.entertainer.photo_small.indexOf(this.photoPreviewSrc)
+          photos: this.entertainers[this.itemActiveIndex].photos,
+          photoIndexActive: this.photoActiveIndex
         }
       });
   }
 
   goToNextStep() {    
-    if (this.OrderService.fetchEntertainersInvitedCount() == 1) {
-      this.$state.go('main.billing', {from: 'main.manipulationEntertainers'})
-    } else {
-      this.$state.go('main.searchEntertainers.confirmedEntertainers')
-    }
+    this.OrderService.inviteEntertainer(this.$stateParams.orderId, this.entertainers[this.itemActiveIndex].id)
+      .then((data) => {
+        if (!data) {
+          return 0;
+        }
+        if (data.invitations_count == 1) {
+          this.$state.go('main.billing', {orderId: this.$stateParams.orderId, from: 'main.manipulationEntertainers'})
+        } else {
+          this.$state.go('main.searchEntertainers.confirmedEntertainers')
+        }
+      })
   }
 
 }

@@ -2,9 +2,17 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import billingComponent from './billing.component';
 import User from '../../../services/user/user';
+import Cards from '../../../services/card/card';
+import personalInformation from '../../../common/profileFields/personalInformation/personalInformation';
+import cardList from '../../../common/profileFields/cardList/cardList';
+import cardInfo from '../../../common/profileFields/cardInfo/cardInfo';
 
 let billingModule = angular.module('billing', [
-  uiRouter
+  uiRouter,
+  personalInformation,
+  cardList,
+  cardInfo,
+  Cards
 ])
 
   .config(($stateProvider) => {
@@ -12,18 +20,34 @@ let billingModule = angular.module('billing', [
 
     $stateProvider
       .state('main.billing', {
-        url: '/billing?from',
+        url: '/billing/:orderId?from',
         parent: 'main',
         template: '<billing \
                     billing-info="billingInfo" \
+                    order-details="orderDetails" \
                   </billing>',
-        controller: function ($scope, billingInfo, User) {
+        controller: function ($scope, billingInfo, orderDetails) {
           $scope.billingInfo = billingInfo;
+          $scope.orderDetails = orderDetails;
         },
         resolve: {
-          billingInfo: function (User) {
-            return User.fetchBillingInfo();
+          orderId: function ($stateParams) {
+            return $stateParams['orderId'] || 0;
+          },
+          billingInfo: function (User, Cards) {
+            let billingInfo = User.get();
+            return Cards.getCards()
+                    .then((response) => {
+                      if (response && response.data) {
+                        billingInfo = _.assign(billingInfo, {cards: response.data});
+                      }
+                      return billingInfo;
+                    });
+          },
+          orderDetails: function (OrderService, orderId) {
+            return OrderService.fetchOrderDetails(orderId);
           }
+
         }
       });
   })

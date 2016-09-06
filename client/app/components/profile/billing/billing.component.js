@@ -4,7 +4,8 @@ import controller from './billing.controller';
 let billingComponent = {
   restrict: 'E',
   bindings: {
-  	billingInfo: '='
+  	billingInfo: '=',
+    orderDetails: '='
   },
   template,
   controller,

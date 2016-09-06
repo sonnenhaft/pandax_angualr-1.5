@@ -51,7 +51,7 @@
               {{entertainer}}
             </md-option>
           </md-select>
-          <div class="descr">
+          <div class="descr" ng-if="$ctrl.User.get('is_newcomer')">
             <p>Minimum 2 entertainers for first time customers</p>
           </div>
         </div>
