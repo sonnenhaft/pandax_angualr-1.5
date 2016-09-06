@@ -1,0 +1,76 @@
+<div
+	layout="row"
+	layout-align="space-between">
+	<div
+		class="form_1-field__container"
+		layout="column"
+		flex="50">
+		<label class="form_1__label">First Name</label>
+
+		<input
+			type="text"
+			name="first_name"
+			class="form_1__input"
+			ng-model="vm.model.first_name"
+			ng-maxlength="50"
+			required/>
+	  <div
+	  	ng-messages="vm.formObject.first_name.$error"
+	  	ng-show="vm.formObject.first_name.$touched"
+	  	class="validation-messages"
+	  	role="alert">
+	    <!-- <div ng-messages-include="/app/common/messages/messages.html"></div> -->
+	    <messages></messages>
+	  </div>
+	</div>
+	<div
+		class="form_1-field__container"
+		layout="column"
+		flex="50">
+		<label class="form_1__label">Last Name</label>
+		<input
+			type="text"
+			name="last_name"
+			class="form_1__input"
+			ng-model="vm.model.last_name"
+			ng-maxlength="50"
+			required/>
+	  <div
+	  	ng-messages="vm.formObject.last_name.$error"
+	  	ng-show="vm.formObject.last_name.$touched"
+	  	class="validation-messages"
+	  	role="alert">
+	    <messages></messages>
+	  </div>
+	  <span class="form_1__notify">We will not display your last name.</span>
+	</div>
+</div>
+
+<div
+	layout="row"
+	class="form_1__row_2">
+	<div
+		class="form_1-field__container"
+		layout="column"
+		flex="100">
+		<label class="form_1__label">Mobile Number</label>
+		<!-- 
+			ToDo: add validation (look at Validation service)
+		-->
+		<input
+			type="text"
+			name="phone"
+			class="form_1__input"
+			ng-model="vm.model.phone"
+			ng-maxlength="16"
+			required/>
+	  <div
+	  	ng-messages="vm.formObject.phone.$error"
+	  	ng-show="vm.formObject.phone.$touched"
+	  	class="validation-messages"
+	  	role="alert">
+	    <messages></messages>
+	  </div>
+	</div>
+</div>
+

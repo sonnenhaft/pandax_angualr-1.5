@@ -8,6 +8,7 @@
 md-dialog {
 	background: none;
 	border-radius: 0px;
+  max-height: 100%;
   @media (max-width: 960px) {
     max-width: 100%;
   }
@@ -19,7 +20,7 @@ md-dialog {
   -khtml-user-select: none;    /* Konqueror */
   -moz-user-select: none;      /* Firefox */
   -ms-user-select: none;       /* Internet Explorer/Edge */
-  user-select: none;   
+  user-select: none;
 }
 
 @mixin transition($type, $duration, $mode) {
@@ -28,4 +29,52 @@ md-dialog {
   -ms-transition: $type $duration $mode;
   -o-transition: $type $duration $mode;
   transition: $type $duration $mode;
+}
+
+md-radio-button ._md-container:before {
+  background-color: $white;
+}
+
+md-radio-button.md-default-theme.md-checked ._md-off,
+md-radio-button.md-checked ._md-off {
+  border: none;
+}
+
+md-radio-button ._md-container,
+md-radio-button ._md-on,
+md-radio-button ._md-off {
+  height: 16px;
+  width: 16px;
+}
+
+
+.md-progress-circular {
+  &_absolute {
+    position: absolute;
+    left: 50%;
+    margin-left: -15px;
+    margin-top: -15px;
+    top: 50%;
+  }
+
+  &_dark {
+    #spinner path {
+      stroke: $AuroMetalSaurus;
+    }
+  }
+}
+
+
+md-toast {
+  background-color: none;
+  position: fixed;
+  &.md-default-theme {
+    .md-toast-content {
+      background-color: $white;
+    }
+  }
+}
+
+md-icon {
+  min-width: 10px;
 }

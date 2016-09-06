@@ -176,7 +176,10 @@ export default class User {
         fields
       )
       .then(
-        result => result.data,
+        result => {
+          this.update(result.data);
+          return result.data;
+        },
         error => console.log(error)
       );
   }
@@ -239,6 +242,10 @@ export default class User {
       photoSrc = data.photos[0].preview;
     }
 
+    if (!photoSrc || photoSrc.length == 0) {
+      photoSrc = this.Constants.user.avatar.empty;
+    }
+
     return this.userAvatarSrc = photoSrc + '?' + this.Helper.getUniqueNumberByTime();
   }
 
@@ -247,27 +254,7 @@ export default class User {
   }
 
   fetchBillingInfo () {
-    /*
-    ToDo: replace with real server request
-     */
-    return new Promise((resolve, reject) => {
-          this.billingInfo = Object.assign(this.billingInfo, {
-            first_name: 'Barry',
-            last_name: 'Bom',
-            mobile: '+123456789',
-            cards: [{
-              id: 1,
-              name: 'Card 1',
-              number: 1111222233334444,
-              expiry: '19/21',
-              cvc: 123
-            }]
-          });
-
-        setTimeout(() => {
-          resolve(this.billingInfo);
-        }, 1000);
-    })
+    return this.billingInfo;
   }
 
   saveBillingInfo () {

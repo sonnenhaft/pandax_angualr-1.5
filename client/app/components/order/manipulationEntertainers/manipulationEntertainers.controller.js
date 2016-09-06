@@ -1,13 +1,17 @@
 class manipulationEntertainersController {
 
-  constructor ($state, $mdMedia) {
+  constructor ($state, $mdMedia, $stateParams, OrderService) {
      'ngInject';
 
      _.assign(this, {
         $state,
         $mdMedia,
-        showComponentOnly: ''
+        $stateParams,
+        OrderService,
+        showComponentOnly: '',
+        itemActiveIndex: 0
      	});
+
   }
 }
 

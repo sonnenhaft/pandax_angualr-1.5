@@ -1,4 +1,7 @@
 #confirmed-entertainers {
+	max-width: 374px;
+	width: 374px;
+
 	.confirmed-entertainers {
 
 		&__header {
@@ -8,8 +11,8 @@
 				color: $white;
 				font: {
 					family: $oswald;
-					size: 15px;
-					weight: 300;
+					size: 16px;
+					weight: 400;
 				}
 
 				letter-spacing: 1px;

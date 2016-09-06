@@ -1,0 +1,63 @@
+@mixin image($name) {
+  background: url('../assets/images/history/' + $name + '.png') no-repeat center left;
+}
+
+.minx-list {
+
+  ul {
+
+    li {
+      color: white;
+      padding: 20px;
+      background: $DarkCharcoal;
+      margin-bottom: 20px;
+
+      .minx-img {
+        img {
+          display: block;
+          max-width: 100%;
+        }
+      }
+
+      .minx-info {
+        span {
+          display: block;
+          padding-left: 21px;
+          line-height: 24px;
+
+          &.name {
+            padding-left: 0;
+            margin-top: 3px;
+            margin-bottom: 15px;
+            font: {
+              size: 0.938em;
+              family: $open-sans, sans-serif;
+              weight: 600;
+            };
+          }
+
+          &.duration {
+            margin-bottom: 11px;
+            font: 0.938em $open-sans, sans-serif;
+            color: $AuroMetalSaurus;
+            @include image('time');
+          }
+
+          &.price {
+            font: 1.063em $oswald, sans-serif;
+            @include image('price');
+          }
+
+          &.cancel {
+            color: $Cardinal;
+            margin-bottom: 9px;
+            font: 0.938em $open-sans, sans-serif;
+            @include image('cancel');
+          }
+        }
+      }
+    }
+
+  }
+
+}
