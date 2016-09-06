@@ -19,9 +19,9 @@
                      ng-disabled="$ctrl.mode === 'main.profile.view'"
                      ng-model="image.file"
                      name="file"
-                     ngf-max-width="2000"
-                     ngf-max-height="1500"
-                     ngf-max-size="2MB"
+                     ngf-capture="'camera'"
+                     ngf-max-size="10MB"
+                     ngf-model-invalid="$ctrl.invalidFiles"
                      ng-change="$ctrl.onImageChange(image.file, $index + 1)"
                      ng-click="$ctrl.imagesError = false">
             <img ngf-src="image.file" alt=""/>
@@ -30,6 +30,9 @@
       </div>
       <span class="error" ng-if="$ctrl.imagesError">
           {{$ctrl.imagesError}}
+        </span>
+      <span class="error" ng-if="$ctrl.invalidFiles">
+          The file size should be less than 10MB
         </span>
     </div>
     <div class="input-container" ng-repeat="field in $ctrl.fields">
@@ -60,10 +63,10 @@
                  ng-class="{error: $ctrl[combine.model + 'Error'] && $ctrl.mode !== 'main.profile.view', first: $index === 0}"
                  ng-change="$ctrl[combine.model + 'Error'] = false"
                  ng-blur="$ctrl.validate({[combine.model]: $ctrl[combine.model]})">
-          <div class="sub-desc">{{combine.desc}}</div>
           <span class="error" ng-if="$ctrl[combine.model + 'Error'] && $ctrl.mode !== 'main.profile.view'">
               {{$ctrl[combine.model + 'Error']}}
-            </span>
+          </span>
+          <div class="sub-desc">{{combine.desc}}</div>
         </div>
       </div>
     </div>
