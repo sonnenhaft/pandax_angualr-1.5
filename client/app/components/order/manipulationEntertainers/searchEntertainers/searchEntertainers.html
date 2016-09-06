@@ -13,7 +13,7 @@
           ng-class="{'disabled': vm.itemActiveIndex == 0}"
           ng-click="vm.goToEntertainerByIndex(-1)"></md-icon>
       </div>
-      <div flex="80" layout="row" layout-align="space-between center">
+      <div flex="75" layout="row" layout-align="space-between center" class="search-entertainers__manip-info">
         <span class="search-entertainers__manip-name">{{vm.entertainers[vm.itemActiveIndex].displaying_name}}</span>
         <span flex="25" class="search-entertainers__manip-counter">{{vm.itemActiveIndex + 1}} / {{vm.entertainers.length}}</span>
       </div>
@@ -36,7 +36,7 @@
           src="/assets/images/icons/raiting.png" 
           class="icon_small"></img>
       </span>
-      <span class="search-entertainers__info-distance">{{vm.entertainers[vm.itemActiveIndex].distance}}M AWAY</span>
+      <span class="search-entertainers__info-distance">{{vm.entertainers[vm.itemActiveIndex].distance.toFixed(2)}}M AWAY</span>
     </div>
 
     <div 

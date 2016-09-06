@@ -26,6 +26,12 @@
 				width: 100%;
 			}
 
+			&-info {
+				@extend .flex-gt-sm-75;
+				min-width: $width-middle-part;
+				width: $width-middle-part;
+			}
+
 			&-counter {
 				font: 16px $oswald;
 				color: $white;
@@ -97,6 +103,7 @@
 			margin: 40px 0px 0px 0px;
 			padding: 17px 125px;
 			text-align: center;
+			width: 100%;
 		}
 	}
 }
