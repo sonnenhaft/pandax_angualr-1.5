@@ -115,7 +115,8 @@ export default class profileFieldsController {
   onReady (profile) {
     profile = this.addAbsentFields(profile);
 
-    if (!this.isProviderProfile() || !this.validate(profile)) {
+                                      // all validations messages should be shown at one moment
+    if (!this.isProviderProfile() || !this.validate(_.assign({}, profile, {images: this.images}))) {
       return false;
     }
 
@@ -134,14 +135,12 @@ export default class profileFieldsController {
   }
 
   isProviderProfile () {
-    if (this.isProvider && !this.validate({images: this.images})) {
-      return false;
-    }
-
     if (this.isProvider) {
       this.session.user = _.assign(this.session.user, {
         displaying_name: this.displaying_name
       });
+    } else {
+      return false;
     }
 
     return true;
