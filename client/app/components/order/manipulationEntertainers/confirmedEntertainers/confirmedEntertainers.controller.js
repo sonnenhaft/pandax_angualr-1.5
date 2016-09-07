@@ -1,20 +1,12 @@
 class confirmedEntertainersController {
 
-  constructor (OrderService, WebSocket) {
+  constructor (OrderService) {
      'ngInject';
 
      _.assign(this, {
      		OrderService, 
-     		WebSocket,
      		entertainer: null
      	});
-  }
-
-  $onInit () {
-  	/*
-  		ToDo: add handler for events from server
-  	 */
-  	// this.WebSocket.invites();
   }
 
 }

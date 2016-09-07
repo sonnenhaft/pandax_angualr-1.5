@@ -27,7 +27,7 @@ console.log('this.order:', this.order);
             this.orderLoading = false;
             if (result.status == 200) {
               this.User.update(result.data.customer);
-              this.$state.go('main.manipulationEntertainers', {orderId: result.data.id});
+              this.$state.go('main.manipulationEntertainers', {orderId: result.data.id, channelName: result.data.channel_name});
             }
           },
           error => {
