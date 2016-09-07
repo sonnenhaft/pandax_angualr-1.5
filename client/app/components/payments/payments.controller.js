@@ -1,12 +1,17 @@
 export default class Payments {
 
-  constructor (User, Cards, $mdToast) {
+  constructor (Cards, $mdToast) {
     'ngInject';
 
-    _.assign(this, {User, Cards, $mdToast});
+    _.assign(this, {
+      Cards, 
+      $mdToast
+    });
 
-    this.cards = User.billingInfo.cards;
-
+    Cards.getCards()
+      .then((data) => {
+        this.cards = data;
+      });
   }
 
   addCard (card) {

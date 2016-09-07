@@ -2,7 +2,8 @@
 	id="cardList"
 	class="card-list"
 	ng-change="vm.setDefaultCard()"
-	ng-model="vm.defaultCardId">
+	ng-model="vm.Cards.defaultCardId"
+	ng-disabled="vm.saveLoading">
 
 	<div
 		layout="row"
@@ -14,7 +15,6 @@
       <md-radio-button
       	ng-model="card.default"
       	ng-value="card.id"
-      	ng-change="vm.test()"
       	aria-label="Set default card"></md-radio-button>
 		</div>
 
@@ -37,9 +37,18 @@
 		<div class="card-manipulation_right">
 			<img
 				src="/assets/images/icons/trash-3x.png"
-				class="icon_medium card-icon_trash"></img>
+				class="pointer icon_medium card-icon_trash"
+				ng-click="vm.deleteCard(card.id)"></img>
 		</div>
 
 	</div>
+
+
+  <md-progress-circular
+  	md-mode="indeterminate"
+  	md-diameter="30"
+  	class="md-progress-circular_absolute md-progress-circular_dark"
+  	ng-if="vm.saveLoading">
+  </md-progress-circular>
 
 </md-radio-group>
