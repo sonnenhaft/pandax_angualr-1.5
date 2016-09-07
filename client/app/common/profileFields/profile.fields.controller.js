@@ -113,9 +113,7 @@ export default class profileFieldsController {
   }
 
   onReady (profile) {
-    profile = _.assign(profile, {                             // maybe, should be replace with better logic
-      displaying_name: this.displaying_name                   //
-    });                                                       //
+    profile = this.addAbsentFields(profile);
 
     if (!this.isProviderProfile() || !this.validate(profile)) {
       return false;
@@ -128,9 +126,7 @@ export default class profileFieldsController {
   }
 
   onSave (profile) {
-    profile = _.assign(profile, {                             // maybe, should be replace with better logic
-      displaying_name: this.displaying_name                   //
-    });                                                       //
+    profile = this.addAbsentFields(profile);
 
     if (this.validate(profile)) {
       this.UpdateUserProfile(profile, 'main.profile.view');
@@ -212,6 +208,16 @@ export default class profileFieldsController {
               this.saveLoading = false;
               return data;
             });
+  }
+
+  addAbsentFields (profile) {
+    if (this.displaying_name) {
+      profile = _.assign(profile, {                             // maybe, should be replace with better logic
+        displaying_name: this.displaying_name                   //
+      });                                                       //
+    }
+
+    return profile;
   }
 
 }
