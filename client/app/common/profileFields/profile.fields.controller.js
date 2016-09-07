@@ -113,11 +113,10 @@ export default class profileFieldsController {
   }
 
   onReady (profile) {
-    profile = _.assign(profile, {                             // maybe, should be replace with better logic
-      displaying_name: this.displaying_name                   //
-    });                                                       //
+    profile = this.addAbsentFields(profile);
 
-    if (!this.isProviderProfile() || !this.validate(profile)) {
+                                      // all validations messages should be shown at one moment
+    if (!this.isProviderProfile() || !this.validate(_.assign({}, profile, {images: this.images}))) {
       return false;
     }
 
@@ -128,9 +127,7 @@ export default class profileFieldsController {
   }
 
   onSave (profile) {
-    profile = _.assign(profile, {                             // maybe, should be replace with better logic
-      displaying_name: this.displaying_name                   //
-    });                                                       //
+    profile = this.addAbsentFields(profile);
 
     if (this.validate(profile)) {
       this.UpdateUserProfile(profile, 'main.profile.view');
@@ -138,14 +135,12 @@ export default class profileFieldsController {
   }
 
   isProviderProfile () {
-    if (this.isProvider && !this.validate({images: this.images})) {
-      return false;
-    }
-
     if (this.isProvider) {
       this.session.user = _.assign(this.session.user, {
         displaying_name: this.displaying_name
       });
+    } else {
+      return false;
     }
 
     return true;
@@ -212,6 +207,16 @@ export default class profileFieldsController {
               this.saveLoading = false;
               return data;
             });
+  }
+
+  addAbsentFields (profile) {
+    if (this.displaying_name) {
+      profile = _.assign(profile, {                             // maybe, should be replace with better logic
+        displaying_name: this.displaying_name                   //
+      });                                                       //
+    }
+
+    return profile;
   }
 
 }
