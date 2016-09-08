@@ -45,7 +45,10 @@ let billingModule = angular.module('billing', [
                     });
           },
           orderDetails: function (OrderService, orderId) {
-            return OrderService.fetchOrderDetails(orderId);
+            return OrderService.fetchOrderDetails(orderId)
+                    .then((data) => {
+                      return data;
+                    });
           }
 
         }

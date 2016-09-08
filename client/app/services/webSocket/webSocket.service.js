@@ -11,26 +11,34 @@ export default class WebSocket {
 
   }
 
-  open (channelName) {    
-console.log('WebSocket service. Open');
-/*    if (channelName || !channelName.length) {
-      return;
-    }*/
+  open (channelName, cbOnOpen) {    
+    /*  
+      ToDo: add check  
+      if (channelName || !channelName.length) {
+        return;
+      }
+    */
 
     this.dataStream = this.$websocket(this.Constants.api.ws.invites.uri(channelName));
+
+    this.dataStream.onOpen((response) => {
+console.log('open', response);
+      if (cbOnOpen) {
+        cbOnOpen();
+      }
+    });
 
     return this.dataStream;
   }
 
-  invites (channelName = '') {
-    this.open(channelName);
+  invites (channelName = '', cbOnMessage, cbOnOpen) {
+    this.open(channelName, cbOnOpen);
     
-    this.dataStream.onOpen((response) => {
-console.log('open', response);
-    });
-
     this.dataStream.onMessage((message) => {
 console.log('message', message);
+      if (cbOnMessage) {
+        cbOnMessage();
+      }
     });
   }
 
