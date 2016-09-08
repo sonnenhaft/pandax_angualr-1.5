@@ -62,22 +62,22 @@ export default class Order {
   }
 
   /*
-    Confirmed entertainers
+    Invited entertainers
   */
-  fetchEntertainersInvited(channelName) {
-    /*
-    ToDo: fetch from server
-     */
-console.log('this.websocket:', this.WebSocket.invites(channelName));
-    return this.listInvited = [{
-        id: 1,
-        name: 'Elaize',
-        photo: '/assets/images/photos/photo3.png'
-    }/*,{
-        id: 2,
-        name: 'Sundra',
-        photo: '/assets/images/photos/photo3.png'
-    }*/]
+  fetchEntertainersInvited(orderId) {
+    return this
+      .Request
+      .send(
+        null,
+        this.Constants.api.invitedEntertainers.method,
+        this.Constants.api.invitedEntertainers.uri(orderId)
+      )
+      .then(
+        result => {
+          return this.listInvited = result.data;
+        },
+        error => console.log(error)
+      );
   }
 
   getEntertainersInvited() {
@@ -108,7 +108,7 @@ console.log('this.websocket:', this.WebSocket.invites(channelName));
 
 
   fetchOrderDetails(orderId) {
-/*    return this
+    return this
       .Request
       .send(
         null,
@@ -117,28 +117,10 @@ console.log('this.websocket:', this.WebSocket.invites(channelName));
       )
       .then(
         result => {
-          return result.data;
+          return this.orderDetails = result.data;
         },
         error => console.log(error)
-      );*/
-    /*
-    ToDo: replace with real server request
-     */
-    return new Promise((resolve, reject) => {
-          this.orderDetails = Object.assign(this.orderDetails, {
-            service_type: 1,
-            minx_count: 4,
-            rate: 125,
-            booking_length: '1h 30m',
-            address: 'Santa Monica Fwy 1110',
-            apartment: 12,
-            cost: 250
-          });
-
-        setTimeout(() => {
-          resolve(this.orderDetails);
-        }, 1000);
-    })
+      );
   }
 
 
@@ -296,6 +278,26 @@ console.log('this.websocket:', this.WebSocket.invites(channelName));
         },
         error => console.log(error)
       );
+  }
+
+  getChannelNameOfOrder (orderId) {
+    this.fetchOrderDetails(orderId)
+      .then(
+        orderDetails => {
+          return orderDetails.channel_name;
+        },
+        error => console.log(error)
+      )
+  }
+
+  subcribeOnEntertainerInvite (channelName) {
+console.log('this.websocket:', this.WebSocket.invites(channelName, this.addEntertainerToInvitedList.bind(this)));
+  }
+
+  addEntertainerToInvitedList (entertainer) {
+console.log('addEntertainerToInvitedList', entertainer, 'list:', this.listInvited);
+/*    this.listInvited.push(entertainer);
+    return this.listInvited;*/
   }
 
 }

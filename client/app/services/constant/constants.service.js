@@ -73,7 +73,7 @@ export default class Constants {
       },
 
       orderDetails: {
-        uri: (orderId) => path + `/orders/${orderId}/details`,
+        uri: (orderId) => path + `/orders/${orderId}`,
         method: 'GET'
       },
 
@@ -97,7 +97,12 @@ export default class Constants {
         invites: {
           uri: (channelName) => pathWS + `/orders/${channelName}/invites`
         }
-      }
+      },
+
+      invitedEntertainers: {
+        uri: (orderId) => path + `/customer/orders/${orderId}/invites`,
+        method: 'GET'
+      },
 
     };
 

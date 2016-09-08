@@ -17,34 +17,31 @@ export default angular
 
     $stateProvider
       .state('main.manipulationEntertainers', {
-        url: '/:orderId/manipulationEntertainers/:channelName',
+        url: '/:orderId/manipulationEntertainers',
         parent: 'main',
         template: '<manipulation-entertainers \
                     entertainers="OrderService.list" \
-                    entertainers-invited="OrderService.listInvited">\
+                    entertainers-invited="OrderService.listInvited"\
+                    channel-name="channelName">\
                   </manipulation-entertainers>',
-        controller: function ($scope, OrderService) {
+        controller: function ($scope, OrderService, channelName) {
           $scope.OrderService = OrderService;
+          $scope.channelName = channelName;
         },
         resolve: {
           orderId: function ($stateParams) {
             return $stateParams['orderId'] || 0;
           },
-          channelName: function ($stateParams) {
-            return $stateParams['channelName'] || 0;
-          },
           entertainers: function (OrderService, orderId) {
             return OrderService.fetchEntertainers(orderId);
           },
-          entertainersInvited: function (OrderService, channelName) {
-            return OrderService.fetchEntertainersInvited(channelName);
+          channelName: function (OrderService, orderId) {
+            return OrderService.getChannelNameOfOrder(orderId);
           },
-          entertainersInvitedCount: function (OrderService) {
-            return OrderService.entertainersInvitedCount;
+          entertainersInvited: function (OrderService, channelName, orderId) {
+            OrderService.subcribeOnEntertainerInvite(channelName);
+            return OrderService.fetchEntertainersInvited(orderId);
           },
-          entertainersConfirmedCount: function (OrderService) {
-            return OrderService.entertainersConfirmedCount;
-          }
         }
       });
   })
