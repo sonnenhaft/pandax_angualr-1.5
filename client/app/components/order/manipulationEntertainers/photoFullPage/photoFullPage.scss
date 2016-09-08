@@ -7,7 +7,6 @@
 
 	.photo-full-page {
 		&__image {
-			max-height: 712px;
 		  @media (max-width: 960px) {
 				max-width: 90%;
 		  }

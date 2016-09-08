@@ -1,16 +1,19 @@
 class photoFullPageController {
 
-  constructor ($state, $mdDialog, $scope) {
+  constructor ($state, $mdDialog, $scope, $mdMedia) {
      'ngInject';
 
      _.assign(this, {
         $state,
         $mdDialog,
         $scope,
-        len: 0
+        $mdMedia,
+        len: 0,
+        imageStyles: {}
      	});
 
     this.len = this.photos.length;
+    this.setImageStyles()
 
 /*
   For future: add handlers for arrow keyup event
@@ -49,6 +52,15 @@ class photoFullPageController {
             break;
     }
   }*/
+
+  setImageStyles () {
+    if (this.$mdMedia('gt-sm')) {   // desktop
+      this.imageStyles = {
+            'max-height': (window.innerHeight * 80 / 100) + 'px',
+            'max-width': (window.innerWidth * 80 / 100) + 'px'
+          }
+    }
+  }
 }
 
 export default photoFullPageController;

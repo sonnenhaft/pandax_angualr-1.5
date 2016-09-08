@@ -1,20 +1,19 @@
 export default class Order {
 
 
-  constructor (User, Constants, Request, Helper, moment) {
+  constructor (User, Constants, Request, Helper, moment, WebSocket) {
     'ngInject';
 
     _.assign(this, {
         User,
         Constants,
         Request,
+        WebSocket,
         list: [],
-        listConfirmed: [],
+        listInvited: [],
         providers: [],
         history: [],
         historyProvider: {},
-        entertainersInvitedCount: 0,
-        entertainersConfirmedCount: 0,
         Helper,
         moment,
         orderDetails: {}
@@ -65,12 +64,12 @@ export default class Order {
   /*
     Confirmed entertainers
   */
-  fetchEntertainersConfirmed() {
+  fetchEntertainersInvited(channelName) {
     /*
     ToDo: fetch from server
      */
-    this.entertainersConfirmedCount = 2;
-    return this.listConfirmed = [{
+console.log('this.websocket:', this.WebSocket.invites(channelName));
+    return this.listInvited = [{
         id: 1,
         name: 'Elaize',
         photo: '/assets/images/photos/photo3.png'
@@ -81,37 +80,10 @@ export default class Order {
     }*/]
   }
 
-  getEntertainersConfirmed() {
-    return this.listConfirmed;
+  getEntertainersInvited() {
+    return this.listInvited;
   }
 
-  /*
-    Invited entertainers count
-  */
-  fetchEntertainersInvitedCount() {
-    /*
-    ToDo: fetch from server
-     */
-    return this.entertainersInvitedCount = 1;
-  }
-
-  getEntertainersInvitedCount() {
-    return this.entertainersInvitedCount;
-  }
-
-  /*
-    Confirmed entertainers count
-  */
-  fetchEntertainersConfirmedCount() {
-    /*
-    ToDo: fetch from server
-     */
-    return this.entertainersConfirmedCount = 2;
-  }
-
-  getEntertainersConfirmedCount() {
-    return this.entertainersConfirmedCount;
-  }
 
   buildOrder (form) {
     return {
@@ -320,7 +292,6 @@ export default class Order {
       )
       .then(
         result => {
-          this.entertainersInvitedCount = result.data.invitations_count;
           return result.data;
         },
         error => console.log(error)

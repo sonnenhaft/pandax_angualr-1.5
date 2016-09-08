@@ -12,8 +12,9 @@
     ng-click="vm.goToPhotoByIndex(-1)"></md-icon>
 
   <img
+    class="photo-full-page__image"
     ng-src="{{vm.photos[vm.photoIndexActive].original}}"
-    class="photo-full-page__image">
+    ng-style="vm.imageStyles">
 
   <md-icon 
     flex="none"
