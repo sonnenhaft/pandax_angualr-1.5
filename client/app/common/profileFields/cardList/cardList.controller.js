@@ -1,32 +1,34 @@
 export default class cardListController {
 
-  constructor () {
-    // 'ngInject';
+  constructor (Cards) {
+    'ngInject';
 
-    _.assign(this, {defaultCardId: 0});
-  }
-
-  $onChanges (changes) {
-    if (changes.cards.currentValue && changes.cards.currentValue.length) {
-      this.defaultCardId = this.findDefaultCard();
-    }
-  }
-
-  $onInit () {
-    if (this.cards.length) {
-      this.defaultCardId = this.findDefaultCard();
-    }
+    _.assign(this, {
+      Cards,
+      saveLoading: false,
+    });
   }
 
   setDefaultCard () {
-    console.log('test', this.defaultCardId, this.cards);
-		/*
-			ToDO: send request
-		 */
+    this.saveLoading = true;
+    this.Cards.setDefaultCard(this.Cards.defaultCardId)
+      .then((data) => {
+        return data;
+      })
+      .then((_data) => {
+        this.saveLoading = false;
+      })
   }
 
-  findDefaultCard () {
-    return _.find(this.cards, {is_default: true}).id;
+  deleteCard (cardId) {
+    this.saveLoading = true;
+    this.Cards.deleteCard(cardId)
+      .then((data) => {
+        return data;
+      })
+      .then((_data) => {
+        this.saveLoading = false;
+      })
   }
 
 }

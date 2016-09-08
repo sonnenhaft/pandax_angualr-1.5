@@ -2,6 +2,13 @@
 @import "../../scss/fonts";
 
 #cardList {
+	position: relative;
+
+	&[disabled] {
+		display: block;
+		opacity: .5;
+	}
+
 	.card {
 		&-list {
 

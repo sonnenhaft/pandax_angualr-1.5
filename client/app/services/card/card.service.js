@@ -3,7 +3,14 @@ export default class Cards {
   constructor (User, Constants, Request, stripe) {
     'ngInject';
 
-    _.assign(this, {User, Constants, Request, stripe});
+    _.assign(this, {
+      User, 
+      Constants, 
+      Request, 
+      stripe,
+      list: [],
+      defaultCardId: 0
+    });
 
   }
 
@@ -57,7 +64,9 @@ export default class Cards {
             }
           );
 
-          return this.User.billingInfo.cards;
+          // return this.User.billingInfo.cards;
+          this.addCardToList(card);
+          return this.list;
         }
 
         return {message: card};
@@ -93,8 +102,77 @@ export default class Cards {
         this.Constants.api.cards.get.uri(this.User.get('role'))
       )
       .then(
-        result => result.data,
+        result => {
+          this.list = result.data;
+          this.setDefaultCardId();
+          return this.list;
+        },
         error => console.log(error)
       );
+  }
+
+  deleteCard (cardId) {
+    return this
+      .Request
+      .send(
+        this.User.token(),
+        this.Constants.api.cards.delete.method,
+        this.Constants.api.cards.delete.uri(this.User.get('role'), cardId)
+      )
+      .then(
+        result => {
+          this.deleteCardFromList(cardId);
+          return result.data;
+        },
+        error => console.log(error)
+      );
+  }
+
+  setDefaultCard (cardId) {
+    return this
+      .Request
+      .send(
+        this.User.token(),
+        this.Constants.api.cards.setDefault.method,
+        this.Constants.api.cards.setDefault.uri(this.User.get('role'), cardId)
+      )
+      .then(
+        result => {
+          this.updateCardInList(result.data);
+          return result.data;
+        },
+        error => console.log(error)
+      );
+  }
+
+  addCardToList (card) {
+    this.resetCardsDefault();
+    this.list.push(card);
+    this.setDefaultCardId();
+    return this.list;
+  }
+
+  updateCardInList (card) {
+    this.resetCardsDefault();
+    let itemIndex = _.findIndex(this.list, {id: card.id});
+    this.list.splice(itemIndex, 1, card);
+    this.setDefaultCardId();
+  }
+
+  deleteCardFromList (id) {
+    let itemIndex = _.findIndex(this.list, {id: id});
+    this.list.splice(itemIndex, 1);
+  }
+
+  resetCardsDefault () {
+    this.list.forEach((card) => {
+      card.is_default = false;
+    });
+    this.defaultCardId = 0;
+  }
+
+  setDefaultCardId () {
+    let cardActive = (this.list.length && _.find(this.list, {is_default: true}));
+    this.defaultCardId = cardActive ? cardActive.id : 0;
   }
 }
