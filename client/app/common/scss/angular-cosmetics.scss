@@ -8,7 +8,7 @@
 md-dialog {
   background: none;
   border-radius: 0px;
-  /* max-height: 100%; */
+  overflow: visible;
   @media (max-width: 960px) {
     max-width: 100%;
   }
