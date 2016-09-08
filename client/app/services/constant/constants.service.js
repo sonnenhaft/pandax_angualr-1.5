@@ -84,6 +84,14 @@ export default class Constants {
         get: {
           uri: user => `${path}/${user}/cards`,
           method: 'GET'
+        },
+        delete: {
+          uri: (user, cardId) => `${path}/${user}/cards/${cardId}`,
+          method: 'DELETE'
+        },
+        setDefault: {
+          uri: (user, cardId) => `${path}/${user}/cards/${cardId}/default`,
+          method: 'PUT'
         }
       },
 
