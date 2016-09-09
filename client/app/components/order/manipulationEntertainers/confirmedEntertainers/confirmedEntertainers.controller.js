@@ -1,11 +1,11 @@
 class confirmedEntertainersController {
 
-  constructor (OrderService) {
+  constructor (OrderService, Constants) {
      'ngInject';
 
      _.assign(this, {
      		OrderService, 
-     		entertainer: null
+     		Constants
      	});
   }
 

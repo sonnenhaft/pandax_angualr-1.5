@@ -99,9 +99,21 @@ angular
       let responseHandler = (response) => {
         let defer = $q.defer();
 
-        if (response.status == 401) {
-          let User = $injector.get("User");
-          User.logout();
+        if (response.status >= 400) {
+          let Helper = $injector.get("Helper"),
+              messageText = response.statusText;
+          if (response.data) {
+            if (response.data.detail) {
+              messageText = response.data.detail;
+            } else if (response.data.message) {
+              messageText = response.data.message;
+            }
+          }
+          Helper.showToast(messageText, 5000);
+          if (response.status == 401) {
+            let User = $injector.get("User");
+            User.logout();
+          }
         }
 
         defer.reject(response);

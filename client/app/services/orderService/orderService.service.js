@@ -74,7 +74,8 @@ export default class Order {
       )
       .then(
         result => {
-          return this.listInvited = result.data;
+          this.listInvited = result.data && result.data.items;
+          return this.sortInvitedList();
         },
         error => console.log(error)
       );
@@ -264,24 +265,27 @@ export default class Order {
     return _.orderBy(this.historyProvider.past, order => order.datetime, 'desc');
   }
 
-  inviteEntertainer (orderId, entertainerId) {
+  inviteEntertainer (orderId, entertainer) {
     return this
       .Request
       .send(
         null,
         this.Constants.api.inviteEntertainer.method,
-        this.Constants.api.inviteEntertainer.uri(orderId, entertainerId)
+        this.Constants.api.inviteEntertainer.uri(orderId, entertainer.id)
       )
       .then(
         result => {
+          /*
+            ToDo: talk to BE to get same response structure as getInvites
+           */
+          this.addEntertainerToInvitedList({provider: entertainer});
           return result.data;
-        },
-        error => console.log(error)
+        }
       );
   }
 
   getChannelNameOfOrder (orderId) {
-    this.fetchOrderDetails(orderId)
+    return this.fetchOrderDetails(orderId)
       .then(
         orderDetails => {
           return orderDetails.channel_name;
@@ -290,14 +294,29 @@ export default class Order {
       )
   }
 
-  subcribeOnEntertainerInvite (channelName) {
-console.log('this.websocket:', this.WebSocket.invites(channelName, this.addEntertainerToInvitedList.bind(this)));
+  addEntertainerToInvitedList (entertainer) {
+    this.listInvited.push(entertainer);
+    return this.listInvited;
   }
 
-  addEntertainerToInvitedList (entertainer) {
-console.log('addEntertainerToInvitedList', entertainer, 'list:', this.listInvited);
-/*    this.listInvited.push(entertainer);
-    return this.listInvited;*/
+  subcribeOnEntertainerInvite (channelName) {
+    this.WebSocket.invites(channelName, this.setEntertainerConfirmed.bind(this));
+  }
+
+  unsubcribeOnEntertainerInvite () {
+    this.WebSocket.close();
+  }
+
+  setEntertainerConfirmed (data) {
+    let entertainer = _.find(this.listInvited, (item) => item.provider.id == data.provider_id);
+    entertainer.status = this.Constants.order.statuses.accepted;
+    this.sortInvitedList();
+  }
+
+  sortInvitedList () {
+    this.listInvited.sort((itemA, itemB) => {
+        return this.moment(itemA.datetime) > this.moment(itemB.datetime);
+    });
   }
 
 }

@@ -62,8 +62,10 @@
 
     <md-button 
       class="md-raised md-accent search-entertainers__invite"
-      ng-click="vm.goToNextStep()">
-      INVITE
+      ng-class="{'button_gradient': (vm.entertainersInvited | filterBy: ['provider.id']: vm.entertainers[vm.itemActiveIndex].id).length > 0}"
+      ng-click="vm.goToNextStep()"
+      ng-disabled="(vm.entertainersInvited | filterBy: ['provider.id']: vm.entertainers[vm.itemActiveIndex].id).length > 0">
+      {{(vm.entertainersInvited | filterBy: ['provider.id']: vm.entertainers[vm.itemActiveIndex].id).length > 0 ? 'INVITED' : 'INVITE'}}
     </md-button>    
   </div>
 
