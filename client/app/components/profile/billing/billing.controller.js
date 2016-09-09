@@ -29,9 +29,6 @@ class BillingController {
     if (!this.hasPersonalInfo) {                                          // should save personal information
       let query = this.User
         .UpdateUserProfile(this.billingInfo);
-        /*
-          ToDo: add error catching
-         */
       promises.push(query);
     }
 
