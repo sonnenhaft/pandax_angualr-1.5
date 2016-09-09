@@ -94,3 +94,7 @@
   	family: $open-sans;
   }
 }
+
+.button_gradient {
+	@include gradient(rgba(24, 95, 221, 1), rgba(188, 55, 240, 1));
+}

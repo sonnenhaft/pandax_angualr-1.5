@@ -5,12 +5,14 @@
 	class="confirmed-entertainers">
 
 	<div class="confirmed-entertainers__header">
-		<h2 class="confirmed-entertainers__header-text">CONFIRMATIONS {{vm.entertainers.length}}/{{(vm.entertainers | filterBy: ['status']: 'confirmed').length}}</h2>
+		<h2 class="confirmed-entertainers__header-text">
+      CONFIRMATIONS {{(vm.entertainers | filterBy: ['status']: vm.Constants.order.statuses.accepted).length}}/{{vm.entertainers.length}}
+    </h2>
 	</div>
 
   <md-card 
   	class="confirmed-entertainers__card" 
-  	ng-repeat="entertainer in vm.entertainers | filterBy: ['status']: 'confirmed' | map: 'provider' track by $index">
+  	ng-repeat="entertainer in vm.entertainers | filterBy: ['status']: vm.Constants.order.statuses.accepted | map: 'provider' track by $index">
     <md-card-header class="confirmed-entertainers__card-header">
     	<md-card-avatar
     		class="confirmed-entertainers__avatar">

@@ -11,20 +11,18 @@ export default class WebSocket {
 
   }
 
-  open (channelName, cbOnOpen) {    
-    /*  
-      ToDo: add check  
-      if (channelName || !channelName.length) {
-        return;
-      }
-    */
-
+  open (channelName, cbOnOpen, cbOnClose) {    
     this.dataStream = this.$websocket(this.Constants.api.ws.invites.uri(channelName));
 
     this.dataStream.onOpen((response) => {
-console.log('open', response);
       if (cbOnOpen) {
         cbOnOpen();
+      }
+    });
+
+    this.dataStream.onClose((response) => {
+      if (cbOnClose) {
+        cbOnClose();
       }
     });
 
@@ -35,11 +33,14 @@ console.log('open', response);
     this.open(channelName, cbOnOpen);
     
     this.dataStream.onMessage((message) => {
-console.log('message', message);
       if (cbOnMessage) {
-        cbOnMessage();
+        cbOnMessage(JSON.parse(message.data));
       }
     });
+  }
+
+  close () {
+    this.dataStream.close();
   }
 
 }
