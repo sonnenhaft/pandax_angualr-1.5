@@ -75,7 +75,11 @@ export default class Cards {
   }
 
   makeCard (card) {
-    let exp = card.expiry.split('/');
+    let exp = card.expiry.replace(/\/+/g, '/').split('/');
+
+    if (exp.length < 2) {
+      exp = card.expiry.replace(/\-+/g, '-').split('-');
+    }
 
     return {
       number: card.number,

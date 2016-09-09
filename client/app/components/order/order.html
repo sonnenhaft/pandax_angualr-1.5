@@ -67,7 +67,6 @@
                  name="apt"
                  autocomplete="off"
                  ng-model="$ctrl.apt"
-                 ng-blur="$ctrl.validate({apt: $ctrl.apt})"
                  ng-keyup="$ctrl.aptError = false"
                  ng-class="{error: $ctrl.aptError}">
           <span class="error" ng-if="$ctrl.aptError">

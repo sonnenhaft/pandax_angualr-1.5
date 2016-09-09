@@ -78,3 +78,18 @@ md-toast {
 md-icon {
   min-width: 10px;
 }
+
+
+/***  Remove riple effect for radio button ***/
+md-radio-group.md-default-theme.md-focused:not(:empty) .md-checked ._md-container:before, 
+md-radio-group.md-focused:not(:empty) .md-checked ._md-container:before {
+  background-color: $white;
+}
+
+md-radio-group.md-focused .md-checked ._md-container:before {
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px; 
+}
+/*** ***/
