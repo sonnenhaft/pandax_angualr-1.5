@@ -200,7 +200,7 @@ export default class Constants {
 
       submenu: [
         {
-          role: ['customer'],
+          role: ['customer', 'provider'],
           parent: 'Settings',
           text: 'Payments',
           url: 'main.payments'
