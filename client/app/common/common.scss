@@ -75,6 +75,10 @@ app {
 	border: 4px solid $Cardinal;
 }
 
+@mixin getImage($path) {
+  background: url('../assets/images/' + $path + '.png') no-repeat center left;
+}
+
 // components
 @import "./navbar/navbar";
 @import "./map/map";

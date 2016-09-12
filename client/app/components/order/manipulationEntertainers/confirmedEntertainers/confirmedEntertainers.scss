@@ -1,4 +1,14 @@
 #confirmed-entertainers {
+	.font-styles_1 {
+		color: $AuroMetalSaurus;
+		font: {
+			family: $open-sans;
+			size: 15px;
+			weight: 200;
+		}
+		letter-spacing: 0.6px;
+	}
+
 
 	.confirmed-entertainers {
 
@@ -23,9 +33,9 @@
 			background-color: $CharcoalDarker;
 			margin: 0;
 			margin-top: 16px;
-			padding: 8px;
+			padding: 19px;
 			&-header {
-				padding: 11px;
+				padding: 0px;
 				md-card-header-text {
 					display: flex;
 					justify-content: center;
@@ -34,23 +44,48 @@
 		}
 
 		&__avatar {
-			margin-left: 0px;
-			margin-right: 19px;
+			height: 44px;
+			width: 44px;
 			&-img {				
 				min-height: 44px;
+				height: 44px !important;
 				min-width: 44px;
+				width: 44px !important;
 			}
+		}
+
+		&__content {
+			margin-top: -5px;		// alignment with avatar photo
+			padding: 0 0 0 19px;
 		}
 
 		&__name {
 			color: $white;
 			font: {
 				family: $open-sans;
-				size: 15px;
-				width: 100;
+				size: 17px;
+				weight: 200;
 			}
-			letter-spacing: 0.1px;
+			letter-spacing: 0.4px;
 			line-height: 24px;
+			text-align: left;
+		}
+
+		&__manipulation {
+			@extend .font-styles_1;
+			margin-top: 6px;
+			text-align: left;
+		}
+
+		&__timer-value {
+			@include getImage('/history/time');
+			padding-left: 8.5px;
+		}
+
+		&__canceling-message {
+			@extend .font-styles_1;
+			color: $white;
+			margin-top: 6px;
 			text-align: left;
 		}
 

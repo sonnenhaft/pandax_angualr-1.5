@@ -11,8 +11,10 @@
 	</div>
 
   <md-card 
+    layout="row"
   	class="confirmed-entertainers__card" 
   	ng-repeat="entertainer in vm.entertainers | filterBy: ['status']: vm.Constants.order.statuses.accepted | map: 'provider' track by $index">
+
     <md-card-header class="confirmed-entertainers__card-header">
     	<md-card-avatar
     		class="confirmed-entertainers__avatar">
@@ -20,10 +22,23 @@
 		      ng-src="{{entertainer.photos[0].preview}}" 
 		      class="confirmed-entertainers__avatar-img"></img>
     	</md-card-avatar>
-      <md-card-header-text>
-        <span class="md-subhead confirmed-entertainers__name">{{entertainer.displaying_name}}</span>
-      </md-card-header-text>
-    </md-card-title>
+    </md-card-header>
+
+
+    <md-card-content
+      layout="column"
+       class="confirmed-entertainers__content">
+
+      <span class="confirmed-entertainers__name">{{entertainer.displaying_name}} is confirmed!</span>
+
+      <div layout="row" layout-align="space-between" class="confirmed-entertainers__manipulation">
+        <span class="confirmed-entertainers__timer-value">04:39</span>
+        <md-button class="md-primary" type="button">Cancel Minx</md-button>
+      </div>
+
+      <span class="confirmed-entertainers__canceling-message">Canceling the invitation will cost ${{entertainer.type_cost}} penalty</span>
+
+    </md-card-content>
   </md-card>
 
 </div>
