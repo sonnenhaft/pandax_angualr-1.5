@@ -63,7 +63,7 @@ export default class Constants {
       },
 
       service: {
-        uri: path + '/service-type',
+        uri: user => path + `/${user}/service-types`,
         method: 'GET'
       },
 
