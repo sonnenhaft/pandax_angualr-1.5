@@ -23,8 +23,8 @@ class orderController {
   }
 
   $onInit () {
-    this.providers = _.map(this.OrderService.getProviders(), provider => {
-      provider.active = false;
+    this.providers = _.map(this.OrderService.getProviders(), (provider, i) => {
+      provider.active = i == 0 ? true : false;
       return provider;
     });
 

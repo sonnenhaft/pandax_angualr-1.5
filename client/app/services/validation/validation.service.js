@@ -23,7 +23,7 @@ export default class Validation {
       case 'first_name':
       case 'last_name':
       case 'displaying_name':
-      case 'apt':
+      // case 'apt':
       case 'old_password':
         return this.isEmpty(field, credentials[field]);
 
@@ -132,6 +132,10 @@ export default class Validation {
 
   isEmpty (field, value) {
     return this.message(field, !_.isEmpty(value), 'This field is required');
+  }
+
+  apt (field, value) {
+    return this.message('apt', true)
   }
 
 }
