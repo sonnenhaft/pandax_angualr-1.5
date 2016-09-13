@@ -21,10 +21,12 @@ export default angular
         parent: 'main',
         template: '<manipulation-entertainers \
                     entertainers="OrderService.list" \
-                    entertainers-invited="OrderService.listInvited">\
+                    entertainers-invited="OrderService.listInvited"\
+                    count-of-required-entertainers="countOfRequiredEntertainers">\
                   </manipulation-entertainers>',
-        controller: function ($scope, OrderService) {
+        controller: function ($scope, OrderService, countOfRequiredEntertainers) {
           $scope.OrderService = OrderService;
+          $scope.countOfRequiredEntertainers = countOfRequiredEntertainers;
         },
         resolve: {
           orderId: function ($stateParams) {
@@ -40,6 +42,10 @@ export default angular
             OrderService.subcribeOnEntertainerInvite(channelName);
             return OrderService.fetchEntertainersInvited(orderId);
           },
+          countOfRequiredEntertainers: function (OrderService, orderId) {
+            return OrderService.fetchOrderDetails(orderId)
+                    .then(data => data && data.entertainers_number);
+          }
         },
         onExit: function(OrderService){
           OrderService.unsubcribeOnEntertainerInvite();

@@ -6,7 +6,7 @@
 
 	<div class="confirmed-entertainers__header">
 		<h2 class="confirmed-entertainers__header-text">
-      CONFIRMATIONS {{(vm.entertainers | filterBy: ['status']: vm.Constants.order.statuses.accepted).length}}/{{vm.entertainers.length}}
+      CONFIRMATIONS {{(vm.entertainers | filterBy: ['status']: vm.Constants.order.statuses.accepted).length}}/{{vm.countOfRequiredEntertainers}}
     </h2>
 	</div>
 

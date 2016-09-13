@@ -310,12 +310,13 @@ export default class Order {
   setEntertainerConfirmed (data) {
     let entertainer = _.find(this.listInvited, (item) => item.provider.id == data.provider_id);
     entertainer.status = this.Constants.order.statuses.accepted;
+    entertainer.datetime = data.datetime;
     this.sortInvitedList();
   }
 
   sortInvitedList () {
     this.listInvited.sort((itemA, itemB) => {
-        return this.moment(itemA.datetime) > this.moment(itemB.datetime);
+        return this.moment(itemA.datetime) - this.moment(itemB.datetime);
     });
   }
 

@@ -5,7 +5,8 @@ let manipulationEntertainersComponent = {
   restrict: 'E',
   bindings: {
   	entertainers: '=',
-  	entertainersInvited: '='
+  	entertainersInvited: '=',
+  	countOfRequiredEntertainers: '='
   },
   template,
   controller,
