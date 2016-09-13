@@ -150,7 +150,9 @@ export default class Constants {
         guests: ['1', '2-3', '4-5', '5-10', '10-15'],
         guest: 1,
         asap: true
-      }.hour().entertainer()
+      }.hour().entertainer(),
+
+      entertainersCountInfo: 'Just trying to get to know you better for the safety of our Minx.'
 
     };
 

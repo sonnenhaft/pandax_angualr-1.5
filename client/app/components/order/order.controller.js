@@ -138,6 +138,14 @@ class orderController {
       );
   }
 
+  showEntertainersCountInfo (event) {
+    this.$mdDialog
+      .show({
+        contentElement: '#entertainers-count-info',
+        targetEvent: event
+      });
+  }
+
 }
 
 export default orderController;
