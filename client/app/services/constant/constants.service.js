@@ -171,7 +171,10 @@ export default class Constants {
         missed:  "missed",
         inProgress:  "in progress",
         finished:  "finished`"
-      }
+      },
+
+      entertainersCountInfo: 'Just trying to get to know you better for the safety of our Minx.'
+
 
     };
 

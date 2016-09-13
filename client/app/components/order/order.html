@@ -52,7 +52,13 @@
             </md-option>
           </md-select>
           <div class="descr" ng-if="$ctrl.User.get('is_newcomer')">
-            <p>Minimum 2 entertainers for first time customers</p>
+            <p>
+              Minimum 2 entertainers for first time customers. 
+              <a href="" ng-click="$ctrl.showEntertainersCountInfo($event)">
+                Why? 
+                <i class="desc-icon"></i>
+              </a>
+            </p>
           </div>
         </div>
       </div>
@@ -159,6 +165,19 @@
 
   <div class="order-map animated fadeInRight" flex ng-if="!$ctrl.mobile">
     <map input="$ctrl.inputLocation" output="$ctrl.location = location"></map>
+  </div>
+
+
+  <!-- Modal window -->
+  <div style="visibility: hidden">
+    <div class="md-dialog-container desc" id="entertainers-count-info">
+      <md-dialog>
+        <span class="close" ng-click="$ctrl.$mdDialog.hide()"></span>
+        <div layout-gt-sm="row" layout-align="space-between center">
+          <div><p>{{$ctrl.Constants.order.entertainersCountInfo}}</p></div>
+        </div>
+      </md-dialog>
+    </div>
   </div>
 
 </div>
