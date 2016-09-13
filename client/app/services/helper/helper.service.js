@@ -22,7 +22,7 @@ export default class Helper {
 
     let date, round, current, time, hours, halfhours, range, object, quarterHoursBeforeHalfHours, quarterHoursAfterHalfHours;
 
-    round = (TIME_PARTITION_IN_MINUTES * 2) * 60 * 1000;
+    round = (TIME_PARTITION_IN_MINUTES * 4) * 60 * 1000;
     date = this.moment().format('YYYY-MM-DD');
     current = this.moment();
     current = this.moment(Math.ceil((+current) / round) * round);
