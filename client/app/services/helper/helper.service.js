@@ -16,9 +16,13 @@ export default class Helper {
   }
 
   getNearestTime (type, newDate) {
-    let date, round, current, time, hours, halfhours, range, object;
+    const
+      TIME_PARTITION_IN_MINUTES = 15,
+      TIME_PARTITIONS_LEFT = parseInt(this.moment().minute() / TIME_PARTITION_IN_MINUTES) + 1;
 
-    round = 30 * 60 * 1000;
+    let date, round, current, time, hours, halfhours, range, object, quarterHoursBeforeHalfHours, quarterHoursAfterHalfHours;
+
+    round = (TIME_PARTITION_IN_MINUTES * 2) * 60 * 1000;
     date = this.moment().format('YYYY-MM-DD');
     current = this.moment();
     current = this.moment(Math.ceil((+current) / round) * round);
@@ -43,21 +47,51 @@ export default class Helper {
       .remove(undefined)
       .value();
 
+    quarterHoursBeforeHalfHours = _
+      .chain(hours)
+      .map(hour => {
+        if (hour >= 0 && hour <= 9) {
+          return '0' + hour + ':15';
+        }
+
+        if (hour != 24) {
+          return hour + ':15';
+        }
+      })
+      .remove(undefined)
+      .value();
+
+    quarterHoursAfterHalfHours = _
+      .chain(hours)
+      .map(hour => {
+        if (hour >= 0 && hour <= 9) {
+          return '0' + hour + ':45';
+        }
+
+        if (hour != 24) {
+          return hour + ':45';
+        }
+      })
+      .remove(undefined)
+      .value();
+
     range = _
       .chain(hours)
       .map(hour => hour >= 1 && hour <= 9 ? '0' + hour + ':00' : hour + ':00')
       .union(halfhours)
+      .union(quarterHoursBeforeHalfHours)
+      .union(quarterHoursAfterHalfHours)
       .sortBy(hour => this.moment(date + ' ' + hour))
       .map(hour => this.moment(date + ' ' + hour).format('h:mm A'))
       .uniq()
       .value();
 
     if (this.moment(newDate).format('YYYY-MM-DD') === date) {
-      range = _.slice(range, 4, range.length);
+      range = _.slice(range, TIME_PARTITIONS_LEFT, range.length);
       time = _.head(range);
     }
 
-    object = {time, range, hours, halfhours};
+    object = {time, range, hours, halfhours, quarterHoursBeforeHalfHours, quarterHoursAfterHalfHours};
 
     return type ? object[type] : object;
   }
