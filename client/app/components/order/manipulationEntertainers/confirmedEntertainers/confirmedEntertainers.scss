@@ -45,6 +45,7 @@
 
 		&__avatar {
 			height: 44px;
+			margin-right: 0px;
 			width: 44px;
 			&-img {				
 				min-height: 44px;
@@ -77,9 +78,24 @@
 			text-align: left;
 		}
 
-		&__timer-value {
-			@include getImage('/history/time');
-			padding-left: 8.5px;
+		&__timer {
+	    align-items: center;
+	    display: flex;
+	    flex-direction: row;
+			&-value {
+				@include getImage('/history/time');
+				padding-left: 21px;
+			}
+		}
+
+		&__cancel {
+			@extend .font-styles_1;
+			line-height: normal;
+			margin: 0;
+			min-height: 15px;
+			padding: 0px;
+			text-transform: none;
+			width: auto;
 		}
 
 		&__canceling-message {

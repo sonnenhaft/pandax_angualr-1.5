@@ -32,11 +32,17 @@
       <span class="confirmed-entertainers__name">{{entertainer.displaying_name}} is confirmed!</span>
 
       <div layout="row" layout-align="space-between" class="confirmed-entertainers__manipulation">
-        <span class="confirmed-entertainers__timer-value">04:39</span>
-        <md-button class="md-primary" type="button">Cancel Minx</md-button>
+        <div class="confirmed-entertainers__timer">
+          <span class="confirmed-entertainers__timer-value">04:39</span>
+        </div>
+        <md-button class="md-primary confirmed-entertainers__cancel" type="button" ng-click="vm.cancelOrder($event, entertainer)">Cancel Minx</md-button>
       </div>
 
-      <span class="confirmed-entertainers__canceling-message">Canceling the invitation will cost ${{entertainer.type_cost}} penalty</span>
+      <span 
+        class="confirmed-entertainers__canceling-message"
+        ng-show="!timer">
+        Canceling the invitation will cost ${{entertainer.type_cost}} penalty
+      </span>
 
     </md-card-content>
   </md-card>

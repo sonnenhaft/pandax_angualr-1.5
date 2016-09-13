@@ -110,11 +110,7 @@ export default class Constants {
       invitedEntertainers: {
         uri: (orderId) => path + `/customer/orders/${orderId}/invites`,
         method: 'GET'
-      },
-
-      cancelEntertainerMessage: (penaltyAmount) => penaltyAmount > 0 ? 
-        `Canceling the order will cost $ ${penaltyAmount} penalty. Are you sure want to cancel order for the minx?` : 
-        'Are you sure want to cancel order for the minx?'
+      }
 
     };
 
@@ -175,7 +171,11 @@ export default class Constants {
         missed:  "missed",
         inProgress:  "in progress",
         finished:  "finished`"
-      }
+      },
+
+      cancelEntertainerMessage: (penaltyAmount) => penaltyAmount > 0 ? 
+        `Canceling the order will cost $ ${penaltyAmount} penalty. Are you sure want to cancel order for the minx?` : 
+        'Are you sure want to cancel order for the minx?'
 
     };
 

@@ -1,7 +1,7 @@
 export default class Order {
 
 
-  constructor (User, Constants, Request, Helper, moment, WebSocket) {
+  constructor (User, Constants, Request, Helper, moment, WebSocket, $mdDialog) {
     'ngInject';
 
     _.assign(this, {
@@ -16,7 +16,8 @@ export default class Order {
         historyProvider: {},
         Helper,
         moment,
-        orderDetails: {}
+        orderDetails: {},
+        $mdDialog
     });
 
   }
@@ -316,6 +317,24 @@ export default class Order {
   sortInvitedList () {
     this.listInvited.sort((itemA, itemB) => {
         return this.moment(itemA.datetime) > this.moment(itemB.datetime);
+    });
+  }
+
+  cancelOrderForEntertainer (ev, entertainer) {
+    let confirm = this.$mdDialog.confirm()
+          .title('Cancel Minx')
+          .textContent(this.Constants.order.cancelEntertainerMessage(entertainer.type_cost))
+          .ariaLabel('Canceling Entertainer')
+          .targetEvent(ev)
+          .ok('Yes')
+          .cancel('No');
+
+    return this.$mdDialog.show(confirm).then((data) => {
+console.log('send request', data);
+      /*
+        ToDo: send request to server
+       */
+      return data;
     });
   }
 
