@@ -4,7 +4,8 @@ import controller from './confirmedEntertainers.controller';
 let confirmedEntertainersComponent = {
   restrict: 'E',
   bindings: {
-  	entertainers: '='
+  	entertainers: '=',
+  	countOfRequiredEntertainers: '='
   },
   template,
   controller,

@@ -41,7 +41,7 @@
           ng-class="{'manipulation-entertainers__head-link_active': vm.showComponentOnly === 'confirmedEntertainers'}"
           ng-click="vm.showComponentOnly = 'confirmedEntertainers'">
           <span>
-            CONFIRMATIONS {{(vm.entertainersInvited | filterBy: ['status']: vm.Constants.order.statuses.accepted).length}}/{{vm.entertainersInvited.length}}
+            CONFIRMATIONS {{(vm.entertainersInvited | filterBy: ['status']: vm.Constants.order.statuses.accepted).length}}/{{vm.countOfRequiredEntertainers}}
           </span>
         </a>
         <a
@@ -82,6 +82,7 @@
     <div flex="100" flex-gt-sm="50" class="manipulation-entertainers__confirmed-entertainers-wrapper">
       <confirmed-entertainers 
         entertainers="vm.entertainersInvited"
+        count-of-required-entertainers="vm.countOfRequiredEntertainers"
         ng-if="vm.entertainersInvited.length > 0 && (vm.$mdMedia('gt-sm') || vm.showComponentOnly === 'confirmedEntertainers')">
       </confirmed-entertainers>
     </div>
