@@ -334,7 +334,9 @@ export default class Constants {
           ], this.customer);
           return this;
         }
-      }.provider()
+      }.provider(),
+
+      defaultCurrency: 'usd'
 
     };
 

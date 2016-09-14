@@ -37,7 +37,7 @@
 
 		<div
 			class="card-manipulation_right"
-			ng-hide="vm.User.get('role') == 'provider' && vm.cards.length < 2">
+			ng-hide="vm.User.get('role') == 'provider' && (vm.cards.length < 2 || card.is_default == true)">
 			<img
 				src="/assets/images/icons/trash-3x.png"
 				class="pointer icon_medium card-icon_trash"
