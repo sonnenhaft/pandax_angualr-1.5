@@ -195,6 +195,36 @@ export default class Constants {
           role: ['customer', 'provider'],
           text: 'Settings',
           url: ''
+        },
+        {
+          role: ['admin'],
+          text: 'Dashboard',
+          url: 'admin.dashboard'
+        },
+        {
+          role: ['admin'],
+          text: 'Entertainers',
+          url: 'admin.entertainers'
+        },
+        {
+          role: ['admin'],
+          text: 'Customers',
+          url: 'admin.customers'
+        },
+        {
+          role: ['admin'],
+          text: 'Orders',
+          url: 'admin.orders'
+        },
+        {
+          role: ['admin'],
+          text: 'Paysheet',
+          url: 'admin.paysheet'
+        },
+        {
+          role: ['admin'],
+          text: 'Log Out',
+          url: 'admin.logout'
         }
       ],
 
