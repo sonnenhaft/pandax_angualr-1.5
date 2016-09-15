@@ -1,5 +1,64 @@
 #navbar-admin {
+  display: flex;
+  flex-direction: column;
+
+  .logo_admin {
+  	height: 89px;
+  	min-height: 89px;
+  }
+
+  .name_admin {
+  	font: {
+  		size: 26px;
+  	}
+  	letter-spacing: 1px;
+  	line-height: 36px;
+  }
+
 	.navigation_admin {
-		margin-top: 79px;
+		height: 100%;
+		margin-left: 27px;
+
+		&__block {
+			&_top {
+				margin-top: 79px;
+			}
+			&_bottom {
+				margin-bottom: 7px;
+			}
+		}
 	}
+
+
+	.navbar {
+		&_admin {
+			&__row {
+				margin-top: 10px;
+				margin-bottom: 20px;
+			}
+			&__link {
+				margin-left: 20px;
+				line-height: normal;
+			}
+		}
+	}
+
+	/*
+		All styles for collapsed menu should be here
+	*/
+	&.navbar_collapsed {
+		width: 70px;
+
+  	.name_admin {
+  		font: {
+  			size: 15px;
+  		}			
+  		letter-spacing: .6px;
+  	}
+
+  	.navbar_admin__link {
+  		display: none;
+  	}
+	}
+
 }

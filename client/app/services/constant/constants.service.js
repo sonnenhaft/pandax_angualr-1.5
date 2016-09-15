@@ -199,32 +199,75 @@ export default class Constants {
         {
           role: ['admin'],
           text: 'Dashboard',
-          url: 'admin.dashboard'
+          url: 'admin.dashboard',
+          icon: {
+            path: '/assets/images/icons/svg/navbar-admin/icon_dashboard.svg',
+            styles: {
+              height: '14px',
+              width: '17px'
+            }
+          }
         },
         {
           role: ['admin'],
           text: 'Entertainers',
-          url: 'admin.entertainers'
+          url: 'admin.entertainers',
+          icon: {
+            path: '/assets/images/icons/svg/navbar-admin/icon_providers.svg',
+            styles: {
+              height: '17px',
+              width: '12px'
+            }
+          }
         },
         {
           role: ['admin'],
           text: 'Customers',
-          url: 'admin.customers'
+          url: 'admin.customers',
+          icon: {
+            path: '/assets/images/icons/svg/navbar-admin/icon_customers.svg',
+            styles: {
+              height: '17px',
+              width: '10px'
+            }
+          }
         },
         {
           role: ['admin'],
           text: 'Orders',
-          url: 'admin.orders'
+          url: 'admin.orders',
+          icon: {
+            path: '/assets/images/icons/svg/navbar-admin/icon_orders.svg',
+            styles: {
+              height: '15px',
+              width: '12px'
+            }
+          }
         },
-        {
+/*        {
           role: ['admin'],
           text: 'Paysheet',
-          url: 'admin.paysheet'
-        },
+          url: 'admin.paysheet',
+          icon: {
+            path: '/assets/images/icons/svg/navbar-admin/icon_paysheet.svg',
+            styles: {
+              height: '12px',
+              width: '18px'
+            }
+          }
+        },*/
         {
           role: ['admin'],
           text: 'Log Out',
-          url: 'admin.logout'
+          url: 'admin.logout',
+          icon: {
+            path: '/assets/images/icons/svg/navbar-admin/icon_exit.svg',
+            styles: {
+              height: '16px',
+              width: '16px'
+            }
+          },
+          bottom: true
         }
       ],
 

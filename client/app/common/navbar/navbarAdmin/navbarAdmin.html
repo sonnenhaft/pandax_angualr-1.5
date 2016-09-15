@@ -1,68 +1,51 @@
 <nav
   id="navbar-admin"
-  class="navbar"
-  ng-class="{'navbar_mobile-opened': vm.mobile == true}"
+  class="navbar navbar_admin"
+  ng-class="{'navbar_collapsed': vm.collapsed == true}"
   flex-sm="100">
 
-  <div class="logo" layout="row">
-    <div class="name" show-gt-sm flex>
-      <a ui-sref="home" class="logo__link">MINX</a>
+  <div class="logo logo_admin" layout="row">
+    <div class="name name_admin">
+      <a ui-sref="admin" class="logo__link" ng-click="vm.collapsed = !vm.collapsed">MINX</a>
     </div>
-    <md-icon
-      flex
-      hide-gt-sm
-      aria-label="menu"
-      ng-click="vm.mobile = !vm.mobile"
-      ng-class="{mobile: vm.mobile}">
-    </md-icon>
   </div>
 
-  <!-- Mobile block -->
-  <div class="mobilemenu" ng-if="vm.mobile">
-
-    <div class="navigation navigation_admin" ng-if="vm.$state.current.name !== 'main.profile.create'">
-      <ul active-menu-item>
-        <li
-          ng-repeat="nav in vm.navigation"
-          ng-click="vm.mobile = (nav.url.length > 0 ? false : true)">
-          <a href="" ui-sref="{{nav.url.length > 0 ? nav.url : '#'}}" ui-sref-active="active">
-            {{nav.text}}
-          </a>
-          <ul
-            class="navigation_sub">
-            <li
-              ng-repeat="subnav in vm.submenu | filterBy: ['parent']: nav.text"
-              ng-click="vm.mobile = false">
-              <a href="" ui-sref="{{subnav.url}}" ui-sref-active="active">
-                {{subnav.text}}
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-
-  </div>
-
-  <!-- Desktop block -->
-  <div class="navigation navigation_admin" hide show-gt-sm ng-if="vm.$state.current.name !== 'main.profile.create'">
-    <ul active-menu-item>
+  <div 
+    layout="column"
+    layout-align="space-between"
+    class="navigation navigation_admin">
+    <ul 
+      class="navigation_admin__block navigation_admin__block_top" 
+      active-menu-item layout="column" 
+      layout-align="start start" 
+      ng-if="(vm.navigation | navByPosition : 'bottom' : undefined).length > 0">
       <li
-        ng-repeat="nav in vm.navigation">
-        <a href="" ui-sref="{{nav.url.length > 0 ? nav.url : '#'}}" ui-sref-active="active">
+        class="navbar_admin__row"
+        ng-repeat="nav in vm.navigation | navByPosition : 'bottom' : undefined"
+        layout="row">
+        <md-icon md-svg-icon="{{nav.icon.path}}" class="" ng-style="nav.icon.styles"></md-icon>
+        <a href="" class="navbar_admin__link" ui-sref="{{nav.url.length > 0 ? nav.url : '#'}}" ui-sref-active="active">
           {{nav.text}}
         </a>
-        <ul
-          class="navigation_sub">
-          <li
-            ng-repeat="subnav in vm.submenu | filterBy: ['parent']: nav.text">
-            <a href="" ui-sref="{{subnav.url}}" ui-sref-active="active">
-              {{subnav.text}}
-            </a>
-          </li>
-        </ul>
       </li>
     </ul>
+
+    <ul 
+      class="navigation_admin__block navigation_admin__block_bottom" 
+      active-menu-item layout="column" 
+      layout-align="start start" 
+      ng-if="(vm.navigation | navByPosition : 'bottom' : true).length > 0">
+      <li
+        class="navbar_admin__row"
+        ng-repeat="nav in vm.navigation | navByPosition : 'bottom' : true"
+        layout="row">
+        <md-icon md-svg-icon="{{nav.icon.path}}" class="" ng-style="nav.icon.styles"></md-icon>
+        <a href="" class="navbar_admin__link" ui-sref="{{nav.url.length > 0 ? nav.url : '#'}}" ui-sref-active="active">
+          {{nav.text}}
+        </a>
+      </li>
+    </ul>
+
   </div>
 
 </nav>
