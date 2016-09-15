@@ -1,17 +1,18 @@
 class confirmedEntertainersController {
 
-  constructor (OrderService, Constants, Helper) {
+  constructor (OrderService, Constants, Helper, moment) {
      'ngInject';
 
      _.assign(this, {
      		OrderService, 
      		Constants,
-     		Helper
+     		Helper,
+        moment
      	});
   }
 
-  cancelOrder (ev, entertainer) {  	
-    this.OrderService.cancelOrderForEntertainer(ev, entertainer).then((_data) => {
+  cancelOrder (ev, invite) {  	
+    this.OrderService.cancelOrderForEntertainer(ev, invite, this.serviceTypePrice).then((_data) => {
 			 this.Helper.showToast('Done');
     });
   }

@@ -82,6 +82,7 @@
     <div flex="100" flex-gt-sm="50" class="manipulation-entertainers__confirmed-entertainers-wrapper">
       <confirmed-entertainers 
         entertainers="vm.entertainersInvited"
+        service-type-price="vm.serviceTypePrice"
         ng-if="vm.entertainersInvited.length > 0 && (vm.$mdMedia('gt-sm') || vm.showComponentOnly === 'confirmedEntertainers')">
       </confirmed-entertainers>
       <h2 

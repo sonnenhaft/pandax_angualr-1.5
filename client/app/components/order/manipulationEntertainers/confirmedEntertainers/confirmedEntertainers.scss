@@ -31,6 +31,7 @@
 
 		&__card {
 			background-color: $CharcoalDarker;
+			border-radius: 0px;
 			margin: 0;
 			margin-top: 16px;
 			padding: 19px;
@@ -76,6 +77,9 @@
 			@extend .font-styles_1;
 			margin-top: 6px;
 			text-align: left;
+			&_bottom {
+				margin-top: 11px;
+			}
 		}
 
 		&__timer {
@@ -101,6 +105,7 @@
 		&__canceling-message {
 			@extend .font-styles_1;
 			color: $white;
+			letter-spacing: .4px;
 			margin-top: 6px;
 			text-align: left;
 		}

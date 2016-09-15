@@ -276,10 +276,7 @@ export default class Order {
       )
       .then(
         result => {
-          /*
-            ToDo: talk to BE to get same response structure as getInvites
-           */
-          this.addEntertainerToInvitedList({provider: entertainer});
+          this.addEntertainerToInvitedList(result.data.invite ? result.data.invite : {provider: entertainer});
           return result.data;
         }
       );
@@ -320,22 +317,35 @@ export default class Order {
     });
   }
 
-  cancelOrderForEntertainer (ev, entertainer) {
+  cancelOrderForEntertainer (ev, invite, cost) {
     let confirm = this.$mdDialog.confirm()
           .title('Cancel Minx')
-          .textContent(this.Constants.order.cancelEntertainerMessage(entertainer.type_cost))
+          .textContent(this.Constants.order.cancelEntertainerMessage(cost))
           .ariaLabel('Canceling Entertainer')
           .targetEvent(ev)
           .ok('Yes')
           .cancel('No');
 
     return this.$mdDialog.show(confirm).then((data) => {
-console.log('send request', data);
-      /*
-        ToDo: send request to server
-       */
+      return this
+        .Request
+        .send(
+          null,
+          this.Constants.api.cancelEntertainerByCustomer.method,
+          this.Constants.api.cancelEntertainerByCustomer.uri(invite.id)
+        )
+        .then(
+          result => {
+            this.setEntertainerCanceled(invite);
+            return result;
+          }
+        );
       return data;
     });
+  }
+
+  setEntertainerCanceled (invite) {
+    invite.status = this.Constants.order.statuses.canceled;
   }
 
 }
