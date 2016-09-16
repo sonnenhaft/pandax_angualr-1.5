@@ -7,7 +7,7 @@ class NavbarAdminController {
       User,
       Constants,
       $state,
-      collapsed: false
+      collapsed: true
     });
 
     // this.navigation = _.filter(Constants.user.navigation, navItem => navItem.role.indexOf(User.get('role')) >= 0);

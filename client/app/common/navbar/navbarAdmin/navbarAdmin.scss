@@ -17,7 +17,7 @@
 
 	.navigation_admin {
 		height: 100%;
-		margin-left: 27px;
+		margin-left: 24px;
 
 		&__block {
 			&_top {
@@ -39,6 +39,11 @@
 			&__link {
 				margin-left: 20px;
 				line-height: normal;
+			}
+			&__icon-wrapper {
+    		display: flex;
+    		flex-direction: row;
+				width: 20px;
 			}
 		}
 	}

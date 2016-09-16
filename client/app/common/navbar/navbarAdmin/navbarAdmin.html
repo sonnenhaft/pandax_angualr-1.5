@@ -16,14 +16,20 @@
     class="navigation navigation_admin">
     <ul 
       class="navigation_admin__block navigation_admin__block_top" 
-      active-menu-item layout="column" 
+      active-menu-item 
+      layout="column" 
       layout-align="start start" 
       ng-if="(vm.navigation | navByPosition : 'bottom' : undefined).length > 0">
       <li
         class="navbar_admin__row"
         ng-repeat="nav in vm.navigation | navByPosition : 'bottom' : undefined"
-        layout="row">
-        <md-icon md-svg-icon="{{nav.icon.path}}" class="" ng-style="nav.icon.styles"></md-icon>
+        layout="row"
+        layout-align="start" 
+        title="{{nav.hint}}">
+        <div 
+          class="navbar_admin__icon-wrapper">
+          <md-icon md-svg-icon="{{nav.icon.path}}" ng-style="nav.icon.styles"></md-icon>
+        </div>
         <a href="" class="navbar_admin__link" ui-sref="{{nav.url.length > 0 ? nav.url : '#'}}" ui-sref-active="active">
           {{nav.text}}
         </a>
@@ -32,14 +38,20 @@
 
     <ul 
       class="navigation_admin__block navigation_admin__block_bottom" 
-      active-menu-item layout="column" 
+      active-menu-item 
+      layout="column" 
       layout-align="start start" 
       ng-if="(vm.navigation | navByPosition : 'bottom' : true).length > 0">
       <li
         class="navbar_admin__row"
         ng-repeat="nav in vm.navigation | navByPosition : 'bottom' : true"
-        layout="row">
-        <md-icon md-svg-icon="{{nav.icon.path}}" class="" ng-style="nav.icon.styles"></md-icon>
+        layout="row" 
+        layout-align="start"
+        title="{{nav.hint}}">
+        <div 
+          class="navbar_admin__icon-wrapper">
+          <md-icon md-svg-icon="{{nav.icon.path}}" ng-style="nav.icon.styles"></md-icon>
+        </div>
         <a href="" class="navbar_admin__link" ui-sref="{{nav.url.length > 0 ? nav.url : '#'}}" ui-sref-active="active">
           {{nav.text}}
         </a>

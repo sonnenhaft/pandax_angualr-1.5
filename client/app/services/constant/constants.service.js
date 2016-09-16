@@ -206,7 +206,8 @@ export default class Constants {
               height: '14px',
               width: '17px'
             }
-          }
+          },
+          hint: 'Dashboard'
         },
         {
           role: ['admin'],
@@ -218,7 +219,8 @@ export default class Constants {
               height: '17px',
               width: '12px'
             }
-          }
+          },
+          hint: 'Entertainers'
         },
         {
           role: ['admin'],
@@ -230,7 +232,8 @@ export default class Constants {
               height: '17px',
               width: '10px'
             }
-          }
+          },
+          hint: 'Customers'
         },
         {
           role: ['admin'],
@@ -242,7 +245,8 @@ export default class Constants {
               height: '15px',
               width: '12px'
             }
-          }
+          },
+          hint: 'Orders'
         },
 /*        {
           role: ['admin'],
@@ -267,6 +271,7 @@ export default class Constants {
               width: '16px'
             }
           },
+          hint: 'Logout',
           bottom: true
         }
       ],
