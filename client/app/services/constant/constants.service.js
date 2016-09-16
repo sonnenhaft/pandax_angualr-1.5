@@ -219,6 +219,84 @@ export default class Constants {
           role: ['customer', 'provider'],
           text: 'Settings',
           url: ''
+        },
+        {
+          role: ['admin'],
+          text: 'Dashboard',
+          url: 'admin.dashboard',
+          icon: {
+            path: '/assets/images/icons/svg/navbar-admin/icon_dashboard.svg',
+            styles: {
+              height: '14px',
+              width: '17px'
+            }
+          },
+          hint: 'Dashboard'
+        },
+        {
+          role: ['admin'],
+          text: 'Entertainers',
+          url: 'admin.entertainers',
+          icon: {
+            path: '/assets/images/icons/svg/navbar-admin/icon_providers.svg',
+            styles: {
+              height: '17px',
+              width: '12px'
+            }
+          },
+          hint: 'Entertainers'
+        },
+        {
+          role: ['admin'],
+          text: 'Customers',
+          url: 'admin.customers',
+          icon: {
+            path: '/assets/images/icons/svg/navbar-admin/icon_customers.svg',
+            styles: {
+              height: '17px',
+              width: '10px'
+            }
+          },
+          hint: 'Customers'
+        },
+        {
+          role: ['admin'],
+          text: 'Orders',
+          url: 'admin.orders',
+          icon: {
+            path: '/assets/images/icons/svg/navbar-admin/icon_orders.svg',
+            styles: {
+              height: '15px',
+              width: '12px'
+            }
+          },
+          hint: 'Orders'
+        },
+/*        {
+          role: ['admin'],
+          text: 'Paysheet',
+          url: 'admin.paysheet',
+          icon: {
+            path: '/assets/images/icons/svg/navbar-admin/icon_paysheet.svg',
+            styles: {
+              height: '12px',
+              width: '18px'
+            }
+          }
+        },*/
+        {
+          role: ['admin'],
+          text: 'Log Out',
+          url: 'admin.logout',
+          icon: {
+            path: '/assets/images/icons/svg/navbar-admin/icon_exit.svg',
+            styles: {
+              height: '16px',
+              width: '16px'
+            }
+          },
+          hint: 'Logout',
+          bottom: true
         }
       ],
 

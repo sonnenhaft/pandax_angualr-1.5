@@ -1,0 +1,63 @@
+<nav
+  id="navbar-admin"
+  class="navbar navbar_admin"
+  ng-class="{'navbar_collapsed': vm.collapsed == true}"
+  flex-sm="100">
+
+  <div class="logo logo_admin" layout="row">
+    <div class="name name_admin">
+      <a ui-sref="admin" class="logo__link" ng-click="vm.collapsed = !vm.collapsed">MINX</a>
+    </div>
+  </div>
+
+  <div 
+    layout="column"
+    layout-align="space-between"
+    class="navigation navigation_admin">
+    <ul 
+      class="navigation_admin__block navigation_admin__block_top" 
+      active-menu-item 
+      layout="column" 
+      layout-align="start start" 
+      ng-if="(vm.navigation | navByPosition : 'bottom' : undefined).length > 0">
+      <li
+        class="navbar_admin__row"
+        ng-repeat="nav in vm.navigation | navByPosition : 'bottom' : undefined"
+        layout="row"
+        layout-align="start" 
+        title="{{nav.hint}}">
+        <div 
+          class="navbar_admin__icon-wrapper">
+          <md-icon md-svg-icon="{{nav.icon.path}}" ng-style="nav.icon.styles"></md-icon>
+        </div>
+        <a href="" class="navbar_admin__link" ui-sref="{{nav.url.length > 0 ? nav.url : '#'}}" ui-sref-active="active">
+          {{nav.text}}
+        </a>
+      </li>
+    </ul>
+
+    <ul 
+      class="navigation_admin__block navigation_admin__block_bottom" 
+      active-menu-item 
+      layout="column" 
+      layout-align="start start" 
+      ng-if="(vm.navigation | navByPosition : 'bottom' : true).length > 0">
+      <li
+        class="navbar_admin__row"
+        ng-repeat="nav in vm.navigation | navByPosition : 'bottom' : true"
+        layout="row" 
+        layout-align="start"
+        title="{{nav.hint}}">
+        <div 
+          class="navbar_admin__icon-wrapper">
+          <md-icon md-svg-icon="{{nav.icon.path}}" ng-style="nav.icon.styles"></md-icon>
+        </div>
+        <a href="" class="navbar_admin__link" ui-sref="{{nav.url.length > 0 ? nav.url : '#'}}" ui-sref-active="active">
+          {{nav.text}}
+        </a>
+      </li>
+    </ul>
+
+  </div>
+
+</nav>
