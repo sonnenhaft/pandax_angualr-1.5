@@ -1,5 +1,6 @@
 import template from './entertainers.html';
 import controller from './entertainers.controller';
+import './entertainers.scss';
 
 let entertainersComponent = {
   restrict: 'E',
