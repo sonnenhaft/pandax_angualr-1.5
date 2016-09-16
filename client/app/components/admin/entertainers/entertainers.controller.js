@@ -1,4 +1,4 @@
-class AdminController {
+class EntertainersController {
 
   constructor () {
     // 'ngInject';
@@ -8,4 +8,4 @@ class AdminController {
 
 }
 
-export default AdminController;
+export default EntertainersController;
