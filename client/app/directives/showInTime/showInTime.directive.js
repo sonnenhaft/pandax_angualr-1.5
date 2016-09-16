@@ -1,0 +1,61 @@
+/**
+ We don't use $timeout, because it runs the $digest cycle very often
+ */
+let ShowInTimeDirective = ['$compile', 'moment', function($compile, moment) {
+  'ngInject';
+
+  const CSS_CLASS = 'ng-hide',
+        ACTOINS = {
+          SHOW: 'show',
+          HIDE: 'hide'
+        };
+
+  return {
+    scope: true,
+      /**
+       * Attributes
+       * show-in-time: time to active
+       * show-in-time-action: 'show' or 'hide'
+       */
+    link: (scope, element, attrs) => {
+      let timeoutId = null,
+          timerPeriod = parseInt(attrs.showInTime) - moment().valueOf();   // in ms
+
+      function startTimeout() {
+        timeoutId = setTimeout(onTimeout, timerPeriod);
+      }
+      
+      function onTimeout() {
+        showHide(attrs.showInTimeAction);
+      }
+
+      function showHide(action) {
+        if (action == ACTOINS.SHOW) {
+          element.removeClass(CSS_CLASS);
+        } else {
+          element.addClass(CSS_CLASS);
+        }
+      }
+
+      function init() {
+        if (attrs.showInTimeAction == ACTOINS.SHOW) {
+          showHide(ACTOINS.HIDE);
+        }
+
+        if (timerPeriod > 0) {
+          startTimeout();
+        } else {
+          showHide(attrs.showInTimeAction);
+        }
+      }
+
+      init();
+
+      scope.$on('$destroy', (_ev) => {
+        clearTimeout(timeoutId);
+      });
+    }
+  }
+}];
+
+export default ShowInTimeDirective;

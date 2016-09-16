@@ -11,6 +11,7 @@ let TimerDirective = ['$compile', 'moment', function($compile, moment) {
           timerPeriod = 1000;   // in ms
 
       scope.counter = parseInt(attrs.timer) - moment().valueOf();
+      scope.$$watchers = [];
 
       function start() {
         timeoutId = setTimeout(onTimeout, timerPeriod);  
@@ -18,7 +19,7 @@ let TimerDirective = ['$compile', 'moment', function($compile, moment) {
       
       function onTimeout() {
         if(scope.counter <= 0) {
-          $timeout.cancel(timeoutId);
+          clearTimeout(timeoutId);
           return;
         }
         scope.counter = scope.counter - timerPeriod;

@@ -5,13 +5,15 @@ import OrderService from '../../../../services/orderService/orderService';
 import WebSocket from '../../../../services/webSocket/webSocket';
 import timer from '../../../../directives/timer/timer';
 import byStatuses from '../../../../common/filters/byStatuses.filter';
+import showInTime from '../../../../directives/showInTime/showInTime';
 
 export default angular
   .module('confirmedEntertainers', [
     uiRouter,
     OrderService,
     WebSocket,
-    timer
+    timer,
+    showInTime
   ])
 
   .filter('byStatuses', byStatuses)
