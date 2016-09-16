@@ -42,7 +42,7 @@
             <span timer="{{vm.moment(invite.datetime).add(vm.Constants.order.timeToCleanCancel, 'm').valueOf()}}"></span>
           </span>
         </div>
-        <md-button class="md-primary confirmed-entertainers__cancel" type="button" ng-click="vm.cancelOrder($event, invite)">Cancel Minx</md-button>
+        <md-button class="md-primary confirmed-entertainers__cancel" type="button" ng-click="vm.cancelOrder($event, invite, false)">Cancel Minx</md-button>
       </div>
 
       <span 

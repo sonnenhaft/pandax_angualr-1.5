@@ -1,14 +1,19 @@
-let TimerDirective = ['$timeout', '$compile', 'moment', function($timeout, $compile, moment) {
+/**
+ We don't use $timeout, because it runs the $digest cycle very often
+ */
+let TimerDirective = ['$compile', 'moment', function($compile, moment) {
   'ngInject';
 
   return {
+    scope: true,
     link: (scope, element, attrs) => {
-      let timeoutId = null;
+      let timeoutId = null,
+          timerPeriod = 1000;   // in ms
 
       scope.counter = parseInt(attrs.timer) - moment().valueOf();
 
       function start() {
-        timeoutId = $timeout(onTimeout, 1000);  
+        timeoutId = setTimeout(onTimeout, timerPeriod);  
       }
       
       function onTimeout() {
@@ -16,9 +21,9 @@ let TimerDirective = ['$timeout', '$compile', 'moment', function($timeout, $comp
           $timeout.cancel(timeoutId);
           return;
         }
-        scope.counter = scope.counter - 1000;
+        scope.counter = scope.counter - timerPeriod;
         element.text(moment(scope.counter).format('mm:ss'));
-        timeoutId = $timeout(onTimeout, 1000);
+        timeoutId = setTimeout(onTimeout, timerPeriod);
       }
 
       if (scope.counter > 0) {
@@ -26,7 +31,7 @@ let TimerDirective = ['$timeout', '$compile', 'moment', function($timeout, $comp
       }
 
       scope.$on('$destroy', (_ev) => {
-        $timeout.cancel(timeoutId);
+        clearTimeout(timeoutId);
       });
     }
   }
