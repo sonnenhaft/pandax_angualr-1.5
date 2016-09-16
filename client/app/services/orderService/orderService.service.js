@@ -276,7 +276,7 @@ export default class Order {
       )
       .then(
         result => {
-          this.addEntertainerToInvitedList(result.data.invite ? result.data.invite : {provider: entertainer});
+          this.addEntertainerToInvitedList({id: result.data.invite_id, provider: entertainer});
           return result.data;
         }
       );
