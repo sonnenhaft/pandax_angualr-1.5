@@ -4,6 +4,8 @@
 let TimerDirective = ['$compile', 'moment', function($compile, moment) {
   'ngInject';
 
+  const CSS_CLASS = 'ng-hide';
+
   return {
     scope: true,
     link: (scope, element, attrs) => {
@@ -20,6 +22,7 @@ let TimerDirective = ['$compile', 'moment', function($compile, moment) {
       function onTimeout() {
         if(scope.counter <= 0) {
           clearTimeout(timeoutId);
+          hideTimer();
           return;
         }
         scope.counter = scope.counter - timerPeriod;
@@ -27,8 +30,14 @@ let TimerDirective = ['$compile', 'moment', function($compile, moment) {
         timeoutId = setTimeout(onTimeout, timerPeriod);
       }
 
+      function hideTimer() {
+        element.addClass(CSS_CLASS);
+      }
+
       if (scope.counter > 0) {
         start();
+      } else {
+        hideTimer();
       }
 
       scope.$on('$destroy', (_ev) => {

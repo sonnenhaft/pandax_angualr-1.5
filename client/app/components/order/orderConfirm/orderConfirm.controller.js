@@ -1,10 +1,21 @@
 class orderController {
 
-  constructor () {
-    // 'ngInject';
+  constructor (Constants, moment, $state, OrderService, Helper) {
+    'ngInject';
 
-    // _.assign(this, {});
-console.log('===orderConfirm', this);
+    _.assign(this, {
+    	Constants,
+    	moment,
+    	$state,
+    	OrderService,
+    	Helper
+    });
+  }
+
+  cancelOrder (ev, invite) {  	
+    this.OrderService.cancelOrderForEntertainer(ev, invite).then((_data) => {
+			 this.Helper.showToast('Done');
+    });
   }
 
 }

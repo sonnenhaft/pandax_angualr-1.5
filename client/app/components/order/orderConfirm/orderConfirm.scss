@@ -1,4 +1,14 @@
 #orderConfirm {
+	.font-styles_1 {
+		color: $white;
+		font: {
+			family: $open-sans;
+			size: 15px;
+			weight: 200;
+		}
+		letter-spacing: 0.6px;
+	}
+
 	$width_main: 80%;
 
 	md-content {
@@ -7,8 +17,8 @@
 	}
 	.order-information {
 		@media (max-width: 960px) {
-			padding-left: 5%;
-			padding-right: 5%;
+			padding-left: 31px;
+			padding-right: 32px;
 		}
 		&__header {
 			font-family: $oswald;
@@ -17,7 +27,6 @@
 			color: $white;
 			letter-spacing: 1.5px;
 			margin-top: 23px;
-			margin-bottom: 35px;
 			line-height: 40px;
 			text-align: left;
 			@media (min-width: 960px) {
@@ -26,7 +35,6 @@
 		}
 		&__descr {
 			margin-top: 35px;
-			margin-bottom: 34px;
 		}
 		&__cards-container {
 			margin-top: 34px;
@@ -40,25 +48,61 @@
 			border-radius: 0px;
 			margin: 0px;
 			padding: 20px;
-			.md-card-image {
-				min-height: 100px;
-				min-width: 82px;
+			&-avatar-img {
+				height: 115px !important;
+				max-height: 115px;
+				max-width: 82px;
+				width: 82px;
 			}
 			md-card-title {
 				padding-top: 0px;
     		padding-bottom: 6px;
 			}
-			md-card-title-text {
-				color: $white;
-				font: 15px $open-sans;
-				letter-spacing: 0.1px;
+			&-name {
+				@extend .font-styles_1;
 				line-height: 24px;
 				text-align: left;
 			}
-			.md-subhead {
+			&-phone {
+    		@include getImage('/icons/icon_phone-3x');
+				@extend .font-styles_1;
+    		background-size: 15px 13px;
 				color: $AuroMetalSaurus;
-				font: 15px $open-sans;
 				margin-top: 10px;
+    		padding-left: 21px;
+			}
+			&-info {
+				margin-left: 20px;
+			}
+			&-title {
+				padding: 0px;
+			}
+			&-timer-value {
+				color: $AuroMetalSaurus;
+			}
+			&-canceling {
+				@extend .font-styles_1;
+				margin-top: 9px;
+				letter-spacing: .4px;
+				&-message {
+					@extend .font-styles_1;
+				}
+			}
+			&-actions {
+				margin-bottom: 0;
+				margin-left: 0;
+				margin-right: 0;
+			}
+			&-action {
+				.md-button {
+					min-width: 80px;
+				}
+			}
+			&-block-bottom {
+				margin-top: 30px;
+			}
+			&:not(:first-child) {
+				margin-top: 20px;
 			}
 		}
 		&__submit {
@@ -67,10 +111,24 @@
 			letter-spacing: 0.1px;
 			line-height: 24px;
 			margin: 0px;
-			padding: 17px 125px;
+			padding-bottom: 17px;
+			padding-top: 13px;
 			text-align: center;
+			width: 100%;
 			@media (min-width: 960px) {
 				width: $width_main;
+			}
+			&_1 {
+				@media (min-width: 960px) {
+					width: 100%;
+				}
+			}
+			&-wrapper {
+				@media (max-width: 960px) {
+					padding-left: 8px;
+					padding-right: 7px;
+				}
+				width: 100%;
 			}
 		}
 	}
