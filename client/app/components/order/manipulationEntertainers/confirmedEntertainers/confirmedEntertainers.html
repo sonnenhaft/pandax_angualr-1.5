@@ -11,19 +11,65 @@
 	</div>
 
   <md-card 
+    layout="row"
   	class="confirmed-entertainers__card" 
-  	ng-repeat="entertainer in vm.entertainers | filterBy: ['status']: vm.Constants.order.statuses.accepted | map: 'provider' track by $index">
+  	ng-repeat="invite in vm.entertainers | byStatuses : [vm.Constants.order.statuses.accepted, vm.Constants.order.statuses.canceled] track by $index">
+
     <md-card-header class="confirmed-entertainers__card-header">
     	<md-card-avatar
     		class="confirmed-entertainers__avatar">
 		    <img
-		      ng-src="{{entertainer.photos[0].preview}}" 
+		      ng-src="{{invite.provider.photos[0].preview}}" 
 		      class="confirmed-entertainers__avatar-img"></img>
     	</md-card-avatar>
-      <md-card-header-text>
-        <span class="md-subhead confirmed-entertainers__name">{{entertainer.displaying_name}}</span>
-      </md-card-header-text>
-    </md-card-title>
+    </md-card-header>
+
+
+    <md-card-content
+      layout="column"
+       class="confirmed-entertainers__content">
+
+      <span class="confirmed-entertainers__name">{{invite.provider.displaying_name}} is confirmed!</span>
+
+      <div ng-hide="invite.status == vm.Constants.order.statuses.canceled">
+        <div 
+          layout="row" 
+          layout-align="space-between" 
+          class="confirmed-entertainers__manipulation" 
+          show-in-time="{{::vm.moment(invite.datetime).add(vm.Constants.order.timeToCleanCancel, 'm').valueOf()}}"
+          show-in-time-action="hide">
+          <div class="confirmed-entertainers__timer">
+            <span class="confirmed-entertainers__timer-value" timer="{{::vm.moment(invite.datetime).add(vm.Constants.order.timeToCleanCancel, 'm').valueOf()}}"></span>
+          </div>
+          <md-button class="md-primary confirmed-entertainers__cancel" type="button" ng-click="vm.cancelOrder($event, invite, false)">Cancel Minx</md-button>
+        </div>
+
+        <span 
+          class="confirmed-entertainers__canceling-message"
+          show-in-time="{{::vm.moment(invite.datetime).add(vm.Constants.order.timeToCleanCancel, 'm').valueOf()}}"
+          show-in-time-action="show">
+          Canceling the invitation will cost ${{vm.serviceTypePrice}} penalty
+        </span>
+
+        <div 
+          layout="row" 
+          layout-align="start" 
+          class="confirmed-entertainers__manipulation confirmed-entertainers__manipulation_bottom"
+          show-in-time="{{::vm.moment(invite.datetime).add(vm.Constants.order.timeToCleanCancel, 'm').valueOf()}}"
+          show-in-time-action="show">
+          <md-button class="md-primary confirmed-entertainers__cancel confirmed-entertainers__cancel" type="button" ng-click="vm.cancelOrder($event, invite)">
+            Cancel Minx
+          </md-button>
+        </div>
+      </div>
+
+      <span 
+        class="confirmed-entertainers__canceling-message"
+        ng-show="invite.status == vm.Constants.order.statuses.canceled">
+        Canceled by you
+      </span>
+
+    </md-card-content>
   </md-card>
 
 </div>

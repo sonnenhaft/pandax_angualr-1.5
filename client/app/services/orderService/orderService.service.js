@@ -1,7 +1,7 @@
 export default class Order {
 
 
-  constructor (User, Constants, Request, Helper, moment, WebSocket) {
+  constructor (User, Constants, Request, Helper, moment, WebSocket, $mdDialog) {
     'ngInject';
 
     _.assign(this, {
@@ -16,7 +16,8 @@ export default class Order {
         historyProvider: {},
         Helper,
         moment,
-        orderDetails: {}
+        orderDetails: {},
+        $mdDialog
     });
 
   }
@@ -275,10 +276,7 @@ export default class Order {
       )
       .then(
         result => {
-          /*
-            ToDo: talk to BE to get same response structure as getInvites
-           */
-          this.addEntertainerToInvitedList({provider: entertainer});
+          this.addEntertainerToInvitedList({id: result.data.invite_id, provider: entertainer});
           return result.data;
         }
       );
@@ -318,6 +316,37 @@ export default class Order {
     this.listInvited.sort((itemA, itemB) => {
         return this.moment(itemA.datetime) - this.moment(itemB.datetime);
     });
+  }
+
+  cancelOrderForEntertainer (ev, invite, cost) {
+    let confirm = this.$mdDialog.confirm()
+          .title('Cancel Minx')
+          .textContent(this.Constants.order.cancelEntertainerMessage(cost))
+          .ariaLabel('Canceling Entertainer')
+          .targetEvent(ev)
+          .ok('Yes')
+          .cancel('No');
+
+    return this.$mdDialog.show(confirm).then((data) => {
+      return this
+        .Request
+        .send(
+          null,
+          this.Constants.api.cancelEntertainerByCustomer.method,
+          this.Constants.api.cancelEntertainerByCustomer.uri(invite.id)
+        )
+        .then(
+          result => {
+            this.setEntertainerCanceled(invite);
+            return result;
+          }
+        );
+      return data;
+    });
+  }
+
+  setEntertainerCanceled (invite) {
+    invite.status = this.Constants.order.statuses.canceled;
   }
 
 }
