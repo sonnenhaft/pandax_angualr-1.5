@@ -112,6 +112,13 @@ export default class Constants {
         method: 'GET'
       },
 
+      entertainers: {
+        get: {        
+          uri: path + `/entertainers`,
+          method: 'GET'
+        }
+      }
+
     };
 
     return apiConstants;
