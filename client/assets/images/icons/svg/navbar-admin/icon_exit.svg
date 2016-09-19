@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="19px" height="16px" viewBox="0 0 19 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>Exit</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Admin-Panel-Provider" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="02_1024_AdminProvider_-Minx_Entertainers_1_Menu" transform="translate(-26.000000, -722.000000)" fill="#747984">
+            <g id="Menu-Collapsed">
+                <g id="Exit" transform="translate(26.000000, 722.000000)">
+                    <g id="Group-3" transform="translate(3.000000, 0.000000)">
+                        <path d="M1,-8.8817842e-16 C0.624736128,-8.8817842e-16 -6.07153217e-18,0.624847968 -6.07153217e-18,1 L-6.07153217e-18,4 L2,4 L2,2 L14,2 L14,14 L2,14 L2,11 L-6.07153217e-18,11 L-6.07153217e-18,15 C-6.07153217e-18,15.375152 0.624736128,16 1,16 L15,16 C15.375152,16 16,15.375152 16,15 L16,1 C16,0.624847968 15.375152,-8.8817842e-16 15,-8.8817842e-16 L1,-8.8817842e-16 Z" id="Fill-1"></path>
+                    </g>
+                    <polygon id="Fill-4" points="7.56056222 11 12 7.52637777 7.5927036 4 7.58381563 5.93334903 0.0142620918 5.88824776 0 9.02154969 7.56945019 9.06665097"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
