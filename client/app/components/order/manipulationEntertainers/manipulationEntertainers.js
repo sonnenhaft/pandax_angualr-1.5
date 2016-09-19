@@ -20,16 +20,15 @@ export default angular
         url: '/:orderId/manipulationEntertainers',
         parent: 'main',
         template: '<manipulation-entertainers \
-                    entertainers-invited-count="entertainersInvitedCount" \
-                    entertainers-confirmed-count="entertainersConfirmedCount" \
                     entertainers="OrderService.list" \
-                    entertainers-confirmed="entertainersConfirmed">\
+                    entertainers-invited="OrderService.listInvited"\
+                    count-of-required-entertainers="countOfRequiredEntertainers"\
+                    service-type-price="serviceTypePrice">\
                   </manipulation-entertainers>',
-        controller: function ($scope, entertainersConfirmed, entertainersInvitedCount, entertainersConfirmedCount, OrderService) {
-          $scope.entertainersConfirmed = entertainersConfirmed;
-          $scope.entertainersInvitedCount = entertainersInvitedCount;
-          $scope.entertainersConfirmedCount = entertainersConfirmedCount;
+        controller: function ($scope, OrderService, countOfRequiredEntertainers, serviceTypePrice) {
           $scope.OrderService = OrderService;
+          $scope.countOfRequiredEntertainers = countOfRequiredEntertainers;
+          $scope.serviceTypePrice = serviceTypePrice;
         },
         resolve: {
           orderId: function ($stateParams) {
@@ -38,15 +37,24 @@ export default angular
           entertainers: function (OrderService, orderId) {
             return OrderService.fetchEntertainers(orderId);
           },
-          entertainersConfirmed: function (OrderService, orderId) {
-            return OrderService.fetchEntertainersConfirmed(orderId);
+          channelName: function (OrderService, orderId) {
+            return OrderService.getChannelNameOfOrder(orderId);
           },
-          entertainersInvitedCount: function (OrderService) {
-            return OrderService.entertainersInvitedCount;
+          entertainersInvited: function (OrderService, channelName, orderId) {
+            OrderService.subcribeOnEntertainerInvite(channelName);
+            return OrderService.fetchEntertainersInvited(orderId);
           },
-          entertainersConfirmedCount: function (OrderService) {
-            return OrderService.entertainersConfirmedCount;
+          countOfRequiredEntertainers: function (OrderService, orderId) {
+            return OrderService.fetchOrderDetails(orderId)
+                    .then(data => data && data.entertainers_number);
+          },
+          serviceTypePrice: function (OrderService, orderId) {
+            return OrderService.fetchOrderDetails(orderId)
+                    .then(data => data && data.serviceType.price);
           }
+        },
+        onExit: function(OrderService){
+          OrderService.unsubcribeOnEntertainerInvite();
         }
       });
   })

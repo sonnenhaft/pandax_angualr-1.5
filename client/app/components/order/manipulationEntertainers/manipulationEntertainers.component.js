@@ -4,10 +4,10 @@ import controller from './manipulationEntertainers.controller';
 let manipulationEntertainersComponent = {
   restrict: 'E',
   bindings: {
-  	entertainersInvitedCount: '=',
-  	entertainersConfirmedCount: '=',
   	entertainers: '=',
-  	entertainersConfirmed: '='
+  	entertainersInvited: '=',
+  	countOfRequiredEntertainers: '=',
+  	serviceTypePrice: '<'
   },
   template,
   controller,

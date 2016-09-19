@@ -18,7 +18,8 @@ export default class Constants {
   }
 
   apiConstants () {
-    const path = config.API_URL;
+    const path = config.API_URL,
+          pathWS = config.WS_URL
 
     let apiConstants = {
 
@@ -72,7 +73,7 @@ export default class Constants {
       },
 
       orderDetails: {
-        uri: (orderId) => path + `/orders/${orderId}/details`,
+        uri: (orderId) => path + `/orders/${orderId}`,
         method: 'GET'
       },
 
@@ -98,6 +99,22 @@ export default class Constants {
       inviteEntertainer: {
         uri: (orderId, entertainerId) => path + `/orders/${orderId}/entertainers/${entertainerId}/invite`,
         method: 'POST'
+      },
+
+      ws: {
+        invites: {
+          uri: (channelName) => pathWS + `/orders/${channelName}/invites`
+        }
+      },
+
+      invitedEntertainers: {
+        uri: (orderId) => path + `/customer/orders/${orderId}/invites`,
+        method: 'GET'
+      },
+
+      cancelEntertainerByCustomer: {
+        uri: (inviteId) => path + `/invite/${inviteId}/cancel`,
+        method: 'PUT'
       }
 
     };
@@ -152,8 +169,24 @@ export default class Constants {
         asap: true
       }.hour().entertainer(),
 
-      entertainersCountInfo: 'Just trying to get to know you better for the safety of our Minx.'
+      statuses: {
+        invited:  "invited",
+        accepted: 'accepted',
+        declined:  "declined",
+        missed:  "missed",
+        inProgress:  "in progress",
+        finished:  "finished`",
+        canceled: "canceled"
+      },
 
+      entertainersCountInfo: 'Just trying to get to know you better for the safety of our Minx.',
+
+      cancelEntertainerMessage: (penaltyAmount) => penaltyAmount > 0 ? 
+        `Canceling the order will cost $ ${penaltyAmount} penalty. Are you sure want to cancel order for the minx?` : 
+        'Are you sure want to cancel order for the minx?',
+
+      // time to cancel entertainer by customer without penalty in minutes
+      timeToCleanCancel: 5
     };
 
     return orderConstants;
@@ -197,6 +230,84 @@ export default class Constants {
           role: ['customer', 'provider'],
           text: 'Settings',
           url: ''
+        },
+        {
+          role: ['admin'],
+          text: 'Dashboard',
+          url: 'admin.dashboard',
+          icon: {
+            path: '/assets/images/icons/svg/navbar-admin/icon_dashboard.svg',
+            styles: {
+              height: '14px',
+              width: '17px'
+            }
+          },
+          hint: 'Dashboard'
+        },
+        {
+          role: ['admin'],
+          text: 'Entertainers',
+          url: 'admin.entertainers',
+          icon: {
+            path: '/assets/images/icons/svg/navbar-admin/icon_providers.svg',
+            styles: {
+              height: '17px',
+              width: '12px'
+            }
+          },
+          hint: 'Entertainers'
+        },
+        {
+          role: ['admin'],
+          text: 'Customers',
+          url: 'admin.customers',
+          icon: {
+            path: '/assets/images/icons/svg/navbar-admin/icon_customers.svg',
+            styles: {
+              height: '17px',
+              width: '10px'
+            }
+          },
+          hint: 'Customers'
+        },
+        {
+          role: ['admin'],
+          text: 'Orders',
+          url: 'admin.orders',
+          icon: {
+            path: '/assets/images/icons/svg/navbar-admin/icon_orders.svg',
+            styles: {
+              height: '15px',
+              width: '12px'
+            }
+          },
+          hint: 'Orders'
+        },
+/*        {
+          role: ['admin'],
+          text: 'Paysheet',
+          url: 'admin.paysheet',
+          icon: {
+            path: '/assets/images/icons/svg/navbar-admin/icon_paysheet.svg',
+            styles: {
+              height: '12px',
+              width: '18px'
+            }
+          }
+        },*/
+        {
+          role: ['admin'],
+          text: 'Log Out',
+          url: 'admin.logout',
+          icon: {
+            path: '/assets/images/icons/svg/navbar-admin/icon_exit.svg',
+            styles: {
+              height: '16px',
+              width: '16px'
+            }
+          },
+          hint: 'Logout',
+          bottom: true
         }
       ],
 

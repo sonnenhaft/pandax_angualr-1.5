@@ -1,9 +1,9 @@
 export default class orderDetailsController {
 
-  constructor (OrderService) {
-    'ngInject';
+  constructor () {
+    // 'ngInject';
 
-    _.assign(this, {OrderService});
+    // _.assign(this);
 
   }
 

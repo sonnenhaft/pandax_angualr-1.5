@@ -1,9 +1,9 @@
 export default class Helper {
 
-  constructor (moment) {
+  constructor (moment, $mdToast) {
     'ngInject';
 
-    _.assign(this, {moment});
+    _.assign(this, {moment, $mdToast});
 
   }
 
@@ -64,5 +64,18 @@ export default class Helper {
 
   getUniqueNumberByTime () {
     return Date.parse(new Date());
+  }
+
+  showToast (message, duration = 200000) {
+    if (angular.isArray(message)) {
+      message = message.join(', ');
+    }
+    this.$mdToast.show(
+      this.$mdToast.simple()
+        .content(message || message.type)
+        .position('top right')
+        .hideDelay(duration)
+        .action('OK')
+    );
   }
 }

@@ -1,14 +1,19 @@
 #photo-full-page {
+	overflow: hidden;
+
   @media (max-width: 960px) {
     width: 100%;
   }
+
 	.photo-full-page {
 		&__image {
-			background-repeat: no-repeat;
-			background-size: cover;
-			background-position: center;
-			height: 521px;
-			width: 374px;
+		  @media (max-width: 960px) {
+				max-width: 90%;
+		  }
+		  @media (min-width: 960px) {
+				min-height: 400px;
+				min-width: 375px;
+		  }
 		}
 		&__manip-arrow {
 			width: 15px;

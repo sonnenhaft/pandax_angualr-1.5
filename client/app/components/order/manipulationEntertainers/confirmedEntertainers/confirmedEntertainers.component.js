@@ -5,7 +5,8 @@ let confirmedEntertainersComponent = {
   restrict: 'E',
   bindings: {
   	entertainers: '=',
-  	entertainersInvitedCount: '='
+  	countOfRequiredEntertainers: '=',
+  	serviceTypePrice: '<'
   },
   template,
   controller,
