@@ -40,7 +40,9 @@ export default class Request {
       .$http(params)
       .then(
         result => result,
-        error => error
+        error => {
+          throw error;
+        }
       );
   }
 

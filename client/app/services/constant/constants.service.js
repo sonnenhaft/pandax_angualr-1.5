@@ -280,7 +280,7 @@ export default class Constants {
 
       submenu: [
         {
-          role: ['customer'],
+          role: ['customer', 'provider'],
           parent: 'Settings',
           text: 'Payments',
           url: 'main.payments'
@@ -414,7 +414,9 @@ export default class Constants {
           ], this.customer);
           return this;
         }
-      }.provider()
+      }.provider(),
+
+      defaultCurrency: 'usd'
 
     };
 

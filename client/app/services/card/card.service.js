@@ -86,7 +86,8 @@ export default class Cards {
       cvc: card.cvc,
       exp_month: exp[0],
       exp_year: exp[1],
-      address_zip: card.zip
+      address_zip: card.zip,
+      currency: this.Constants.billing.defaultCurrency
     };
   }
 
@@ -150,7 +151,9 @@ export default class Cards {
   }
 
   addCardToList (card) {
-    this.resetCardsDefault();
+    if (card && card.is_default == true) {
+      this.resetCardsDefault();
+    }
     this.list.push(card);
     this.setDefaultCardId();
     return this.list;

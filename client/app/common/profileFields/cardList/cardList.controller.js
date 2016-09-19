@@ -1,10 +1,11 @@
 export default class cardListController {
 
-  constructor (Cards) {
+  constructor (Cards, User) {
     'ngInject';
 
     _.assign(this, {
       Cards,
+      User,
       saveLoading: false,
     });
   }
