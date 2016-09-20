@@ -22,11 +22,13 @@ export default angular
         template: '<manipulation-entertainers \
                     entertainers="OrderService.list" \
                     entertainers-invited="OrderService.listInvited"\
-                    count-of-required-entertainers="countOfRequiredEntertainers">\
+                    count-of-required-entertainers="countOfRequiredEntertainers"\
+                    service-type-price="serviceTypePrice">\
                   </manipulation-entertainers>',
-        controller: function ($scope, OrderService, countOfRequiredEntertainers) {
+        controller: function ($scope, OrderService, countOfRequiredEntertainers, serviceTypePrice) {
           $scope.OrderService = OrderService;
           $scope.countOfRequiredEntertainers = countOfRequiredEntertainers;
+          $scope.serviceTypePrice = serviceTypePrice;
         },
         resolve: {
           orderId: function ($stateParams) {
@@ -45,6 +47,10 @@ export default angular
           countOfRequiredEntertainers: function (OrderService, orderId) {
             return OrderService.fetchOrderDetails(orderId)
                     .then(data => data && data.entertainers_number);
+          },
+          serviceTypePrice: function (OrderService, orderId) {
+            return OrderService.fetchOrderDetails(orderId)
+                    .then(data => data && data.serviceType.price);
           }
         },
         onExit: function(OrderService){
