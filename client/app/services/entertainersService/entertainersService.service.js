@@ -13,6 +13,7 @@ export default class Entertainers {
   }
 
   fetchEntertainers() {
+console.log('this.Constants.api.entertainers:', this.Constants.api.entertainers);
     return this
       .Request
       .send(

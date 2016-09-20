@@ -1,3 +1,38 @@
-<div id="entertainers" class="entertainers">
-	Entertainers
+<div id="entertainers" class="admin__page">
+
+
+	<div 
+		layout="column"
+		layout-align="end"
+		class="admin__header">
+		<span class="admin__page-name">Entertainers</span>		
+	</div>
+
+
+	<div class="admin__manip-row">
+		<div 
+			layout="row"
+			layout="start center"
+			class="manip-row__block manip-row__block_left">
+			<span class="filter-name">Status</span>
+      <md-select 
+      	ng-model="weapon" 
+      	placeholder="Status" 
+      	class="select-container_admin">
+        <md-option value="all">All</md-option>
+        <md-option value="sword">Sword</md-option>
+        <md-option value="wand">Wand</md-option>
+        <md-option value="pen">Pen?</md-option>
+      </md-select>
+		</div>
+	</div>
+
+
+	<table class="admin__table">
+		<tr>
+			<td></td>
+		</tr>		
+	</table>
+
+
 </div>
