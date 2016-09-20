@@ -1,20 +1,19 @@
 export default class Order {
 
 
-  constructor (User, Constants, Request, Helper, moment) {
+  constructor (User, Constants, Request, Helper, moment, WebSocket) {
     'ngInject';
 
     _.assign(this, {
         User,
         Constants,
         Request,
+        WebSocket,
         list: [],
-        listConfirmed: [],
+        listInvited: [],
         providers: [],
         history: [],
         historyProvider: {},
-        entertainersInvitedCount: 0,
-        entertainersConfirmedCount: 0,
         Helper,
         moment,
         orderDetails: {}
@@ -63,55 +62,29 @@ export default class Order {
   }
 
   /*
-    Confirmed entertainers
+    Invited entertainers
   */
-  fetchEntertainersConfirmed() {
-    /*
-    ToDo: fetch from server
-     */
-    this.entertainersConfirmedCount = 2;
-    return this.listConfirmed = [{
-        id: 1,
-        name: 'Elaize',
-        photo: '/assets/images/photos/photo3.png'
-    }/*,{
-        id: 2,
-        name: 'Sundra',
-        photo: '/assets/images/photos/photo3.png'
-    }*/]
+  fetchEntertainersInvited(orderId) {
+    return this
+      .Request
+      .send(
+        null,
+        this.Constants.api.invitedEntertainers.method,
+        this.Constants.api.invitedEntertainers.uri(orderId)
+      )
+      .then(
+        result => {
+          this.listInvited = result.data && result.data.items;
+          return this.sortInvitedList();
+        },
+        error => console.log(error)
+      );
   }
 
-  getEntertainersConfirmed() {
-    return this.listConfirmed;
+  getEntertainersInvited() {
+    return this.listInvited;
   }
 
-  /*
-    Invited entertainers count
-  */
-  fetchEntertainersInvitedCount() {
-    /*
-    ToDo: fetch from server
-     */
-    return this.entertainersInvitedCount = 1;
-  }
-
-  getEntertainersInvitedCount() {
-    return this.entertainersInvitedCount;
-  }
-
-  /*
-    Confirmed entertainers count
-  */
-  fetchEntertainersConfirmedCount() {
-    /*
-    ToDo: fetch from server
-     */
-    return this.entertainersConfirmedCount = 2;
-  }
-
-  getEntertainersConfirmedCount() {
-    return this.entertainersConfirmedCount;
-  }
 
   buildOrder (form) {
     return {
@@ -136,7 +109,7 @@ export default class Order {
 
 
   fetchOrderDetails(orderId) {
-/*    return this
+    return this
       .Request
       .send(
         null,
@@ -145,28 +118,10 @@ export default class Order {
       )
       .then(
         result => {
-          return result.data;
+          return this.orderDetails = result.data;
         },
         error => console.log(error)
-      );*/
-    /*
-    ToDo: replace with real server request
-     */
-    return new Promise((resolve, reject) => {
-          this.orderDetails = Object.assign(this.orderDetails, {
-            service_type: 1,
-            minx_count: 4,
-            rate: 125,
-            booking_length: '1h 30m',
-            address: 'Santa Monica Fwy 1110',
-            apartment: 12,
-            cost: 250
-          });
-
-        setTimeout(() => {
-          resolve(this.orderDetails);
-        }, 1000);
-    })
+      );
   }
 
 
@@ -310,20 +265,58 @@ export default class Order {
     return _.orderBy(this.historyProvider.past, order => order.datetime, 'desc');
   }
 
-  inviteEntertainer (orderId, entertainerId) {
+  inviteEntertainer (orderId, entertainer) {
     return this
       .Request
       .send(
         null,
         this.Constants.api.inviteEntertainer.method,
-        this.Constants.api.inviteEntertainer.uri(orderId, entertainerId)
+        this.Constants.api.inviteEntertainer.uri(orderId, entertainer.id)
       )
       .then(
         result => {
-          this.entertainersInvitedCount = result.data.invitations_count;
+          /*
+            ToDo: talk to BE to get same response structure as getInvites
+           */
+          this.addEntertainerToInvitedList({provider: entertainer});
           return result.data;
+        }
+      );
+  }
+
+  getChannelNameOfOrder (orderId) {
+    return this.fetchOrderDetails(orderId)
+      .then(
+        orderDetails => {
+          return orderDetails.channel_name;
         },
         error => console.log(error)
-      );
+      )
+  }
+
+  addEntertainerToInvitedList (entertainer) {
+    this.listInvited.push(entertainer);
+    return this.listInvited;
+  }
+
+  subcribeOnEntertainerInvite (channelName) {
+    this.WebSocket.invites(channelName, this.setEntertainerConfirmed.bind(this));
+  }
+
+  unsubcribeOnEntertainerInvite () {
+    this.WebSocket.close();
+  }
+
+  setEntertainerConfirmed (data) {
+    let entertainer = _.find(this.listInvited, (item) => item.provider.id == data.provider_id);
+    entertainer.status = this.Constants.order.statuses.accepted;
+    entertainer.datetime = data.datetime;
+    this.sortInvitedList();
+  }
+
+  sortInvitedList () {
+    this.listInvited.sort((itemA, itemB) => {
+        return this.moment(itemA.datetime) - this.moment(itemB.datetime);
+    });
   }
 }

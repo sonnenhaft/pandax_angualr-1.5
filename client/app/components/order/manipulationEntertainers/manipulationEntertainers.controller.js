@@ -1,6 +1,6 @@
 class manipulationEntertainersController {
 
-  constructor ($state, $mdMedia, $stateParams, OrderService) {
+  constructor ($state, $mdMedia, $stateParams, OrderService, Constants) {
      'ngInject';
 
      _.assign(this, {
@@ -8,10 +8,10 @@ class manipulationEntertainersController {
         $mdMedia,
         $stateParams,
         OrderService,
+        Constants,
         showComponentOnly: '',
         itemActiveIndex: 0
-     	});
-
+     });
   }
 }
 

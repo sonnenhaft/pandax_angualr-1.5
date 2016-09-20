@@ -6,8 +6,7 @@ let searchEntertainersComponent = {
   bindings: {
   	entertainers: '=',
   	itemActiveIndex: '=',
-  	entertainersInvitedCount: '=',
-  	entertainersConfirmedCount: '='
+  	entertainersInvited: '='
   },
   template,
   controller,

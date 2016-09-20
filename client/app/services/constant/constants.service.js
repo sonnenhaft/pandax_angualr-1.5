@@ -18,7 +18,8 @@ export default class Constants {
   }
 
   apiConstants () {
-    const path = config.API_URL;
+    const path = config.API_URL,
+          pathWS = config.WS_URL
 
     let apiConstants = {
 
@@ -72,7 +73,7 @@ export default class Constants {
       },
 
       orderDetails: {
-        uri: (orderId) => path + `/orders/${orderId}/details`,
+        uri: (orderId) => path + `/orders/${orderId}`,
         method: 'GET'
       },
 
@@ -98,7 +99,18 @@ export default class Constants {
       inviteEntertainer: {
         uri: (orderId, entertainerId) => path + `/orders/${orderId}/entertainers/${entertainerId}/invite`,
         method: 'POST'
-      }
+      },
+
+      ws: {
+        invites: {
+          uri: (channelName) => pathWS + `/orders/${channelName}/invites`
+        }
+      },
+
+      invitedEntertainers: {
+        uri: (orderId) => path + `/customer/orders/${orderId}/invites`,
+        method: 'GET'
+      },
 
     };
 
@@ -152,7 +164,16 @@ export default class Constants {
         asap: true
       }.hour().entertainer(),
 
-      entertainersCountInfo: 'Just trying to get to know you better for the safety of our Minx.'
+      statuses: {
+        invited:  "invited",
+        accepted: 'accepted',
+        declined:  "declined",
+        missed:  "missed",
+        inProgress:  "in progress",
+        finished:  "finished`"
+      },
+
+      entertainersCountInfo: 'Just trying to get to know you better for the safety of our Minx.',
 
     };
 

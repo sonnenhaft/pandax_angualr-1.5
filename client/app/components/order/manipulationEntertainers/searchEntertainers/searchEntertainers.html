@@ -6,18 +6,18 @@
 
   <div flex="100" layout="column" layout-align="start center" class="search-entertainers__main">
     <div layout="row" layout-align="center stretch" class="search-entertainers__manip_head">
-      <div flex="10" layout="row" layout-align="end">
+      <div flex="15" layout="row" layout-align="end">
         <md-icon 
           md-svg-icon="/assets/images/icons/svg/arrow_left.svg" 
           class="pointer search-entertainers__manip-arrow search-entertainers__manip-arrow_left"
           ng-class="{'disabled': vm.itemActiveIndex == 0}"
           ng-click="vm.goToEntertainerByIndex(-1)"></md-icon>
       </div>
-      <div flex="80" layout="row" layout-align="space-between center">
+      <div flex="75" layout="row" layout-align="space-between center" class="search-entertainers__manip-info">
         <span class="search-entertainers__manip-name">{{vm.entertainers[vm.itemActiveIndex].displaying_name}}</span>
         <span flex="25" class="search-entertainers__manip-counter">{{vm.itemActiveIndex + 1}} / {{vm.entertainers.length}}</span>
       </div>
-      <div flex="10" layout="row" layout-align="end">
+      <div flex="15" layout="row" layout-align="end">
         <md-icon 
           md-svg-icon="/assets/images/icons/svg/arrow_right.svg" 
           class="pointer search-entertainers__manip-arrow search-entertainers__manip-arrow_right"
@@ -26,14 +26,17 @@
       </div>
     </div>
 
-    <div class="search-entertainers__info">
+    <div 
+      flex="75" 
+      layout="row" 
+      class="search-entertainers__info">
       <span class="search-entertainers__info-raiting">
         {{vm.entertainers[vm.itemActiveIndex].rating}}
         <img
           src="/assets/images/icons/raiting.png" 
           class="icon_small"></img>
       </span>
-      <span class="search-entertainers__info-distance">{{vm.entertainers[vm.itemActiveIndex].distance}}M AWAY</span>
+      <span class="search-entertainers__info-distance">{{vm.entertainers[vm.itemActiveIndex].distance.toFixed(2)}}M AWAY</span>
     </div>
 
     <div 
@@ -42,7 +45,8 @@
       ng-click="vm.showPopup($event)">
     </div>
 
-    <div 
+    <div
+      flex="75" 
       layout="row" 
       layout-align="space-between stretch" 
       class="search-entertainers__switch-foto">
@@ -58,9 +62,12 @@
 
     <md-button 
       class="md-raised md-accent search-entertainers__invite"
-      ng-click="vm.goToNextStep()">
-      INVITE
+      ng-class="{'button_gradient': (vm.entertainersInvited | filterBy: ['provider.id']: vm.entertainers[vm.itemActiveIndex].id).length > 0}"
+      ng-click="vm.goToNextStep()"
+      ng-disabled="(vm.entertainersInvited | filterBy: ['provider.id']: vm.entertainers[vm.itemActiveIndex].id).length > 0">
+      {{(vm.entertainersInvited | filterBy: ['provider.id']: vm.entertainers[vm.itemActiveIndex].id).length > 0 ? 'INVITED' : 'INVITE'}}
     </md-button>    
   </div>
 
 </div>
+
