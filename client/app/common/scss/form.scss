@@ -86,6 +86,23 @@
 				white-space: nowrap;
 		  }
 		}
+
+		&__notify {
+			display: block;
+			color: $AuroMetalSaurus;
+			font: {
+				family: $open-sans;
+				size: 13px;
+			}
+			letter-spacing: .1px;
+			line-height: 17px;
+			margin-top: 15px;
+			margin-left: 8px;
+			text-align: left;
+		  @media (min-width: 960px) {
+				white-space: nowrap;
+		  }
+		}
 	}
 }
 

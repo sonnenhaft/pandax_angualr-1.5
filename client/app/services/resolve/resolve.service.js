@@ -151,13 +151,15 @@ export default class Resolve {
               name: 'Kimberly',
               duration: null,
               price: 50,
-              img: ''
+              img: '',
+              rejected: true
             },
             {
               name: 'Rebecca',
               duration: null,
               price: 0,
-              img: ''
+              img: '',
+              declined: true
             },
             {
               name: 'Agnes',

@@ -37,6 +37,7 @@ angular
     angularStripe
   ])
   .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider, $mdDateLocaleProvider, moment, $mdGestureProvider, jwtInterceptorProvider, $httpProvider, stripeProvider) => {
+
     "ngInject";
     // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions
     // #how-to-configure-your-server-to-work-with-html5mode
@@ -72,7 +73,6 @@ angular
       v: '3', //defaults to latest 3.X anyhow
       libraries: 'weather,geometry,visualization'
     });
-
 
     //JWT interceptor will take care of sending the JWT in every request (More info: https://github.com/auth0/angular-jwt#jwtinterceptor)
     jwtInterceptorProvider.tokenGetter = function () {
