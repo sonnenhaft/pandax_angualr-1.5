@@ -1,0 +1,18 @@
+.table {
+
+  &_admin {
+  	background-color: $white;
+  	margin-top: 20px;
+    padding: 10px 10px;
+    &__row {
+      
+    }
+    &__cell {
+      @extend .font_admin-main;
+      padding: 4px 14px 4px 15px;
+      &_label {
+        color: $AuroMetalSaurus;
+      }
+    }
+  }
+}

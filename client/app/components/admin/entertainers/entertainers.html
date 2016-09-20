@@ -12,9 +12,9 @@
 	<div class="admin__manip-row">
 		<div 
 			layout="row"
-			layout="start center"
+			layout-align="start center"
 			class="manip-row__block manip-row__block_left">
-			<span class="filter-name">Status</span>
+			<span class="admin__filter-name">Status</span>
       <md-select 
       	ng-model="weapon" 
       	placeholder="Status" 
@@ -28,9 +28,94 @@
 	</div>
 
 
-	<table class="admin__table">
-		<tr>
+	<table class="admin__table table_admin">
+		<tr 
+			class="table_admin__row" 
+			ng-repeat-start="entertainer in vm.entertainers">
+			<td 
+				class="table_admin__cell table_admin__cell_avatar" 
+				rowspan="3">
+				{{entertainer.photo[0].preview}}
+			</td>
+			<td
+				class="table_admin__cell table_admin__cell_label">
+				Status
+			</td>
+			<td 
+				class="table_admin__cell">
+				<img class="icon icon_admin" src="/assets/images/icons/admin/icon_approved_copy_2-3x.png" /> 
+				<span class="table_admin__cell-status-value">{{entertainer.status}}</span>
+			</td>
+			<td
+				class="table_admin__cell table_admin__cell_label">
+				Email
+			</td>
+			<td 
+				class="table_admin__cell">
+				{{entertainer.email}}
+			</td>
+			<td
+				class="table_admin__cell table_admin__cell_label">
+				Raiting
+			</td>
+			<td 
+				class="table_admin__cell">
+				{{entertainer.raiting}}
+			</td>
+			<td 
+				class="table_admin__cell">
+				<img class="icon icon_admin" src="/assets/images/icons/admin/icon_approved_copy_2-3x.png" />
+				<img class="icon icon_admin" src="/assets/images/icons/admin/icon_approved_copy_2-3x.png" />
+			</td>
+		</tr>		
+		<tr 
+			class="table_admin__row">
+			<td
+				class="table_admin__cell table_admin__cell_label">
+				Name
+			</td>
+			<td 
+				class="table_admin__cell">
+				{{entertainer.name}}
+			</td>
+			<td
+				class="table_admin__cell table_admin__cell_label">
+				Phone
+			</td>
+			<td 
+				class="table_admin__cell">
+				{{entertainer.phone}}
+			</td>
+			<td
+				class="table_admin__cell table_admin__cell_label">
+				Photos
+			</td>
+			<td 
+				class="table_admin__cell">
+				{{entertainer.photos.length}}
+			</td>
 			<td></td>
+		</tr>		
+		<tr 
+			class="table_admin__row"
+			ng-repeat-end>
+			<td 
+				class="table_admin__cell table_admin__cell_label">
+				Displaying Name
+			</td>
+			<td 
+				class="table_admin__cell">
+				{{entertainer.displaying_name}}
+			</td>
+			<td
+				class="table_admin__cell table_admin__cell_label">
+				City
+			</td>
+			<td 
+				class="table_admin__cell">
+				{{entertainer.city}}
+			</td>
+			<td></td><td></td><td></td>
 		</tr>		
 	</table>
 

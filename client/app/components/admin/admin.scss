@@ -1,14 +1,14 @@
 #admin {
-	.font_header {
-		color: $DarkJungleGreen;
-		font: {
-			family: $oswald;
-			size: 32px;
-		}
-		letter-spacing: 0.0588em;
-		line-height: 47px;
-		text-align: left;
-	}
+  .font_header {
+    color: $DarkJungleGreen;
+    font: {
+      family: $oswald;
+      size: 32px;
+    }
+    letter-spacing: 0.0588em;
+    line-height: 47px;
+    text-align: left;
+  }
 
   background-color: $Platinum;
   height: 100%;
@@ -38,12 +38,15 @@
   	}
 
   	&__manip-row {
-  		margin-top: 21px;
+  		margin-top: 27px;
   	}
 
+    &__filter-name {
+      @extend .font_admin-main;
+    }
+
   	&__table {
-  		background-color: $white;
-  		margin-top: 20px;
+      width: 100%;
   	}
   }
 

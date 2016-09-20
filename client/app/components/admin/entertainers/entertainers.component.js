@@ -3,7 +3,9 @@ import controller from './entertainers.controller';
 
 let entertainersComponent = {
   restrict: 'E',
-  bindings: {},
+  bindings: {
+  	entertainers: '='
+  },
   template,
   controller,
   controllerAs: 'vm'

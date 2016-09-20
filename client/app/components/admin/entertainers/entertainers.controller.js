@@ -1,9 +1,12 @@
 class EntertainersController {
 
-  constructor () {
-    // 'ngInject';
+  constructor (EntertainersService) {
+    'ngInject';
 
-    // _.assign(this, {});
+    _.assign(this, {
+    	EntertainersService
+    });
+console.log('this:', this.EntertainersService);
   }
 
 }
