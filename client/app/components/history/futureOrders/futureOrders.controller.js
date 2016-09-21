@@ -1,25 +1,26 @@
-export default class futureOrdersController {
+export default class futuresOrdersController {
 
   constructor (OrderService) {
     'ngInject';
 
     _.assign(this, {OrderService});
 
-    this.history = OrderService.getFutureOrders();
-    this.activeOrders = this.findActiveOrders('active');
-    this.asapOrders = this.findActiveOrders('asap');
+    OrderService.fetchFuturesOrders()
+      .then(data => this.futures = data);
 
+    this.activeOrders = this.findActiveOrders('active');
+    this.asapOrders = this.findActiveOrders('asapFlag');
   }
 
   $onInit () {
     if (this.activeOrders.length || this.asapOrders.length) {
-      this.history = this.moveActiveOrdersToHead();
+      this.futures = this.moveActiveOrdersToHead();
     }
   }
 
   findActiveOrders (param) {
     return _
-      .chain(this.history)
+      .chain(this.futures)
       .filter(order => order[param])
       .sortBy(order => order.datetime)
       .value();
@@ -27,9 +28,9 @@ export default class futureOrdersController {
 
   moveActiveOrdersToHead () {
     return _
-      .chain(this.history)
+      .chain(this.futures)
       .remove(['active', true])
-      .union(this.activeOrders, this.asapOrders, this.history)
+      .union(this.activeOrders, this.asapOrders, this.futures)
       .value();
   }
 

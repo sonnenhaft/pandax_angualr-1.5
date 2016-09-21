@@ -115,6 +115,11 @@ export default class Constants {
       cancelEntertainerByCustomer: {
         uri: (inviteId) => path + `/invite/${inviteId}/cancel`,
         method: 'PUT'
+      },
+
+      orderFutures: {
+        uri: (user) => path + `/${user}/orders?status[]=accepted`,
+        method: 'GET'
       }
 
     };

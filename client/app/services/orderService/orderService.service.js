@@ -17,7 +17,9 @@ export default class Order {
         Helper,
         moment,
         orderDetails: {},
-        $mdDialog
+        $mdDialog,
+        listFutures: [],
+        role: User.get('role')
     });
 
   }
@@ -54,8 +56,20 @@ export default class Order {
     return _.orderBy(this.history.past, order => order.datetime, 'desc');
   }
 
-  getFutureOrders() {
-    return _.sortBy(this.history.future, order => order.datetime);
+  fetchFuturesOrders() {
+    return this
+      .Request
+      .send(
+        null,
+        this.Constants.api.orderFutures.method,
+        this.Constants.api.orderFutures.uri(this.role)
+      )
+      .then(
+        result => {
+          return this.listFutures = result.data;
+        },
+        error => console.log(error)
+      );
   }
 
   getOrdersWithParam(id, type) {

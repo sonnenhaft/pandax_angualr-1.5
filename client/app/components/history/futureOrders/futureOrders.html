@@ -1,35 +1,35 @@
 <div class="list future-orders">
 
-  <ul ng-if="$ctrl.history.length">
-    <li ng-repeat="order in $ctrl.history">
+  <ul ng-if="$ctrl.futures.length">
+    <li ng-repeat="order in $ctrl.futures">
       <div class="order-status" ng-if="order.active">
         <span class="active">Active order</span>
       </div>
       <div class="order-information">
         <span class="date">
-          {{!order.asap ? (order.datetime | amDateFormat:'h:mm A, MMM DD (dddd)') : 'ASAP'}}
+          {{!order.asapFlag ? (order.datetime | amDateFormat:'h:mm A, MMM DD (dddd)') : 'ASAP'}}
         </span>
-        <span class="minx">{{$ctrl.OrderService.getProviderById(order.service_type).name}}</span>
-        <span class="address">{{order.address}}</span>
+        <span class="minx">{{order.serviceType.name}}</span>
+        <span class="address">{{order.location}}</span>
         <div layout="row">
-          <span flex="15" class="guest">{{order.guests}}</span>
-          <span flex="15" class="minx">{{order.provider.length}}</span>
+          <span flex="15" class="guest">{{order.guestNumber}}</span>
+          <span flex="15" class="minx">{{order.entertainers_number}}</span>
         </div>
-        <span class="time">{{order.duration}}</span>
+        <span class="time">{{order.length | hoursToTime}}</span>
         <div layout="row" class="price">
           <div flex>
-            <span class="initial">${{order.initial_price}}</span>
+            <span class="initial">${{order.cost}}</span>
             <p>Initial</p>
           </div>
         </div>
       </div>
       <div class="order-minx">
-        <span class="minx" ui-sref="main.minx({type: 'future', id: order.id})">MINX ({{order.provider.length}})</span>
+        <span class="minx" ui-sref="main.minx({type: 'future', id: order.id})">MINX ({{order.entertainers_number}})</span>
       </div>
     </li>
   </ul>
 
-  <div class="empty-history" ng-if="!$ctrl.history.length">
+  <div class="empty-history" ng-if="!$ctrl.futures.length">
     <p>You don't have any upcoming orders</p>
   </div>
 
