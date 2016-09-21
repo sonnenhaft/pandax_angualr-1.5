@@ -11,6 +11,7 @@ import HistoryMinx from './historyMinx/historyMinx';
 import Password from './password/password';
 import Admin from './admin/admin';
 
+
 let componentModule = angular.module('app.components', [
   Home,
   Main,

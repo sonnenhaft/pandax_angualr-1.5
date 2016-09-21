@@ -115,6 +115,12 @@ export default class Constants {
       cancelEntertainerByCustomer: {
         uri: (inviteId) => path + `/invite/${inviteId}/cancel`,
         method: 'PUT'
+      },
+
+      orderFutures: {
+        // uri: (user, page = 1) => path + `/${user}/orders?page=${page}&status[]=accepted`,
+        uri: (user, page = 1) => path + `/${user}/orders?page=${page}&status[]=new`,
+        method: 'GET'
       }
 
     };
@@ -313,7 +319,7 @@ export default class Constants {
 
       submenu: [
         {
-          role: ['customer'],
+          role: ['customer', 'provider'],
           parent: 'Settings',
           text: 'Payments',
           url: 'main.payments'
@@ -447,7 +453,9 @@ export default class Constants {
           ], this.customer);
           return this;
         }
-      }.provider()
+      }.provider(),
+
+      defaultCurrency: 'usd'
 
     };
 

@@ -14,6 +14,7 @@ import angularMessages from 'angular-messages';
 import 'angular-filter/dist/angular-filter.min.js';
 import JWT from 'angular-jwt';
 import angularStripe from 'angular-stripe';
+import ngInfiniteScroll from 'ng-infinite-scroll';
 
 import Common from './common/common';
 import Components from './components/components';
@@ -34,9 +35,11 @@ angular
     "angular.filter",
     angularMessages,
     JWT,
-    angularStripe
+    angularStripe,
+    ngInfiniteScroll
   ])
   .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider, $mdDateLocaleProvider, moment, $mdGestureProvider, jwtInterceptorProvider, $httpProvider, stripeProvider) => {
+
     "ngInject";
     // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions
     // #how-to-configure-your-server-to-work-with-html5mode
@@ -72,7 +75,6 @@ angular
       v: '3', //defaults to latest 3.X anyhow
       libraries: 'weather,geometry,visualization'
     });
-
 
     //JWT interceptor will take care of sending the JWT in every request (More info: https://github.com/auth0/angular-jwt#jwtinterceptor)
     jwtInterceptorProvider.tokenGetter = function () {
