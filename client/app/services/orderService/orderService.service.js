@@ -322,7 +322,7 @@ export default class Order {
   cancelOrderForEntertainer (ev, invite, cost) {
     let confirm = this.$mdDialog.confirm()
           .title('Cancel Minx')
-          .textContent(this.Constants.order.cancelEntertainerMessage(invite.type ? invite.type.penalty_amount : cost))
+          .textContent(this.Constants.order.cancelEntertainerMessage(cost))
           .ariaLabel('Canceling Entertainer')
           .targetEvent(ev)
           .ok('Yes')
