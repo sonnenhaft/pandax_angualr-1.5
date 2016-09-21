@@ -8,7 +8,8 @@ class orderController {
     	moment,
     	$state,
     	OrderService,
-    	Helper
+    	Helper,
+      timeToCleanCancel: Constants.order.timeToCleanCancel
     });
   }
 

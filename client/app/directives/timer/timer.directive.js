@@ -20,12 +20,12 @@ let TimerDirective = ['$compile', 'moment', function($compile, moment) {
       }
       
       function onTimeout() {
+        scope.counter = scope.counter - timerPeriod;
         if(scope.counter <= 0) {
           clearTimeout(timeoutId);
           hideTimer();
           return;
         }
-        scope.counter = scope.counter - timerPeriod;
         element.text(moment(scope.counter).format('mm:ss'));
         timeoutId = setTimeout(onTimeout, timerPeriod);
       }

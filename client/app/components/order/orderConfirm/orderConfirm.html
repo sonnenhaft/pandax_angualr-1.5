@@ -39,11 +39,11 @@
 									ng-hide="invite.status == vm.Constants.order.statuses.canceled">
 									<span 
 										class="order-information__card-timer-value" 
-										timer="{{::vm.moment(invite.datetime).add(vm.Constants.order.timeToCleanCancel, 'm').valueOf()}}">
+										timer="{{::vm.moment(invite.datetime).add(vm.timeToCleanCancel, 'm').valueOf()}}">
 									</span>
 					        <span 
 					          class="order-information__card-canceling-message"
-					          show-in-time="{{::vm.moment(invite.datetime).add(vm.Constants.order.timeToCleanCancel, 'm').valueOf()}}"
+					          show-in-time="{{::vm.moment(invite.datetime).add(vm.timeToCleanCancel, 'm').valueOf()}}"
 					          show-in-time-action="show">
 					          Canceling the invitation will cost ${{invite.type.penalty_amount}} penalty
 					        </span>								
