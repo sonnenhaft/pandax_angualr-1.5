@@ -56,17 +56,18 @@ export default class Order {
     return _.orderBy(this.history.past, order => order.datetime, 'desc');
   }
 
-  fetchFuturesOrders() {
+  fetchFuturesOrders(page = 1) {
     return this
       .Request
       .send(
         null,
         this.Constants.api.orderFutures.method,
-        this.Constants.api.orderFutures.uri(this.role)
+        this.Constants.api.orderFutures.uri(this.role, page)
       )
       .then(
         result => {
-          return this.listFutures = result.data;
+          this.listFutures = result.data.items;
+          return result.data;
         },
         error => console.log(error)
       );

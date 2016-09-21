@@ -5,7 +5,7 @@ import hoursToTime from '../../../common/filters/hoursToTime.filter';
 
 export default angular
   .module('futureOrders', [
-    uiRouter    
+    uiRouter,
   ])
   .filter('hoursToTime', hoursToTime)
   .component('futureOrders', futureOrdersComponent)

@@ -118,7 +118,8 @@ export default class Constants {
       },
 
       orderFutures: {
-        uri: (user) => path + `/${user}/orders?status[]=accepted`,
+        // uri: (user, page = 1) => path + `/${user}/orders?page=${page}&status[]=accepted`,
+        uri: (user, page = 1) => path + `/${user}/orders?page=${page}&status[]=new`,
         method: 'GET'
       }
 

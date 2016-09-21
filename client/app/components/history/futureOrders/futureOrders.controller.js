@@ -1,37 +1,73 @@
 export default class futuresOrdersController {
 
-  constructor (OrderService) {
+  constructor (OrderService, Constants) {
     'ngInject';
 
-    _.assign(this, {OrderService});
+    _.assign(this, {
+      OrderService,
+      Constants,
+      futures: [],
+      isOnProgress: false,
+      isLastPage: false,
+      currentPage: 1,
+      activeOrders: [],
+      asapOrders: []
+    });
 
     OrderService.fetchFuturesOrders()
-      .then(data => this.futures = data);
-
-    this.activeOrders = this.findActiveOrders('active');
-    this.asapOrders = this.findActiveOrders('asapFlag');
+      .then(data => {
+        if (this.currentPage == data.meta.pagination.total_pages) {
+          this.isLastPage = true;
+        }
+        return this.futures = this.resortList(data.items);
+      });
   }
 
-  $onInit () {
-    if (this.activeOrders.length || this.asapOrders.length) {
-      this.futures = this.moveActiveOrdersToHead();
-    }
-  }
 
-  findActiveOrders (param) {
+  findActiveOrders (param, list = this.futures) {
     return _
-      .chain(this.futures)
+      .chain(list)
       .filter(order => order[param])
       .sortBy(order => order.datetime)
       .value();
   }
 
-  moveActiveOrdersToHead () {
+  moveActiveOrdersToHead (list = this.futures) {
     return _
-      .chain(this.futures)
+      .chain(list)
       .remove(['active', true])
-      .union(this.activeOrders, this.asapOrders, this.futures)
+      .union(this.activeOrders, this.asapOrders, list)
       .value();
   }
 
+  fetchMoreItems () {
+    this.isOnProgress = true;
+
+    this.OrderService.fetchFuturesOrders(this.currentPage + 1)
+      .then((data) => {
+        this.isOnProgress = false;
+        this.currentPage = data.meta.pagination.current_page;
+        this.futures = this.futures.concat( this.resortList(data.items) );
+
+        if (this.currentPage == data.meta.pagination.total_pages) {
+          this.isLastPage = true;
+        }
+      })
+  };
+
+  /**
+   * Search and lift up 'ASAP' orders and orders with 'active' status
+   * @param  {Array} list [List of the orders, futures by default]
+   * @return {[Array]}      [Sorted list]
+   */
+  resortList (list = this.futures) {
+    this.activeOrders = this.findActiveOrders('active', list);
+    this.asapOrders = this.findActiveOrders('asapFlag', list);
+
+    if (this.activeOrders.length || this.asapOrders.length) {
+      list = this.moveActiveOrdersToHead(list);
+    }
+
+    return list;
+  }
 }
