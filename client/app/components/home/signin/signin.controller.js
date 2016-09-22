@@ -40,7 +40,6 @@ export default class Signin {
           return true;
         },
         error => {
-          console.log(error);
           this.loginLoading = false;
         }
       );
