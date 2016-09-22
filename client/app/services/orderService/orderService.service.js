@@ -147,7 +147,7 @@ export default class Order {
       .send(
         null,
         this.Constants.api.orderHistory.method,
-        this.Constants.api.orderHistory.uri(this.role, page)
+        this.Constants.api.orderHistory.uri(this.User.get('role'), page)
       )
       .then(
         result => {
