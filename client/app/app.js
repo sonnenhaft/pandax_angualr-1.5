@@ -4,10 +4,10 @@ import 'angular-material/angular-material.css';
 import uiRouter from 'angular-ui-router';
 import 'angular-ui-router/release/stateEvents.js';    // enable All state events, (i.e. $stateChange* and friends), due to https://github.com/angular-ui/ui-router/releases/tag/1.0.0alpha0
 import 'angular-simple-logger';
-import 'angular-google-maps';
 import 'moment';
 import 'angular-moment';
 import 'lodash';
+import 'angular-google-maps';
 import 'normalize.css';
 import 'animate.css';
 import angularMessages from 'angular-messages';
