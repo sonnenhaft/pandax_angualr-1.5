@@ -192,6 +192,7 @@ export default class Constants {
 
       // time to cancel entertainer by customer without penalty in minutes
       timeToCleanCancel: 5
+
     };
 
     return orderConstants;
@@ -318,7 +319,7 @@ export default class Constants {
 
       submenu: [
         {
-          role: ['customer'],
+          role: ['customer', 'provider'],
           parent: 'Settings',
           text: 'Payments',
           url: 'main.payments'
@@ -452,7 +453,9 @@ export default class Constants {
           ], this.customer);
           return this;
         }
-      }.provider()
+      }.provider(),
+
+      defaultCurrency: 'usd'
 
     };
 
