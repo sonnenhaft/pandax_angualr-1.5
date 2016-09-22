@@ -55,4 +55,4 @@ console.log('close directly:');
     this.dataStream.close();
   }
 
-}
+}

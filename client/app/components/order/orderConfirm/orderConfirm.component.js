@@ -3,9 +3,12 @@ import controller from './orderConfirm.controller';
 
 let orderConfirmComponent = {
   restrict: 'E',
-  bindings: {},
+  bindings: {
+  	invites: '='
+  },
   template,
-  controller
+  controller,
+  controllerAs: 'vm'
 };
 
 export default orderConfirmComponent;
