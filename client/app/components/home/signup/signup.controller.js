@@ -51,7 +51,6 @@ export default class Signup {
           }
         },
         error => {
-          console.log(error);
           this.registerLoading = false;
         }
       );
