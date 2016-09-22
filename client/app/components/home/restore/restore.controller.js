@@ -44,7 +44,6 @@ export default class Restore {
         },
         error => {
           this.restoreLoading = false;
-          concole.lgo(error);
         }
       )
       .then(result => {
