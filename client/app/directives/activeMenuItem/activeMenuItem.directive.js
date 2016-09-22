@@ -34,14 +34,11 @@ let ActiveMenuItemDirective = ['$state', '$timeout', '$rootScope', function($sta
 
       function init () {
         menuItems = angular.element(element).children('li');
-console.log('init:', menuItems, _, '_')
 
         checkActiveSubItem();
 
         _.each(menuItems, menuItem => {
-console.log('ineach:', menuItem);
-          angular.element(menuItem).bind("click", (_e) => {
-console.log('click', menuItem);
+          angular.element(menuItem).children('a').bind("click", (_e) => {
             toggleOpened(angular.element(menuItem));
           });
         });
@@ -49,12 +46,12 @@ console.log('click', menuItem);
 
         $rootScope.$on("$stateChangeSuccess", function(event, next, current) {
           clearAll();
-          $timeout(checkActiveSubItem, 300);
+          $timeout(checkActiveSubItem, 100);
         });
       }
 
 
-      $timeout(init, 300);
+      $timeout(init, 100);
     }
   }
 }];
