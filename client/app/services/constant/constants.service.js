@@ -125,7 +125,12 @@ export default class Constants {
       orderHistory: {
         uri: (user, page = 1) => path + `/${user}/orders/history?page=${page}`,
         method: 'GET'
-      }
+      },
+
+      confirmedEntertainers: {
+        uri: (orderId) => path + `/customer/orders/${orderId}/invites?status[]=accepted&status[]=canceled`,
+        method: 'GET'
+      },
 
     };
 

@@ -91,7 +91,7 @@ export default class Order {
       .then(
         result => {
           this.listInvited = result.data && result.data.items;
-          return this.sortInvitedList();
+          return this.sortList();
         },
         error => console.log(error)
       );
@@ -202,11 +202,11 @@ export default class Order {
     let entertainer = _.find(this.listInvited, (item) => item.provider.id == data.provider_id);
     entertainer.status = this.Constants.order.statuses.accepted;
     entertainer.datetime = data.datetime;
-    this.sortInvitedList();
+    this.sortList();
   }
 
-  sortInvitedList () {
-    this.listInvited.sort((itemA, itemB) => {
+  sortList (list = this.listInvited) {
+    list.sort((itemA, itemB) => {
         return this.moment(itemA.datetime) - this.moment(itemB.datetime);
     });
   }
@@ -240,6 +240,26 @@ export default class Order {
 
   setEntertainerCanceled (invite) {
     invite.status = this.Constants.order.statuses.canceled;
+  }
+
+  /*
+    Confirmed entertainers
+  */
+  fetchEntertainersConfirmed(orderId) {
+    return this
+      .Request
+      .send(
+        null,
+        this.Constants.api.confirmedEntertainers.method,
+        this.Constants.api.confirmedEntertainers.uri(orderId)
+      )
+      .then(
+        result => {
+          this.listConfirmed = result.data && result.data.items;
+          return this.listConfirmed;
+        },
+        error => console.log(error)
+      );
   }
 
 }

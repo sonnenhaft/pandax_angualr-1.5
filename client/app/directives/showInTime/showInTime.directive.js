@@ -19,7 +19,7 @@ let ShowInTimeDirective = ['$compile', 'moment', function($compile, moment) {
        */
     link: (scope, element, attrs) => {
       let timeoutId = null,
-          timerPeriod = parseInt(attrs.showInTime) - moment().valueOf();   // in ms
+          timerPeriod = parseInt(attrs.showInTime) - moment().valueOf() + 1000;   // in ms
 
       function startTimeout() {
         timeoutId = setTimeout(onTimeout, timerPeriod);
