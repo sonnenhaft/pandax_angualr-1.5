@@ -1,10 +1,11 @@
 export default class pastOrdersProviderController {
 
-  constructor (OrderService) {
+  constructor (OrderService, Constants) {
     'ngInject';
 
     _.assign(this, {
     	OrderService,
+      Constants,
     	history: [],
       isOnProgress: false,
       isLastPage: false,

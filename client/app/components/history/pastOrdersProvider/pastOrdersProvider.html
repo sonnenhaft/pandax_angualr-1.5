@@ -4,14 +4,14 @@
     ng-if="$ctrl.history.length" 
     infinite-scroll="$ctrl.fetchMoreItems()" 
     infinite-scroll-disabled='$ctrl.isOnProgress || $ctrl.isLastPage'>
-    <li ng-repeat="order in $ctrl.history" class="order-information-wrapper">
+    <li ng-repeat="item in $ctrl.history" class="order-information-wrapper">
       <div class="order-information">
         
         <div 
           layout="row"
           layout-align="space-between start"
           class="order-information__header">
-          <div class="order-information-customer-photo" ng-style="{'background-image': 'url(' + order.order.customer.photo[0].preview + ')'}"></div>
+          <div class="order-information-customer-photo" ng-style="{'background-image': 'url(' + item.order.customer.photo.preview + ')'}"></div>
           <div 
             flex="90"
             layout="column"
@@ -22,10 +22,6 @@
               layout="row"
               layout-align="start start"
               class="order-information-customer-tel">
-              <md-icon 
-                md-svg-icon="/assets/images/icons/svg/ic_phone_black.svg" 
-                class="order-information-customer-tel__icon icon_medium"
-                disabled="disabled"></md-icon>
               <span class="order-information-customer-tel__value">{{item.order.customer.phone}}</span>
             </div>
           </div>
@@ -50,9 +46,21 @@
         <span class="time">{{item.order.length | hoursToTime}}</span>
         <div layout="row" class="price">
           <div flex>
-            <span class="initial">{{item.order.cost}}</span>
+            <!-- rate per hour -->
+            <span class="initial">{{item.order.cost / item.order.length | number : 2}}</span>
             <p class="initial-text">Initial</p>
           </div>
+          <div flex ng-if="item.moneyEarned > 0">
+            <!-- rate per hour -->
+            <span class="initial">{{item.moneyEarned}}</span>
+            <p class="initial-text">Earned</p>
+          </div>
+        </div>
+        <div 
+          ng-if="item.status == $ctrl.Constants.order.statuses.canceled"
+          layout="row" 
+          class="order-information-canceled-message">
+          Order canceled by entertainer. Cancelation fee will be deducted from the next payment
         </div>
       </div>
     </li>
