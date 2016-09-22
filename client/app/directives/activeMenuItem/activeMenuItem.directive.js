@@ -38,7 +38,7 @@ let ActiveMenuItemDirective = ['$state', '$timeout', '$rootScope', function($sta
         checkActiveSubItem();
 
         _.each(menuItems, menuItem => {
-          angular.element(menuItem).bind("click", (_e) => {
+          angular.element(menuItem).children('a').bind("click", (_e) => {
             toggleOpened(angular.element(menuItem));
           });
         });
