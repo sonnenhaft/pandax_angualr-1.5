@@ -126,7 +126,7 @@ export default class Constants {
         uri: (user, page = 1) => {
           let result = path + `/${user}/orders`;
           if (user == 'customer') {
-            result += `?page=${page}&status[]=finished`;
+            result += `?page=${page}&status[]=finished&status[]=canceled`;
           } else {
             result += `/history?page=${page}`;
           }
