@@ -48,14 +48,6 @@ export default class Order {
     return this.providers;
   }
 
-  getProviderById(id) {
-    return _.find(this.providers, ['type', id]);
-  }
-
-  getPastOrders() {
-    return _.orderBy(this.history.past, order => order.datetime, 'desc');
-  }
-
   fetchFuturesOrders(page = 1) {
     return this
       .Request
@@ -67,6 +59,23 @@ export default class Order {
       .then(
         result => {
           this.listFutures = result.data.items;
+          return result.data;
+        },
+        error => console.log(error)
+      );
+  }
+
+  fetchHistoryOrders(page = 1) {
+    return this
+      .Request
+      .send(
+        null,
+        this.Constants.api.orderHistory.method,
+        this.Constants.api.orderHistory.uri(this.role, page)
+      )
+      .then(
+        result => {
+          this.history = result.data.items;
           return result.data;
         },
         error => console.log(error)
@@ -95,10 +104,6 @@ export default class Order {
         },
         error => console.log(error)
       );
-  }
-
-  getEntertainersInvited() {
-    return this.listInvited;
   }
 
 
