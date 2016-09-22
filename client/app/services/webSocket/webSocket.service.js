@@ -16,7 +16,7 @@ export default class WebSocket {
     this.dataStream = this.$websocket(this.Constants.api.ws.invites.uri(channelName));
 
     this.dataStream.onOpen((response) => {
-console.log('onOpen:', response)
+console.log('onOpen:', response);
       if (cbOnOpen) {
         cbOnOpen();
       }
@@ -55,4 +55,4 @@ console.log('close directly:');
     this.dataStream.close();
   }
 
-}
+}
