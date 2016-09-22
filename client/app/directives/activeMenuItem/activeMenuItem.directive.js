@@ -34,6 +34,7 @@ let ActiveMenuItemDirective = ['$state', '$timeout', '$rootScope', function($sta
 
       function init () {
         menuItems = angular.element(element).children('li');
+console.log('init:', menuItems)
 
         checkActiveSubItem();
 
@@ -46,12 +47,12 @@ let ActiveMenuItemDirective = ['$state', '$timeout', '$rootScope', function($sta
 
         $rootScope.$on("$stateChangeSuccess", function(event, next, current) {
           clearAll();
-          $timeout(checkActiveSubItem, 100);
+          $timeout(checkActiveSubItem, 300);
         });
       }
 
 
-      $timeout(init, 100);
+      $timeout(init, 300);
     }
   }
 }];
