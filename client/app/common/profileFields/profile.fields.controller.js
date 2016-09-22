@@ -198,6 +198,7 @@ export default class profileFieldsController {
 
   UpdateUserProfile (profile, mode) {
     this.saveLoading = true;
+
     let query = this.User
         .UpdateUserProfile(profile)
         .then(
