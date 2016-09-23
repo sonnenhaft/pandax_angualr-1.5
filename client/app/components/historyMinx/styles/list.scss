@@ -13,9 +13,15 @@
       margin-bottom: 20px;
 
       .minx-img {
-        img {
+        div {
+          background: {
+            repeat: no-repeat;
+            size: cover;
+          }
           display: block;
+          height: 115px;
           max-width: 100%;
+          width: 86px;
         }
       }
 
