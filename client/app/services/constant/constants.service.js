@@ -73,7 +73,7 @@ export default class Constants {
       },
 
       orderDetails: {
-        uri: (orderId) => path + `/orders/${orderId}`,
+        uri: (orderId, include) => path + `/orders/${orderId}` + (!!include ? `?include=${include}` : ''),
         method: 'GET'
       },
 
@@ -126,7 +126,7 @@ export default class Constants {
         uri: (user, page = 1) => {
           let result = path + `/${user}/orders`;
           if (user == 'customer') {
-            result += `?page=${page}&status[]=finished&status[]=canceled`;
+            result += `?page=${page}&status[]=finished&status[]=canceled&include=invites`;
           } else {
             result += `/history?page=${page}`;
           }

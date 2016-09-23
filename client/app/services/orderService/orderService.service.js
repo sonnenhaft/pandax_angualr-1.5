@@ -18,8 +18,7 @@ export default class Order {
         moment,
         orderDetails: {},
         $mdDialog,
-        listFutures: [],
-        role: User.get('role')
+        listFutures: []
     });
 
   }
@@ -54,7 +53,7 @@ export default class Order {
       .send(
         null,
         this.Constants.api.orderFutures.method,
-        this.Constants.api.orderFutures.uri(this.role, page)
+        this.Constants.api.orderFutures.uri(this.User.get('role'), page)
       )
       .then(
         result => {
@@ -71,19 +70,19 @@ export default class Order {
       .send(
         null,
         this.Constants.api.orderHistory.method,
-        this.Constants.api.orderHistory.uri(this.role, page)
+        this.Constants.api.orderHistory.uri(this.User.get('role'), page)
       )
       .then(
         result => {
           this.history = result.data.items;
           return result.data;
-        },
-        error => console.log(error)
+        }
       );
   }
 
-  getOrdersWithParam(id, type) {
-    return _.find(this.history[type], ['id', Number(id)]);
+  getOrdersWithParam(orderId) {
+    return this.fetchOrderDetails(orderId, 'invites')
+            .then(data => data);    
   }
 
   /*
@@ -129,13 +128,13 @@ export default class Order {
   }
 
 
-  fetchOrderDetails(orderId) {
+  fetchOrderDetails(orderId, include = '') {
     return this
       .Request
       .send(
         null,
         this.Constants.api.orderDetails.method,
-        this.Constants.api.orderDetails.uri(orderId)
+        this.Constants.api.orderDetails.uri(orderId, include)
       )
       .then(
         result => {
@@ -152,7 +151,7 @@ export default class Order {
       .send(
         null,
         this.Constants.api.orderHistory.method,
-        this.Constants.api.orderHistory.uri(this.role, page)
+        this.Constants.api.orderHistory.uri(this.User.get('role'), page)
       )
       .then(
         result => {

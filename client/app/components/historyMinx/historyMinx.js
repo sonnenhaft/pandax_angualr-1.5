@@ -2,6 +2,7 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import historyMinxComponent from './historyMinx.component';
 import OrderService from '../../services/orderService/orderService';
+import hoursToTime from '../../common/filters/hoursToTime.filter';
 
 export default angular
   .module('historyMinx', [
@@ -15,18 +16,18 @@ export default angular
       .state('main.minx', {
         url: '/orders-history/:type/:id',
         parent: 'main',
-        template: '<history-minx minx="minx"></history-minx>',
-        controller: (minx, $scope) => {
-          $scope.minx = minx;
+        template: '<history-minx order="order"></history-minx>',
+        controller: (order, $scope) => {
+          $scope.order = order;
         },
         resolve: {
-          minx: (OrderService, $stateParams) => {
+          order: (OrderService, $stateParams) => {
             return OrderService
-              .getOrdersWithParam($stateParams.id, $stateParams.type)
-              .provider;
+              .getOrdersWithParam($stateParams.id);
           }
         }
       });
   })
+  .filter('hoursToTime', hoursToTime)
   .component('historyMinx', historyMinxComponent)
   .name;

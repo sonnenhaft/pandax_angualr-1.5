@@ -5,22 +5,22 @@
 
     <div class="minx-back">
       <button ui-sref="main.history({type: $ctrl.type})">
-        Other MINX ({{$ctrl.minx.length}})
+        Other MINX ({{$ctrl.order.entertainers_number}})
       </button>
     </div>
 
     <div class="minx-list">
       <ul>
-        <li ng-repeat="provider in $ctrl.minx" layout="row" layout-align="space-between">
+        <li ng-repeat="invite in $ctrl.order.invites" layout="row" layout-align="space-between">
           <div class="minx-img" flex="20">
-            <img ng-src="/assets/images/photos/photo0.png" alt="{{provider.name}}"/>
+            <img ng-src="{{invite.provider.photo.preview}}" alt="{{invite.provider.displaying_name}}"/>
           </div>
           <div class="minx-info" flex="75">
-            <span class="name">{{provider.name}}</span>
-            <span class="cancel" ng-if="provider.rejected">Cancelled by me</span>
-            <span class="cancel" ng-if="provider.declined">Cancelled</span>
-            <span class="duration" ng-if="provider.duration">{{provider.duration}}</span>
-            <span class="price">${{provider.price}}</span>
+            <span class="name">{{invite.provider.displaying_name}}</span>
+            <span class="cancel" ng-if="invite.status == $ctrl.Constants.order.statuses.canceled">Cancelled by me</span>
+            <span class="cancel" ng-if="invite.status == $ctrl.Constants.order.statuses.declined">Cancelled</span>
+            <span class="duration" ng-if="order.length">{{order.length | hoursToTime}}</span>
+            <span class="price">${{order.cost}}</span>
           </div>
         </li>
       </ul>
