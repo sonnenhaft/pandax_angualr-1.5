@@ -23,7 +23,8 @@ export default angular
         },
         resolve: {
           entertainers: function (EntertainersService) {
-            return EntertainersService.fetchEntertainers();
+            return EntertainersService.fetchEntertainers()
+                    .then(data => data.itmes);
           }
         }
       });

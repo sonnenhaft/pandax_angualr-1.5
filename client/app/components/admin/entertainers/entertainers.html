@@ -33,7 +33,7 @@
 			class="table_admin__row" 
 			ng-repeat-start="entertainer in vm.entertainers">
 			<td 
-				class="table_admin__cell table_admin__cell_avatar" 
+				class="table_admin__cell table_admin__cell_avatar table_admin__cell_rowspaned" 
 				rowspan="3">
 				{{entertainer.photo[0].preview}}
 			</td>
@@ -97,7 +97,7 @@
 			<td></td>
 		</tr>		
 		<tr 
-			class="table_admin__row"
+			class="table_admin__row table_admin__row_end"
 			ng-repeat-end>
 			<td 
 				class="table_admin__cell table_admin__cell_label">
@@ -115,7 +115,7 @@
 				class="table_admin__cell">
 				{{entertainer.city}}
 			</td>
-			<td></td><td></td><td></td>
+			<td class="table_admin__cell_rowspaned"></td><td class="table_admin__cell_rowspaned"></td><td class="table_admin__cell_rowspaned"></td>
 		</tr>		
 	</table>
 

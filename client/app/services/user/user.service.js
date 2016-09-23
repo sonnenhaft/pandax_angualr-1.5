@@ -67,8 +67,7 @@ export default class User {
 
           this.create(result.data);
           return this.getUserProfile(result.data, this.get('role'));
-        },
-        error => console.log(error)
+        }
       );
   }
 
@@ -146,7 +145,10 @@ export default class User {
 
 
   getUserProfile (user, type, redirectUser = true) {
-    return this
+    let result = user;
+
+    if (type != 'admin') {      
+      result = this
       .Request
       .send(
         user.token,
@@ -161,9 +163,15 @@ export default class User {
           }
           this.setUserAvatarSrc(result.data);
           return result.data;
-        },
-        error => console.log(error)
+        }
       );
+    } else {
+      if (redirectUser == true) {
+        this.redirectUser();
+      }
+    }
+
+    return result;
   }
 
   UpdateUserProfile (fields) {
@@ -209,6 +217,10 @@ export default class User {
         this.$state.go('main.order');
         return false;
 
+      case this.get('role') === 'admin':
+        this.$state.go('admin.entertainers');
+        return false;
+
       case !this.get('first_name') || !this.get('last_name'):
         this.$state.go('main.profile.create');
         return false;
@@ -220,17 +232,23 @@ export default class User {
 
   logout () {
     this.Storage.remove('MINX');
-    this.$state.go('home');
+    setTimeout(() => this.$state.go('home'), 1);
   }
 
   /*
     User avatar section
    */
   fetchUserAvatarSrc () {
-    return this.getUserProfile(_.assign(this.get(), {token: this.token()}), this.get('role'), false)
-      .then(data => {
-        return this.setUserAvatarSrc(data);
-      });
+    let result = this.getUserAvatarSrc();
+
+    if (!result) {
+      result = this.getUserProfile(_.assign(this.get(), {token: this.token()}), this.get('role'), false)
+        .then(data => {
+          return this.setUserAvatarSrc(data);
+        });
+    }
+
+    return result;
   }
 
   setUserAvatarSrc (data = {}) {

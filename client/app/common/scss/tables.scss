@@ -5,13 +5,26 @@
   	margin-top: 20px;
     padding: 10px 10px;
     &__row {
-      
+      &_start {
+        .table_admin__cell {
+          padding-top: 10px;
+        }
+      }
+      &_end {
+        .table_admin__cell {
+          border-bottom: 2px solid $Platinum;
+          padding-bottom: 13px;
+        }
+      }
     }
     &__cell {
       @extend .font_admin-main;
-      padding: 4px 14px 4px 15px;
+      padding: 8px 14px 8px 15px;
       &_label {
         color: $AuroMetalSaurus;
+      }
+      &_rowspaned {
+        border-bottom: 2px solid $Platinum;
       }
     }
   }
