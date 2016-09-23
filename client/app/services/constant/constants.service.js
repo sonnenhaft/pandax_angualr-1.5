@@ -210,6 +210,7 @@ export default class Constants {
 
       // time to cancel entertainer by customer without penalty in minutes
       timeToCleanCancel: 5
+
     };
 
     return orderConstants;

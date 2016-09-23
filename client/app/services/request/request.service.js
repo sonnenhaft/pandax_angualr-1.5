@@ -1,9 +1,9 @@
 export default class Request {
 
-  constructor ($http) {
+  constructor ($http, $q) {
     'ngInject';
 
-    _.assign(this, {$http});
+    _.assign(this, {$http, $q});
 
     this.headers = {
       'Content-Type': 'application/json'
@@ -41,7 +41,9 @@ export default class Request {
       .then(
         result => result,
         error => {
-          throw error;
+          let defer = this.$q.defer();
+          defer.reject(error);
+          return defer.promise;
         }
       );
   }

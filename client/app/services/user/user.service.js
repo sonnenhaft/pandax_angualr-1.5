@@ -1,9 +1,9 @@
 export default class User {
 
-  constructor (Storage, Constants, Request, $state, $http, Helper) {
+  constructor (Storage, Constants, Request, $state, $http, Helper, $q) {
     'ngInject';
 
-    _.assign(this, {Storage, Constants, Request, $state, $http, Helper, userAvatarSrc: '', billingInfo: {}});
+    _.assign(this, {Storage, Constants, Request, $state, $http, Helper, $q, userAvatarSrc: '', billingInfo: {}});
   }
 
   isAuth () {
@@ -67,8 +67,7 @@ export default class User {
 
           this.create(result.data);
           return this.getUserProfile(result.data, this.get('role'));
-        },
-        error => console.log(error)
+        }
       );
   }
 
@@ -93,8 +92,7 @@ export default class User {
           }
 
           return this.login(credentials);
-        },
-        error => console.log(error)
+        }
       );
   }
 
@@ -116,8 +114,7 @@ export default class User {
           }
 
           return result;
-        },
-        error => console.log(error)
+        }
       );
   }
 
@@ -139,8 +136,7 @@ export default class User {
           }
 
           return result;
-        },
-        error => console.log(error)
+        }
       );
   }
 
@@ -161,8 +157,7 @@ export default class User {
           }
           this.setUserAvatarSrc(result.data);
           return result.data;
-        },
-        error => console.log(error)
+        }
       );
   }
 
@@ -179,8 +174,7 @@ export default class User {
         result => {
           this.update(result.data);
           return result.data;
-        },
-        error => console.log(error)
+        }
       );
   }
 
@@ -198,8 +192,7 @@ export default class User {
             this.setUserAvatarSrc(result.data)
           }
           return result.data;
-        },
-        error => console.log(error)
+        }
       )
   }
 
@@ -256,29 +249,4 @@ export default class User {
   fetchBillingInfo () {
     return this.billingInfo;
   }
-
-  saveBillingInfo () {
-    /*
-    ToDo: replace with real server request
-     */
-    return new Promise((resolve, reject) => {
-          this.billingInfo = Object.assign(this.billingInfo, {
-            first_name: 'Barry edit',
-            last_name: 'Bom edit',
-            mobile: '+123456789',
-            cards: [{
-              id: 1,
-              name: 'Card 1',
-              number: 1111222233334444,
-              expiry: '19/21',
-              cvc: 123
-            }]
-          });
-
-        setTimeout(() => {
-          resolve(this.billingInfo);
-        }, 1000);
-    })
-  }
-
 }
