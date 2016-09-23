@@ -45,13 +45,7 @@
         </div>
         <span class="time">{{item.order.length | hoursToTime}}</span>
         <div layout="row" class="price">
-          <div flex>
-            <!-- rate per hour -->
-            <span class="initial">{{item.order.cost / item.order.length | number : 2}}</span>
-            <p class="initial-text">Initial</p>
-          </div>
           <div flex ng-if="item.moneyEarned > 0">
-            <!-- rate per hour -->
             <span class="initial">{{item.moneyEarned}}</span>
             <p class="initial-text">Earned</p>
           </div>
@@ -77,7 +71,7 @@
     </md-progress-circular>
   </div>
 
-  <div class="empty-history" ng-if="!$ctrl.history.length">
+  <div class="empty-history" ng-if="!$ctrl.history.length && !$ctrl.isOnProgress">
     <p>You don't have any past orders</p>
   </div>
 

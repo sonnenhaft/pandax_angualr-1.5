@@ -55,4 +55,10 @@ md-tabs {
     @import "list";
   }
 
+  &.md-tabs_provider {
+    md-tabs-wrapper {
+      display: none;
+    }
+  }
+
 }
