@@ -12,45 +12,18 @@ export default class Entertainers {
 
   }
 
-  fetchEntertainers() {
+  fetchEntertainers(page = 1) {
     return this
       .Request
       .send(
         null,
         this.Constants.api.entertainers.get.method,
-        this.Constants.api.entertainers.get.uri()
+        this.Constants.api.entertainers.get.uri(page)
       )
       .then(
         result => {
-          return this.list = result.data;
-        },
-        error => {
-          return this.list = [{
-            "id": 1,
-            "name": "Nameeee",
-            "displaying_name": "Displaying Name",
-            "status": "Approved",
-            "email": "email@mail.com",
-            "phone": 34234234234,
-            "raiting": 3.34,
-            "city": "Cityyyyy",
-            "photos": [{
-              "preview": "https://material.angularjs.org/latest/img/icons/angular-logo.svg"
-            }],
-          },{
-            "id": 2,
-            "name": "Nameeee 2",
-            "displaying_name": "Displaying Name 2",
-            "status": "Approved 2",
-            "email": "email2@mail.com",
-            "phone": 22222222,
-            "raiting": 2.24,
-            "city": "Cityyyyy 2",
-            "photos": [{
-              "preview": "https://material.angularjs.org/latest/img/icons/angular-logo.svg"
-            }],
-          }]
-          // return console.log(error)
+          this.list = this.list.concat(result.data.items);
+          return result.data;
         }
       );
   }

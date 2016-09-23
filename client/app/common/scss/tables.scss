@@ -26,6 +26,23 @@
       &_rowspaned {
         border-bottom: 2px solid $Platinum;
       }
+      &_avatar {
+        img {
+          height: 100px;
+          width: 50px;
+        }
+      }
+      &_status-value {
+        color: green;
+        &::before {
+          width: 100px;
+          height: 100px;
+          background: red;
+          -moz-border-radius: 50px;
+          -webkit-border-radius: 50px;
+          border-radius: 50px;
+        }
+      }
     }
   }
 }

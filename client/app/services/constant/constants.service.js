@@ -114,7 +114,7 @@ export default class Constants {
 
       entertainers: {
         get: {        
-          uri: () => path + `/provider`,
+          uri: (page = 1) => path + `/provider?page=${page}`,
           method: 'GET'
         }
       }

@@ -15,18 +15,7 @@ export default angular
       .state('admin.entertainers', {
         url: '/entertainers',
         parent: 'admin',
-        template: '<entertainers\
-                    entertainers="EntertainersService.list">\
-                  </entertainers>',
-        controller: function ($scope, EntertainersService) {
-          $scope.EntertainersService = EntertainersService;
-        },
-        resolve: {
-          entertainers: function (EntertainersService) {
-            return EntertainersService.fetchEntertainers()
-                    .then(data => data.itmes);
-          }
-        }
+        template: '<entertainers></entertainers>'
       });
   })
   .component('entertainers', entertainersComponent)
