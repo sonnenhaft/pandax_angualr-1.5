@@ -56,6 +56,11 @@
 		margin: 0px 0px 0px 22.3px;
   }
 }
+md-option {
+  ._md-text {
+    text-transform: capitalize;
+  }
+}
 
 
 @import "entertainers/entertainers";

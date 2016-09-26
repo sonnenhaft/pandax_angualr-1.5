@@ -1,5 +1,5 @@
 module.exports = {
-  API_URL: 'https://dev2-panda-aws.isdev.info/api',
+  API_URL: 'https://dev3-panda-aws.isdev.info/api',
   COPYRIGHT: (new Date()).getFullYear() + 'Panda',
   VERSION: '0.0.1',
   STRIPE: {

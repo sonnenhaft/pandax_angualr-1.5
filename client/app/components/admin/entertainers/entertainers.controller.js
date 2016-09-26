@@ -1,14 +1,16 @@
 class EntertainersController {
 
-  constructor (EntertainersService) {
+  constructor (EntertainersService, Constants) {
     'ngInject';
 
     _.assign(this, {
     	EntertainersService,
+      Constants,
     	list: [],
     	isOnProgress: false,
       isLastPage: false,
       currentPage: 1,
+      statuses: Constants.admin.statuses
     });
   }
 

@@ -1,4 +1,24 @@
 .table {
+  $circleSize: 8px;
+
+  @mixin circle($borderColor, $bgColor: 'none') {
+   @if $bgColor != 'none' {
+    background-color: $bgColor;
+   }
+
+    border: {
+      color: $borderColor;
+      radius: $circleSize;
+      style: solid;
+      width: 1px;
+    }
+    -moz-border-radius: $circleSize;
+    -webkit-border-radius: $circleSize;
+    display: inline-block;
+    height: $circleSize;
+    margin-right: 8px;
+    width: $circleSize;
+  }
 
   &_admin {
   	background-color: $white;
@@ -20,6 +40,7 @@
     &__cell {
       @extend .font_admin-main;
       padding: 8px 14px 8px 15px;
+      vertical-align: top;
       &_label {
         color: $AuroMetalSaurus;
       }
@@ -27,20 +48,33 @@
         border-bottom: 2px solid $Platinum;
       }
       &_avatar {
-        img {
+        div {
+          background: {
+            repeat: no-repeat;
+            position: cover;
+          }
           height: 100px;
           width: 50px;
         }
       }
-      &_status-value {
-        color: green;
-        &::before {
-          width: 100px;
-          height: 100px;
-          background: red;
-          -moz-border-radius: 50px;
-          -webkit-border-radius: 50px;
-          border-radius: 50px;
+      &_status {
+        &-icon {
+          @include circle(green);
+          &-approved {
+           @include circle(green, green);
+          }
+          &-blocked {
+           @include circle($Cardinal, $Cardinal);
+          }
+          &-offline {
+           @include circle($AuroMetalSaurus, $AuroMetalSaurus);
+          }
+        }
+        &-value {
+          display: inline-block;
+          &::first-letter {
+            text-transform: uppercase;
+          }
         }
       }
     }

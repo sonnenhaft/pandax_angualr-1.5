@@ -14,7 +14,7 @@ export default class Constants {
     this.billing = this.billingConstants();
     this.api = this.apiConstants();
     this.terms = this.termsConstants();
-
+    this.admin = this.adminConstants();
   }
 
   apiConstants () {
@@ -450,4 +450,20 @@ export default class Constants {
     return billingConstants;
   }
 
+  adminConstants () {
+    const adminConstants = {
+
+      statuses: {
+        accepted: "accepted",
+        active: "active",
+        blocked: "blocked",
+        offline:  "offline",
+        pending:  "pending",
+        rejected:  "rejected"
+      },
+
+    };
+
+    return adminConstants;
+  }
 }

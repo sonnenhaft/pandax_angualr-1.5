@@ -19,10 +19,7 @@
       	ng-model="weapon" 
       	placeholder="Status" 
       	class="select-container_admin">
-        <md-option value="all">All</md-option>
-        <md-option value="sword">Sword</md-option>
-        <md-option value="wand">Wand</md-option>
-        <md-option value="pen">Pen?</md-option>
+        <md-option ng-repeat="(key, val) in vm.statuses" value="{{val}}">{{key}}</md-option>
       </md-select>
 		</div>
 	</div>
@@ -33,12 +30,12 @@
     infinite-scroll="vm.fetchMoreItems()" 
     infinite-scroll-disabled='vm.isOnProgress || vm.isLastPage'>
 		<tr 
-			class="table_admin__row" 
+			class="table_admin__row table_admin__row_start" 
 			ng-repeat-start="entertainer in vm.list">
 			<td 
 				class="table_admin__cell table_admin__cell_avatar table_admin__cell_rowspaned" 
 				rowspan="3">
-				<img ng-src="{{entertainer.photos[0].preview}}" alt="">
+				<div ng-style="{'background-image': 'url(' + entertainer.photos[0].preview + ')'}" alt="{{entertainer.displaying_name}}"></div>
 			</td>
 			<td
 				class="table_admin__cell table_admin__cell_label">
@@ -46,6 +43,7 @@
 			</td>
 			<td 
 				class="table_admin__cell table_admin__cell_status">
+				<span class="table_admin__cell_status-icon table_admin__cell_status-icon-{{entertainer.status}}"></span>
 				<span class="table_admin__cell_status-value">{{entertainer.status}}</span>
 			</td>
 			<td
@@ -66,8 +64,7 @@
 			</td>
 			<td 
 				class="table_admin__cell">
-				<img class="icon icon_admin" src="/assets/images/icons/admin/icon_approved_copy_2-3x.png" />
-				<img class="icon icon_admin" src="/assets/images/icons/admin/icon_approved_copy_2-3x.png" />
+				<span class="table_admin__cell_status-icon"></span>
 			</td>
 		</tr>		
 		<tr 
@@ -78,7 +75,7 @@
 			</td>
 			<td 
 				class="table_admin__cell">
-				{{entertainer.name}}
+				{{entertainer.displaying_name}}
 			</td>
 			<td
 				class="table_admin__cell table_admin__cell_label">

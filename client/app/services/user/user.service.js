@@ -145,10 +145,7 @@ export default class User {
 
 
   getUserProfile (user, type, redirectUser = true) {
-    let result = user;
-
-    if (type != 'admin') {      
-      result = this
+    return this
       .Request
       .send(
         user.token,
@@ -163,15 +160,17 @@ export default class User {
           }
           this.setUserAvatarSrc(result.data);
           return result.data;
+        },
+        error => {
+          return error;
         }
-      );
-    } else {
-      if (redirectUser == true) {
-        this.redirectUser();
-      }
-    }
-
-    return result;
+      )
+      .then(data => {
+        if (redirectUser == true) {
+          this.redirectUser();
+        }
+        return data;
+      })
   }
 
   UpdateUserProfile (fields) {
