@@ -1,12 +1,66 @@
 #admin {
-  width: 100%;
+  .font_header {
+    color: $DarkJungleGreen;
+    font: {
+      family: $oswald;
+      size: 32px;
+    }
+    letter-spacing: 0.0588em;
+    line-height: 47px;
+    text-align: left;
+  }
+
+  background-color: $Platinum;
   height: 100%;
   position: relative;
   overflow: hidden;
+  width: 100%;
 
   .main-pages_admin {
     display: block;
     position: relative;
-    background-color: $DarkJungleGreen;
+  }
+
+  .admin {
+		&__page {
+			padding: 0px 20px;
+		}
+
+  	&__header {
+  		height: 89px;
+  		padding-left: 10px;
+  	}
+
+  	&__page-name {
+			@extend .font_header;
+  		margin-bottom: -10px;
+			text-transform: uppercase;
+  	}
+
+  	&__manip-row {
+  		margin-top: 27px;
+  	}
+
+    &__filter-name {
+      @extend .font_admin-main;
+    }
+
+  	&__table {
+      width: 100%;
+  	}
+  }
+
+
+  /* Angular Material overwritten */
+  md-select {
+		margin: 0px 0px 0px 22.3px;
   }
 }
+md-option {
+  ._md-text {
+    text-transform: capitalize;
+  }
+}
+
+
+@import "entertainers/entertainers";

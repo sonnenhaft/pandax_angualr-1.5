@@ -75,12 +75,9 @@ angular
     });
 
     //JWT interceptor will take care of sending the JWT in every request (More info: https://github.com/auth0/angular-jwt#jwtinterceptor)
-    jwtInterceptorProvider.tokenGetter = function () {
-      /*
-        ToDo: look for better solution without directly localStorage manipulation
-       */
-      let minx = localStorage.getItem('MINX');
-      return minx ? minx.token : '';
+    jwtInterceptorProvider.tokenGetter = function (User) {
+      "ngInject";
+      return User.token();
     };
     $httpProvider.interceptors.push('jwtInterceptor');
 

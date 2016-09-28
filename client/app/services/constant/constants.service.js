@@ -14,12 +14,12 @@ export default class Constants {
     this.billing = this.billingConstants();
     this.api = this.apiConstants();
     this.terms = this.termsConstants();
-
+    this.admin = this.adminConstants();
   }
 
   apiConstants () {
     const path = config.API_URL,
-          pathWS = config.WS_URL
+          pathWS = config.WS_URL;
 
     let apiConstants = {
 
@@ -139,6 +139,13 @@ export default class Constants {
         uri: (orderId) => path + `/customer/orders/${orderId}/invites?status[]=accepted&status[]=canceled`,
         method: 'GET'
       },
+
+      entertainers: {
+        get: {        
+          uri: (page = 1) => path + `/provider?page=${page}`,
+          method: 'GET'
+        }
+      }
 
     };
 
@@ -480,4 +487,20 @@ export default class Constants {
     return billingConstants;
   }
 
+  adminConstants () {
+    const adminConstants = {
+
+      statuses: {
+        accepted: "accepted",
+        active: "active",
+        blocked: "blocked",
+        offline:  "offline",
+        pending:  "pending",
+        rejected:  "rejected"
+      },
+
+    };
+
+    return adminConstants;
+  }
 }
