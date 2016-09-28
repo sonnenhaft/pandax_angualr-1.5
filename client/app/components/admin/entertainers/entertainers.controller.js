@@ -33,7 +33,7 @@ class EntertainersController {
         this.currentPage = data.meta.pagination.current_page;
         this.list = this.list.concat( data.items );
         this.isLastPage = this.checkIsLastPage(data.meta.pagination.total_pages);
-      })
+      });
   };
 
   checkIsLastPage (totalPages) {

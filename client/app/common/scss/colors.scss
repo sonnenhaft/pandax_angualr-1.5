@@ -18,6 +18,7 @@ $AuroMetalSaurus: #747984;
 $CharcoalDarker: #38404f;
 $DarkJungleGreen: #151520;
 $Platinum: rgba(223, 229, 235, 1);
+$UnitedNationsBlue: rgba(74, 144, 226, 1);
 
 @mixin gradient($from, $to) {
   background: -ms-linear-gradient(top left, $from 0%, $to 185%);

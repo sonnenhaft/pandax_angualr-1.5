@@ -1,5 +1,7 @@
 .table {
   $circleSize: 8px;
+  $avatarSize: 28px;
+  $actionIconSize: 16px;
 
   @mixin circle($borderColor, $bgColor: 'none') {
    @if $bgColor != 'none' {
@@ -43,6 +45,7 @@
       vertical-align: top;
       &_label {
         color: $AuroMetalSaurus;
+        font-weight: 400;
       }
       &_rowspaned {
         border-bottom: 2px solid $Platinum;
@@ -51,10 +54,11 @@
         div {
           background: {
             repeat: no-repeat;
-            position: cover;
+            size: cover;
           }
-          height: 100px;
-          width: 50px;
+          border-radius: 50%;
+          height: $avatarSize;
+          width: $avatarSize;
         }
       }
       &_status {
@@ -76,6 +80,21 @@
             text-transform: uppercase;
           }
         }
+      }
+      &_actions {
+        min-width: 100px;
+        text-align: right;
+        img {
+          display: inline-block;
+          height: $actionIconSize;
+          width: $actionIconSize;
+          &:not(:first-of-type) {
+            margin-left: 12px;
+          }
+        } 
+      }
+      &_link {
+        color: $UnitedNationsBlue;
       }
     }
   }

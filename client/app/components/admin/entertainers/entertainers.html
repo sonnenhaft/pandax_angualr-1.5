@@ -60,11 +60,14 @@
 			</td>
 			<td 
 				class="table_admin__cell">
-				{{entertainer.raiting}}
+				{{entertainer.rating}}
 			</td>
 			<td 
-				class="table_admin__cell">
-				<span class="table_admin__cell_status-icon"></span>
+				class="table_admin__cell table_admin__cell_actions">
+<!-- 				<img ng-if="entertainer.status == vm.statuses.offline" src="/assets/images/icons/admin/icon_approved.png" alt="Approve">
+<img ng-if="entertainer.status == vm.statuses.offline" src="/assets/images/icons/admin/icon_rejected.png" alt="Reject">
+<img ng-if="entertainer.status == vm.statuses.blocked" src="/assets/images/icons/admin/icon_unblock.png" alt="Unblock">
+<img ng-if="entertainer.status == vm.statuses.active" src="/assets/images/icons/admin/icon_unblock_copy.png" alt="Block"> -->
 			</td>
 		</tr>		
 		<tr 
@@ -75,7 +78,7 @@
 			</td>
 			<td 
 				class="table_admin__cell">
-				{{entertainer.displaying_name}}
+				{{entertainer.first_name}} {{entertainer.last_name}}
 			</td>
 			<td
 				class="table_admin__cell table_admin__cell_label">
@@ -90,7 +93,7 @@
 				Photos
 			</td>
 			<td 
-				class="table_admin__cell">
+				class="table_admin__cell table_admin__cell_link">
 				{{entertainer.photos.length}}
 			</td>
 			<td></td>
@@ -100,7 +103,7 @@
 			ng-repeat-end>
 			<td 
 				class="table_admin__cell table_admin__cell_label">
-				Displaying Name
+				Display Name
 			</td>
 			<td 
 				class="table_admin__cell">
