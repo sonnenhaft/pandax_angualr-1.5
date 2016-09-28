@@ -1,11 +1,15 @@
+import photoFullPageTpl from '../../order/manipulationEntertainers/photoFullPage/photoFullPage.html';
+import photoFullPageCtrl from '../../order/manipulationEntertainers/photoFullPage/photoFullPage.controller.js';
+
 class EntertainersController {
 
-  constructor (EntertainersService, Constants) {
+  constructor (EntertainersService, Constants, $mdDialog) {
     'ngInject';
 
     _.assign(this, {
     	EntertainersService,
       Constants,
+      $mdDialog,
     	list: [],
     	isOnProgress: false,
       isLastPage: false,
@@ -39,6 +43,25 @@ class EntertainersController {
   checkIsLastPage (totalPages) {
 		return this.currentPage == totalPages;
   }
+
+
+  showPopup(ev, index) {
+    this.$mdDialog.show({
+        controller: photoFullPageCtrl,
+        controllerAs: 'vm',
+        clickOutsideToClose: true,
+        template: '<div layout="row" layout-align="end" class="icon_modal-close">\
+                    <div class="icon_modal-close__image" ng-click="vm.$mdDialog.hide()"></div>\
+                  </div>' + 
+                  photoFullPageTpl,
+        targetEvent: ev,
+        bindToController: true,
+        locals: {
+          photos: this.list[index].photos,
+          photoIndexActive: 0
+        }
+      });
+  }  
 }
 
 export default EntertainersController;
