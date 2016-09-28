@@ -62,6 +62,10 @@ class EntertainersController {
         }
       });
   }  
+
+  changeStatus (entertainer, toStatus, showConfirmPopup = true) {
+
+  }
 }
 
 export default EntertainersController;

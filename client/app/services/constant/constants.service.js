@@ -493,6 +493,7 @@ export default class Constants {
       statuses: {
         accepted: "accepted",
         active: "active",
+        approved: "approved",
         blocked: "blocked",
         offline:  "offline",
         pending:  "pending",
