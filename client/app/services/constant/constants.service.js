@@ -148,7 +148,7 @@ export default class Constants {
       },
 
       lastNotAccomplishedOrder: {
-        uri: () => path + '/provider/orders/last-not-accomplished',
+        uri: (user) => path + `/${user}/orders/last-not-accomplished`,
         method: 'GET'
       }
 

@@ -32,21 +32,20 @@ export default angular
         url: '/order',
         parent: 'main',
         component: 'order',
-        onEnter: function($transition$, $state, OrderService, Constants) {
-          OrderService.fetchLastNotAccomplishedOrder()
-            .then(data => {
-console.log('data:', data);
-              if (data.status == Constants.order.statuses.new) {
-                if (data.customer.is_newcomer) {
-                  $state.go('main.accept', {order: data});
-                } else {
-                  $state.go('main.manipulationEntertainers', {orderId: data.id});
-                }
-              } else if (data.status == Constants.order.statuses.paid) {
-                $state.go('main.manipulationEntertainers', {orderId: data.id});
-              }
+        resolve: {
+          notAccomplishedOrder: function (OrderService) {
+            return OrderService.fetchLastNotAccomplishedOrder()
+                    .then(data => data);
+          }
+        },
+        onEnter: ($transition$, notAccomplishedOrder, $state, Constants, $timeout) => {
+          if (notAccomplishedOrder) {
+            $timeout(() => {
+              $state.go('main.manipulationEntertainers', {orderId: notAccomplishedOrder.id});
             });
+          }
         }
+
       });
   })
   .component('order', orderComponent)

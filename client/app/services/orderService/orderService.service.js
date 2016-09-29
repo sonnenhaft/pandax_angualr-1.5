@@ -272,7 +272,7 @@ export default class Order {
       .send(
         null,
         this.Constants.api.lastNotAccomplishedOrder.method,
-        this.Constants.api.lastNotAccomplishedOrder.uri()
+        this.Constants.api.lastNotAccomplishedOrder.uri(this.User.get('role'))
       )
       .then(
         result => {
