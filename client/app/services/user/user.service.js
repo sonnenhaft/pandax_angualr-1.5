@@ -1,9 +1,9 @@
 export default class User {
 
-  constructor (Storage, Constants, Request, $state, $http, Helper) {
+  constructor (Storage, Constants, Request, $state, $http, Helper, $q) {
     'ngInject';
 
-    _.assign(this, {Storage, Constants, Request, $state, $http, Helper, userAvatarSrc: '', billingInfo: {}});
+    _.assign(this, {Storage, Constants, Request, $state, $http, Helper, $q, userAvatarSrc: '', billingInfo: {}});
   }
 
   isAuth () {
@@ -145,7 +145,15 @@ export default class User {
 
 
   getUserProfile (user, type, redirectUser = true) {
-    return this
+    let result;
+
+    if (type == 'admin') {      
+      result = this.$q.defer().resolve(user);
+      if (redirectUser == true) {
+        this.redirectUser();
+      }
+    } else {
+      result = this
       .Request
       .send(
         user.token,
@@ -160,17 +168,11 @@ export default class User {
           }
           this.setUserAvatarSrc(result.data);
           return result.data;
-        },
-        error => {
-          return error;
         }
-      )
-      .then(data => {
-        if (redirectUser == true) {
-          this.redirectUser();
-        }
-        return data;
-      })
+      );
+    }
+
+    return result;
   }
 
   UpdateUserProfile (fields) {

@@ -1,4 +1,13 @@
 .navbar {
+  .active {
+    color: $white;
+    & g,
+    & path,
+    & rect {
+      fill: $white;
+    }
+  }
+
   background-color: black;
   color: $white;
   height: 100%;
@@ -78,7 +87,7 @@
           font-size: 1.063em;
           letter-spacing: 1px;
           &.active {
-            color: $white;
+            @extend .active;
           }
         }
 
@@ -97,7 +106,7 @@
             color: $AuroMetalSaurus;
             font-size: .938em;
             &.active {
-              color: $Cardinal;
+              @extend .active;
             }
           }
         }
