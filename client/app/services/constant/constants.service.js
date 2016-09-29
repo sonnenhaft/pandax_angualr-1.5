@@ -122,6 +122,11 @@ export default class Constants {
         method: 'GET'
       },
 
+      orderFutures: {
+        uri: (user, page = 1) => path + `/${user}/orders?page=${page}&status[]=accepted&status[]=in+progress&include=invites`,
+        method: 'GET'
+      }
+
     };
 
     return apiConstants;
@@ -181,7 +186,8 @@ export default class Constants {
         missed:  "missed",
         inProgress:  "in progress",
         finished:  "finished`",
-        canceled: "canceled"
+        canceled: "canceled",
+        active: "active"
       },
 
       entertainersCountInfo: 'Just trying to get to know you better for the safety of our Minx.',

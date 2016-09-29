@@ -25,6 +25,7 @@
         &.time { @include image('time'); }
         &.initial { @include image('price'); }
         &.apt { @include image('apt'); }
+
         &.active {
           color: $active;
           @include image('active');
