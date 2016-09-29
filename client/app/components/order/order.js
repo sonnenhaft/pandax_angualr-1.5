@@ -31,7 +31,22 @@ export default angular
       .state('main.order', {
         url: '/order',
         parent: 'main',
-        component: 'order'
+        component: 'order',
+        onEnter: function($transition$, $state, OrderService, Constants) {
+          OrderService.fetchLastNotAccomplishedOrder()
+            .then(data => {
+console.log('data:', data);
+              if (data.status == Constants.order.statuses.new) {
+                if (data.customer.is_newcomer) {
+                  $state.go('main.accept', {order: data});
+                } else {
+                  $state.go('main.manipulationEntertainers', {orderId: data.id});
+                }
+              } else if (data.status == Constants.order.statuses.paid) {
+                $state.go('main.manipulationEntertainers', {orderId: data.id});
+              }
+            });
+        }
       });
   })
   .component('order', orderComponent)

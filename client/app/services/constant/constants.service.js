@@ -145,6 +145,11 @@ export default class Constants {
           uri: (page = 1) => path + `/provider?page=${page}`,
           method: 'GET'
         }
+      },
+
+      lastNotAccomplishedOrder: {
+        uri: () => path + '/provider/orders/last-not-accomplished',
+        method: 'GET'
       }
 
     };
@@ -200,13 +205,15 @@ export default class Constants {
       }.hour().entertainer(),
 
       statuses: {
-        invited:  "invited",
         accepted: 'accepted',
+        canceled: "canceled",
         declined:  "declined",
-        missed:  "missed",
+        invited:  "invited",
         inProgress:  "in progress",
         finished:  "finished`",
-        canceled: "canceled"
+        missed:  "missed",
+        new:  "new",
+        paid:  "paid",
       },
 
       entertainersCountInfo: 'Just trying to get to know you better for the safety of our Minx.',

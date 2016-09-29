@@ -266,4 +266,19 @@ export default class Order {
       );
   }
 
+  fetchLastNotAccomplishedOrder () {
+    return this
+      .Request
+      .send(
+        null,
+        this.Constants.api.lastNotAccomplishedOrder.method,
+        this.Constants.api.lastNotAccomplishedOrder.uri()
+      )
+      .then(
+        result => {
+          return result.data;
+        }
+      );
+  }
+
 }
