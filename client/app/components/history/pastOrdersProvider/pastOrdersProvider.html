@@ -43,7 +43,7 @@
         <div layout="row">
           <span flex="15" class="guest">{{item.order.guestNumber}}</span>
         </div>
-        <span class="time">{{item.order.length | hoursToTime}}</span>
+        <span class="time">{{(item.worked_time) | hoursToTime: 'seconds' }}</span>
         <div layout="row" class="price">
           <div flex ng-if="item.moneyEarned > 0">
             <span class="initial">{{item.moneyEarned}}</span>
