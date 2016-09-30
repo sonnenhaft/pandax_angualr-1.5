@@ -70,6 +70,19 @@
         </div>
       </div>
     </div>
+
+    <!-- Add new card form -->
+    <div class="payments-add-card" ng-if="$ctrl.mode === 'main.profile.create'" flex="50">
+      <form name="billingInformationForm"
+        layout="column"
+        class="billing-information-form"
+        novalidate>
+
+        <card-info form-object="billingInformationForm" model="$ctrl.newCard"></card-info>
+      </form>
+    </div>
+
+
     <div class="terms" ng-if="$ctrl.isProvider">
       By clicking Ready you agree to the <a href="">Terms and Privacy</a>
     </div>
@@ -117,5 +130,7 @@
       </div>
     </div>
   </div>
+
+
 </form>
 <div class="user-photo" ng-style="$ctrl.photo" ng-if="$ctrl.photo && !$ctrl.mode !== 'main.profile.create'"></div>

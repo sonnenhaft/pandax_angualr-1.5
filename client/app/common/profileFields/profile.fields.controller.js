@@ -24,6 +24,7 @@ export default class profileFieldsController {
       case 'main.profile.create':
         this.email = this.User.get('email');
         this.backupModel.email = this.email;
+        this.newCard = {};
         break;
 
       default:
@@ -100,6 +101,8 @@ export default class profileFieldsController {
     _.mapValues(this.backupModel, (model, key) => {
       this[key] = angular.copy(model);
     });
+    
+    this.newCard = {};
   }
 
   validate (field) {
