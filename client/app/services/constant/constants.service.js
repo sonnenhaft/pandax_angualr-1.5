@@ -145,6 +145,13 @@ export default class Constants {
           uri: (page = 1) => path + `/provider?page=${page}`,
           method: 'GET'
         }
+      },
+
+      customers: {
+        get: {        
+          uri: (page = 1) => path + `/admin/customers?page=${page}`,
+          method: 'GET'
+        }
       }
 
     };
@@ -492,12 +499,18 @@ export default class Constants {
     const adminConstants = {
 
       statuses: {
-        accepted: "accepted",
-        active: "active",
-        blocked: "blocked",
-        offline:  "offline",
-        pending:  "pending",
-        rejected:  "rejected"
+        entertainer: {
+          accepted: "accepted",
+          active: "active",
+          blocked: "blocked",
+          offline:  "offline",
+          pending:  "pending",
+          rejected:  "rejected"
+        },
+        customer: {
+          active: "active",
+          blocked: "blocked",
+        }
       },
 
     };

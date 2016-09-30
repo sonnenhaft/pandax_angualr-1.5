@@ -14,7 +14,7 @@ class EntertainersController {
     	isOnProgress: false,
       isLastPage: false,
       currentPage: 1,
-      statuses: Constants.admin.statuses
+      statuses: Constants.admin.statuses.entertainer
     });
   }
 
