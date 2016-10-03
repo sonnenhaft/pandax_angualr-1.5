@@ -72,16 +72,9 @@
     </div>
 
     <!-- Add new card form -->
-    <div class="payments-add-card" ng-if="$ctrl.mode === 'main.profile.create'" flex="50">
-      <form name="billingInformationForm"
-        layout="column"
-        class="billing-information-form"
-        novalidate>
-
-        <card-info form-object="billingInformationForm" model="$ctrl.newCard"></card-info>
-      </form>
+    <div class="payments-add-card" ng-if="$ctrl.mode === 'main.profile.create'" flex="50" layout="column">
+      <card-info form-object="profileForm" model="$ctrl.newCard"></card-info>
     </div>
-
 
     <div class="terms" ng-if="$ctrl.isProvider">
       By clicking Ready you agree to the <a href="">Terms and Privacy</a>
@@ -122,7 +115,7 @@
                     last_name: profileForm.last_name.$viewValue,
                     phone: profileForm.phone.$viewValue,
                     email: profileForm.email.$viewValue
-                   })"
+                   }, profileForm)"
                    type="submit">
           {{!$ctrl.saveLoading ? 'Ready' : ''}}
           <spinner input="$ctrl.saveLoading"></spinner>

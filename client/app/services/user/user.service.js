@@ -235,7 +235,7 @@ export default class User {
 
   logout () {
     this.Storage.remove('MINX');
-    setTimeout(() => this.$state.go('home'), 1);
+    setTimeout(() => this.$state.go('home'), 1);    // 'setTimeout' - waiting for finishing current state transition
   }
 
   /*
