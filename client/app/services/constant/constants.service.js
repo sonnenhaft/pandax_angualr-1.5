@@ -41,6 +41,10 @@ export default class Constants {
         change: {
           uri: token => path + '/sessions/password/' + token,
           method: 'PUT'
+        },
+        changeByOld: {
+          uri: () => path + '/password/change',
+          method: 'POST'
         }
       },
 
@@ -73,7 +77,7 @@ export default class Constants {
       },
 
       orderDetails: {
-        uri: (orderId) => path + `/orders/${orderId}`,
+        uri: (orderId, include) => path + `/orders/${orderId}` + (!!include ? `?include=${include}` : ''),
         method: 'GET'
       },
 
@@ -123,9 +127,22 @@ export default class Constants {
       },
 
       orderHistory: {
-        uri: (user, page = 1) => path + `/${user}/orders/history?page=${page}`,
+        uri: (user, page = 1) => {
+          let result = path + `/${user}/orders/history?page=${page}`;
+/*          if (user == 'customer') {
+            result += `?page=${page}&status[]=finished&status[]=canceled&include=invites`;
+          } else {
+            result += `/history?page=${page}`;
+          }*/
+          return result;
+        },
         method: 'GET'
-      }
+      },
+
+      confirmedEntertainers: {
+        uri: (orderId) => path + `/customer/orders/${orderId}/invites?status[]=accepted&status[]=canceled`,
+        method: 'GET'
+      },
 
     };
 
@@ -199,6 +216,7 @@ export default class Constants {
 
       // time to cancel entertainer by customer without penalty in minutes
       timeToCleanCancel: 5
+
     };
 
     return orderConstants;
