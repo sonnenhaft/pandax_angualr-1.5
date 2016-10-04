@@ -211,6 +211,8 @@ export default class User {
         return data;
       });
     }
+
+    return result;
   }
 
   UpdateUserProfile (fields) {
