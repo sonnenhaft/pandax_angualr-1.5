@@ -14,7 +14,7 @@ export default class Constants {
     this.billing = this.billingConstants();
     this.api = this.apiConstants();
     this.terms = this.termsConstants();
-
+    this.admin = this.adminConstants();
   }
 
   apiConstants () {
@@ -128,7 +128,7 @@ export default class Constants {
 
       orderHistory: {
         uri: (user, page = 1) => {
-          let result = path + `/${user}/orders/history?page=${page}`;
+          let result = path + `/${user}/orders/history?page=${page}&include=invites`;
 /*          if (user == 'customer') {
             result += `?page=${page}&status[]=finished&status[]=canceled&include=invites`;
           } else {
@@ -143,6 +143,14 @@ export default class Constants {
         uri: (orderId) => path + `/customer/orders/${orderId}/invites?status[]=accepted&status[]=canceled`,
         method: 'GET'
       },
+
+      entertainers: {
+        get: {        
+          uri: (page = 1) => path + `/provider?page=${page}`,
+          method: 'GET'
+        }
+      }
+
 
     };
 
@@ -486,4 +494,21 @@ export default class Constants {
     return billingConstants;
   }
 
+  adminConstants () {
+    const adminConstants = {
+
+      statuses: {
+        accepted: "accepted",
+        active: "active",
+        blocked: "blocked",
+        offline:  "offline",
+        pending:  "pending",
+        rejected:  "rejected"
+      },
+
+    };
+
+    return adminConstants;
+  }
 }
+
