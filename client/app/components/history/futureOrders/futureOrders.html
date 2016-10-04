@@ -1,11 +1,11 @@
 <div class="list future-orders">
-
+ 
   <ul 
     ng-if="$ctrl.futures.length" 
     infinite-scroll="$ctrl.fetchMoreItems()" 
     infinite-scroll-disabled='$ctrl.isOnProgress || $ctrl.isLastPage'>
     <li ng-repeat="order in $ctrl.futures">
-      <div class="order-status" ng-if="order.active">
+      <div class="order-status" ng-if="(order.invites | filterBy: ['status']: $ctrl.Constants.order.statuses.inProgress).length > 0">
         <span class="active">Active order</span>
       </div>
       <div class="order-information">

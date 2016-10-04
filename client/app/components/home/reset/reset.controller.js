@@ -44,7 +44,6 @@ export default class Reset {
         },
         error => {
           this.resetLoading = false;
-          console.log(error);
         }
       )
       .then(result => {
