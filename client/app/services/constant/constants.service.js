@@ -222,7 +222,9 @@ export default class Constants {
         inProgress:  "in progress",
         finished:  "finished`",
         canceled: "canceled",
-        active: "active"
+        active: "active",
+        canceledbyProvider: "canceled_by_provider",
+        canceledbyCustomer: "canceled_by_customer",
       },
 
       entertainersCountInfo: 'Just trying to get to know you better for the safety of our Minx.',
