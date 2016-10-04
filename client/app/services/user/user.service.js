@@ -1,9 +1,9 @@
 export default class User {
 
-  constructor (Storage, Constants, Request, $state, $http, Helper, $q) {
+  constructor (Storage, Constants, Request, $state, $http, Helper, $q, $mdDialog) {
     'ngInject';
 
-    _.assign(this, {Storage, Constants, Request, $state, $http, Helper, $q, userAvatarSrc: '', billingInfo: {}});
+    _.assign(this, {Storage, Constants, Request, $state, $http, Helper, $q, $mdDialog, userAvatarSrc: '', billingInfo: {}});
   }
 
   isAuth () {
@@ -67,6 +67,15 @@ export default class User {
 
           this.create(result.data);
           return this.getUserProfile(result.data, this.get('role'));
+        },
+        error => {
+          if (error.status == 403) {
+            this.showBanPopUp(error.data && error.data.detail);
+          }
+
+          let defer = this.$q.defer();
+          defer.reject(error);
+          return defer.promise;
         }
       );
   }
@@ -140,9 +149,42 @@ export default class User {
       );
   }
 
+  changeByOld (passwordOld, passwordNew) {
+    return this
+      .Request
+      .send(
+        false,
+        this.Constants.api.password.changeByOld.method,
+        this.Constants.api.password.changeByOld.uri(),
+        {
+          old_password: passwordOld,
+          new_password: passwordNew
+        }
+      )
+      .then(
+        result => {
+          if (result.data.detail) {
+            return {
+              error: result.data.detail
+            };
+          }
+
+          return result;
+        }
+      );
+  }
+
 
   getUserProfile (user, type, redirectUser = true) {
-    return this
+    let result;
+
+    if (type == 'admin') {      
+      result = this.$q.defer().resolve(user);
+      if (redirectUser == true) {
+        this.redirectUser();
+      }
+    } else {
+      result = this
       .Request
       .send(
         user.token,
@@ -168,6 +210,9 @@ export default class User {
         }
         return data;
       });
+    }
+
+    return result;
   }
 
   UpdateUserProfile (fields) {
@@ -268,4 +313,18 @@ export default class User {
   fetchBillingInfo () {
     return this.billingInfo;
   }
+
+  showBanPopUp (message = '') {
+    let title = message.slice(message.indexOf('account'), message.indexOf('.'));
+
+    this.$mdDialog.show(
+      this.$mdDialog.alert()
+        .clickOutsideToClose(true)
+        .title(title.substr(0, 1).toUpperCase() + title.substr(1))
+        .textContent(message)
+        .ariaLabel('Ban Dialog')
+        .ok('Ok')
+    );
+  }
 }
+

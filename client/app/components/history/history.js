@@ -25,7 +25,12 @@ export default angular
           type: ''
         },
         parent: 'main',
-        component: 'history'
+        component: 'history',
+        resolve: {
+          isOnPending: (User, Constants) => {
+            return User.get('status') == Constants.admin.statuses.entertainer.pending;
+          }
+        }
       });
   })
   .component('history', historyComponent)

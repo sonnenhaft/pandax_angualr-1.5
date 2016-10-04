@@ -42,7 +42,7 @@ export default angular
           if (notAccomplishedOrder) {
             $timeout(() => {
               $state.go('main.manipulationEntertainers', {orderId: notAccomplishedOrder.id});
-            });
+            }, 10);
           }
         }
 

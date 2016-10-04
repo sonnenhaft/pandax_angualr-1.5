@@ -3,7 +3,7 @@ export default class historyController {
   constructor ($stateParams, User) {
     'ngInject';
 
-    _.assign(this, {$stateParams, User});
+    _.assign(this, {$stateParams, User, role: User.get('role')});
   }
 
   $onInit () {
