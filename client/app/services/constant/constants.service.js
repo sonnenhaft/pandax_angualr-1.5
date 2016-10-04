@@ -519,6 +519,7 @@ export default class Constants {
         customer: {
           active: "active",
           blocked: "blocked",
+          unblocked: "unblocked",
         }
       },
 

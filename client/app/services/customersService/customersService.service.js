@@ -1,11 +1,13 @@
 export default class Customers {
 
-  constructor (Constants, Request) {
+  constructor (Constants, Request, $mdDialog, $q) {
     'ngInject';
 
     _.assign(this, {
         Constants,
         Request,
+        $mdDialog,
+        $q,
         list: []
     });
 
@@ -29,6 +31,46 @@ export default class Customers {
 
   getCustomers() {
     return this.list;
+  }
+
+  setStatus (ev, customer, targetStatus, showPopup = true) {
+    let confirm;
+
+    if (showPopup) {
+      confirm = this.$mdDialog.show(
+        this.$mdDialog.confirm()
+          .title(this.Constants.admin.setStatusMessage.title('customer', targetStatus))
+          .textContent(this.Constants.admin.setStatusMessage.content('customer', targetStatus))
+          .ariaLabel('Set status')
+          .targetEvent(ev)
+          .ok('Yes')
+          .cancel('No'));
+    } else {
+      confirm = this.$q.defer();
+      confirm.resolve();
+      confirm = confirm.promise;
+    }
+
+    return confirm.then((_data) => {
+      return this
+        .Request
+        .send(
+          null,
+          this.Constants.api.admin.setStatus.method,
+          this.Constants.api.admin.setStatus.uri('customers', customer.id),
+          {set: targetStatus}
+        )
+        .then(
+          result => {
+            this.updateCustomerInList(customer, targetStatus);
+            return result.data;
+          }
+        );
+      });
+  }
+
+  updateCustomerInList (customer, targetStatus) {
+    customer.status = targetStatus;
   }
 
 }
