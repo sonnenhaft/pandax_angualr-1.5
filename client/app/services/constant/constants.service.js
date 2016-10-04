@@ -117,15 +117,28 @@ export default class Constants {
         method: 'PUT'
       },
 
+      orderFutures: {
+        uri: (user, page = 1) => path + `/${user}/orders?page=${page}&status[]=accepted`,
+        method: 'GET'
+      },
+
+      orderHistory: {
+        uri: (user, page = 1) => {
+          let result = path + `/${user}/orders/history?page=${page}`;
+/*          if (user == 'customer') {
+            result += `?page=${page}&status[]=finished&status[]=canceled`;
+          } else {
+            result += `/history?page=${page}`;
+          }*/
+          return result;
+        },
+        method: 'GET'
+      },
+
       confirmedEntertainers: {
         uri: (orderId) => path + `/customer/orders/${orderId}/invites?status[]=accepted&status[]=canceled`,
         method: 'GET'
       },
-
-      orderFutures: {
-        uri: (user, page = 1) => path + `/${user}/orders?page=${page}&status[]=accepted&status[]=in+progress&include=invites`,
-        method: 'GET'
-      }
 
     };
 

@@ -49,14 +49,6 @@ export default class Order {
     return this.providers;
   }
 
-  getProviderById(id) {
-    return _.find(this.providers, ['type', id]);
-  }
-
-  getPastOrders() {
-    return _.orderBy(this.history.past, order => order.datetime, 'desc');
-  }
-
   fetchFuturesOrders(page = 1) {
     return this
       .Request
@@ -68,6 +60,23 @@ export default class Order {
       .then(
         result => {
           this.listFutures = result.data.items;
+          return result.data;
+        },
+        error => console.log(error)
+      );
+  }
+
+  fetchHistoryOrders(page = 1) {
+    return this
+      .Request
+      .send(
+        null,
+        this.Constants.api.orderHistory.method,
+        this.Constants.api.orderHistory.uri(this.role, page)
+      )
+      .then(
+        result => {
+          this.history = result.data.items;
           return result.data;
         },
         error => console.log(error)
@@ -96,10 +105,6 @@ export default class Order {
         },
         error => console.log(error)
       );
-  }
-
-  getEntertainersInvited() {
-    return this.listInvited;
   }
 
 
@@ -142,145 +147,23 @@ export default class Order {
   }
 
 
-  fetchProviderPastOrders () {
-    return new Promise((resolve, reject) => {
-        this.historyProvider = {
-          past: [
-            {
-              id: 1,
-              customer: {
-                photo: '/assets/images/photos/photo2-3x.png',
-                name: 'Daniel',
-                tel: "+ 9246 3415 5314",
-                rating: 5
-              },
-              datetime: this.moment(new Date('08-24-2016 15:00')),
-              service_type: 1,
-              address: 'Santa Monica Fwy 2222',
-              guests: 3,
-              duration: '1h 30m',
-              initial_price: 250
-            },
-            {
-              id: 2,
-              customer: {
-                photo: '/assets/images/photos/photo3-3x.png',
-                name: 'Daniel 2',
-                tel: "+ 9246 3415 5314",
-                rating: 5
-              },
-              datetime: this.moment(new Date('07-21-2016 12:30')),
-              service_type: 3,
-              address: '365 W Craig Rd #123, North Las Vegas, NV 89032, USA',
-              guests: 1,
-              duration: '2h',
-              initial_price: 800
-            }
-          ],
-          future: [
-            {
-              id: 1,
-              datetime: this.moment(new Date('09-10-2016 18:30')),
-              service_type: 1,
-              address: 'Santa Monica Fwy 1110',
-              guests: 3,
-              duration: '1h 30m',
-              initial_price: 250,
-              provider: [
-                {
-                  name: 'Agnes',
-                  duration: '1h 30m',
-                  price: 100,
-                  img: ''
-                },
-                {
-                  name: 'Kimberly',
-                  duration: null,
-                  price: 50,
-                  img: ''
-                },
-                {
-                  name: 'Rebecca',
-                  duration: null,
-                  price: 0,
-                  img: ''
-                },
-                {
-                  name: 'Agnes',
-                  duration: '1h 30m',
-                  price: 100,
-                  img: ''
-                },
-                {
-                  name: 'Agnes',
-                  duration: '45m',
-                  price: 100,
-                  img: ''
-                }
-              ]
-            },
-            {
-              id: 2,
-              active: true,
-              datetime: new Date(),
-              service_type: 3,
-              address: '365 W Craig Rd #123, North Las Vegas, NV 89032, USA',
-              guests: 1,
-              duration: '2h',
-              initial_price: 800,
-              provider: [
-                {
-                  name: 'Lil',
-                  duration: '2h',
-                  price: 400,
-                  img: ''
-                },
-                {
-                  name: 'Sara',
-                  duration: '2h',
-                  price: 200,
-                  img: ''
-                }
-              ]
-            },
-            {
-              id: 3,
-              asap: true,
-              datetime: new Date(),
-              service_type: 2,
-              address: '1, 22262 Mission Blvd, Hayward, CA 94541, USA',
-              guests: '2-3',
-              duration: '1h',
-              initial_price: 250,
-              provider: [
-                {
-                  name: 'Lil',
-                  duration: '1h',
-                  price: 125,
-                  img: ''
-                },
-                {
-                  name: 'Sara',
-                  duration: '1h',
-                  price: 125,
-                  img: ''
-                }
-              ]
-            }
-          ]
-        };
-
-        setTimeout(() => {
-          resolve(this.historyProvider);
-        }, 4000);
-    })
-
-
+  fetchProviderPastOrders (page = 1) {
+    return this
+      .Request
+      .send(
+        null,
+        this.Constants.api.orderHistory.method,
+        this.Constants.api.orderHistory.uri(this.role, page)
+      )
+      .then(
+        result => {
+          this.historyProvider = result.data.items;
+          return result.data;
+        },
+        error => console.log(error)
+      );
   }
 
-  getProviderPastOrders () {
-    return _.orderBy(this.historyProvider.past, order => order.datetime, 'desc');
-  }
 
   inviteEntertainer (orderId, entertainer) {
     return this

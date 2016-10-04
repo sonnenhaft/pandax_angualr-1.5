@@ -1,15 +1,32 @@
-function hoursToTime() {
+function hoursToTime(moment) {
+  'ngInject';
 
-  return function(hours) {
-    let hh = parseInt(hours), 
-        mm = parseFloat(hours) - hh,
+  return function(val, valType = 'default') {
+    let hh, mm, 
         resultString = '';
 
-    if (hh > 0) {
-      resultString += `${hh}h `;
-    }
-    if (mm > 0) {
-      resultString += `${parseInt(mm * 60)}m `;
+    if (valType == 'default') {
+        hh = parseInt(val);
+        mm = parseFloat(val) - hh;
+
+      if (hh > 0) {
+        resultString += `${hh}h `;
+      }
+      if (mm > 0) {
+        resultString += `${parseInt(mm * 60)}m `;
+      }
+    } else {
+      if (valType == 'seconds') {
+        hh = moment.duration(val * 1000).hours();
+        mm = moment.duration(val * 1000).minutes();
+
+        if (hh > 0) {
+          resultString += `${hh}h `;
+        }
+        if (mm > 0) {
+          resultString += `${mm}m `;
+        }
+      }
     }
 
     return resultString;
