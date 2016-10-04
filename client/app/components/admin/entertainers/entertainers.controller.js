@@ -10,11 +10,10 @@ class EntertainersController {
     	EntertainersService,
       Constants,
       $mdDialog,
-    	list: [],
     	isOnProgress: false,
       isLastPage: false,
       currentPage: 1,
-      statuses: Constants.admin.statuses
+      statuses: Constants.admin.statuses.entertainer
     });
   }
 
@@ -24,7 +23,6 @@ class EntertainersController {
       .then(data => {
       	this.isOnProgress = false;
         this.isLastPage = this.checkIsLastPage(data.meta.pagination.total_pages);
-        return this.list = data.items;
       });
   }
 
@@ -35,7 +33,6 @@ class EntertainersController {
       .then((data) => {
         this.isOnProgress = false;
         this.currentPage = data.meta.pagination.current_page;
-        this.list = this.list.concat( data.items );
         this.isLastPage = this.checkIsLastPage(data.meta.pagination.total_pages);
       });
   };
@@ -57,15 +54,11 @@ class EntertainersController {
         targetEvent: ev,
         bindToController: true,
         locals: {
-          photos: this.list[index].photos,
+          photos: this.EntertainersService.list[index].photos,
           photoIndexActive: 0
         }
       });
   }  
-
-  changeStatus (entertainer, toStatus, showConfirmPopup = true) {
-
-  }
 }
 
 export default EntertainersController;

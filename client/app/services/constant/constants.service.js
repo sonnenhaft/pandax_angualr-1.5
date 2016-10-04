@@ -145,6 +145,13 @@ export default class Constants {
           uri: (page = 1) => path + `/provider?page=${page}`,
           method: 'GET'
         }
+      },
+
+      admin: {
+        setStatus: {
+          uri: (role, userId) => path + `/admin/${role}/${userId}/status`,
+          method: 'POST'
+        }
       }
 
     };
@@ -491,15 +498,28 @@ export default class Constants {
     const adminConstants = {
 
       statuses: {
-        accepted: "accepted",
-        active: "active",
-        approved: "approved",
-        blocked: "blocked",
-        offline:  "offline",
-        pending:  "pending",
-        rejected:  "rejected"
+        entertainer: {
+          accepted: "accepted",
+          active: "active",
+          blocked: "blocked",
+          offline:  "offline",
+          pending:  "pending",
+          rejected:  "rejected",
+          unblocked: "unblocked",
+        },
+        customer: {
+          active: "active",
+          blocked: "blocked",
+        }
       },
 
+      setStatusMessage: {
+        // substring to remove 'ed' in the end of status name
+        title: (role, targetStatus) => 
+          `${targetStatus.substr(0, 1).toUpperCase() + targetStatus.substr(1, (targetStatus == 'active' ? targetStatus.length : targetStatus.length-3))} ${role}`,
+        content: (role, targetStatus) => 
+          `Are you sure want to ${targetStatus == 'active' ? targetStatus : targetStatus.substr(0, targetStatus.length-2)} the ${role}?`
+      }
     };
 
     return adminConstants;
