@@ -355,7 +355,7 @@ export default class Constants {
           url: 'settings.terms'
         },
         {
-          role: ['customer'],
+          role: ['customer', 'provider'],
           parent: 'Settings',
           text: 'Change Password',
           url: 'main.password'
