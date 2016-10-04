@@ -1,10 +1,14 @@
 export default class historyMinxController {
 
-  constructor ($stateParams) {
+  constructor ($stateParams, Constants) {
     'ngInject';
 
-    this.type = $stateParams.type;
+    _.assign(this, {
+    	$stateParams,
+    	Constants
+    });
 
+    this.type = $stateParams.type;
   }
 
 }

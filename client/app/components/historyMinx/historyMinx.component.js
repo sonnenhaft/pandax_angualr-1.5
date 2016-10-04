@@ -4,7 +4,7 @@ import controller from './historyMinx.controller';
 let historyMinxComponent = {
   restrict: 'E',
   bindings: {
-    minx: '='
+    order: '<'
   },
   template,
   controller

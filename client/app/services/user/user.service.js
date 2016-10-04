@@ -249,5 +249,4 @@ export default class User {
   fetchBillingInfo () {
     return this.billingInfo;
   }
-
 }

@@ -4,7 +4,6 @@ export default class historyController {
     'ngInject';
 
     _.assign(this, {$stateParams, User});
-
   }
 
   $onInit () {
