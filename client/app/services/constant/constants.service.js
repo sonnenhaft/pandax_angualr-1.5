@@ -41,6 +41,10 @@ export default class Constants {
         change: {
           uri: token => path + '/sessions/password/' + token,
           method: 'PUT'
+        },
+        changeByOld: {
+          uri: () => path + '/password/change',
+          method: 'POST'
         }
       },
 
