@@ -152,6 +152,13 @@ export default class Constants {
           uri: (page = 1) => path + `/admin/customers?page=${page}`,
           method: 'GET'
         }
+      },
+
+      admin: {
+        setStatus: {
+          uri: (role, userId) => path + `/admin/${role}/${userId}/status`,
+          method: 'POST'
+        }
       }
 
     };
@@ -505,7 +512,8 @@ export default class Constants {
           blocked: "blocked",
           offline:  "offline",
           pending:  "pending",
-          rejected:  "rejected"
+          rejected:  "rejected",
+          unblocked: "unblocked",
         },
         customer: {
           active: "active",
@@ -513,6 +521,13 @@ export default class Constants {
         }
       },
 
+      setStatusMessage: {
+        // substring to remove 'ed' in the end of status name
+        title: (role, targetStatus) => 
+          `${targetStatus.substr(0, 1).toUpperCase() + targetStatus.substr(1, (targetStatus == 'active' ? targetStatus.length : targetStatus.length-3))} ${role}`,
+        content: (role, targetStatus) => 
+          `Are you sure want to ${targetStatus == 'active' ? targetStatus : targetStatus.substr(0, targetStatus.length-2)} the ${role}?`
+      }
     };
 
     return adminConstants;

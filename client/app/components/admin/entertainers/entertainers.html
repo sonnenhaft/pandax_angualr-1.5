@@ -31,7 +31,7 @@
     infinite-scroll-disabled='vm.isOnProgress || vm.isLastPage'>
 		<tr 
 			class="table_admin__row table_admin__row_start" 
-			ng-repeat-start="entertainer in vm.list">
+			ng-repeat-start="entertainer in vm.EntertainersService.list">
 			<td 
 				class="table_admin__cell table_admin__cell_avatar table_admin__cell_rowspaned" 
 				rowspan="3">
@@ -64,10 +64,32 @@
 			</td>
 			<td 
 				class="table_admin__cell table_admin__cell_actions">
-<!-- 				<img ng-if="entertainer.status == vm.statuses.offline" src="/assets/images/icons/admin/icon_approved.png" alt="Approve">
-<img ng-if="entertainer.status == vm.statuses.offline" src="/assets/images/icons/admin/icon_rejected.png" alt="Reject">
-<img ng-if="entertainer.status == vm.statuses.blocked" src="/assets/images/icons/admin/icon_unblock.png" alt="Unblock">
-<img ng-if="entertainer.status == vm.statuses.active" src="/assets/images/icons/admin/icon_unblock_copy.png" alt="Block"> -->
+ 				<img 
+ 					ng-if="entertainer.status == vm.statuses.pending || entertainer.status == vm.statuses.rejected" 
+ 					src="/assets/images/icons/admin/icon_approve.png" 
+ 					ng-click="vm.EntertainersService.setStatus($event, entertainer, vm.statuses.active, false)"
+ 					title="Approve"
+ 					alt="Approve">
+				<img 
+					ng-if="entertainer.status == vm.statuses.pending" 
+					src="/assets/images/icons/admin/icon_reject.png" 
+					ng-click="vm.EntertainersService.setStatus($event, entertainer, vm.statuses.rejected, true)"
+					title="Reject"
+					alt="Reject">
+
+				<img 
+					ng-if="entertainer.status == vm.statuses.approved" 
+					src="/assets/images/icons/admin/icon_block.png" 
+					ng-click="vm.EntertainersService.setStatus($event, entertainer, vm.statuses.blocked, true)"
+					title="Block"
+					alt="Block">
+
+				<img 
+					ng-if="entertainer.status == vm.statuses.blocked" 
+					src="/assets/images/icons/admin/icon_unblock.png" 
+					ng-click="vm.EntertainersService.setStatus($event, entertainer, vm.statuses.unblocked, true)"
+					alt="Unblock"
+					alt="Ubblock">
 			</td>
 		</tr>		
 		<tr 
