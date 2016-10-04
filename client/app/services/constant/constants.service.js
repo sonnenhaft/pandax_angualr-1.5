@@ -186,7 +186,9 @@ export default class Constants {
         missed:  "missed",
         inProgress:  "in progress",
         finished:  "finished`",
-        canceled: "canceled"
+        canceled: "canceled",
+        canceledbyProvider: "canceled_by_provider",
+        canceledbyCustomer: "canceled_by_customer",
       },
 
       entertainersCountInfo: 'Just trying to get to know you better for the safety of our Minx.',

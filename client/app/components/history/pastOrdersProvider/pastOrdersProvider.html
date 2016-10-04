@@ -51,10 +51,16 @@
           </div>
         </div>
         <div 
-          ng-if="item.status == $ctrl.Constants.order.statuses.canceled"
+          ng-if="item.status == $ctrl.Constants.order.statuses.canceledbyProvider"
           layout="row" 
           class="order-information-canceled-message">
           Order canceled by entertainer. Cancelation fee will be deducted from the next payment
+        </div>
+        <div 
+          ng-if="item.status == $ctrl.Constants.order.statuses.canceledbyCustomer"
+          layout="row" 
+          class="order-information-canceled-message">
+          Order canceled by customer
         </div>
       </div>
     </li>
