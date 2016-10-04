@@ -1,9 +1,9 @@
 export default class passwordController {
 
-  constructor (User, Validation) {
+  constructor (User, Validation, Helper) {
     'ngInject';
 
-    _.assign(this, {User, Validation});
+    _.assign(this, {User, Validation, Helper});
 
   }
 
@@ -20,16 +20,16 @@ export default class passwordController {
   onChange (form) {
     if (this.validate(form)) {
       this.resetError = false;
-      return this.reset(form.password, this.User.token());
+      return this.reset(form.old_password, form.password);
     }
 
     return false;
   }
 
-  reset (password, token) {
+  reset (passwordOld, passwordNew) {
     this.resetLoading = true;
     this.User
-      .reset({password}, token)
+      .changeByOld(passwordOld, passwordNew)
       .then(
         result => {
           console.log(result);
@@ -40,16 +40,15 @@ export default class passwordController {
             return false;
           }
 
+          this.Helper.showToast('Your password was successfully changed', 4000);
+
           return true;
         },
         error => {
           this.resetLoading = false;
           console.log(error);
         }
-      )
-      .then(result => {
-        console.log('Password changed')
-      });
+      );
   }
 
 }

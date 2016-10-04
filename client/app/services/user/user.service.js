@@ -140,9 +140,42 @@ export default class User {
       );
   }
 
+  changeByOld (passwordOld, passwordNew) {
+    return this
+      .Request
+      .send(
+        false,
+        this.Constants.api.password.changeByOld.method,
+        this.Constants.api.password.changeByOld.uri(),
+        {
+          old_password: passwordOld,
+          new_password: passwordNew
+        }
+      )
+      .then(
+        result => {
+          if (result.data.detail) {
+            return {
+              error: result.data.detail
+            };
+          }
+
+          return result;
+        }
+      );
+  }
+
 
   getUserProfile (user, type, redirectUser = true) {
-    return this
+    let result;
+
+    if (type == 'admin') {      
+      result = this.$q.defer().resolve(user);
+      if (redirectUser == true) {
+        this.redirectUser();
+      }
+    } else {
+      result = this
       .Request
       .send(
         user.token,

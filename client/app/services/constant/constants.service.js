@@ -41,6 +41,10 @@ export default class Constants {
         change: {
           uri: token => path + '/sessions/password/' + token,
           method: 'PUT'
+        },
+        changeByOld: {
+          uri: () => path + '/password/change',
+          method: 'POST'
         }
       },
 
@@ -124,12 +128,12 @@ export default class Constants {
 
       orderHistory: {
         uri: (user, page = 1) => {
-          let result = path + `/${user}/orders`;
-          if (user == 'customer') {
+          let result = path + `/${user}/orders/history?page=${page}&include=invites`;
+/*          if (user == 'customer') {
             result += `?page=${page}&status[]=finished&status[]=canceled&include=invites`;
           } else {
             result += `/history?page=${page}`;
-          }
+          }*/
           return result;
         },
         method: 'GET'
@@ -146,6 +150,7 @@ export default class Constants {
           method: 'GET'
         }
       }
+
 
     };
 
@@ -206,7 +211,9 @@ export default class Constants {
         missed:  "missed",
         inProgress:  "in progress",
         finished:  "finished`",
-        canceled: "canceled"
+        canceled: "canceled",
+        canceledbyProvider: "canceled_by_provider",
+        canceledbyCustomer: "canceled_by_customer",
       },
 
       entertainersCountInfo: 'Just trying to get to know you better for the safety of our Minx.',
