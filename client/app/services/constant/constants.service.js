@@ -41,6 +41,10 @@ export default class Constants {
         change: {
           uri: token => path + '/sessions/password/' + token,
           method: 'PUT'
+        },
+        changeByOld: {
+          uri: () => path + '/password/change',
+          method: 'POST'
         }
       },
 
@@ -127,7 +131,6 @@ export default class Constants {
           let result = path + `/${user}/orders/history?page=${page}&include=invites`;
 /*        if (user == 'customer') {
             result += `?page=${page}&status[]=finished&status[]=canceled&include=invites`;
->>>>>>> e184c0a8b082a097806b9804def4705e6ba33de6
           } else {
             result += `/history?page=${page}`;
           }*/
@@ -161,6 +164,7 @@ export default class Constants {
           method: 'POST'
         }
       }
+
 
     };
 
