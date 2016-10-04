@@ -125,9 +125,9 @@ export default class Constants {
       orderHistory: {
         uri: (user, page = 1) => {
           let result = path + `/${user}/orders/history?page=${page}&include=invites`;
-/*          if (user == 'customer') {
-            result += `?page=${page}&status[]=finished&status[]=canceled`;
->>>>>>> 3465eada020a25838c1cd9755323246772c97b2b
+/*        if (user == 'customer') {
+            result += `?page=${page}&status[]=finished&status[]=canceled&include=invites`;
+>>>>>>> e184c0a8b082a097806b9804def4705e6ba33de6
           } else {
             result += `/history?page=${page}`;
           }*/
