@@ -8,6 +8,7 @@ export default class Request {
       'Content-Type': 'application/json'
     };
   }
+
   send (token, method, url, data) {
     let params = {
       method,

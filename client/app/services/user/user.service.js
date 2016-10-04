@@ -190,11 +190,17 @@ export default class User {
           }
           this.setUserAvatarSrc(result.data);
           return result.data;
+        },
+        error => {
+          return error;
         }
-      );
-    }
-
-    return result;
+      )
+      .then(data => {
+        if (redirectUser == true) {
+          this.redirectUser();
+        }
+        return data;
+      });
   }
 
   UpdateUserProfile (fields) {

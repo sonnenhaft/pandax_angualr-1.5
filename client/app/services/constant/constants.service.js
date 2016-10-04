@@ -19,7 +19,7 @@ export default class Constants {
 
   apiConstants () {
     const path = config.API_URL,
-          pathWS = config.WS_URL
+          pathWS = config.WS_URL;
 
     let apiConstants = {
 
@@ -511,4 +511,3 @@ export default class Constants {
     return adminConstants;
   }
 }
-
