@@ -18,7 +18,9 @@ export default class Order {
         moment,
         orderDetails: {},
         $mdDialog,
-        listFutures: []
+        listConfirmed: [],
+        listFutures: [],
+        role: User.get('role')
     });
 
   }
