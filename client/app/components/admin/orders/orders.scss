@@ -1,0 +1,41 @@
+#orders {
+	$ordersContentMinWidth: 914px;
+	$ordersListMinWidth: 305px;
+
+	.orders {
+		&-list {
+			overflow: auto;
+			padding-top: 2px;
+			padding-bottom: 4px;
+			min-width: $ordersListMinWidth;
+		}
+
+		&-content {
+			min-width: $ordersContentMinWidth;
+		}
+	}
+
+	.order {
+		padding: {
+			top: 9px;
+			bottom: 9px;
+		}
+		width: 100%;
+
+		&-param {
+			background: {
+				repeat: no-repeat;
+				position: center;
+				size: 23px 15px;
+			}
+			padding-left: 21px;
+
+			&_date {
+				@include getImage('history/date')
+			}
+			&_name {
+				@include getImage('history/guest')
+			}
+		}
+	}
+}

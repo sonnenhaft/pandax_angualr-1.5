@@ -82,6 +82,9 @@
           }
         }
       }
+      &_header {
+        @extend .font_admin-table__header;
+      }
       &_actions {
         min-width: 100px;
         text-align: right;
@@ -99,10 +102,6 @@
         color: $UnitedNationsBlue;
         cursor: pointer;
       }
-    }
-
-    &_orders {
-      min-width: $ordersContentMinWidth;
     }
   }
 }

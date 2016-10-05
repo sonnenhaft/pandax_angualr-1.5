@@ -52,3 +52,16 @@
   line-height: 24px;
   text-align: left;
 }
+
+.font_admin-table__header {
+  color: $DarkJungleGreen;
+  font: {
+    family: $oswald;
+    size: 17px;
+    weight: 600;
+  }
+  letter-spacing: 0.0588em;
+  line-height: 40px;
+  text-align: left;
+  text-transform: uppercase;
+}

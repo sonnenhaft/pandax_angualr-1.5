@@ -9,7 +9,8 @@ class OrdersController {
     	isOnProgress: false,
       isLastPage: false,
       currentPage: 1,
-      statuses: Constants.order.statuses
+      statuses: Constants.order.statuses,
+      activeOrderIndex: 0
     });
   }
 

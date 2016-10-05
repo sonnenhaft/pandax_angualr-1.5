@@ -65,6 +65,9 @@
 
     &__table {
       width: 100%;
+      &_orders {
+        width: auto;
+      }
     }
   }
 
@@ -80,3 +83,5 @@ md-option {
     text-transform: capitalize;
   }
 }
+
+@import "orders/orders";
