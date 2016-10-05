@@ -96,7 +96,7 @@ angular
       let responseHandler = (response) => {
         let defer = $q.defer();
 
-        if (response.status >= 400) {
+        if (response.status >= 400 && response.status != 403) { // for 403 status we have another handler only in userService.login()
           let Helper = $injector.get("Helper"),
               messageText = response.statusText;
           if (response.data) {

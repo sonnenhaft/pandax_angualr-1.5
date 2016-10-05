@@ -1,26 +1,22 @@
 <div id="history" layout-gt-sm="row" class="animated fadeIn">
 
-  <div class="history-container" flex="50">
+  <div class="history-container" flex="60">
     <h1 class="page-name">Orders</h1>
 
-    <div id="history-tabs-wrapper" ng-if="$ctrl.User.get('role') == 'customer'">
-      <md-tabs md-dynamic-height md-selected="$ctrl.tab">
+    <div id="history-tabs-wrapper">
+      <md-tabs md-dynamic-height md-selected="$ctrl.tab" ng-if="$ctrl.role != 'provider' || !$ctrl.isOnPending">
         <md-tab label="Future"> 
-          <future-orders></future-orders>
+          <future-orders ng-if="$ctrl.role == 'customer'"></future-orders>
           <!-- <future-orders-provider ng-if="$ctrl.User.get('role') == 'provider'"></future-orders-provider> -->
         </md-tab>
         <md-tab label="History">
-          <past-orders></past-orders>
+          <past-orders ng-if="$ctrl.role == 'customer'"></past-orders>
+          <past-orders-provider ng-if="$ctrl.role == 'provider'"></past-orders-provider>
         </md-tab>
       </md-tabs>
-    </div>
-
-    <div id="history-tabs-wrapper" ng-if="$ctrl.User.get('role') == 'provider'">
-      <md-tabs md-dynamic-height md-selected="0" class="md-tabs_provider">
-        <md-tab label="History">
-          <past-orders-provider></past-orders-provider>
-        </md-tab>
-      </md-tabs>
+      <div class="page-notify" ng-if="$ctrl.role == 'provider' && $ctrl.isOnPending">
+        Your account is not approved
+      </div>
     </div>
 
   </div>
