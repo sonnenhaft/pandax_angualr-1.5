@@ -50,17 +50,6 @@
       &_rowspaned {
         border-bottom: 2px solid $Platinum;
       }
-      &_avatar {
-        div {
-          background: {
-            repeat: no-repeat;
-            size: cover;
-          }
-          border-radius: 50%;
-          height: $avatarSize;
-          width: $avatarSize;
-        }
-      }
       &_status {
         &-icon {
           @include circle(green);
@@ -98,6 +87,26 @@
       &_link {
         color: $UnitedNationsBlue;
         cursor: pointer;
+      }
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: $avatarSize;
+      height: $avatarSize;
+      border-radius: 50%;
+      overflow: hidden;
+      cursor: pointer;
+
+      img {
+        display: block;
+        max-width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
       }
     }
   }
