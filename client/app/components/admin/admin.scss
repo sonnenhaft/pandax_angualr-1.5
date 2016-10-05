@@ -56,15 +56,17 @@
       }
       &-field {
         border: none;
+        padding: 4px 12px 6px 12px;
+        &::-webkit-input-placeholder {
+          @extend .font_admin-filter__placeholder;
+        }
       }
     }
 
-  	&__table {
+    &__table {
       width: 100%;
-  	}
+    }
   }
-
-  
 
   /* Angular Material overwritten */
   md-select {

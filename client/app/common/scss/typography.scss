@@ -40,3 +40,15 @@
   line-height: 15px;
   text-align: left;
 }
+
+.font_admin-filter__placeholder {
+  color: $AuroMetalSaurus;
+  font: {
+    family: $open-sans;
+    size: 14px;
+    weight: 600;
+  }
+  letter-spacing: 0.0176em;
+  line-height: 24px;
+  text-align: left;
+}
