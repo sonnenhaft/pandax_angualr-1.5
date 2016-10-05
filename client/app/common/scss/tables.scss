@@ -2,6 +2,7 @@
   $circleSize: 8px;
   $avatarSize: 28px;
   $actionIconSize: 16px;
+  $ordersContentMinWidth: 914px;
 
   @mixin circle($borderColor, $bgColor: 'none') {
    @if $bgColor != 'none' {
@@ -98,6 +99,10 @@
         color: $UnitedNationsBlue;
         cursor: pointer;
       }
+    }
+
+    &_orders {
+      min-width: $ordersContentMinWidth;
     }
   }
 }

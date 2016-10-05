@@ -163,8 +163,12 @@ export default class Constants {
           uri: (role, userId) => path + `/admin/${role}/${userId}/status`,
           method: 'POST'
         }
-      }
+      },
 
+      orders: {
+        uri: (page = 1) => path + `/admin/orders?page=${page}&include=invites`,
+        method: 'GET'
+      }
 
     };
 

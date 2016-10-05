@@ -1,7 +1,7 @@
 import angular from 'angular';
-import CustomersService from './customersService.service';
+import OrdersService from './ordersService.service';
 
 export default angular
-  .module('customersService', [])
-  .service('CustomersService', CustomersService)
+  .module('ordersService', [])
+  .service('OrdersService', OrdersService)
   .name;

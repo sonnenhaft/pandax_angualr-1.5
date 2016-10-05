@@ -1,26 +1,20 @@
-<div id="entertainers" class="admin__page">
+<div id="orders" class="admin__page admin__page_orders">
 
 
 	<div 
 		layout="column"
 		layout-align="end"
 		class="admin__header">
-		<span class="admin__page-name">Entertainers</span>		
+		<span class="admin__page-name">Orders</span>		
 	</div>
 
 
-	<div class="admin__manip-row">
+	<div class="admin__manip-row admin__manip-row_full-width">
 		<div 
 			layout="row"
 			layout-align="start center"
-			class="manip-row__block manip-row__block_left">
-			<span class="admin__filter-name">Status</span>
-      <md-select 
-      	ng-model="weapon" 
-      	placeholder="Status" 
-      	class="select-container_admin">
-        <md-option ng-repeat="(key, val) in vm.statuses" value="{{val}}">{{key}}</md-option>
-      </md-select>
+			class="manip-row__block manip-row__block_left_full-width">
+			<input type="text" name="filter" placeholder="Filters" flex="100" class="admin__filter-field">
 		</div>
 	</div>
 
@@ -31,11 +25,11 @@
     infinite-scroll-disabled='vm.isOnProgress || vm.isLastPage'>
 		<tr 
 			class="table_admin__row table_admin__row_start" 
-			ng-repeat-start="entertainer in vm.EntertainersService.list">
+			ng-repeat-start="order in vm.OrdersService.list">
 			<td 
 				class="table_admin__cell table_admin__cell_avatar table_admin__cell_rowspaned" 
 				rowspan="3">
-				<div ng-style="{'background-image': 'url(' + entertainer.photos[0].preview + ')'}" alt="{{entertainer.displaying_name}}"></div>
+				<div ng-style="{'background-image': 'url(' + order.photos[0].preview + ')'}" alt="{{order.displaying_name}}"></div>
 			</td>
 			<td
 				class="table_admin__cell table_admin__cell_label">
@@ -43,8 +37,8 @@
 			</td>
 			<td 
 				class="table_admin__cell table_admin__cell_status">
-				<span class="table_admin__cell_status-icon table_admin__cell_status-icon-{{entertainer.status}}"></span>
-				<span class="table_admin__cell_status-value">{{entertainer.status}}</span>
+				<span class="table_admin__cell_status-icon table_admin__cell_status-icon-{{order.status}}"></span>
+				<span class="table_admin__cell_status-value">{{order.status}}</span>
 			</td>
 			<td
 				class="table_admin__cell table_admin__cell_label">
@@ -52,7 +46,7 @@
 			</td>
 			<td 
 				class="table_admin__cell">
-				{{entertainer.email}}
+				{{order.email}}
 			</td>
 			<td
 				class="table_admin__cell table_admin__cell_label">
@@ -60,34 +54,34 @@
 			</td>
 			<td 
 				class="table_admin__cell">
-				{{entertainer.rating}}
+				{{order.rating}}
 			</td>
 			<td 
 				class="table_admin__cell table_admin__cell_actions">
  				<img 
- 					ng-if="entertainer.status == vm.statuses.pending || entertainer.status == vm.statuses.rejected" 
+ 					ng-if="order.status == vm.statuses.pending || order.status == vm.statuses.rejected" 
  					src="/assets/images/icons/admin/icon_approve.png" 
- 					ng-click="vm.EntertainersService.setStatus($event, entertainer, vm.statuses.active, false)"
+ 					ng-click="vm.OrdersService.setStatus($event, order, vm.statuses.active, false)"
  					title="Approve"
  					alt="Approve">
 				<img 
-					ng-if="entertainer.status == vm.statuses.pending" 
+					ng-if="order.status == vm.statuses.pending" 
 					src="/assets/images/icons/admin/icon_reject.png" 
-					ng-click="vm.EntertainersService.setStatus($event, entertainer, vm.statuses.rejected, true)"
+					ng-click="vm.OrdersService.setStatus($event, order, vm.statuses.rejected, true)"
 					title="Reject"
 					alt="Reject">
 
 				<img 
-					ng-if="entertainer.status == vm.statuses.approved" 
+					ng-if="order.status == vm.statuses.approved" 
 					src="/assets/images/icons/admin/icon_block.png" 
-					ng-click="vm.EntertainersService.setStatus($event, entertainer, vm.statuses.blocked, true)"
+					ng-click="vm.OrdersService.setStatus($event, order, vm.statuses.blocked, true)"
 					title="Block"
 					alt="Block">
 
 				<img 
-					ng-if="entertainer.status == vm.statuses.blocked" 
+					ng-if="order.status == vm.statuses.blocked" 
 					src="/assets/images/icons/admin/icon_unblock.png" 
-					ng-click="vm.EntertainersService.setStatus($event, entertainer, vm.statuses.unblocked, true)"
+					ng-click="vm.OrdersService.setStatus($event, order, vm.statuses.unblocked, true)"
 					alt="Unblock"
 					alt="Ubblock">
 			</td>
@@ -100,7 +94,7 @@
 			</td>
 			<td 
 				class="table_admin__cell">
-				{{entertainer.first_name}} {{entertainer.last_name}}
+				{{order.first_name}} {{order.last_name}}
 			</td>
 			<td
 				class="table_admin__cell table_admin__cell_label">
@@ -108,7 +102,7 @@
 			</td>
 			<td 
 				class="table_admin__cell">
-				{{entertainer.phone}}
+				{{order.phone}}
 			</td>
 			<td
 				class="table_admin__cell table_admin__cell_label">
@@ -117,7 +111,7 @@
 			<td 
 				class="table_admin__cell table_admin__cell_link"
 				ng-click="vm.showPopup($event, $index)">
-				{{entertainer.photos.length}}
+				{{order.photos.length}}
 			</td>
 			<td></td>
 		</tr>		
@@ -130,7 +124,7 @@
 			</td>
 			<td 
 				class="table_admin__cell">
-				{{entertainer.displaying_name}}
+				{{order.displaying_name}}
 			</td>
 			<td
 				class="table_admin__cell table_admin__cell_label">
@@ -138,7 +132,7 @@
 			</td>
 			<td 
 				class="table_admin__cell">
-				{{entertainer.city}}
+				{{order.city}}
 			</td>
 			<td class="table_admin__cell_rowspaned"></td><td class="table_admin__cell_rowspaned"></td><td class="table_admin__cell_rowspaned"></td>
 		</tr>		
