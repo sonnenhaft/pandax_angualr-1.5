@@ -39,8 +39,11 @@
 				margin-bottom: 20px;
 			}
 			&__link {
-				margin-left: 20px;
+				display: flex;
 				line-height: normal;
+				&-text {
+					margin-left: 20px;
+				}
 			}
 			&__icon-wrapper {
 				cursor: pointer;
@@ -64,7 +67,7 @@
   		letter-spacing: .6px;
   	}
 
-  	.navbar_admin__link {
+  	.navbar_admin__link-text {
   		display: none;
   	}
 	}
