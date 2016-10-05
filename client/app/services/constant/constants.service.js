@@ -163,8 +163,12 @@ export default class Constants {
           uri: (role, userId) => path + `/admin/${role}/${userId}/status`,
           method: 'POST'
         }
-      }
+      },
 
+      lastNotAccomplishedOrder: {
+        uri: (user) => path + `/${user}/orders/last-not-accomplished`,
+        method: 'GET'
+      }
 
     };
 
@@ -219,12 +223,15 @@ export default class Constants {
       }.hour().entertainer(),
 
       statuses: {
-        invited:  "invited",
         accepted: 'accepted',
+        canceled: "canceled",
         declined:  "declined",
-        missed:  "missed",
+        invited:  "invited",
         inProgress:  "in progress",
         finished:  "finished`",
+        missed:  "missed",
+        new:  "new",
+        paid:  "paid",
         canceled: "canceled",
         active: "active",
         canceledbyProvider: "canceled_by_provider",
