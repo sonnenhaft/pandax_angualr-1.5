@@ -64,7 +64,8 @@
       &_status {
         &-icon {
           @include circle(green);
-          &-approved {
+          &-approved,
+          &-active {
            @include circle(green, green);
           }
           &-blocked {
