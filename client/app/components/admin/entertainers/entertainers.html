@@ -33,9 +33,12 @@
 			class="table_admin__row table_admin__row_start" 
 			ng-repeat-start="entertainer in vm.EntertainersService.list">
 			<td 
-				class="table_admin__cell table_admin__cell_avatar table_admin__cell_rowspaned" 
+				class="table_admin__cell table_admin__cell_rowspaned" 
 				rowspan="3">
-				<div ng-style="{'background-image': 'url(' + entertainer.photos[0].preview + ')'}" alt="{{entertainer.displaying_name}}"></div>
+				<!-- <div ng-style="{'background-image': 'url(' + entertainer.photos[0].preview + ')'}" alt="{{entertainer.displaying_name}}"></div> -->
+				<div class="avatar-wrapper">
+					<img ng-src="{{entertainer.photos[0].preview}}" alt="{{entertainer.displaying_name}}">
+				</div>
 			</td>
 			<td
 				class="table_admin__cell table_admin__cell_label">

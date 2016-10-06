@@ -33,9 +33,12 @@
 			class="table_admin__row table_admin__row_start" 
 			ng-repeat-start="customer in vm.list">
 			<td 
-				class="table_admin__cell table_admin__cell_avatar table_admin__cell_rowspaned" 
+				class="table_admin__cell table_admin__cell_rowspaned" 
 				rowspan="2">
-				<div ng-style="{'background-image': 'url(' + customer.photo.preview + ')'}" alt="{{customer.displaying_name}}"></div>
+				<!-- <div ng-style="{'background-image': 'url(' + customer.photo.preview + ')'}" alt="{{customer.displaying_name}}"></div> -->
+				<div class="avatar-wrapper">
+					<img ng-src="{{customer.photo.preview}}" alt="{{customer.last_name}}">
+				</div>
 			</td>
 			<td
 				class="table_admin__cell table_admin__cell_label">
@@ -67,14 +70,14 @@
   			<img 
   					ng-if="customer.status == vm.statuses.active" 
   					src="/assets/images/icons/admin/icon_block.png" 
-  					ng-click="vm.CustomersService.setStatus($event, customer, vm.statuses.unblocked, true)"
+  					ng-click="vm.CustomersService.setStatus($event, customer, vm.statuses.blocked, true)"
   					title="Block"
   					alt="Block">
 
  				<img 
  					ng-if="customer.status == vm.statuses.blocked" 
  					src="/assets/images/icons/admin/icon_unblock.png" 
- 					ng-click="vm.CustomersService.setStatus($event, customer, vm.statuses.active, true)"
+ 					ng-click="vm.CustomersService.setStatus($event, customer, vm.statuses.active, true, vm.statuses.unblocked)"
  					title="Unblock"
  					alt="Unblock">
 
