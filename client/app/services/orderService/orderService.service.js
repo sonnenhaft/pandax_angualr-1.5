@@ -126,7 +126,7 @@ export default class Order {
       entertainers_number: Number(form.entertainer),
       guests_number: form.guest.toString(),
       cost: form.price.toString()
-    }
+    };
   }
 
 
@@ -165,17 +165,17 @@ export default class Order {
   }
 
 
-  inviteEntertainer (orderId, entertainer) {
+  inviteEntertainer (orderId, entertainerId) {
     return this
       .Request
       .send(
         null,
         this.Constants.api.inviteEntertainer.method,
-        this.Constants.api.inviteEntertainer.uri(orderId, entertainer.id)
+        this.Constants.api.inviteEntertainer.uri(orderId, entertainerId)
       )
       .then(
         result => {
-          this.addEntertainerToInvitedList({id: result.data.invite_id, provider: entertainer});
+          this.addEntertainerToInvitedList({id: result.data.invite_id, entertainerId: entertainerId});
           return result.data;
         }
       );
@@ -188,11 +188,12 @@ export default class Order {
           return orderDetails.channel_name;
         },
         error => console.log(error)
-      )
+      );
   }
 
-  addEntertainerToInvitedList (entertainer) {
-    this.listInvited.push(entertainer);
+  addEntertainerToInvitedList (invite) {
+    let entertainer = _.find(this.list, {id: invite.entertainerId});
+    this.listInvited.push({id: invite.id, provider: entertainer});
     return this.listInvited;
   }
 

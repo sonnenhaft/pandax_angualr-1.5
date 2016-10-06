@@ -1,6 +1,6 @@
 class BillingController {
 
-  constructor ($state, User, Cards, $stateParams, Resolve, $mdToast, $q) {
+  constructor ($state, User, Cards, $stateParams, Resolve, $mdToast, $q, OrderService) {
     'ngInject';
 
     _.assign(this, {
@@ -11,6 +11,7 @@ class BillingController {
       Cards,
       $mdToast,
       $q,
+      OrderService,
       newCard: {},   //temporary
       saveLoading: false,
       defaultCardId: 0,
@@ -51,20 +52,26 @@ class BillingController {
       }
     }
 
+
     return this.$q.all(promises).then((data) => {
       let errorMessages = _.chain(data).filter('message').map('message').value();
 
-      this.saveLoading = false;
-
       if (errorMessages.length) {
          this.showError(errorMessages.join(' ,'));
+         this.saveLoading = false;
       } else {
-        this.$state.go(this.$stateParams.from, {orderId: this.$stateParams.orderId})
+        this.payForOrder()
+          .then(data => {
+            this.$state.go(this.$stateParams.from, {orderId: this.$stateParams.orderId});
+          })
+          .finally(() => {
+            this.saveLoading = false;
+          });
       }
     })
     .catch((data) => {
       console.log('errors', data);
-    })
+    });
   }
 
   getDefaultCardId () {
@@ -84,6 +91,13 @@ class BillingController {
         .hideDelay(200000)
         .action('OK')
     );
+  }
+
+  payForOrder () {
+    /*
+      ToDo: add request to pay for order and after that send request for invite entertainer
+     */
+    return this.OrderService.inviteEntertainer(this.$stateParams.orderId, parseInt(this.$stateParams.entertainerId));
   }
 
 }

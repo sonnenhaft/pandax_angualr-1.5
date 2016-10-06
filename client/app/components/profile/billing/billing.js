@@ -20,7 +20,7 @@ let billingModule = angular.module('billing', [
 
     $stateProvider
       .state('main.billing', {
-        url: '/billing/:orderId?from',
+        url: '/billing/:orderId/:entertainerId?from',
         parent: 'main',
         template: '<billing \
                     billing-info="billingInfo" \
