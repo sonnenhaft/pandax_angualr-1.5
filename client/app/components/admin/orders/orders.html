@@ -9,17 +9,62 @@
 	</div>
 
 
-	<div class="admin__manip-row admin__manip-row_full-width">
+	<div 
+		class="admin__manip-row"
+		layout="row">
 		<div 
-			layout="row"
-			layout-align="start center"
-			class="manip-row__block manip-row__block_left_full-width">
-			<input type="text" name="filter" placeholder="Filters" flex="100" class="admin__filter-field">
+			class="admin__manip-section"
+			flex="40"
+			layout="column">
+			<label for="search" class="admin__manip-label">Search</label>
+			<input 
+				type="text" 
+				name="search" 
+				class="admin__manip-field admin__manip-text" 
+				placeholder="Enter name, email or location" 
+				ng-model="vm.manip.search">
+		</div>		
+		<div 
+			class="admin__manip-section"
+			flex="40"
+			layout="column">
+			<label for="typeOfService" class="admin__manip-label">Type of service</label>
+      <md-select 
+      	ng-model="vm.manip.typeOfServiceSelected" 
+      	placeholder="All" 
+      	class="admin__manip-field select-container_admin">
+        <!-- <md-option ng-repeat="type in vm.typesOfService track by $index" value="{{type.id}}">{{type.name}}</md-option> -->
+      </md-select>			
+		</div>
+		<div 
+			class="admin__manip-section"
+			flex="40"
+			layout="column">
+      <label for="dateFrom" class="admin__manip-label">Date</label>
+     	<div layout="row" class="admin__manip-field">
+	      <md-datepicker
+	      							class="admin__datepicker" 
+	      							ng-model="vm.manip.dateFr"
+	                    md-placeholder="From"
+	                    md-hide-icons="triangle"
+	                    aria-readonly="true"
+	                    name="dateFrom">
+	      </md-datepicker>
+	      <md-datepicker
+	      							class="admin__datepicker"
+	      							ng-model="vm.manip.dateTo"
+	                    md-placeholder="To"
+	                    md-hide-icons="triangle"
+	                    aria-readonly="true"
+	                    name="dateFrom">
+	      </md-datepicker>
+	    </div>
 		</div>
 	</div>
 
+
 	<div class="orders-content" layout="row">
-		<div class="orders-list">
+		<div class="orders-list" flex="30">
 			<div 
 				class="order"
 				layout="column"
@@ -31,153 +76,156 @@
 				<span class="order-param order-param_name">{{order.customer.first_name + order.customer.last_name}}</span>
 			</div>
 		</div>
+		
+		<div flex="70">
+			<table 
+				class="admin__table admin__table_orders table_admin">
+				<tr 
+					class="table_admin__row table_admin__row_start">
+					<th class=" table_admin__cell table_admin__cell_header" colspan="4">General Information</th>
+				</tr>
+				<tr 
+					class="table_admin__row">
+					<td 
+						class="table_admin__cell ">
+						<div ng-style="{'background-image': 'url(' + order.photos[0].preview + ')'}" alt="{{order.displaying_name}}"></div>
+					</td>
+					<td
+						class="table_admin__cell table_admin__cell_label">
+						Status
+					</td>
+					<td 
+						class="table_admin__cell table_admin__cell_status">
+						<span class="table_admin__cell_status-icon table_admin__cell_status-icon-{{order.status}}"></span>
+						<span class="table_admin__cell_status-value">{{order.status}}</span>
+					</td>
+				</tr>
 
-		<table 
-			class="admin__table admin__table_orders table_admin">
-			<tr 
-				class="table_admin__row table_admin__row_start">
-				<th class=" table_admin__cell table_admin__cell_header" colspan="4">General Information</th>
-			</tr>
-			<tr 
-				class="table_admin__row">
-				<td 
-					class="table_admin__cell ">
-					<div ng-style="{'background-image': 'url(' + order.photos[0].preview + ')'}" alt="{{order.displaying_name}}"></div>
-				</td>
-				<td
-					class="table_admin__cell table_admin__cell_label">
-					Status
-				</td>
-				<td 
-					class="table_admin__cell table_admin__cell_status">
-					<span class="table_admin__cell_status-icon table_admin__cell_status-icon-{{order.status}}"></span>
-					<span class="table_admin__cell_status-value">{{order.status}}</span>
-				</td>
-			</tr>
 
+				<tr 
+					class="table_admin__row table_admin__row_start">
+					<th class="table_admin__cell table_admin__cell_header" colspan="4">Invites</th>
+				</tr>
 
-			<tr 
-				class="table_admin__row table_admin__row_start">
-				<th class="table_admin__cell table_admin__cell_header" colspan="4">Invites</th>
-			</tr>
+				<tr 
+					class="table_admin__row table_admin__row_start">
+				</tr>
+				<tr 
+					class="table_admin__row table_admin__row_start" 
+					ng-repeat-start="order in vm.OrdersService.list">
+					<td 
+						class="table_admin__cell table_admin__cell_avatar table_admin__cell_rowspaned" 
+						rowspan="3">
+						<div ng-style="{'background-image': 'url(' + order.photos[0].preview + ')'}" alt="{{order.displaying_name}}"></div>
+					</td>
+					<td
+						class="table_admin__cell table_admin__cell_label">
+						Status
+					</td>
+					<td 
+						class="table_admin__cell table_admin__cell_status">
+						<span class="table_admin__cell_status-icon table_admin__cell_status-icon-{{order.status}}"></span>
+						<span class="table_admin__cell_status-value">{{order.status}}</span>
+					</td>
+					<td
+						class="table_admin__cell table_admin__cell_label">
+						Email
+					</td>
+					<td 
+						class="table_admin__cell">
+						{{order.email}}
+					</td>
+					<td
+						class="table_admin__cell table_admin__cell_label">
+						Raiting
+					</td>
+					<td 
+						class="table_admin__cell">
+						{{order.rating}}
+					</td>
+					<td 
+						class="table_admin__cell table_admin__cell_actions">
+		 				<img 
+		 					ng-if="order.status == vm.statuses.pending || order.status == vm.statuses.rejected" 
+		 					src="/assets/images/icons/admin/icon_approve.png" 
+		 					ng-click="vm.OrdersService.setStatus($event, order, vm.statuses.active, false)"
+		 					title="Approve"
+		 					alt="Approve">
+						<img 
+							ng-if="order.status == vm.statuses.pending" 
+							src="/assets/images/icons/admin/icon_reject.png" 
+							ng-click="vm.OrdersService.setStatus($event, order, vm.statuses.rejected, true)"
+							title="Reject"
+							alt="Reject">
 
-			<tr 
-				class="table_admin__row table_admin__row_start">
-			</tr>
-			<tr 
-				class="table_admin__row table_admin__row_start" 
-				ng-repeat-start="order in vm.OrdersService.list">
-				<td 
-					class="table_admin__cell table_admin__cell_avatar table_admin__cell_rowspaned" 
-					rowspan="3">
-					<div ng-style="{'background-image': 'url(' + order.photos[0].preview + ')'}" alt="{{order.displaying_name}}"></div>
-				</td>
-				<td
-					class="table_admin__cell table_admin__cell_label">
-					Status
-				</td>
-				<td 
-					class="table_admin__cell table_admin__cell_status">
-					<span class="table_admin__cell_status-icon table_admin__cell_status-icon-{{order.status}}"></span>
-					<span class="table_admin__cell_status-value">{{order.status}}</span>
-				</td>
-				<td
-					class="table_admin__cell table_admin__cell_label">
-					Email
-				</td>
-				<td 
-					class="table_admin__cell">
-					{{order.email}}
-				</td>
-				<td
-					class="table_admin__cell table_admin__cell_label">
-					Raiting
-				</td>
-				<td 
-					class="table_admin__cell">
-					{{order.rating}}
-				</td>
-				<td 
-					class="table_admin__cell table_admin__cell_actions">
-	 				<img 
-	 					ng-if="order.status == vm.statuses.pending || order.status == vm.statuses.rejected" 
-	 					src="/assets/images/icons/admin/icon_approve.png" 
-	 					ng-click="vm.OrdersService.setStatus($event, order, vm.statuses.active, false)"
-	 					title="Approve"
-	 					alt="Approve">
-					<img 
-						ng-if="order.status == vm.statuses.pending" 
-						src="/assets/images/icons/admin/icon_reject.png" 
-						ng-click="vm.OrdersService.setStatus($event, order, vm.statuses.rejected, true)"
-						title="Reject"
-						alt="Reject">
+						<img 
+							ng-if="order.status == vm.statuses.approved" 
+							src="/assets/images/icons/admin/icon_block.png" 
+							ng-click="vm.OrdersService.setStatus($event, order, vm.statuses.blocked, true)"
+							title="Block"
+							alt="Block">
 
-					<img 
-						ng-if="order.status == vm.statuses.approved" 
-						src="/assets/images/icons/admin/icon_block.png" 
-						ng-click="vm.OrdersService.setStatus($event, order, vm.statuses.blocked, true)"
-						title="Block"
-						alt="Block">
+						<img 
+							ng-if="order.status == vm.statuses.blocked" 
+							src="/assets/images/icons/admin/icon_unblock.png" 
+							ng-click="vm.OrdersService.setStatus($event, order, vm.statuses.unblocked, true)"
+							alt="Unblock"
+							alt="Ubblock">
+					</td>
+				</tr>		
+				<tr 
+					class="table_admin__row">
+					<td
+						class="table_admin__cell table_admin__cell_label">
+						Name
+					</td>
+					<td 
+						class="table_admin__cell">
+						{{order.first_name}} {{order.last_name}}
+					</td>
+					<td
+						class="table_admin__cell table_admin__cell_label">
+						Phone
+					</td>
+					<td 
+						class="table_admin__cell">
+						{{order.phone}}
+					</td>
+					<td
+						class="table_admin__cell table_admin__cell_label">
+						Photos
+					</td>
+					<td 
+						class="table_admin__cell table_admin__cell_link"
+						ng-click="vm.showPopup($event, $index)">
+						{{order.photos.length}}
+					</td>
+					<td></td>
+				</tr>		
+				<tr 
+					class="table_admin__row table_admin__row_end"
+					ng-repeat-end>
+					<td 
+						class="table_admin__cell table_admin__cell_label">
+						Display Name
+					</td>
+					<td 
+						class="table_admin__cell">
+						{{order.displaying_name}}
+					</td>
+					<td
+						class="table_admin__cell table_admin__cell_label">
+						City
+					</td>
+					<td 
+						class="table_admin__cell">
+						{{order.city}}
+					</td>
+					<td class="table_admin__cell_rowspaned"></td><td class="table_admin__cell_rowspaned"></td><td class="table_admin__cell_rowspaned"></td>
+				</tr>		
+			</table>
+		</div>
 
-					<img 
-						ng-if="order.status == vm.statuses.blocked" 
-						src="/assets/images/icons/admin/icon_unblock.png" 
-						ng-click="vm.OrdersService.setStatus($event, order, vm.statuses.unblocked, true)"
-						alt="Unblock"
-						alt="Ubblock">
-				</td>
-			</tr>		
-			<tr 
-				class="table_admin__row">
-				<td
-					class="table_admin__cell table_admin__cell_label">
-					Name
-				</td>
-				<td 
-					class="table_admin__cell">
-					{{order.first_name}} {{order.last_name}}
-				</td>
-				<td
-					class="table_admin__cell table_admin__cell_label">
-					Phone
-				</td>
-				<td 
-					class="table_admin__cell">
-					{{order.phone}}
-				</td>
-				<td
-					class="table_admin__cell table_admin__cell_label">
-					Photos
-				</td>
-				<td 
-					class="table_admin__cell table_admin__cell_link"
-					ng-click="vm.showPopup($event, $index)">
-					{{order.photos.length}}
-				</td>
-				<td></td>
-			</tr>		
-			<tr 
-				class="table_admin__row table_admin__row_end"
-				ng-repeat-end>
-				<td 
-					class="table_admin__cell table_admin__cell_label">
-					Display Name
-				</td>
-				<td 
-					class="table_admin__cell">
-					{{order.displaying_name}}
-				</td>
-				<td
-					class="table_admin__cell table_admin__cell_label">
-					City
-				</td>
-				<td 
-					class="table_admin__cell">
-					{{order.city}}
-				</td>
-				<td class="table_admin__cell_rowspaned"></td><td class="table_admin__cell_rowspaned"></td><td class="table_admin__cell_rowspaned"></td>
-			</tr>		
-		</table>
 	</div>
 
 

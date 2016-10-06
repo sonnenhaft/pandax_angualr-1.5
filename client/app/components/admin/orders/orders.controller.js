@@ -1,16 +1,18 @@
 class OrdersController {
 
-  constructor (OrdersService, Constants) {
+  constructor (OrdersService, Constants, Resolve) {
     'ngInject';
 
     _.assign(this, {
     	OrdersService,
       Constants,
+      Resolve,
     	isOnProgress: false,
       isLastPage: false,
       currentPage: 1,
       statuses: Constants.order.statuses,
-      activeOrderIndex: 0
+      activeOrderIndex: 0,
+      typesOfService: []
     });
   }
 
@@ -21,6 +23,8 @@ class OrdersController {
       	this.isOnProgress = false;
         this.isLastPage = this.checkIsLastPage(data.meta.pagination.total_pages);
       });
+    this.Resolve.providers()
+      .then(data => this.typesOfService = data);
   }
 
   fetchMoreItems () {

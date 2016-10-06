@@ -1,5 +1,6 @@
 #admin {
   $ordersContentMinWidth: 914px;
+  $ordersTableMinWidth: 631px;
 
   .font_header {
     color: $DarkJungleGreen;
@@ -43,29 +44,58 @@
 			text-transform: uppercase;
   	}
 
-  	&__manip-row {
-  		margin-top: 27px;
-      &_full-width {
-        width: 100%;
+    &__manip {
+      &-row {
+        margin-top: 27px;
+/*         &:not(:first-child) {
+          margin-top: 8px;
+        } */
       }
-  	}
+      &-text {
+        border: none;
+        padding: 4px 12px 10px 12px;
+        &::-webkit-input-placeholder {
+          @extend .font_admin-filter__placeholder;
+        }
+      }
+      &-section {
+        &:not(:first-child) {
+          margin-left: 10px;
+        }
+      }
+      &-label {
+        @extend .font_admin-manip__label;
+        margin-left: 10px;
+      }
+      &-field {
+        margin: 3px 0px 0px 0px;
+      }
+    }
+    &__datepicker {
+      align-items: center;
+      background-color: white;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      padding-right: 0px;
+      &:first-child {
+        margin-right: 1px;
+      }
+      &:not(:first-child) {
+        margin-left: 1px;
+      }
+    }
 
     &__filter {
       &-name {
         @extend .font_admin-main;
-      }
-      &-field {
-        border: none;
-        padding: 4px 12px 6px 12px;
-        &::-webkit-input-placeholder {
-          @extend .font_admin-filter__placeholder;
-        }
       }
     }
 
     &__table {
       width: 100%;
       &_orders {
+        min-width: $ordersTableMinWidth;
         width: auto;
       }
     }
@@ -74,6 +104,15 @@
   /* Angular Material overwritten */
   md-select {
 		margin: 0px 0px 0px 22.3px;
+  }
+  .md-datepicker-triangle-button {
+    display: none;
+  }
+  .md-datepicker-input-container {
+    border-bottom: none;
+  }
+  .md-button.md-icon-button {
+    order: 2;
   }
 }
 
