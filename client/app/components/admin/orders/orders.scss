@@ -4,14 +4,15 @@
 
 	.orders {
 		&-list {
+			min-width: $ordersListMinWidth;
 			overflow: auto;
 			padding-top: 2px;
 			padding-bottom: 4px;
-			min-width: $ordersListMinWidth;
 		}
 
 		&-content {
 			min-width: $ordersContentMinWidth;
+			overflow: auto;
 		}
 	}
 
