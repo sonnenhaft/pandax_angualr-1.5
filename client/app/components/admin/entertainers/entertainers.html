@@ -87,7 +87,7 @@
 				<img 
 					ng-if="entertainer.status == vm.statuses.blocked" 
 					src="/assets/images/icons/admin/icon_unblock.png" 
-					ng-click="vm.EntertainersService.setStatus($event, entertainer, vm.statuses.unblocked, true)"
+					ng-click="vm.EntertainersService.setStatus($event, entertainer, vm.statuses.active, true)"
 					alt="Unblock"
 					alt="Ubblock">
 			</td>
