@@ -58,7 +58,7 @@ export default class Entertainers {
         .send(
           null,
           this.Constants.api.admin.setStatus.method,
-          this.Constants.api.admin.setStatus.uri('entertainers', entertainer.id),
+          this.Constants.api.admin.setStatus.uri('providers', entertainer.id),
           {set: targetStatus}
         )
         .then(
