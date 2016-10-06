@@ -14,12 +14,12 @@ export default class Constants {
     this.billing = this.billingConstants();
     this.api = this.apiConstants();
     this.terms = this.termsConstants();
-
+    this.admin = this.adminConstants();
   }
 
   apiConstants () {
     const path = config.API_URL,
-          pathWS = config.WS_URL
+          pathWS = config.WS_URL;
 
     let apiConstants = {
 
@@ -122,14 +122,14 @@ export default class Constants {
       },
 
       orderFutures: {
-        uri: (user, page = 1) => path + `/${user}/orders?page=${page}&status[]=accepted`,
+        uri: (user, page = 1) => path + `/${user}/orders?page=${page}&status[]=accepted&status[]=in+progress&include=invites`,
         method: 'GET'
       },
 
       orderHistory: {
         uri: (user, page = 1) => {
-          let result = path + `/${user}/orders/history?page=${page}`;
-/*          if (user == 'customer') {
+          let result = path + `/${user}/orders/history?page=${page}&include=invites`;
+/*        if (user == 'customer') {
             result += `?page=${page}&status[]=finished&status[]=canceled&include=invites`;
           } else {
             result += `/history?page=${page}`;
@@ -143,6 +143,32 @@ export default class Constants {
         uri: (orderId) => path + `/customer/orders/${orderId}/invites?status[]=accepted&status[]=canceled`,
         method: 'GET'
       },
+
+      entertainers: {
+        get: {        
+          uri: (page = 1) => path + `/provider?page=${page}`,
+          method: 'GET'
+        }
+      },
+
+      customers: {
+        get: {        
+          uri: (page = 1) => path + `/admin/customers?page=${page}`,
+          method: 'GET'
+        }
+      },
+
+      admin: {
+        setStatus: {
+          uri: (role, userId) => path + `/admin/${role}/${userId}/status`,
+          method: 'POST'
+        }
+      },
+
+      lastNotAccomplishedOrder: {
+        uri: (user) => path + `/${user}/orders/last-not-accomplished`,
+        method: 'GET'
+      }
 
     };
 
@@ -197,13 +223,17 @@ export default class Constants {
       }.hour().entertainer(),
 
       statuses: {
-        invited:  "invited",
         accepted: 'accepted',
+        canceled: "canceled",
         declined:  "declined",
-        missed:  "missed",
+        invited:  "invited",
         inProgress:  "in progress",
         finished:  "finished`",
+        missed:  "missed",
+        new:  "new",
+        paid:  "paid",
         canceled: "canceled",
+        active: "active",
         canceledbyProvider: "canceled_by_provider",
         canceledbyCustomer: "canceled_by_customer",
       },
@@ -486,4 +516,35 @@ export default class Constants {
     return billingConstants;
   }
 
+  adminConstants () {
+    const adminConstants = {
+
+      statuses: {
+        entertainer: {
+          accepted: "accepted",
+          active: "active",
+          blocked: "blocked",
+          offline:  "offline",
+          pending:  "pending",
+          rejected:  "rejected",
+          unblocked: "unblocked",
+        },
+        customer: {
+          active: "active",
+          blocked: "blocked",
+          unblocked: "unblocked",
+        }
+      },
+
+      setStatusMessage: {
+        // substring to remove 'ed' in the end of status name
+        title: (role, targetStatus) => 
+          `${targetStatus.substr(0, 1).toUpperCase() + targetStatus.substr(1, (targetStatus == 'active' ? targetStatus.length : targetStatus.length-3))} ${role}`,
+        content: (role, targetStatus) => 
+          `Are you sure want to ${targetStatus == 'active' ? targetStatus : targetStatus.substr(0, targetStatus.length-2)} the ${role}?`
+      }
+    };
+
+    return adminConstants;
+  }
 }

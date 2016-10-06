@@ -1,6 +1,8 @@
 #navbar-admin {
   display: flex;
   flex-direction: column;
+  position: fixed;
+  width: 230px;
 
   .logo_admin {
   	height: 89px;
@@ -41,6 +43,7 @@
 				line-height: normal;
 			}
 			&__icon-wrapper {
+				cursor: pointer;
     		display: flex;
     		flex-direction: row;
 				width: 20px;

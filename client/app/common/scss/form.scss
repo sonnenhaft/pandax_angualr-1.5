@@ -1,3 +1,14 @@
+.font_select {
+	color: $AuroMetalSaurus;
+	font: {
+		family: $open-sans;
+		size: 14px;
+	}
+	letter-spacing: 0.0176em;
+	line-height: 24px;
+	text-align: left;
+}
+
 .mobile-number {
 	white-space: nowrap;
 }
@@ -119,4 +130,34 @@
 
 .button_gradient {
 	@include gradient(rgba(24, 95, 221, 1), rgba(188, 55, 240, 1));
+}
+
+.select-container {
+	&_admin {
+    background-color: $white;
+    padding: 4px 9px 6px 9px;
+    min-width: 229px;
+		._md-select-value > span:not(._md-select-icon) {
+			@extend .font_select;
+		}
+		md-select-value {
+    	align-items: stretch;
+    		-webkit-align-items: stretch;
+    		-ms-flex-align: stretch;
+			border: none;
+			padding-bottom: 2px;
+			padding-top: 0px;
+			._md-select-icon {
+				text-align: center;
+				&::after {
+					content: '\276f';
+					transform: rotate(90deg);
+						-webkit-transform: rotate(90deg);
+				}
+			}
+		}
+		&:not([disabled]):focus ._md-select-value {
+		  border: none;
+		}
+	}
 }

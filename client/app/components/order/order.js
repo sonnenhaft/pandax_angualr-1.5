@@ -31,7 +31,21 @@ export default angular
       .state('main.order', {
         url: '/order',
         parent: 'main',
-        component: 'order'
+        component: 'order',
+        resolve: {
+          notAccomplishedOrder: function (OrderService) {
+            return OrderService.fetchLastNotAccomplishedOrder()
+                    .then(data => data);
+          }
+        },
+        onEnter: ($transition$, notAccomplishedOrder, $state, Constants, $timeout) => {
+          if (notAccomplishedOrder) {
+            $timeout(() => {
+              $state.go('main.manipulationEntertainers', {orderId: notAccomplishedOrder.id});
+            }, 10);
+          }
+        }
+
       });
   })
   .component('order', orderComponent)

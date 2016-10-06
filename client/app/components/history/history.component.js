@@ -3,7 +3,9 @@ import controller from './history.controller';
 
 let historyComponent = {
   restrict: 'E',
-  bindings: {},
+  bindings: {
+  	isOnPending: '<'
+  },
   template,
   controller
 };

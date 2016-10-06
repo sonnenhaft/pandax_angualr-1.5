@@ -1,0 +1,103 @@
+.table {
+  $circleSize: 8px;
+  $avatarSize: 28px;
+  $actionIconSize: 16px;
+
+  @mixin circle($borderColor, $bgColor: 'none') {
+   @if $bgColor != 'none' {
+    background-color: $bgColor;
+   }
+
+    border: {
+      color: $borderColor;
+      radius: $circleSize;
+      style: solid;
+      width: 1px;
+    }
+    -moz-border-radius: $circleSize;
+    -webkit-border-radius: $circleSize;
+    display: inline-block;
+    height: $circleSize;
+    margin-right: 8px;
+    width: $circleSize;
+  }
+
+  &_admin {
+  	background-color: $white;
+  	margin-top: 20px;
+    padding: 10px 10px;
+    &__row {
+      &_start {
+        .table_admin__cell {
+          padding-top: 10px;
+        }
+      }
+      &_end {
+        .table_admin__cell {
+          border-bottom: 2px solid $Platinum;
+          padding-bottom: 13px;
+        }
+      }
+    }
+    &__cell {
+      @extend .font_admin-main;
+      padding: 8px 14px 8px 15px;
+      vertical-align: top;
+      &_label {
+        color: $AuroMetalSaurus;
+        font-weight: 400;
+      }
+      &_rowspaned {
+        border-bottom: 2px solid $Platinum;
+      }
+      &_avatar {
+        div {
+          background: {
+            repeat: no-repeat;
+            size: cover;
+          }
+          border-radius: 50%;
+          height: $avatarSize;
+          width: $avatarSize;
+        }
+      }
+      &_status {
+        &-icon {
+          @include circle(green);
+          &-approved {
+           @include circle(green, green);
+          }
+          &-blocked {
+           @include circle($Cardinal, $Cardinal);
+          }
+          &-offline {
+           @include circle($AuroMetalSaurus, $AuroMetalSaurus);
+          }
+        }
+        &-value {
+          display: inline-block;
+          &::first-letter {
+            text-transform: uppercase;
+          }
+        }
+      }
+      &_actions {
+        min-width: 100px;
+        text-align: right;
+        img {
+          cursor: pointer;
+          display: inline-block;
+          height: $actionIconSize;
+          width: $actionIconSize;
+          &:not(:first-of-type) {
+            margin-left: 12px;
+          }
+        } 
+      }
+      &_link {
+        color: $UnitedNationsBlue;
+        cursor: pointer;
+      }
+    }
+  }
+}

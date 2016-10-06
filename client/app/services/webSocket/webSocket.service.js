@@ -36,8 +36,14 @@ console.log('onClose:', response);
     this.open(channelName, cbOnOpen);
     
     this.dataStream.onMessage((message) => {
-console.log('onmessage:', message)
+console.log('onmessage:', message);
       let data = JSON.parse(message.data);
+
+      if (data.action == 'close') {
+        this.close();
+        return data;
+      }
+
       if (data.code == 404) {
         this.Helper.showToast(data.message, 8000);
         return data;
@@ -55,4 +61,4 @@ console.log('close directly:');
     this.dataStream.close();
   }
 
-}
+}

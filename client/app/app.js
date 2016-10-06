@@ -75,12 +75,9 @@ angular
     });
 
     //JWT interceptor will take care of sending the JWT in every request (More info: https://github.com/auth0/angular-jwt#jwtinterceptor)
-    jwtInterceptorProvider.tokenGetter = function () {
-      /*
-        ToDo: look for better solution without directly localStorage manipulation
-       */
-      let minx = localStorage.getItem('MINX');
-      return minx ? minx.token : '';
+    jwtInterceptorProvider.tokenGetter = function (User) {
+      "ngInject";
+      return User.token();
     };
     $httpProvider.interceptors.push('jwtInterceptor');
 
@@ -99,7 +96,7 @@ angular
       let responseHandler = (response) => {
         let defer = $q.defer();
 
-        if (response.status >= 400 && response.status != 403) {
+        if (response.status >= 400 && response.status != 403) { // for 403 status we have another handler only in userService.login()
           let Helper = $injector.get("Helper"),
               messageText = response.statusText;
           if (response.data) {

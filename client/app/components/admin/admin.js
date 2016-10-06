@@ -2,11 +2,15 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import adminComponent from './admin.component';
 import navbarAdmin from '../../common/navbar/navbarAdmin/navbarAdmin';
+import entertainers from './entertainers/entertainers';
+import customers from './customers/customers';
 
 export default angular
   .module('admin', [
     uiRouter,
-    navbarAdmin
+    navbarAdmin,
+    entertainers,
+    customers
   ])
   .config(($stateProvider) => {
     "ngInject";
@@ -14,7 +18,7 @@ export default angular
     $stateProvider
       .state('admin', {
         url: '/admin',
-        // abstract: true,
+        abstract: true,
         component: 'admin'
       });
   })

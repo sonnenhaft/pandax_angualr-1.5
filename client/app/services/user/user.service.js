@@ -1,9 +1,9 @@
 export default class User {
 
-  constructor (Storage, Constants, Request, $state, $http, Helper, $q) {
+  constructor (Storage, Constants, Request, $state, $http, Helper, $q, $mdDialog) {
     'ngInject';
 
-    _.assign(this, {Storage, Constants, Request, $state, $http, Helper, $q, userAvatarSrc: '', billingInfo: {}});
+    _.assign(this, {Storage, Constants, Request, $state, $http, Helper, $q, $mdDialog, userAvatarSrc: '', billingInfo: {}});
   }
 
   isAuth () {
@@ -67,6 +67,15 @@ export default class User {
 
           this.create(result.data);
           return this.getUserProfile(result.data, this.get('role'));
+        },
+        error => {
+          if (error.status == 403) {
+            this.showBanPopUp(error.data && error.data.detail);
+          }
+
+          let defer = this.$q.defer();
+          defer.reject(error);
+          return defer.promise;
         }
       );
   }
@@ -167,7 +176,15 @@ export default class User {
 
 
   getUserProfile (user, type, redirectUser = true) {
-    return this
+    let result;
+
+    if (type == 'admin') {      
+      result = this.$q.defer().resolve(user);
+      if (redirectUser == true) {
+        this.redirectUser();
+      }
+    } else {
+      result = this
       .Request
       .send(
         user.token,
@@ -182,8 +199,20 @@ export default class User {
           }
           this.setUserAvatarSrc(result.data);
           return result.data;
+        },
+        error => {
+          return error;
         }
-      );
+      )
+      .then(data => {
+        if (redirectUser == true) {
+          this.redirectUser();
+        }
+        return data;
+      });
+    }
+
+    return result;
   }
 
   UpdateUserProfile (fields) {
@@ -227,6 +256,10 @@ export default class User {
         this.$state.go('main.order');
         return false;
 
+      case this.get('role') === 'admin':
+        this.$state.go('admin.entertainers');
+        return false;
+
       case !this.get('first_name') || !this.get('last_name'):
         this.$state.go('main.profile.create');
         return false;
@@ -238,17 +271,23 @@ export default class User {
 
   logout () {
     this.Storage.remove('MINX');
-    this.$state.go('home');
+    setTimeout(() => this.$state.go('home'), 1);
   }
 
   /*
     User avatar section
    */
   fetchUserAvatarSrc () {
-    return this.getUserProfile(_.assign(this.get(), {token: this.token()}), this.get('role'), false)
-      .then(data => {
-        return this.setUserAvatarSrc(data);
-      });
+    let result = this.getUserAvatarSrc();
+
+    if (!result) {
+      result = this.getUserProfile(_.assign(this.get(), {token: this.token()}), this.get('role'), false)
+        .then(data => {
+          return this.setUserAvatarSrc(data);
+        });
+    }
+
+    return result;
   }
 
   setUserAvatarSrc (data = {}) {
@@ -274,4 +313,18 @@ export default class User {
   fetchBillingInfo () {
     return this.billingInfo;
   }
+
+  showBanPopUp (message = '') {
+    let title = message.slice(message.indexOf('account'), message.indexOf('.'));
+
+    this.$mdDialog.show(
+      this.$mdDialog.alert()
+        .clickOutsideToClose(true)
+        .title(title.substr(0, 1).toUpperCase() + title.substr(1))
+        .textContent(message)
+        .ariaLabel('Ban Dialog')
+        .ok('Ok')
+    );
+  }
 }
+
