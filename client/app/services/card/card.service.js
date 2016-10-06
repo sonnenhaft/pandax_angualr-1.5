@@ -1,6 +1,6 @@
 export default class Cards {
 
-  constructor (User, Constants, Request, stripe) {
+  constructor (User, Constants, Request, stripe, $q, Helper) {
     'ngInject';
 
     _.assign(this, {
@@ -8,6 +8,8 @@ export default class Cards {
       Constants, 
       Request, 
       stripe,
+      $q,
+      Helper,
       list: [],
       defaultCardId: 0
     });
@@ -19,7 +21,11 @@ export default class Cards {
       .stripeCreateToken(this.makeCard(card))
       .then((data) => data.id)
       .catch(error => {
-        throw error;
+        this.Helper.showToast(error.message || error);    // All errors in response are displays in the http interceptors (look at 'app.js')
+                                                          // We need to display this one directly, 'cause this request sends to external resource (stripe.com)
+        let defer = this.$q.defer();
+        defer.reject(error);
+        return defer.promise;
       })
       .then(token => {
 
@@ -38,12 +44,10 @@ export default class Cards {
               }
 
               return card.data;
-            },
-            error => console.log(error)
+            }
           );
 
       })
-      .catch(error => error)
       .then(card => {
 
         if (!card) {
@@ -71,7 +75,11 @@ export default class Cards {
 
         return {message: card};
       })
-      .catch(error => error);
+      .catch(error => {
+        let defer = this.$q.defer();
+        defer.reject(error);
+        return defer.promise;
+      });
   }
 
   makeCard (card) {
@@ -111,8 +119,7 @@ export default class Cards {
           this.list = result.data;
           this.setDefaultCardId();
           return this.list;
-        },
-        error => console.log(error)
+        }
       );
   }
 
@@ -128,8 +135,7 @@ export default class Cards {
         result => {
           this.deleteCardFromList(cardId);
           return result.data;
-        },
-        error => console.log(error)
+        }
       );
   }
 
@@ -145,8 +151,7 @@ export default class Cards {
         result => {
           this.updateCardInList(result.data);
           return result.data;
-        },
-        error => console.log(error)
+        }
       );
   }
 
