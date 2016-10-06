@@ -96,7 +96,6 @@
       width: 100%;
       &_orders {
         min-width: $ordersTableMinWidth;
-        width: auto;
       }
     }
   }
@@ -113,6 +112,11 @@
   }
   .md-button.md-icon-button {
     order: 2;
+    margin: 0px;
+  }
+  .md-datepicker-input {
+    min-width: 0px;
+    width: 95px;
   }
 }
 

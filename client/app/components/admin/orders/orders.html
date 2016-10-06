@@ -33,19 +33,18 @@
       	ng-model="vm.manip.typeOfServiceSelected" 
       	placeholder="All" 
       	class="admin__manip-field select-container_admin">
-        <!-- <md-option ng-repeat="type in vm.typesOfService track by $index" value="{{type.id}}">{{type.name}}</md-option> -->
+        <md-option ng-repeat="type in vm.typesOfService track by $index" value="{{type.type}}">{{type.name}}</md-option>
       </md-select>			
 		</div>
 		<div 
 			class="admin__manip-section"
 			flex="40"
 			layout="column">
-      <label for="dateFrom" class="admin__manip-label">Date</label>
+      <label for="dateFrom" class="admin__manip-label">Creation dates</label>
      	<div layout="row" class="admin__manip-field">
 	      <md-datepicker
 	      							class="admin__datepicker" 
 	      							ng-model="vm.manip.dateFr"
-	                    md-placeholder="From"
 	                    md-hide-icons="triangle"
 	                    aria-readonly="true"
 	                    name="dateFrom">
@@ -53,7 +52,6 @@
 	      <md-datepicker
 	      							class="admin__datepicker"
 	      							ng-model="vm.manip.dateTo"
-	                    md-placeholder="To"
 	                    md-hide-icons="triangle"
 	                    aria-readonly="true"
 	                    name="dateFrom">
@@ -84,23 +82,38 @@
 					class="table_admin__row table_admin__row_start">
 					<th class=" table_admin__cell table_admin__cell_header" colspan="4">General Information</th>
 				</tr>
-				<tr 
-					class="table_admin__row">
-					<td 
-						class="table_admin__cell ">
-						<div ng-style="{'background-image': 'url(' + order.photos[0].preview + ')'}" alt="{{order.displaying_name}}"></div>
+				<tr class="table_admin__row">
+					<td
+						class="table_admin__cell table_admin__cell_label">
+						Creation date
 					</td>
 					<td
 						class="table_admin__cell table_admin__cell_label">
-						Status
+						Location
 					</td>
-					<td 
-						class="table_admin__cell table_admin__cell_status">
-						<span class="table_admin__cell_status-icon table_admin__cell_status-icon-{{order.status}}"></span>
-						<span class="table_admin__cell_status-value">{{order.status}}</span>
+					<td
+						class="table_admin__cell table_admin__cell_label">
+						Apartment
+					</td>
+					<td
+						class="table_admin__cell table_admin__cell_label">
+						Location Notes
 					</td>
 				</tr>
-
+				<tr class="table_admin__row">
+					<td class="table_admin__cell">
+						{{order.date}}
+					</td>
+					<td class="table_admin__cell">
+						{{order.location}}
+					</td>
+					<td class="table_admin__cell">
+						{{order.apartment}}
+					</td>
+					<td class="table_admin__cell">
+						{{order.location_notes}}
+					</td>
+				</tr>
 
 				<tr 
 					class="table_admin__row table_admin__row_start">

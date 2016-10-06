@@ -11,7 +11,7 @@ class OrdersController {
       isLastPage: false,
       currentPage: 1,
       statuses: Constants.order.statuses,
-      activeOrderIndex: 0,
+      activeOrderIndex: -1,
       typesOfService: []
     });
   }
