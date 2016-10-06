@@ -78,7 +78,7 @@
 					alt="Reject">
 
 				<img 
-					ng-if="entertainer.status == vm.statuses.approved" 
+					ng-if="entertainer.status == vm.statuses.active || entertainer.status == vm.statuses.offline" 
 					src="/assets/images/icons/admin/icon_block.png" 
 					ng-click="vm.EntertainersService.setStatus($event, entertainer, vm.statuses.blocked, true)"
 					title="Block"
