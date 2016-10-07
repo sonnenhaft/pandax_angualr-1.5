@@ -168,6 +168,11 @@ export default class Constants {
       lastNotAccomplishedOrder: {
         uri: (user) => path + `/${user}/orders/last-not-accomplished`,
         method: 'GET'
+      },
+
+      payForOrder: {
+        uri: (user, orderId) => path + `/${user}/orders/${orderId}/pay`,
+        method: 'POST'
       }
 
     };
@@ -245,7 +250,12 @@ export default class Constants {
         'Are you sure want to cancel order for the minx?',
 
       // time to cancel entertainer by customer without penalty in minutes
-      timeToCleanCancel: 5
+      timeToCleanCancel: 5,
+
+      moneyReservationFailedMessage: {
+        title: 'Money reservation failed',
+        content: 'One of the captures failed. we will return all captured money. Please try another card.'
+      }
 
     };
 

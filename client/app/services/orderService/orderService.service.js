@@ -181,15 +181,6 @@ export default class Order {
       );
   }
 
-  getChannelNameOfOrder (orderId) {
-    return this.fetchOrderDetails(orderId)
-      .then(
-        orderDetails => {
-          return orderDetails.channel_name;
-        },
-        error => console.log(error)
-      );
-  }
 
   addEntertainerToInvitedList (invite) {
     let entertainer = _.find(this.list, {id: invite.entertainerId});
@@ -281,6 +272,17 @@ export default class Order {
         result => {
           return result.data;
         }
+      );
+  }
+
+  payForOrder (orderId, cardId) {
+    return this
+      .Request
+      .send(
+        null,
+        this.Constants.api.payForOrder.method,
+        this.Constants.api.payForOrder.uri(this.User.get('role'), orderId),
+        {card_id: cardId}
       );
   }
 

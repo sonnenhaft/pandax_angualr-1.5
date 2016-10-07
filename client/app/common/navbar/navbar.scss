@@ -107,6 +107,7 @@
             font-size: .938em;
             &.active {
               @extend .active;
+              color: $Cardinal;
             }
           }
         }

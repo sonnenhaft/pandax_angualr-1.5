@@ -1,6 +1,6 @@
 class BillingController {
 
-  constructor ($state, User, Cards, $stateParams, Resolve, $mdToast, $q, OrderService) {
+  constructor ($state, User, Cards, $stateParams, Resolve, $mdToast, $q, OrderService, Constants, $mdDialog) {
     'ngInject';
 
     _.assign(this, {
@@ -12,6 +12,8 @@ class BillingController {
       $mdToast,
       $q,
       OrderService,
+      Constants,
+      $mdDialog,
       newCard: {},   //temporary
       saveLoading: false,
       defaultCardId: 0,
@@ -52,25 +54,17 @@ class BillingController {
       }
     }
 
-
     return this.$q.all(promises).then((data) => {
-      let errorMessages = _.chain(data).filter('message').map('message').value();
-
-      if (errorMessages.length) {
-         this.showError(errorMessages.join(' ,'));
-         this.saveLoading = false;
-      } else {
-        this.payForOrder()
-          .then(data => {
-            this.$state.go(this.$stateParams.from, {orderId: this.$stateParams.orderId});
-          })
-          .finally(() => {
-            this.saveLoading = false;
-          });
-      }
+      this.payForOrder()
+        .then(data => {
+          this.$state.go(this.$stateParams.from, {orderId: this.$stateParams.orderId});
+        })
+        .finally(() => {
+          this.saveLoading = false;
+        });
     })
-    .catch((data) => {
-      console.log('errors', data);
+    .finally((_data) => {
+      this.saveLoading = false;
     });
   }
 
@@ -94,10 +88,28 @@ class BillingController {
   }
 
   payForOrder () {
-    /*
-      ToDo: add request to pay for order and after that send request for invite entertainer
-     */
-    return this.OrderService.inviteEntertainer(this.$stateParams.orderId, parseInt(this.$stateParams.entertainerId));
+    return this.OrderService.payForOrder(this.$stateParams.orderId, this.getDefaultCardId())
+      .then(
+        data => {
+          return this.OrderService.inviteEntertainer(this.$stateParams.orderId, parseInt(this.$stateParams.entertainerId));
+        },
+        error => {
+          this.showMoneyReservationFailedPopUp();
+          let defer = this.$q.defer();
+          defer.reject(error);
+          return defer.promise;
+        });
+  }
+
+  showMoneyReservationFailedPopUp () {
+    this.$mdDialog.show(
+      this.$mdDialog.alert()
+        .clickOutsideToClose(true)
+        .title(this.Constants.order.moneyReservationFailedMessage.title)
+        .textContent(this.Constants.order.moneyReservationFailedMessage.content)
+        .ariaLabel('Ban Dialog')
+        .ok('Ok')
+    );    
   }
 
 }
