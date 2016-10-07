@@ -42,7 +42,7 @@ export default class Resolve {
       .send(
         this.User.token(),
         this.Constants.api.service.method,
-        this.Constants.api.service.uri('customer')
+        this.Constants.api.service.uri(this.User.get('role'))
       )
       .then(
         result => {
