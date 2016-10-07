@@ -43,24 +43,24 @@
         <div layout="row">
           <span flex="15" class="guest">{{item.order.guestNumber}}</span>
         </div>
-        <span class="time">{{item.order.length | hoursToTime}}</span>
+        <span class="time">{{(item.worked_time) | hoursToTime: 'seconds' }}</span>
         <div layout="row" class="price">
-          <div flex>
-            <!-- rate per hour -->
-            <span class="initial">{{item.order.cost / item.order.length | number : 2}}</span>
-            <p class="initial-text">Initial</p>
-          </div>
           <div flex ng-if="item.moneyEarned > 0">
-            <!-- rate per hour -->
             <span class="initial">{{item.moneyEarned}}</span>
             <p class="initial-text">Earned</p>
           </div>
         </div>
         <div 
-          ng-if="item.status == $ctrl.Constants.order.statuses.canceled"
+          ng-if="item.status == $ctrl.Constants.order.statuses.canceledbyProvider"
           layout="row" 
           class="order-information-canceled-message">
           Order canceled by entertainer. Cancelation fee will be deducted from the next payment
+        </div>
+        <div 
+          ng-if="item.status == $ctrl.Constants.order.statuses.canceledbyCustomer"
+          layout="row" 
+          class="order-information-canceled-message">
+          Order canceled by customer
         </div>
       </div>
     </li>
@@ -77,7 +77,7 @@
     </md-progress-circular>
   </div>
 
-  <div class="empty-history" ng-if="!$ctrl.history.length">
+  <div class="empty-history" ng-if="!$ctrl.history.length && !$ctrl.isOnProgress">
     <p>You don't have any past orders</p>
   </div>
 

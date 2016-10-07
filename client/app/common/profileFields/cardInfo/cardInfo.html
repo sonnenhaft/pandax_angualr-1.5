@@ -14,7 +14,7 @@
 			required/>
 	  <div
 	  	ng-messages="vm.formObject.card_number.$error"
-	  	ng-show="vm.formObject.card_number.$touched && vm.formObject.card_number.$invalid"
+	  	ng-show="(vm.formObject.card_number.$touched || vm.formObject.$submitted) && vm.formObject.card_number.$invalid"
 	  	class="validation-messages"
 	  	role="alert">
 	    <!-- <div ng-messages-include="/app/common/messages/messages.html"></div> -->
@@ -41,7 +41,7 @@
 			required/>
 	  <div
 	  	ng-messages="vm.formObject.expiry.$error"
-	  	ng-show="vm.formObject.expiry.$touched && vm.formObject.expiry.$invalid"
+	  	ng-show="(vm.formObject.expiry.$touched || vm.formObject.$submitted) && vm.formObject.expiry.$invalid"
 	  	class="validation-messages"
 	  	role="alert">
 	    <messages></messages>
@@ -61,7 +61,7 @@
 			required/>
 	  <div
 	  	ng-messages="vm.formObject.cvc.$error"
-	  	ng-show="vm.formObject.cvc.$touched && vm.formObject.cvc.$invalid"
+	  	ng-show="(vm.formObject.cvc.$touched || vm.formObject.$submitted) && vm.formObject.cvc.$invalid"
 	  	class="validation-messages"
 	  	role="alert">
 	    <messages></messages>
@@ -80,7 +80,7 @@
 			required/>
 	  <div
 	  	ng-messages="vm.formObject.zip.$error"
-	  	ng-show="vm.formObject.zip.$touched && vm.formObject.zip.$invalid"
+	  	ng-show="(vm.formObject.zip.$touched || vm.formObject.$submitted) && vm.formObject.zip.$invalid"
 	  	class="validation-messages"
 	  	role="alert">
 	    <messages></messages>

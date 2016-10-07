@@ -1,9 +1,9 @@
 export default class profileFieldsController {
 
-  constructor (User, Constants, Validation, Storage, $state, $q, $timeout, Helper) {
+  constructor (User, Constants, Validation, Storage, $state, $q, $timeout, Helper, Cards) {
     'ngInject';
 
-    _.assign(this, {User, Constants, Validation, Storage, $state, $q, $timeout, Helper, images: [], backupModel: {}, photosBuffer: []});
+    _.assign(this, {User, Constants, Validation, Storage, $state, $q, $timeout, Helper, Cards, images: [], backupModel: {}, photosBuffer: []});
 
     this.session = Storage.getObject('MINX');
 
@@ -24,6 +24,7 @@ export default class profileFieldsController {
       case 'main.profile.create':
         this.email = this.User.get('email');
         this.backupModel.email = this.email;
+        this.newCard = {};
         break;
 
       default:
@@ -100,6 +101,8 @@ export default class profileFieldsController {
     _.mapValues(this.backupModel, (model, key) => {
       this[key] = angular.copy(model);
     });
+    
+    this.newCard = {};
   }
 
   validate (field) {
@@ -112,28 +115,29 @@ export default class profileFieldsController {
     return true;
   }
 
-  onReady (profile) {
+  onReady (profile, form) {
     profile = this.addAbsentFields(profile);
-                                     
-    if (!this.isProviderProfile() || 
-        !this.validate(               // all validations messages should be shown at one moment
-            _.assign(
-              {}, 
-              profile, 
-              {
-                displaying_name: this.displaying_name,
-                images: this.images
-              }
-            )
-          )
-        ) {
+    form.$setSubmitted();                                         // show error messages if 
+
+    if (!this.validate(profile) || form.$invalid) {               // all validations messages should be shown at one moment
       return false;
     }
 
-    this.UpdateUserProfile(profile)
-      .then(() => {
-        this.$state.go('main.profile.view');
-      });
+    this.saveLoading = true;
+
+    this.addCard()
+      .then(
+        data => {
+          this.UpdateUserProfile(profile)
+            .then(
+              _data => {
+                this.saveLoading = false;
+                this.$state.go('main.profile.view');
+              });
+        },
+        error => {
+          this.saveLoading = false;
+        });
   }
 
   onSave (profile) {
@@ -142,18 +146,6 @@ export default class profileFieldsController {
     if (this.validate(profile)) {
       this.UpdateUserProfile(profile, 'main.profile.view');
     }
-  }
-
-  isProviderProfile () {
-    if (this.isProvider) {
-      this.session.user = _.assign(this.session.user, {
-        displaying_name: this.displaying_name
-      });
-    } else {
-      return false;
-    }
-
-    return true;
   }
 
   onImageChange (image, slot) {
@@ -184,37 +176,31 @@ export default class profileFieldsController {
               }
             }
 
-            return this.User.update({[this.isCustomer ? 'photo' : 'photos']: result.photo})
+            return this.User.update({[this.isCustomer ? 'photo' : 'photos']: result.photo});
           },
           error => console.log(error)
         );
       promises.push(query);
-    })
+    });
 
     return this.$q.all(promises).then((data) => {
       this.photosBuffer = [];
-    })
+    });
   }
 
-  UpdateUserProfile (profile, mode) {
-    this.saveLoading = true;
-
-    let query = this.User
+  UpdateUserProfile (profile, mode) {    
+    let queryToUpdatePersonalInfo = this.User
         .UpdateUserProfile(profile)
         .then(
           result => {
             this.User.update(_.assign(result, {auth: true}));
             this.mode = mode;
             this.buildProfileModels();
-          },
-          error => {
-            console.log(error);
           }
-        )
+        );
 
-    return this.$q.all([this.UpdateUserPhotos(), query])
+    return this.$q.all([this.UpdateUserPhotos(), queryToUpdatePersonalInfo])
             .then((data) => {
-              this.saveLoading = false;
               return data;
             });
   }
@@ -222,11 +208,18 @@ export default class profileFieldsController {
   addAbsentFields (profile) {
     if (this.displaying_name) {
       profile = _.assign(profile, {                             // maybe, should be replace with better logic
-        displaying_name: this.displaying_name                   //
-      });                                                       //
+        displaying_name: this.displaying_name,                   //
+        images: this.images
+      });                                                       
     }
 
     return profile;
+  }
+
+  addCard (card = this.newCard) {
+    return this.Cards
+      .add(card)
+      .then(result => result);
   }
 
 }

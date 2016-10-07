@@ -41,6 +41,10 @@ export default class Constants {
         change: {
           uri: token => path + '/sessions/password/' + token,
           method: 'PUT'
+        },
+        changeByOld: {
+          uri: () => path + '/password/change',
+          method: 'POST'
         }
       },
 
@@ -118,18 +122,18 @@ export default class Constants {
       },
 
       orderFutures: {
-        uri: (user, page = 1) => path + `/${user}/orders?page=${page}&status[]=accepted`,
+        uri: (user, page = 1) => path + `/${user}/orders?page=${page}&status[]=accepted&status[]=in+progress&include=invites`,
         method: 'GET'
       },
 
       orderHistory: {
         uri: (user, page = 1) => {
-          let result = path + `/${user}/orders`;
-          if (user == 'customer') {
+          let result = path + `/${user}/orders/history?page=${page}&include=invites`;
+/*        if (user == 'customer') {
             result += `?page=${page}&status[]=finished&status[]=canceled&include=invites`;
           } else {
             result += `/history?page=${page}`;
-          }
+          }*/
           return result;
         },
         method: 'GET'
@@ -147,11 +151,23 @@ export default class Constants {
         }
       },
 
+      customers: {
+        get: {        
+          uri: (page = 1) => path + `/admin/customers?page=${page}`,
+          method: 'GET'
+        }
+      },
+
       admin: {
         setStatus: {
           uri: (role, userId) => path + `/admin/${role}/${userId}/status`,
           method: 'POST'
         }
+      },
+
+      lastNotAccomplishedOrder: {
+        uri: (user) => path + `/${user}/orders/last-not-accomplished`,
+        method: 'GET'
       }
 
     };
@@ -207,13 +223,19 @@ export default class Constants {
       }.hour().entertainer(),
 
       statuses: {
-        invited:  "invited",
         accepted: 'accepted',
+        canceled: "canceled",
         declined:  "declined",
-        missed:  "missed",
+        invited:  "invited",
         inProgress:  "in progress",
         finished:  "finished`",
-        canceled: "canceled"
+        missed:  "missed",
+        new:  "new",
+        paid:  "paid",
+        canceled: "canceled",
+        active: "active",
+        canceledbyProvider: "canceled_by_provider",
+        canceledbyCustomer: "canceled_by_customer",
       },
 
       entertainersCountInfo: 'Just trying to get to know you better for the safety of our Minx.',
@@ -363,7 +385,7 @@ export default class Constants {
           url: 'settings.terms'
         },
         {
-          role: ['customer'],
+          role: ['customer', 'provider'],
           parent: 'Settings',
           text: 'Change Password',
           url: 'main.password'
@@ -510,6 +532,7 @@ export default class Constants {
         customer: {
           active: "active",
           blocked: "blocked",
+          unblocked: "unblocked",
         }
       },
 

@@ -196,8 +196,11 @@
   }
 
   .submit {
-    position: absolute;
-    bottom: 40px;
+    // position: absolute;
+    margin: {
+      top: 23px;
+      bottom: 23px;
+    }
     max-width: 50%;
     width: 100%;
 
@@ -248,4 +251,7 @@
     }
   }
 
+  .payments-add-card {
+    margin-top: 13px;
+  }
 }

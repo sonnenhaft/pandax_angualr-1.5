@@ -7,13 +7,19 @@ export default class pastOrdersProviderController {
     	OrderService,
       Constants,
     	history: [],
-      isOnProgress: false,
+      isOnProgress: true,
       isLastPage: false,
       currentPage: 1,
     });
 
     this.OrderService.fetchProviderPastOrders()
-    	.then(data => this.history = data.items);
+    	.then(data => {
+        this.isOnProgress = false;
+        if (this.currentPage == data.meta.pagination.total_pages) {
+          this.isLastPage = true;
+        }
+        return this.history = data.items
+      });
   }
 
   fetchMoreItems () {

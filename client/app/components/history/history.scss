@@ -15,6 +15,21 @@
       margin-bottom: 50px;
     }
 
+    .page-notify {
+      color: $white;
+      font: {
+        family: $oswald;
+        size: 24px;
+        weight: 500;
+      }
+      letter-spacing: 1px;
+      line-height: 40px;
+      text: {
+        align: left;
+        transform: uppercase;
+      }
+    }
+
     @import "./styles/tabs";
 
     @media (max-width: 960px) {

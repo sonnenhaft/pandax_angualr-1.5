@@ -18,7 +18,9 @@ export default class Order {
         moment,
         orderDetails: {},
         $mdDialog,
-        listFutures: []
+        listConfirmed: [],
+        listFutures: [],
+        role: User.get('role')
     });
 
   }
@@ -263,6 +265,21 @@ export default class Order {
           return this.listConfirmed;
         },
         error => console.log(error)
+      );
+  }
+
+  fetchLastNotAccomplishedOrder () {
+    return this
+      .Request
+      .send(
+        null,
+        this.Constants.api.lastNotAccomplishedOrder.method,
+        this.Constants.api.lastNotAccomplishedOrder.uri(this.User.get('role'))
+      )
+      .then(
+        result => {
+          return result.data;
+        }
       );
   }
 
