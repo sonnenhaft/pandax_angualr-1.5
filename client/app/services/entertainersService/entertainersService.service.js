@@ -34,14 +34,19 @@ export default class Entertainers {
     return this.list;
   }
 
-  setStatus (ev, entertainer, targetStatus, showPopup = true) {
+  setStatus (ev, entertainer, targetStatus, showPopup = true, targetStatusForPopup) {
+console.log('targetStatusForPopup bfr:', targetStatusForPopup);
+    if (!targetStatusForPopup) {
+      targetStatusForPopup = targetStatus;
+    }
+console.log('targetStatusForPopup aftr:', targetStatusForPopup);
     let confirm;
 
     if (showPopup) {
       confirm = this.$mdDialog.show(
         this.$mdDialog.confirm()
-          .title(this.Constants.admin.setStatusMessage.title('entertainer', targetStatus))
-          .textContent(this.Constants.admin.setStatusMessage.content('entertainer', targetStatus))
+          .title(this.Constants.admin.setStatusMessage.title('entertainer', targetStatusForPopup))
+          .textContent(this.Constants.admin.setStatusMessage.content('entertainer', targetStatusForPopup))
           .ariaLabel('Set status')
           .targetEvent(ev)
           .ok('Yes')

@@ -33,14 +33,19 @@ export default class Customers {
     return this.list;
   }
 
-  setStatus (ev, customer, targetStatus, showPopup = true) {
+  setStatus (ev, customer, targetStatus, showPopup = true, targetStatusForPopup) {
+console.log('targetStatusForPopup bfr:', targetStatusForPopup);
+    if (!targetStatusForPopup) {
+      targetStatusForPopup = targetStatus;
+    }
+console.log('targetStatusForPopup aftr:', targetStatusForPopup);
     let confirm;
 
     if (showPopup) {
       confirm = this.$mdDialog.show(
         this.$mdDialog.confirm()
-          .title(this.Constants.admin.setStatusMessage.title('customer', targetStatus))
-          .textContent(this.Constants.admin.setStatusMessage.content('customer', targetStatus))
+          .title(this.Constants.admin.setStatusMessage.title('customer', targetStatusForPopup))
+          .textContent(this.Constants.admin.setStatusMessage.content('customer', targetStatusForPopup))
           .ariaLabel('Set status')
           .targetEvent(ev)
           .ok('Yes')

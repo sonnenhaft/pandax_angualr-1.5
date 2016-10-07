@@ -523,6 +523,7 @@ export default class Constants {
         entertainer: {
           accepted: "accepted",
           active: "active",
+          approved: "approved",
           blocked: "blocked",
           offline:  "offline",
           pending:  "pending",
@@ -538,10 +539,33 @@ export default class Constants {
 
       setStatusMessage: {
         // substring to remove 'ed' in the end of status name
-        title: (role, targetStatus) => 
-          `${targetStatus.substr(0, 1).toUpperCase() + targetStatus.substr(1, (targetStatus == 'active' ? targetStatus.length : targetStatus.length-3))} ${role}`,
-        content: (role, targetStatus) => 
-          `Are you sure want to ${targetStatus == 'active' ? targetStatus : targetStatus.substr(0, targetStatus.length-2)} the ${role}?`
+        title: (role, targetStatus) => {
+          return `${this.admin.getCorrectStatusName(targetStatus)} ${role}`;
+        },
+        content: (role, targetStatus) => {
+          return `Are you sure want to ${this.admin.getCorrectStatusName(targetStatus, false)} the ${role}?`; 
+        }
+      },
+
+      getCorrectStatusName (status, isCapitalize = true) {
+        let statusResult = status.substr(0, 1);
+
+        if (isCapitalize) {
+          statusResult = status.substr(0, 1).toUpperCase();
+        }
+
+        switch (status) {
+          case 'active':
+            statusResult += status.substr(1);
+            break;
+          case 'approved':
+            statusResult += status.substr(1, status.length - 2);
+            break;
+          default:
+            statusResult += status.substr(1, status.length - 3);
+        }
+
+        return statusResult;
       }
     };
 

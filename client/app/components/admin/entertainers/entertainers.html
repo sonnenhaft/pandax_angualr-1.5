@@ -65,11 +65,19 @@
 			<td 
 				class="table_admin__cell table_admin__cell_actions">
  				<img 
- 					ng-if="entertainer.status == vm.statuses.pending || entertainer.status == vm.statuses.rejected" 
+ 					ng-if="entertainer.status == vm.statuses.pending" 
  					src="/assets/images/icons/admin/icon_approve.png" 
  					ng-click="vm.EntertainersService.setStatus($event, entertainer, vm.statuses.active, false)"
  					title="Approve"
  					alt="Approve">
+
+ 				<img 
+ 					ng-if="entertainer.status == vm.statuses.rejected" 
+ 					src="/assets/images/icons/admin/icon_approve.png" 
+ 					ng-click="vm.EntertainersService.setStatus($event, entertainer, vm.statuses.active, true, vm.statuses.approved)"
+ 					title="Approve"
+ 					alt="Approve">
+
 				<img 
 					ng-if="entertainer.status == vm.statuses.pending" 
 					src="/assets/images/icons/admin/icon_reject.png" 
@@ -87,8 +95,8 @@
 				<img 
 					ng-if="entertainer.status == vm.statuses.blocked" 
 					src="/assets/images/icons/admin/icon_unblock.png" 
-					ng-click="vm.EntertainersService.setStatus($event, entertainer, vm.statuses.active, true)"
-					alt="Unblock"
+					ng-click="vm.EntertainersService.setStatus($event, entertainer, vm.statuses.active, true, vm.statuses.unblocked)"
+					title="Unblock"
 					alt="Ubblock">
 			</td>
 		</tr>		
@@ -143,6 +151,5 @@
 			<td class="table_admin__cell_rowspaned"></td><td class="table_admin__cell_rowspaned"></td><td class="table_admin__cell_rowspaned"></td>
 		</tr>		
 	</table>
-
 
 </div>
