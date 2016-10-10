@@ -50,7 +50,11 @@
           }
 
           &.price {
+            display: flex;
+            flex-direction: row;
             font: 1.063em $oswald, sans-serif;
+            justify-content: space-between;
+            padding-left: 0;
             @include image('price');
           }
 
