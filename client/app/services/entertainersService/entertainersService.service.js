@@ -35,11 +35,9 @@ export default class Entertainers {
   }
 
   setStatus (ev, entertainer, targetStatus, showPopup = true, targetStatusForPopup) {
-console.log('targetStatusForPopup bfr:', targetStatusForPopup);
     if (!targetStatusForPopup) {
       targetStatusForPopup = targetStatus;
     }
-console.log('targetStatusForPopup aftr:', targetStatusForPopup);
     let confirm;
 
     if (showPopup) {
@@ -68,7 +66,7 @@ console.log('targetStatusForPopup aftr:', targetStatusForPopup);
         )
         .then(
           result => {
-            this.updateEntertainerInList(entertainer, targetStatus);
+            this.updateEntertainerInList(entertainer, result.data.status);
             return result.data;
           }
         );

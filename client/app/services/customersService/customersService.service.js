@@ -34,11 +34,9 @@ export default class Customers {
   }
 
   setStatus (ev, customer, targetStatus, showPopup = true, targetStatusForPopup) {
-console.log('targetStatusForPopup bfr:', targetStatusForPopup);
     if (!targetStatusForPopup) {
       targetStatusForPopup = targetStatus;
     }
-console.log('targetStatusForPopup aftr:', targetStatusForPopup);
     let confirm;
 
     if (showPopup) {
@@ -67,7 +65,7 @@ console.log('targetStatusForPopup aftr:', targetStatusForPopup);
         )
         .then(
           result => {
-            this.updateCustomerInList(customer, targetStatus);
+            this.updateCustomerInList(customer, result.data.status);
             return result.data;
           }
         );
