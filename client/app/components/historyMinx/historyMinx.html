@@ -20,10 +20,7 @@
             <span class="cancel" ng-if="invite.status == $ctrl.Constants.order.statuses.canceledbyCustomer">Cancelled by me</span>
             <span class="cancel" ng-if="invite.status == $ctrl.Constants.order.statuses.canceledbyProvider">Cancelled</span>
             <span class="duration">{{invite.length | hoursToTime: 'seconds'}}</span>
-            <span class="price">
-              <span>${{invite.finalPrice}}</span>
-              <span ng-if="invite.penalty > 0">penalty ${{invite.penalty}}</span>
-            </span>
+            <span class="price">${{invite.finalPrice}}</span>
           </div>
         </li>
       </ul>
