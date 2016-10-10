@@ -1,9 +1,9 @@
 export default class Helper {
 
-  constructor (moment, $mdToast) {
+  constructor (moment, $mdToast, $mdDialog) {
     'ngInject';
 
-    _.assign(this, {moment, $mdToast});
+    _.assign(this, {moment, $mdToast, $mdDialog});
 
   }
 
@@ -110,6 +110,19 @@ export default class Helper {
         .position('top right')
         .hideDelay(duration)
         .action('OK')
+    );
+  }
+
+  showBanPopUp (message = '') {
+    let title = message.slice(message.indexOf('account'), message.indexOf('.'));
+
+    this.$mdDialog.show(
+      this.$mdDialog.alert()
+        .clickOutsideToClose(true)
+        .title(title.substr(0, 1).toUpperCase() + title.substr(1))
+        .textContent(message)
+        .ariaLabel('Ban Dialog')
+        .ok('Ok')
     );
   }
 }
