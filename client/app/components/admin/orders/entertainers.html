@@ -33,12 +33,9 @@
 			class="table_admin__row table_admin__row_start" 
 			ng-repeat-start="entertainer in vm.EntertainersService.list">
 			<td 
-				class="table_admin__cell table_admin__cell_rowspaned" 
+				class="table_admin__cell table_admin__cell_avatar table_admin__cell_rowspaned" 
 				rowspan="3">
-				<!-- <div ng-style="{'background-image': 'url(' + entertainer.photos[0].preview + ')'}" alt="{{entertainer.displaying_name}}"></div> -->
-				<div class="avatar-wrapper">
-					<img ng-src="{{entertainer.photos[0].preview}}" alt="{{entertainer.displaying_name}}">
-				</div>
+				<div ng-style="{'background-image': 'url(' + entertainer.photos[0].preview + ')'}" alt="{{entertainer.displaying_name}}"></div>
 			</td>
 			<td
 				class="table_admin__cell table_admin__cell_label">
@@ -68,19 +65,11 @@
 			<td 
 				class="table_admin__cell table_admin__cell_actions">
  				<img 
- 					ng-if="entertainer.status == vm.statuses.pending" 
+ 					ng-if="entertainer.status == vm.statuses.pending || entertainer.status == vm.statuses.rejected" 
  					src="/assets/images/icons/admin/icon_approve.png" 
  					ng-click="vm.EntertainersService.setStatus($event, entertainer, vm.statuses.active, false)"
  					title="Approve"
  					alt="Approve">
-
- 				<img 
- 					ng-if="entertainer.status == vm.statuses.rejected" 
- 					src="/assets/images/icons/admin/icon_approve.png" 
- 					ng-click="vm.EntertainersService.setStatus($event, entertainer, vm.statuses.active, true, vm.statuses.approved)"
- 					title="Approve"
- 					alt="Approve">
-
 				<img 
 					ng-if="entertainer.status == vm.statuses.pending" 
 					src="/assets/images/icons/admin/icon_reject.png" 
@@ -89,7 +78,7 @@
 					alt="Reject">
 
 				<img 
-					ng-if="entertainer.status == vm.statuses.active || entertainer.status == vm.statuses.offline" 
+					ng-if="entertainer.status == vm.statuses.approved" 
 					src="/assets/images/icons/admin/icon_block.png" 
 					ng-click="vm.EntertainersService.setStatus($event, entertainer, vm.statuses.blocked, true)"
 					title="Block"
@@ -98,8 +87,8 @@
 				<img 
 					ng-if="entertainer.status == vm.statuses.blocked" 
 					src="/assets/images/icons/admin/icon_unblock.png" 
-					ng-click="vm.EntertainersService.setStatus($event, entertainer, vm.statuses.active, true, vm.statuses.unblocked)"
-					title="Unblock"
+					ng-click="vm.EntertainersService.setStatus($event, entertainer, vm.statuses.unblocked, true)"
+					alt="Unblock"
 					alt="Ubblock">
 			</td>
 		</tr>		
@@ -154,5 +143,6 @@
 			<td class="table_admin__cell_rowspaned"></td><td class="table_admin__cell_rowspaned"></td><td class="table_admin__cell_rowspaned"></td>
 		</tr>		
 	</table>
+
 
 </div>

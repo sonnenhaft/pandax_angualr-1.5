@@ -34,14 +34,17 @@ export default class Entertainers {
     return this.list;
   }
 
-  setStatus (ev, entertainer, targetStatus, showPopup = true) {
+  setStatus (ev, entertainer, targetStatus, showPopup = true, targetStatusForPopup) {
+    if (!targetStatusForPopup) {
+      targetStatusForPopup = targetStatus;
+    }
     let confirm;
 
     if (showPopup) {
       confirm = this.$mdDialog.show(
         this.$mdDialog.confirm()
-          .title(this.Constants.admin.setStatusMessage.title('entertainer', targetStatus))
-          .textContent(this.Constants.admin.setStatusMessage.content('entertainer', targetStatus))
+          .title(this.Constants.admin.setStatusMessage.title('entertainer', targetStatusForPopup))
+          .textContent(this.Constants.admin.setStatusMessage.content('entertainer', targetStatusForPopup))
           .ariaLabel('Set status')
           .targetEvent(ev)
           .ok('Yes')
@@ -58,12 +61,12 @@ export default class Entertainers {
         .send(
           null,
           this.Constants.api.admin.setStatus.method,
-          this.Constants.api.admin.setStatus.uri('entertainers', entertainer.id),
+          this.Constants.api.admin.setStatus.uri('providers', entertainer.id),
           {set: targetStatus}
         )
         .then(
           result => {
-            this.updateEntertainerInList(entertainer, targetStatus);
+            this.updateEntertainerInList(entertainer, result.data.status);
             return result.data;
           }
         );
