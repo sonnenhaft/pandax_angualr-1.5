@@ -111,6 +111,11 @@ angular
             let User = $injector.get("User");
             User.logout();
           }
+        } else if (response.status == 403) {
+          let Helper = $injector.get("Helper"),
+              User = $injector.get("User");
+          Helper.showBanPopUp(response.data && response.data.detail);
+          User.logout();
         }
 
         defer.reject(response);
