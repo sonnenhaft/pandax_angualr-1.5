@@ -1,9 +1,9 @@
 export default class Validation {
 
-  constructor (moment) {
+  constructor (moment, Constants) {
     'ngInject';
 
-    _.assign(this, {moment});
+    _.assign(this, {moment, Constants});
 
   }
 
@@ -62,6 +62,14 @@ export default class Validation {
 
       case !this.moment(date, 'MMMM DD, YYYY').isValid():
         return this.message('date', false, 'Wrong date format');
+
+      case this.moment(date).startOf('date').isBefore(this.moment().startOf('date')):
+        return this.message('date', false, 'Date should be in the future');
+
+      case this.moment(date).startOf('date').isAfter(
+              this.moment().add(this.Constants.order.maxPeriodForCreating.value, this.Constants.order.maxPeriodForCreating.key).startOf('date')
+            ):
+        return this.message('date', false, 'Date should be to 14 days in the future');
 
       default:
         return this.message('date', true);

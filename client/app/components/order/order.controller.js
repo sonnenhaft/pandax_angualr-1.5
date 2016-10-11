@@ -1,6 +1,6 @@
 class orderController {
 
-  constructor (User, Constants, Helper, Validation, OrderService, Request, $window, $state, $mdDialog) {
+  constructor (User, Constants, Helper, Validation, OrderService, Request, $window, $state, $mdDialog, moment) {
     'ngInject';
 
     _.assign(this, {
@@ -11,9 +11,9 @@ class orderController {
       OrderService,
       Request,
       $state,
-      $mdDialog
+      $mdDialog,
+      maxDateForCreating: moment().add(Constants.order.maxPeriodForCreating.value, Constants.order.maxPeriodForCreating.key).toDate()
     });
-
     this.mobile = $window.innerWidth <= 960;
 
     $window.addEventListener('resize', () => {
@@ -81,20 +81,18 @@ class orderController {
     return true;
   }
 
-  onSearch (form) {
-    this.orderLoading = true;
-
-    if (!this.Helper.getActiveObjectFromArray(this.providers).length) {
-      this.typeError = true;
-      this.orderLoading = false;
+  onSearch (orderModel, form) {
+    if ((this.typeError = !this.Helper.getActiveObjectFromArray(this.providers).length) || form.$invalid) {
       return false;
     }
+    
+    this.orderLoading = true;
 
     if (
       !this.validate({
-        apt: form.apt,
+        apt: orderModel.apt,
         location: this.inputLocation,
-        date: form.date
+        date: orderModel.date
       })
     ) {
       this.location = false;
@@ -103,7 +101,7 @@ class orderController {
     }
 
     if (this.User.get('is_newcomer')) {
-      this.$state.go('main.accept', {order: this.orderData(form)});
+      this.$state.go('main.accept', {order: this.orderData(orderModel)});
       return false;
     }
 
@@ -112,7 +110,7 @@ class orderController {
         this.User.token(),
         this.Constants.api.order.method,
         this.Constants.api.order.uri,
-        this.orderData(form)
+        this.orderData(orderModel)
       )
       .then(
         result => {
@@ -127,11 +125,11 @@ class orderController {
       );
   }
 
-  orderData (form) {
+  orderData (orderModel) {
     return this
       .OrderService
       .buildOrder(
-        _.assign(form, {
+        _.assign(orderModel, {
           geo: this.inputLocation,
           price: this.getTotalPrice()
         })

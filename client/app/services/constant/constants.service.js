@@ -255,6 +255,11 @@ export default class Constants {
       moneyReservationFailedMessage: {
         title: 'Money reservation failed',
         content: 'One of the captures failed. we will return all captured money. Please try another card.'
+      },
+
+      maxPeriodForCreating: {
+        value: 14,
+        key: 'days'
       }
 
     };
