@@ -245,7 +245,7 @@ export default class Order {
   }
 
   setEntertainerCanceled (invite) {
-    invite.status = this.Constants.order.statuses.canceled;
+    invite.status = this.Constants.order.statuses.canceledbyCustomer;
   }
 
   /*
