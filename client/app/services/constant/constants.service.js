@@ -217,7 +217,7 @@ export default class Constants {
           this.hour = _.head(this.hours);
           return this;
         },
-        guests: ['1', '2-3', '4-5', '5-10', '10-15'],
+        guests: ['1', '2-3', '4-5', '5-10', '10-15', '15+'],
         guest: 1,
         asap: true
       }.hour().entertainer(),

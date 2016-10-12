@@ -9,7 +9,6 @@ export default class orderTermsController {
       Request,
       $state
     });
-console.log('this.order:', this.order);
   }
 
   onAccept () {
@@ -24,17 +23,15 @@ console.log('this.order:', this.order);
         )
         .then(
           result => {
-            this.orderLoading = false;
             if (result.status == 200) {
               this.User.update(result.data.customer);
               this.$state.go('main.manipulationEntertainers', {orderId: result.data.id, channelName: result.data.channel_name});
             }
-          },
-          error => {
-            this.orderLoading = false;
-            console.log(error);
           }
-        );
+        )
+        .finally((_data) => {
+            this.orderLoading = false;
+        });
     }
   }
 
