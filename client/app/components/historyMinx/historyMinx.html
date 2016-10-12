@@ -21,6 +21,16 @@
             <span class="cancel" ng-if="invite.status == $ctrl.Constants.order.statuses.canceledbyProvider">Cancelled</span>
             <span class="duration">{{invite.length | hoursToTime: 'seconds'}}</span>
             <span class="price">${{invite.finalPrice}}</span>
+
+            <div 
+              class="minx-actions" 
+              layout="row"
+              layout-align="start center"
+              ng-if="invite.status != $ctrl.Constants.order.statuses.canceledbyProvider && invite.status != $ctrl.Constants.order.statuses.canceledbyCustomer">
+              <md-button class="md-raised md-accent minx-actions__button" type="button" ng-click="$ctrl.cancelOrder($event, invite)">Cancel Minx</md-button>
+              <span timer="{{::$ctrl.moment(invite.datetime).add($ctrl.timeToCleanCancel, 'm').valueOf()}}"></span>
+            </div>
+
           </div>
         </li>
       </ul>
