@@ -51,7 +51,11 @@
 
 	<div class="orders-content" layout="row">
 		<div class="orders-list">
-			<div class="infinite-scroll-wrapper" infinite-scroll="vm.fetchMoreItems()" infinite-scroll-disabled='vm.isOnProgress || vm.isLastPage'>
+			<div 
+				class="infinite-scroll-wrapper" 
+				infinite-scroll="vm.fetchMoreItems()" 
+				infinite-scroll-disabled='vm.isOnProgress || vm.isLastPage'
+				infinite-scroll-container="'.orders-list'">
 				<div 
 					class="order"
 					ng-class="{'order_active': vm.orderActiveIndex == $index}"
