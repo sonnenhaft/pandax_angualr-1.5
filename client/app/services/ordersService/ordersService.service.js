@@ -1,11 +1,12 @@
 export default class Orders {
 
-  constructor (Constants, Request) {
+  constructor (Constants, Request, User) {
     'ngInject';
 
     _.assign(this, {
         Constants,
         Request,
+        User,
         list: []
     });
 
@@ -16,8 +17,8 @@ export default class Orders {
       .Request
       .send(
         null,
-        this.Constants.api.orders.method,
-        this.Constants.api.orders.uri(page)
+        this.Constants.api.orders.getAll.method,
+        this.Constants.api.orders.getAll.uri(this.User.get('role'), page)
       )
       .then(
         result => {
@@ -31,4 +32,14 @@ export default class Orders {
     return this.list;
   }
 
+  getOrderDetails(orderId) {
+    return this
+      .Request
+      .send(
+        null,
+        this.Constants.api.orders.getOne.method,
+        this.Constants.api.orders.getOne.uri(this.User.get('role'), orderId)
+      )
+      .then(result => result.data);
+  }
 }

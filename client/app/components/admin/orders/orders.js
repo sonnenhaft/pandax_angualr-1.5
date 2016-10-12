@@ -2,6 +2,7 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import ordersComponent from './orders.component';
 import OrdersService from '../../../services/ordersService/ordersService';
+import hoursToTime from '../../../common/filters/hoursToTime.filter';
 
 export default angular
   .module('orders', [
@@ -18,5 +19,6 @@ export default angular
         template: '<orders></orders>'
       });
   })
+  .filter('hoursToTime', hoursToTime)
   .component('orders', ordersComponent)
   .name;

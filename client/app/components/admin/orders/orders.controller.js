@@ -11,18 +11,21 @@ class OrdersController {
       isLastPage: false,
       currentPage: 1,
       statuses: Constants.order.statuses,
-      activeOrderIndex: -1,
-      typesOfService: []
+      orderActiveIndex: -1,
+      typesOfService: [],
+      orderActive: null
     });
   }
 
   $onInit () {
   	this.isOnProgress = true;
+
     this.OrdersService.fetchOrders()
       .then(data => {
       	this.isOnProgress = false;
         this.isLastPage = this.checkIsLastPage(data.meta.pagination.total_pages);
       });
+
     this.Resolve.providers()
       .then(data => this.typesOfService = data);
   }
@@ -40,6 +43,17 @@ class OrdersController {
 
   checkIsLastPage (totalPages) {
 		return this.currentPage == totalPages;
+  }
+
+  getOrderDetails (index) {
+    this.isOnProgress = true;
+    this.orderActiveIndex = index;
+
+    this.OrdersService.getOrderDetails(this.OrdersService.list[this.orderActiveIndex].id)
+      .then((data) => {
+        this.isOnProgress = false;
+        return this.orderActive = data;
+      });
   }
 
 }

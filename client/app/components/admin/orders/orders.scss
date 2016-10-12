@@ -1,29 +1,34 @@
 #orders {
 	$ordersContentMinWidth: 914px;
 	$ordersListMinWidth: 275px;
+	$ordersListWidth: 34%;
+	$ordersListMaxHeight: 700px;
 
 	.orders {
 		&-list {
+			background: {
+				color: white;
+			}
+			max-height: $ordersListMaxHeight;
 			min-width: $ordersListMinWidth;
 			overflow: auto;
 			padding-top: 2px;
 			padding-bottom: 4px;
+			width: $ordersListWidth;
 		}
 
 		&-content {
+			margin-top: 20px;
 			min-width: $ordersContentMinWidth;
-			overflow: auto;
 		}
 	}
 
 	.order {
-		padding: {
-			top: 9px;
-			bottom: 9px;
-		}
+		padding: 11px 17px 14px 17px;
 		width: 100%;
 
 		&-param {
+			@extend .font_admin-manip__label;
 			background: {
 				repeat: no-repeat;
 				position: center;
@@ -35,8 +40,21 @@
 				@include getImage('history/date')
 			}
 			&_name {
+				margin-top: 9px;
 				@include getImage('history/guest')
 			}
 		}
+
+		&_active {
+			background: {
+				color: $Munsell;
+			}
+		}
+	}
+
+	.infinite-scroll-wrapper {
+		display: block;
+		position: relative;
+		/* height: 100%; */
 	}
 }

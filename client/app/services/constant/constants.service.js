@@ -166,8 +166,14 @@ export default class Constants {
       },
 
       orders: {
-        uri: (page = 1) => path + `/admin/orders?page=${page}&include=invites`,
-        method: 'GET'
+        getAll: {
+          uri: (role, page = 1) => path + `/${role}/orders?page=${page}`,
+          method: 'GET'
+        },
+        getOne: {
+          uri: (role, orderId) => path + `/${role}/orders/${orderId}?include=invites`,
+          method: 'GET'
+        }
       }
 
     };
