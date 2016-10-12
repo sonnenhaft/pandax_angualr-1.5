@@ -6,7 +6,9 @@
     infinite-scroll-disabled='$ctrl.isOnProgress || $ctrl.isLastPage'>
     <li ng-repeat="order in $ctrl.history">
       <div class="order-information">
-        <span class="date">{{order.datetime | amDateFormat:'h:mm A, MMM DD (dddd)'}}</span>
+        <span class="date">
+          {{order.status == $ctrl.statuses.canceledbyProvider || order.status == $ctrl.statuses.canceledbyCustomer ? '-' : (order.startDt | amDateFormat:'h:mm A, MMM DD (dddd)')}}
+        </span>
         <span class="minx">{{order.serviceType.name}}</span>
         <span class="address">{{order.location}}</span>
         <div layout="row">

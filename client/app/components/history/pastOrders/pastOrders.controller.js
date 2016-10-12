@@ -1,6 +1,6 @@
 export default class pastOrdersController {
 
-  constructor (OrderService) {
+  constructor (OrderService, Constants) {
     'ngInject';
 
     _.assign(this, {
@@ -9,6 +9,7 @@ export default class pastOrdersController {
       isOnProgress: false,
       isLastPage: false,
       currentPage: 1,
+      statuses: Constants.order.statuses
     });
   }
 
