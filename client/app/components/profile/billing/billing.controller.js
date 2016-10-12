@@ -112,6 +112,10 @@ class BillingController {
     );    
   }
 
+  goToPreviousStep () {
+    this.$state.go(this.$stateParams.from, {orderId: this.$stateParams.orderId});
+  }
+
 }
 
 export default BillingController;
