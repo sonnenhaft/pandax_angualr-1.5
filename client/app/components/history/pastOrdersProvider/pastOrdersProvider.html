@@ -37,7 +37,9 @@
         </div>
 
 
-        <span class="date">{{item.order.datetime | amDateFormat:'h:mm A, MMM DD (dddd)'}}</span>
+        <span class="date">
+          {{item.order.status == $ctrl.Constants.order.statuses.canceledbyProvider || item.order.status == $ctrl.Constants.order.statuses.canceledbyCustomer ? '-' : (item.order.startDt | amDateFormat:'h:mm A, MMM DD (dddd)')}}
+        </span>
         <span class="minx">{{item.order.service_type.name}}</span>
         <span class="address">{{item.order.location.location}}</span>
         <div layout="row">
