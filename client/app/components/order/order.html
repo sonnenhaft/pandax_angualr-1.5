@@ -28,7 +28,7 @@
         </md-button>
       </div>
     </div>
-    <div class="type-error" ng-if="$ctrl.typeError">
+    <div class="type-error" ng-if="$ctrl.typeError == true">
       Please choose type of service.
     </div>
     <form name="orderForm" id="profile-form" novalidate>
@@ -118,12 +118,16 @@
                          ng-class="{error: $ctrl.dateError}"
                          md-placeholder="Enter date"
                          md-min-date="$ctrl.currentDate"
-                         md-max-date=""
+                         md-max-date="$ctrl.maxDateForCreating"
                          aria-readonly="true"
                          name="date">
           </md-datepicker>
           <span class="error" ng-if="$ctrl.dateError">
             {{$ctrl.dateError}}
+          </span>
+          <span class="error" ng-messages="orderForm.date.$error" ng-if="orderForm.date.$error">
+            <div ng-message="mindate">Date is too early!</div>
+            <div ng-message="maxdate">Date is too late!</div>
           </span>
         </div>
         <div flex>
@@ -152,7 +156,7 @@
                     later: orderForm.later.$viewValue,
                     date: orderForm.date.$viewValue,
                     time: orderForm.time.$viewValue
-                   })">
+                   }, orderForm)">
           {{!$ctrl.orderLoading ? 'SEARCH FOR MINX' : ''}}
           <spinner input="$ctrl.orderLoading"></spinner>
         </md-button>

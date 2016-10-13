@@ -41,7 +41,8 @@
 		layout-align="space-between">
     <md-button
     	flex="50"
-    	class="md-raised form_1__button form_1__button_primary">
+    	class="md-raised form_1__button form_1__button_primary"
+    	ng-click="vm.goToPreviousStep()">
     	Cancel
     </md-button>
     <md-button
@@ -51,7 +52,7 @@
     							 ((!vm.billingInfo.cards || vm.billingInfo.cards.length == 0) && billingInformationForm.$invalid) || 
     							 vm.saveLoading"
     	ng-click="vm.saveInfo()">
-			Continue
+			Pay
 	    <md-progress-circular
 	    	md-mode="indeterminate"
 	    	md-diameter="30"

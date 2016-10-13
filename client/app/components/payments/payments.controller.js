@@ -1,11 +1,12 @@
 export default class Payments {
 
-  constructor (Cards, $mdToast) {
+  constructor (Cards, $mdToast, $q) {
     'ngInject';
 
     _.assign(this, {
       Cards, 
-      $mdToast
+      $mdToast,
+      $q
     });
 
     Cards.getCards()
@@ -18,17 +19,25 @@ export default class Payments {
     this.saveLoading = true;
     this.Cards
       .add(card)
-      .then(cards => {
+      .then(
+        cards => {
 
-        if (!cards.message) {
-          this.cards = cards;
-          this.add = false;
-        }
+          if (!cards.message) {
+            this.cards = cards;
+            this.add = false;
+          }
 
-        this.saveLoading = false;
+          this.saveLoading = false;
 
-        return cards;
-      })
+          return cards;
+        },
+        error => {
+          this.saveLoading = false;
+          
+          let defer = this.$q.defer();
+          defer.reject(error);
+          return defer.promise;
+        })
       .then(result => {
         if (result.message) {
           this.showError(result.message.message || result.message);

@@ -8,7 +8,7 @@
               {{$ctrl.order.serviceType.name}}
               ({{$ctrl.order.entertainersNumber}})
             </span>
-            <span class="initial" flex>{{$ctrl.order.cost / $ctrl.order.entertainersNumber}} / hour</span>
+            <span class="initial" flex>{{$ctrl.order.cost / $ctrl.order.entertainers_number}} / hour</span>
           </div>
           <div layout="row">
             <span class="time" flex>{{$ctrl.order.length | hoursToTime}}</span>

@@ -1,6 +1,6 @@
 class BillingController {
 
-  constructor ($state, User, Cards, $stateParams, Resolve, $mdToast, $q) {
+  constructor ($state, User, Cards, $stateParams, Resolve, $mdToast, $q, OrderService, Constants, $mdDialog) {
     'ngInject';
 
     _.assign(this, {
@@ -11,6 +11,9 @@ class BillingController {
       Cards,
       $mdToast,
       $q,
+      OrderService,
+      Constants,
+      $mdDialog,
       newCard: {},   //temporary
       saveLoading: false,
       defaultCardId: 0,
@@ -52,19 +55,17 @@ class BillingController {
     }
 
     return this.$q.all(promises).then((data) => {
-      let errorMessages = _.chain(data).filter('message').map('message').value();
-
+      this.payForOrder()
+        .then(data => {
+          this.$state.go(this.$stateParams.from, {orderId: this.$stateParams.orderId});
+        })
+        .finally(() => {
+          this.saveLoading = false;
+        });
+    })
+    .finally((_data) => {
       this.saveLoading = false;
-
-      if (errorMessages.length) {
-         this.showError(errorMessages.join(' ,'));
-      } else {
-        this.$state.go(this.$stateParams.from, {orderId: this.$stateParams.orderId})
-      }
-    })
-    .catch((data) => {
-      console.log('errors', data);
-    })
+    });
   }
 
   getDefaultCardId () {
@@ -84,6 +85,35 @@ class BillingController {
         .hideDelay(200000)
         .action('OK')
     );
+  }
+
+  payForOrder () {
+    return this.OrderService.payForOrder(this.$stateParams.orderId, this.getDefaultCardId())
+      .then(
+        data => {
+          return this.OrderService.inviteEntertainer(this.$stateParams.orderId, parseInt(this.$stateParams.entertainerId));
+        },
+        error => {
+          this.showMoneyReservationFailedPopUp();
+          let defer = this.$q.defer();
+          defer.reject(error);
+          return defer.promise;
+        });
+  }
+
+  showMoneyReservationFailedPopUp () {
+    this.$mdDialog.show(
+      this.$mdDialog.alert()
+        .clickOutsideToClose(true)
+        .title(this.Constants.order.moneyReservationFailedMessage.title)
+        .textContent(this.Constants.order.moneyReservationFailedMessage.content)
+        .ariaLabel('Ban Dialog')
+        .ok('Ok')
+    );    
+  }
+
+  goToPreviousStep () {
+    this.$state.go(this.$stateParams.from, {orderId: this.$stateParams.orderId});
   }
 
 }

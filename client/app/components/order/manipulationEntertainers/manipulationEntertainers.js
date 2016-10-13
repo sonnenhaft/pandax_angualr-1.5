@@ -37,20 +37,21 @@ export default angular
           entertainers: function (OrderService, orderId) {
             return OrderService.fetchEntertainers(orderId);
           },
-          channelName: function (OrderService, orderId) {
-            return OrderService.getChannelNameOfOrder(orderId);
+          orderDetails: function (OrderService, orderId) {
+            return OrderService.fetchOrderDetails(orderId);
+          },
+          channelName: function (orderDetails) {
+            return orderDetails.channel_name;
           },
           entertainersInvited: function (OrderService, channelName, orderId) {
             OrderService.subcribeOnEntertainerInvite(channelName);
             return OrderService.fetchEntertainersInvited(orderId);
           },
-          countOfRequiredEntertainers: function (OrderService, orderId) {
-            return OrderService.fetchOrderDetails(orderId)
-                    .then(data => data && data.entertainers_number);
+          countOfRequiredEntertainers: function (orderDetails) {
+            return orderDetails.entertainers_number;
           },
-          serviceTypePrice: function (OrderService, orderId) {
-            return OrderService.fetchOrderDetails(orderId)
-                    .then(data => data && data.serviceType.price);
+          serviceTypePrice: function (orderDetails) {
+            return orderDetails.serviceType.price;
           }
         },
         onExit: function(OrderService){
