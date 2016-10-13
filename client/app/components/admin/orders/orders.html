@@ -40,7 +40,7 @@
       </md-select>			
 		</div>
 		<div class="admin__manip-section" flex="40" layout="column">
-      <label for="dateStartFr" class="admin__manip-label">Order start date {{vm.isOnProgress}} : {{vm.isLastPage}}</label>
+      <label for="dateStartFr" class="admin__manip-label">Order start date</label>
      	<div layout="row" class="admin__manip-field">
 	      <md-datepicker class="admin__datepicker" ng-model="vm.manip.dateStartFr" aria-readonly="true" name="dateStartFrom"></md-datepicker>
 	      <md-datepicker class="admin__datepicker" ng-model="vm.manip.dateStartTo" aria-readonly="true" name="dateStartTo"></md-datepicker>
@@ -62,8 +62,10 @@
 					layout="column"
 		    	ng-repeat="order in vm.OrdersService.list"
 		    	ng-click="vm.getOrderDetails($index)">
-					<span class="order-param order-param_date">{{order.datetime | amDateFormat:'h:mm A, MMM DD (dddd)'}}</span>
-					<span class="order-param order-param_name">{{order.customer.first_name}} {{order.customer.last_name}}</span>
+		    	<div class="order__content">
+						<span class="order-param order-param_date">{{order.datetime | amDateFormat:'h:mm A, MMM DD (dddd)'}}</span>
+						<span class="order-param order-param_name">{{order.customer.first_name}} {{order.customer.last_name}}</span>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -110,6 +112,14 @@
 					<td class="table_admin__cell">{{vm.orderActive.cost}}</td>
 					<td class="table_admin__cell">{{vm.orderActive.finalCost}}</td>
 				</tr>
+				<tr class="table_admin__row">
+					<td class="table_admin__cell">Minx</td>
+					<td class="table_admin__cell" collspan="3">Stripe</td>
+				</tr>
+				<tr class="table_admin__row">
+					<td class="table_admin__cell">{{invite.commission}}</td>
+					<td class="table_admin__cell" collspan="3">{{vm.orderActive.stripeComission}}</td>
+				</tr>
 
 				<tr class="table_admin__row table_admin__row_start">
 					<th class="table_admin__cell table_admin__cell_header" colspan="4">Invites</th>
@@ -129,16 +139,14 @@
 				</tr>
 				<tr class="table_admin__row">
 					<td class="table_admin__cell table_admin__cell_label">To entertainer</td>
-					<td class="table_admin__cell table_admin__cell_label">Minx</td>
-					<td class="table_admin__cell table_admin__cell_label" colspan="2">Stripe</td>
+					<td class="table_admin__cell table_admin__cell_label" colspan="3">Stripe (0.5%)</td>
 				</tr>
 				<tr class="table_admin__row table_admin__row_end" ng-repeat-end>
 					<td class="table_admin__cell">
 						{{invite.moneyEarned}}
 						<span class="attention" ng-if="invite.status == vm.statuses.canceledbyCustomer">(excl. ${{vm.orderActive.customer.finalPrice}})</span>
 					</td>
-					<td class="table_admin__cell">{{invite.commission}}</td>
-					<td class="table_admin__cell" colspan="2">{{invite.stripeComission}}</td>
+					<td class="table_admin__cell" colspan="3">{{invite.stripeComission}}</td>
 				</tr>
 
 			</table>
