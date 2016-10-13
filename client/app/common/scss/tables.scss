@@ -54,13 +54,14 @@
         &-icon {
           @include circle(green);
           &-approved,
-          &-active {
+          &-active,
+          &-offline {
            @include circle(green, green);
           }
           &-blocked {
            @include circle($Cardinal, $Cardinal);
           }
-          &-offline {
+          &-rejected {
            @include circle($AuroMetalSaurus, $AuroMetalSaurus);
           }
         }
