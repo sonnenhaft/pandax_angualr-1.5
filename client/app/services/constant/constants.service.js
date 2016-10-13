@@ -173,6 +173,11 @@ export default class Constants {
       payForOrder: {
         uri: (user, orderId) => path + `/${user}/orders/${orderId}/pay`,
         method: 'POST'
+      },
+
+      actualStatusOfCurrentUser: {
+        uri: path + '/status',
+        method: 'GET'
       }
 
     };
@@ -254,7 +259,7 @@ export default class Constants {
 
       moneyReservationFailedMessage: {
         title: 'Money reservation failed',
-        content: 'One of the captures failed. we will return all captured money. Please try another card.'
+        content: 'Money capture failed. Please try another card.'
       },
 
       maxPeriodForCreating: {

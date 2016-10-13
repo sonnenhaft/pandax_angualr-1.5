@@ -27,8 +27,18 @@ export default angular
         parent: 'main',
         component: 'history',
         resolve: {
-          isOnPending: (User, Constants) => {
-            return User.get('status') == Constants.admin.statuses.entertainer.pending;
+          isOnPending: (User, Constants, $q) => {
+            let result;
+            if (User.get('role') == 'provider') {
+              result = User.getActualStatus()
+                        .then(status => status == Constants.admin.statuses.entertainer.pending);
+            } else {
+              let defer = $q.defer();
+              defer.resolve(false);
+              result = defer.promise;
+            }
+
+            return result;
           }
         }
       });

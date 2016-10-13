@@ -304,5 +304,18 @@ export default class User {
   fetchBillingInfo () {
     return this.billingInfo;
   }
+  
+  getActualStatus () {
+    return this.Request
+      .send(
+        null,
+        this.Constants.api.actualStatusOfCurrentUser.method,
+        this.Constants.api.actualStatusOfCurrentUser.uri
+      )
+      .then(result => {
+        this.update(result.data);
+        return result.data && result.data.status
+      })
+  }
 }
 
