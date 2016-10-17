@@ -231,7 +231,6 @@ export default class Order {
             return result;
           }
         );
-      return data;
     });
   }
 
@@ -283,6 +282,26 @@ export default class Order {
         this.Constants.api.payForOrder.uri(this.User.get('role'), orderId),
         {card_id: cardId}
       );
+  }
+
+  cancelOrder (ev, orderId, messageType = 0) {
+    let confirm = this.$mdDialog.confirm()
+          .title(this.Constants.order.cancelOrderMessages[messageType].title)
+          .textContent(this.Constants.order.cancelOrderMessages[messageType].content)
+          .ariaLabel('Canceling Order')
+          .targetEvent(ev)
+          .ok('Yes')
+          .cancel('No');
+
+    return this.$mdDialog.show(confirm).then((data) => {
+      return this
+        .Request
+        .send(
+          null,
+          this.Constants.api.cancelOrder.method,
+          this.Constants.api.cancelOrder.uri(orderId)
+        );
+    });
   }
 
 }

@@ -66,6 +66,23 @@
 			&_active {
 				color: $white;
 			}
+			&_depends-on-width {
+				text-align: left;
+				@media (max-width: 960px) {
+					text-align: right;
+				}
+			}
+		}
+
+		&__cancel-order {
+			border: 1px solid $TrolleyGrey;
+			color: $TrolleyGrey;
+			font: 15px $oswald;
+			margin: 0;
+			padding: 8px 16px;
+			@media (max-width: 960px) {
+				margin-top: 10px;
+			}
 		}
 
 		&__search-entertainers-wrapper {
