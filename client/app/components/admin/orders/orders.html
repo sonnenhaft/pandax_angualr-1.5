@@ -117,7 +117,7 @@
 					<td class="table_admin__cell" collspan="3">Stripe</td>
 				</tr>
 				<tr class="table_admin__row">
-					<td class="table_admin__cell">{{invite.commission}}</td>
+					<td class="table_admin__cell">{{invite.comission}}</td>
 					<td class="table_admin__cell" collspan="3">{{vm.orderActive.stripeComission}}</td>
 				</tr>
 
@@ -144,7 +144,7 @@
 				<tr class="table_admin__row table_admin__row_end" ng-repeat-end>
 					<td class="table_admin__cell">
 						{{invite.moneyEarned}}
-						<span class="attention" ng-if="invite.status == vm.statuses.canceledbyCustomer">(excl. ${{vm.orderActive.customer.finalPrice}})</span>
+						<span class="attention" ng-if="invite.status == vm.statuses.canceledbyCustomer">(excl. ${{invite.penalty}})</span>
 					</td>
 					<td class="table_admin__cell" colspan="3">{{invite.stripeComission}}</td>
 				</tr>
