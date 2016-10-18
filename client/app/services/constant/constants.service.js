@@ -178,6 +178,17 @@ export default class Constants {
       actualStatusOfCurrentUser: {
         uri: path + '/status',
         method: 'GET'
+      },
+
+      orders: {
+        getAll: {
+          uri: (role, page = 1) => path + `/${role}/orders?page=${page}`,
+          method: 'GET'
+        },
+        getOne: {
+          uri: (role, orderId) => path + `/${role}/orders/${orderId}?include=invites`,
+          method: 'GET'
+        }
       }
 
     };

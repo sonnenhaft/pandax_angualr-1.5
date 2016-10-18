@@ -17,9 +17,7 @@ export default angular
         abstract: true,
         component: 'main',
         resolve: {
-          // billing: Resolve => Resolve.billing(),
-          providers: Resolve => Resolve.providers(),
-          // history: Resolve => Resolve.history()
+          providers: Resolve => Resolve.providers()
         }
       });
   })

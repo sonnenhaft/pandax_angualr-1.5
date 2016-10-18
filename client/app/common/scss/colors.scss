@@ -19,6 +19,8 @@ $CharcoalDarker: #38404f;
 $DarkJungleGreen: #151520;
 $Platinum: rgba(223, 229, 235, 1);
 $UnitedNationsBlue: rgba(74, 144, 226, 1);
+$Munsell: rgba(241, 241, 241, 1);
+$Timberwolf: rgba(216, 216, 216, 1);
 
 @mixin gradient($from, $to) {
   background: -ms-linear-gradient(top left, $from 0%, $to 185%);

@@ -1,4 +1,6 @@
 #admin {
+  $ordersContentMinWidth: 914px;
+
   .font_header {
     color: $DarkJungleGreen;
     font: {
@@ -25,6 +27,9 @@
   .admin {
 		&__page {
 			padding: 0px 20px;
+      &_orders {
+        min-width: $ordersContentMinWidth;
+      }
 		}
 
   	&__header {
@@ -38,27 +43,96 @@
 			text-transform: uppercase;
   	}
 
-  	&__manip-row {
-  		margin-top: 27px;
-  	}
-
-    &__filter-name {
-      @extend .font_admin-main;
+    &__manip {
+      &-row {
+        margin-top: 27px;
+      }
+      &-text {
+        border: none;
+        padding: 4px 12px 10px 12px;
+        &::-webkit-input-placeholder {
+          @extend .font_admin-filter__placeholder;
+        }
+        &_half {
+          width: 50%;
+          &:not(:first-child) {
+            margin-left: 1px;
+          }
+        }
+      }
+      &-section {
+        &:not(:first-child) {
+          margin-left: 10px;
+        }
+      }
+      &-label {
+        @extend .font_admin-manip__label;
+        margin-left: 10px;
+      }
+      &-field {
+        margin: 3px 0px 0px 0px;
+      }
+    }
+    &__datepicker {
+      align-items: center;
+      background-color: white;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      min-width: 50%;
+      padding-right: 0px;
+      &:first-child {
+        margin-right: 1px;
+      }
+      &:not(:first-child) {
+        margin-left: 1px;
+      }
     }
 
-  	&__table {
-      width: 100%;
-  	}
-  }
+    &__filter {
+      &-name {
+        @extend .font_admin-main;
+      }
+    }
 
+    &__table {
+      width: 100%;
+      &_orders {
+        margin-top: 0px;
+        .table_admin__cell {
+          max-width: 130px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
 
   /* Angular Material overwritten */
   md-select {
 		margin: 0px 0px 0px 22.3px;
   }
+  .md-datepicker-triangle-button {
+    display: none;
+  }
+  .md-datepicker-input-container {
+    border-bottom: none;
+  }
+  .md-button.md-icon-button {
+    order: 2;
+    margin: 0px;
+  }
+  .md-datepicker-input {
+    min-width: 0px;
+    width: 95px;
+  }
 }
+
+
 md-option {
   ._md-text {
     text-transform: capitalize;
   }
 }
+
+@import "orders/orders";

@@ -1,25 +1,24 @@
-export default class Customers {
+export default class Orders {
 
-  constructor (Constants, Request, $mdDialog, $q) {
+  constructor (Constants, Request, User) {
     'ngInject';
 
     _.assign(this, {
         Constants,
         Request,
-        $mdDialog,
-        $q,
+        User,
         list: []
     });
 
   }
 
-  fetchCustomers(page = 1) {
+  fetchOrders(page = 1) {
     return this
       .Request
       .send(
         null,
-        this.Constants.api.customers.get.method,
-        this.Constants.api.customers.get.uri(page)
+        this.Constants.api.orders.getAll.method,
+        this.Constants.api.orders.getAll.uri(this.User.get('role'), page)
       )
       .then(
         result => {
@@ -29,48 +28,18 @@ export default class Customers {
       );
   }
 
-  getCustomers() {
+  getOrders() {
     return this.list;
   }
 
-  setStatus (ev, customer, targetStatus, showPopup = true) {
-    let confirm;
-
-    if (showPopup) {
-      confirm = this.$mdDialog.show(
-        this.$mdDialog.confirm()
-          .title(this.Constants.admin.setStatusMessage.title('customer', targetStatus))
-          .textContent(this.Constants.admin.setStatusMessage.content('customer', targetStatus))
-          .ariaLabel('Set status')
-          .targetEvent(ev)
-          .ok('Yes')
-          .cancel('No'));
-    } else {
-      confirm = this.$q.defer();
-      confirm.resolve();
-      confirm = confirm.promise;
-    }
-
-    return confirm.then((_data) => {
-      return this
-        .Request
-        .send(
-          null,
-          this.Constants.api.admin.setStatus.method,
-          this.Constants.api.admin.setStatus.uri('customers', customer.id),
-          {set: targetStatus}
-        )
-        .then(
-          result => {
-            this.updateCustomerInList(customer, targetStatus);
-            return result.data;
-          }
-        );
-      });
+  getOrderDetails(orderId) {
+    return this
+      .Request
+      .send(
+        null,
+        this.Constants.api.orders.getOne.method,
+        this.Constants.api.orders.getOne.uri(this.User.get('role'), orderId)
+      )
+      .then(result => result.data);
   }
-
-  updateCustomerInList (customer, targetStatus) {
-    customer.status = targetStatus;
-  }
-
 }

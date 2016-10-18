@@ -19,8 +19,7 @@ export default class Order {
         orderDetails: {},
         $mdDialog,
         listConfirmed: [],
-        listFutures: [],
-        role: User.get('role')
+        listFutures: []
     });
 
   }

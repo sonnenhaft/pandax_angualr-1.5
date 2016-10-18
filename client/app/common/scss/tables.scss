@@ -2,6 +2,7 @@
   $circleSize: 8px;
   $avatarSize: 28px;
   $actionIconSize: 16px;
+  $ordersContentMinWidth: 914px;
 
   @mixin circle($borderColor, $bgColor: 'none') {
    @if $bgColor != 'none' {
@@ -71,6 +72,9 @@
             text-transform: uppercase;
           }
         }
+      }
+      &_header {
+        @extend .font_admin-table__header;
       }
       &_actions {
         min-width: 100px;
