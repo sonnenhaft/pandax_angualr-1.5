@@ -10,6 +10,7 @@
                ng-change="$ctrl.emailError = $ctrl.logignError = false"
                ng-blur="$ctrl.validate({email: loginForm.email.$viewValue})"
                maxlength="100"
+               tabindex=1
                required/>
         <span class="error" ng-if="$ctrl.emailError">
           {{$ctrl.emailError}}
@@ -17,7 +18,7 @@
       </div>
       <div class="input">
         <label>Password</label>
-        <a href="" ng-click="$ctrl.output({view: 'restore'})" class="forgot">Forgot ?</a>
+        <a href="" ng-click="$ctrl.output({view: 'restore'})" class="forgot" tabindex=4>Forgot ?</a>
         <input type="password"
                name="password"
                ng-model="$ctrl.password"
@@ -26,6 +27,7 @@
                ng-blur="$ctrl.validate({password: $ctrl.password})"
                maxlength="50"
                autocomplete="off"
+               tabindex=2
                required />
         <span class="error" ng-if="$ctrl.passwordError">
           {{$ctrl.passwordError}}
@@ -36,6 +38,7 @@
       <md-button ng-disabled="$ctrl.loginLoading"
                  ng-class="{disabled: $ctrl.loginLoading}"
                  type="submit"
+                 tabindex=3
                  ng-click="$ctrl.onSubmit({
                         email: loginForm.email.$viewValue,
                         password: loginForm.password.$viewValue
@@ -49,6 +52,6 @@
     </div>
   </form>
   <div class="account-ready">
-    Don't have an account? <a href="" ng-click="$ctrl.output({view: 'signUp'})">Sign Up</a>
+    Don't have an account? <a href="" ng-click="$ctrl.output({view: 'signUp'})" tabindex=5>Sign Up</a>
   </div>
 </div>
