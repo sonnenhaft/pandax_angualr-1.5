@@ -89,36 +89,40 @@
 					<td class="table_admin__cell">{{vm.orderActive.locationNotes}}</td>
 				</tr>
 				<tr class="table_admin__row">
+					<td class="table_admin__cell table_admin__cell_label">Customer name</td>
 					<td class="table_admin__cell table_admin__cell_label">Customer email</td>
+					<td class="table_admin__cell table_admin__cell_label">Date of order start</td>
+					<td class="table_admin__cell table_admin__cell_label">Service type</td>
+				</tr>
+				<tr class="table_admin__row">
+					<td class="table_admin__cell">{{vm.orderActive.customer.first_name}} {{vm.orderActive.customer.last_name}}</td>
+					<td class="table_admin__cell">{{vm.orderActive.customer.email}}</td>
+					<td class="table_admin__cell">{{vm.orderActive.asapFlag ? 'ASAP' : (vm.orderActive.startDt | amDateFormat:'h:mm A, MMM DD')}}</td>
+					<td class="table_admin__cell">{{vm.orderActive.serviceType.name}}</td>
+				</tr>
+				<tr class="table_admin__row">
+					<td class="table_admin__cell table_admin__cell_label">Length of booking</td>
 					<td class="table_admin__cell table_admin__cell_label">Number of invites</td>
 					<td class="table_admin__cell table_admin__cell_label">Entertainers</td>
 					<td class="table_admin__cell table_admin__cell_label">Guests</td>
 				</tr>
 				<tr class="table_admin__row">
-					<td class="table_admin__cell">{{vm.orderActive.customer.email}}</td>
+					<td class="table_admin__cell">{{vm.orderActive.length | hoursToTime}}</td>
 					<td class="table_admin__cell">{{vm.orderActive.totalInvites}}</td>
 					<td class="table_admin__cell">{{vm.orderActive.entertainers_number}}</td>
 					<td class="table_admin__cell">{{vm.orderActive.guestNumber}}</td>
 				</tr>
 				<tr class="table_admin__row">
-					<td class="table_admin__cell table_admin__cell_label">Service type</td>
-					<td class="table_admin__cell table_admin__cell_label">Length of booking</td>
 					<td class="table_admin__cell table_admin__cell_label">Initial cost</td>
 					<td class="table_admin__cell table_admin__cell_label">Final cost</td>
+					<td class="table_admin__cell table_admin__cell_label">Minx</td>
+					<td class="table_admin__cell table_admin__cell_label">Stripe</td>
 				</tr>
 				<tr class="table_admin__row">
-					<td class="table_admin__cell">{{vm.orderActive.serviceType.name}}</td>
-					<td class="table_admin__cell">{{vm.orderActive.length | hoursToTime}}</td>
 					<td class="table_admin__cell">{{vm.orderActive.cost}}</td>
 					<td class="table_admin__cell">{{vm.orderActive.finalCost}}</td>
-				</tr>
-				<tr class="table_admin__row">
-					<td class="table_admin__cell table_admin__cell_label">Minx</td>
-					<td class="table_admin__cell table_admin__cell_label" collspan="3">Stripe</td>
-				</tr>
-				<tr class="table_admin__row">
 					<td class="table_admin__cell">{{invite.comission}}</td>
-					<td class="table_admin__cell" collspan="3">{{vm.orderActive.stripeComission}}</td>
+					<td class="table_admin__cell">{{vm.orderActive.stripeComission}}</td>
 				</tr>
 
 				<tr class="table_admin__row table_admin__row_start">
@@ -128,25 +132,27 @@
 					class="table_admin__row" ng-repeat-start="invite in vm.orderActive.invites">
 					<td class="table_admin__cell table_admin__cell_label">Entertainer name</td>
 					<td class="table_admin__cell table_admin__cell_label">Entertainer email</td>
+					<td class="table_admin__cell table_admin__cell_label">Creation date</td>
 					<td class="table_admin__cell table_admin__cell_label">Actual length</td>
-					<td class="table_admin__cell table_admin__cell_label">Status</td>
 				</tr>
 				<tr class="table_admin__row">
 					<td class="table_admin__cell">{{invite.provider.displaying_name}}</td>
 					<td class="table_admin__cell">{{invite.provider.email}}</td>
+					<td class="table_admin__cell">{{invite.createdDt.date | amDateFormat:'h:mm A, MMM DD'}}</td>
 					<td class="table_admin__cell">{{invite.length}}</td>
-					<td class="table_admin__cell">{{invite.status}}</td>
 				</tr>
 				<tr class="table_admin__row">
+					<td class="table_admin__cell table_admin__cell_label">Status</td>
 					<td class="table_admin__cell table_admin__cell_label">To entertainer</td>
-					<td class="table_admin__cell table_admin__cell_label" colspan="3">Stripe (0.5%)</td>
+					<td class="table_admin__cell table_admin__cell_label" colspan="2">Stripe (0.5%)</td>
 				</tr>
 				<tr class="table_admin__row table_admin__row_end" ng-repeat-end>
+					<td class="table_admin__cell">{{invite.status}}</td>
 					<td class="table_admin__cell">
 						{{invite.moneyEarned}}
 						<span class="attention" ng-if="invite.status == vm.statuses.canceledbyCustomer">(excl. ${{invite.penalty}})</span>
 					</td>
-					<td class="table_admin__cell" colspan="3">{{invite.stripeComission}}</td>
+					<td class="table_admin__cell" colspan="2">{{invite.stripeComission}}</td>
 				</tr>
 
 			</table>
