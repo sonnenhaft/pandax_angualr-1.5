@@ -63,7 +63,7 @@
 		    	ng-repeat="order in vm.OrdersService.list"
 		    	ng-click="vm.getOrderDetails($index)">
 		    	<div class="order__content">
-						<span class="order-param order-param_date">{{order.datetime | amDateFormat:'h:mm A, MMM DD (dddd)'}}</span>
+						<span class="order-param order-param_date">{{order.createdDt | amDateFormat:'h:mm A, MMM DD (dddd)'}}</span>
 						<span class="order-param order-param_name">{{order.customer.first_name}} {{order.customer.last_name}}</span>
 					</div>
 				</div>
@@ -113,8 +113,8 @@
 					<td class="table_admin__cell">{{vm.orderActive.finalCost}}</td>
 				</tr>
 				<tr class="table_admin__row">
-					<td class="table_admin__cell">Minx</td>
-					<td class="table_admin__cell" collspan="3">Stripe</td>
+					<td class="table_admin__cell table_admin__cell_label">Minx</td>
+					<td class="table_admin__cell table_admin__cell_label" collspan="3">Stripe</td>
 				</tr>
 				<tr class="table_admin__row">
 					<td class="table_admin__cell">{{invite.comission}}</td>
