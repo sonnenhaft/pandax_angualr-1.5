@@ -143,16 +143,18 @@
 				</tr>
 				<tr class="table_admin__row">
 					<td class="table_admin__cell table_admin__cell_label">Status</td>
+					<td class="table_admin__cell table_admin__cell_label">Initial cost</td>
 					<td class="table_admin__cell table_admin__cell_label">To entertainer</td>
-					<td class="table_admin__cell table_admin__cell_label" colspan="2">Stripe (0.5%)</td>
+					<td class="table_admin__cell table_admin__cell_label">Stripe (0.5%)</td>
 				</tr>
 				<tr class="table_admin__row table_admin__row_end" ng-repeat-end>
 					<td class="table_admin__cell">{{invite.status}}</td>
+					<td class="table_admin__cell">{{invite.finalPrice}}</td>
 					<td class="table_admin__cell">
 						{{invite.moneyEarned}}
 						<span class="attention" ng-if="invite.status == vm.statuses.canceledbyCustomer">(excl. ${{invite.penalty}})</span>
 					</td>
-					<td class="table_admin__cell" colspan="2">{{invite.stripeComission}}</td>
+					<td class="table_admin__cell">{{invite.stripeComission}}</td>
 				</tr>
 
 			</table>
