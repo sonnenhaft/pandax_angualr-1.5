@@ -188,16 +188,16 @@ export default class Order {
   }
 
   subcribeOnEntertainerInvite (channelName) {
-    this.WebSocket.invites(channelName, this.setEntertainerConfirmed.bind(this));
+    this.WebSocket.invites(channelName, this.setEntertainerStatus.bind(this));
   }
 
   unsubcribeOnEntertainerInvite () {
     this.WebSocket.close();
   }
 
-  setEntertainerConfirmed (data) {
+  setEntertainerStatus (data) {
     let entertainer = _.find(this.listInvited, (item) => item.provider.id == data.provider_id);
-    entertainer.status = this.Constants.order.statuses.accepted;
+    entertainer.status = data.action;
     entertainer.datetime = data.datetime;
     this.sortList();
   }
