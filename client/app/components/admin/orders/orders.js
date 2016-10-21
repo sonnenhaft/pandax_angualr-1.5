@@ -3,6 +3,7 @@ import uiRouter from 'angular-ui-router';
 import ordersComponent from './orders.component';
 import OrdersService from '../../../services/ordersService/ordersService';
 import hoursToTime from '../../../common/filters/hoursToTime.filter';
+import statusCorrection from '../../../common/filters/statusCorrection.filter';
 
 export default angular
   .module('orders', [
@@ -20,5 +21,6 @@ export default angular
       });
   })
   .filter('hoursToTime', hoursToTime)
+  .filter('statusCorrection', statusCorrection)
   .component('orders', ordersComponent)
   .name;

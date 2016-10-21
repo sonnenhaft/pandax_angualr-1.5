@@ -138,8 +138,8 @@
 				<tr class="table_admin__row">
 					<td class="table_admin__cell">{{invite.provider.displaying_name}}</td>
 					<td class="table_admin__cell">{{invite.provider.email}}</td>
-					<td class="table_admin__cell">{{invite.createdDt.date | amDateFormat:'h:mm A, MMM DD'}}</td>
-					<td class="table_admin__cell">{{invite.length}}</td>
+					<td class="table_admin__cell">{{invite.createdDt | amDateFormat:'h:mm A, MMM DD'}}</td>
+					<td class="table_admin__cell">{{invite.length | hoursToTime: 'seconds'}}</td>
 				</tr>
 				<tr class="table_admin__row">
 					<td class="table_admin__cell table_admin__cell_label">Status</td>
@@ -148,7 +148,7 @@
 					<td class="table_admin__cell table_admin__cell_label">Stripe (0.5%)</td>
 				</tr>
 				<tr class="table_admin__row table_admin__row_end" ng-repeat-end>
-					<td class="table_admin__cell">{{invite.status}}</td>
+					<td class="table_admin__cell">{{invite.status | statusCorrection}}</td>
 					<td class="table_admin__cell">{{invite.finalPrice}}</td>
 					<td class="table_admin__cell">
 						{{invite.moneyEarned}}

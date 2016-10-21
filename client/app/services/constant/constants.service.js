@@ -259,6 +259,8 @@ export default class Constants {
         canceledbyCustomer: "canceled_by_customer",
       },
 
+      statusesViewCorrection: {canceled_by_provider: 'canceled by entertainer', canceled_by_customer: 'canceled by customer'},
+
       entertainersCountInfo: 'Just trying to get to know you better for the safety of our Minx.',
 
       cancelEntertainerMessage: (penaltyAmount) => penaltyAmount > 0 ? 
