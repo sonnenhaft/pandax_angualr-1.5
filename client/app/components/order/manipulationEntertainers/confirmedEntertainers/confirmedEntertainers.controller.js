@@ -14,7 +14,7 @@ class confirmedEntertainersController {
      	});
 
       this.$scope.$watch(() => this.entertainers, (newValue, oldValue) => {
-        if (newValue.filter((item) => item.status && item.status != this.Constants.order.statuses.invited).length == this.countOfRequiredEntertainers) {
+        if (newValue.filter((item) => item.status && item.status == this.Constants.order.statuses.accepted).length == this.countOfRequiredEntertainers) {
           this.$state.go('main.orderConfirm', {orderId: this.$stateParams.orderId});
         }
       }, true);
