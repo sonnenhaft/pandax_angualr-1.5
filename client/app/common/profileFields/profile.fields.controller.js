@@ -144,7 +144,11 @@ export default class profileFieldsController {
     profile = this.addAbsentFields(profile);
 
     if (this.validate(profile)) {
-      this.UpdateUserProfile(profile, 'main.profile.view');
+      this.saveLoading = true;
+      this.UpdateUserProfile(profile, 'main.profile.view')
+        .finally((_data) => {
+          this.saveLoading = false;
+        });
     }
   }
 
@@ -177,8 +181,7 @@ export default class profileFieldsController {
             }
 
             return this.User.update({[this.isCustomer ? 'photo' : 'photos']: result.photo});
-          },
-          error => console.log(error)
+          }
         );
       promises.push(query);
     });
@@ -194,13 +197,13 @@ export default class profileFieldsController {
         .then(
           result => {
             this.User.update(_.assign(result, {auth: true}));
-            this.mode = mode;
-            this.buildProfileModels();
           }
         );
 
     return this.$q.all([this.UpdateUserPhotos(), queryToUpdatePersonalInfo])
             .then((data) => {
+              this.mode = mode;
+              this.buildProfileModels();
               return data;
             });
   }
