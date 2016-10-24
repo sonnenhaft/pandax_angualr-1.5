@@ -84,6 +84,14 @@ app {
   background: url('../assets/images/' + $path + '.png') no-repeat center left;
 }
 
+.avatar-bg {
+	background: {
+		repeat: no-repeat;
+		size: cover;
+		position: center;
+	}
+}
+
 // components
 @import "./navbar/navbar";
 @import "./map/map";

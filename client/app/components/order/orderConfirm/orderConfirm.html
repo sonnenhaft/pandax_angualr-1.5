@@ -23,7 +23,10 @@
 
 					<div
 						layout="row">
-						<img ng-src="{{invite.provider.photos[0].preview}}" class="order-information__card-avatar-img">
+						<!-- <img ng-src="{{invite.provider.photos[0].preview}}" class="order-information__card-avatar-img"> -->
+						<div class="order-information__card-avatar-img" ng-style="{'background-image': 'url(' + invite.provider.photos[0].preview + ')'}">
+							
+						</div>
 					  <div 
 					  	flex="80" 
 					  	layout="column" 

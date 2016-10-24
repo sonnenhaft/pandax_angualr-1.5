@@ -16,11 +16,10 @@
   	ng-repeat="invite in vm.entertainers | byStatuses : [vm.Constants.order.statuses.accepted, vm.Constants.order.statuses.canceled] track by $index">
 
     <md-card-header class="confirmed-entertainers__card-header">
-    	<md-card-avatar
-    		class="confirmed-entertainers__avatar">
-		    <img
-		      ng-src="{{invite.provider.photos[0].preview}}" 
-		      class="confirmed-entertainers__avatar-img"></img>
+    	<md-card-avatar class="confirmed-entertainers__avatar" ng-style="{'background-image': 'url(' + invite.provider.photos[0].preview + ')'}">
+		    <!-- <img
+          ng-src="{{invite.provider.photos[0].preview}}" 
+          class="confirmed-entertainers__avatar-img"></img> -->
     	</md-card-avatar>
     </md-card-header>
 

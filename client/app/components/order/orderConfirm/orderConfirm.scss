@@ -49,6 +49,7 @@
 			margin: 0px;
 			padding: 20px;
 			&-avatar-img {
+				@extend .avatar-bg;
 				height: 115px !important;
 				max-height: 115px;
 				max-width: 82px;

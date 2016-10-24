@@ -50,16 +50,17 @@
   }
 
   .avatar {
+    @extend .avatar-bg;
     position: relative;
     width: 88px;
     height: 88px;
     border-radius: 50%;
     margin: 55px auto 0;
-    background: $Charcoal;
+    background-color: $Charcoal;
     overflow: hidden;
     cursor: pointer;
 
-    img {
+/*     img {
       display: block;
       max-width: 100%;
       position: absolute;
@@ -68,7 +69,7 @@
       right: 0;
       bottom: 0;
       margin: auto;
-    }
+    } */
   }
 
   .navigation {
