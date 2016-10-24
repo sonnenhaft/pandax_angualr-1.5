@@ -150,7 +150,7 @@
 					<td class="table_admin__cell">{{invite.status | statusCorrection}}</td>
 					<td class="table_admin__cell table_admin__cell_money">
 						{{invite.moneyEarned}}
-						<span class="attention" ng-if="invite.status == vm.statuses.canceledbyCustomer">(excl. ${{invite.penalty}})</span>
+						<span class="attention" ng-if="invite.penalty > 0">(excl. ${{invite.penalty}})</span>
 					</td>
 					<td class="table_admin__cell table_admin__cell_money" colspan="2">{{invite.stripeComission}}</td>
 				</tr>
