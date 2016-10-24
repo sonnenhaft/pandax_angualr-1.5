@@ -93,6 +93,14 @@
         color: $UnitedNationsBlue;
         cursor: pointer;
       }
+      &_money {
+        background: {
+          image: url(/assets/images/history/price.png);
+          repeat: no-repeat;
+          position: 15px 45%;
+        }
+        padding-left: 30px;
+      }
     }
 
     .avatar-wrapper {
