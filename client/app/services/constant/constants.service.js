@@ -192,7 +192,7 @@ export default class Constants {
       },
 
       cancelOrder: {
-        uri: (orderId) => path + `/orders/${orderId}/cancel`,
+        uri: (role, orderId) => path + `/${role}/orders/${orderId}/complete`,
         method: 'POST'
       }
 
@@ -293,7 +293,8 @@ export default class Constants {
         content: 'Are you sure want to cancel unconfirmed invites and cancel order?'
       },{
         title: 'Cancel unconfirmed invites',
-        content: 'Are you sure want to cancel unconfirmed invites and complete this order? <br/> Note: We will do a refund of the money that you paid for unconfirmed entertainers'
+        content: 'Are you sure want to cancel unconfirmed invites and complete this order? <br/> \
+                 Note: We will do a refund of the money that you paid for unconfirmed entertainers'
       }],
 
     };
