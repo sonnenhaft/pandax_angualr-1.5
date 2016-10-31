@@ -1,14 +1,14 @@
 <div
-  id="search-entertainers" 
-  layout="row" 
+  id="search-entertainers"
+  layout="row"
   layout-align="space-between"
   layout-wrap>
 
-  <div flex="100" layout="column" layout-align="start center" class="search-entertainers__main">
+  <div flex="100" class="search-entertainers__main">
     <div layout="row" layout-align="center stretch" class="search-entertainers__manip_head">
       <div flex="15" layout="row" layout-align="end">
-        <md-icon 
-          md-svg-icon="/assets/images/icons/svg/arrow_left.svg" 
+        <md-icon
+          md-svg-icon="/assets/images/icons/svg/arrow_left.svg"
           class="pointer search-entertainers__manip-arrow search-entertainers__manip-arrow_left"
           ng-class="{'disabled': vm.itemActiveIndex == 0}"
           ng-click="vm.goToEntertainerByIndex(-1)"></md-icon>
@@ -18,40 +18,37 @@
         <span flex="25" class="search-entertainers__manip-counter">{{vm.itemActiveIndex + 1}} / {{vm.entertainers.length}}</span>
       </div>
       <div flex="15" layout="row" layout-align="end">
-        <md-icon 
-          md-svg-icon="/assets/images/icons/svg/arrow_right.svg" 
+        <md-icon
+          md-svg-icon="/assets/images/icons/svg/arrow_right.svg"
           class="pointer search-entertainers__manip-arrow search-entertainers__manip-arrow_right"
           ng-class="{'disabled': (vm.itemActiveIndex + 1) == vm.entertainers.length}"
           ng-click="vm.goToEntertainerByIndex(+1)"></md-icon>
       </div>
     </div>
 
-    <div 
-      flex="75" 
-      layout="row" 
-      class="search-entertainers__info">
+    <div class="search-entertainers__info">
       <span class="search-entertainers__info-raiting">
         {{vm.entertainers[vm.itemActiveIndex].rating}}
         <img
-          src="/assets/images/icons/raiting.png" 
+          src="/assets/images/icons/raiting.png"
           class="icon_small"></img>
       </span>
       <span class="search-entertainers__info-distance">{{vm.entertainers[vm.itemActiveIndex].distance.toFixed(2)}}M AWAY</span>
     </div>
 
-    <div 
+    <div
       class="search-entertainers__preview search-entertainers__preview_medium pointer"
       ng-style="{'background-image': 'url(' + vm.entertainers[vm.itemActiveIndex].photos[vm.photoActiveIndex].original + ')'}"
       ng-click="vm.showPopup($event)">
     </div>
 
     <div
-      flex="75" 
-      layout="row" 
-      layout-align="space-between stretch" 
+      flex="75"
+      layout="row"
+      layout-align="space-between stretch"
       class="search-entertainers__switch-foto">
-      <div 
-        flex="50"
+      <div
+        flex="33"
         class="search-entertainers__preview search-entertainers__preview_small"
         ng-repeat="photo in vm.entertainers[vm.itemActiveIndex].photos track by $index"
         ng-class="{'photo_active': vm.photoActiveIndex === $index}"
@@ -60,13 +57,13 @@
       </div>
     </div>
 
-    <md-button 
+    <md-button
       class="md-raised md-accent search-entertainers__invite"
       ng-class="{'button_gradient': (vm.entertainersInvited | filterBy: ['provider.id']: vm.entertainers[vm.itemActiveIndex].id).length > 0}"
       ng-click="vm.goToNextStep()"
       ng-disabled="(vm.entertainersInvited | filterBy: ['provider.id']: vm.entertainers[vm.itemActiveIndex].id).length > 0">
       {{(vm.entertainersInvited | filterBy: ['provider.id']: vm.entertainers[vm.itemActiveIndex].id).length > 0 ? 'INVITED' : 'INVITE'}}
-    </md-button>    
+    </md-button>
   </div>
 
 </div>
