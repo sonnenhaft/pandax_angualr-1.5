@@ -3,12 +3,6 @@
 #search-entertainers {
 	$width-middle-part: 274px;
 
-	.flex-gt-sm-75 {
-	  @media (min-width: 960px) {
-	    width: $width-middle-part !important;
-	  }
-	}
-
 	md-buttom {
 		color: $AuroMetalSaurus;
 	}
@@ -28,12 +22,6 @@
 				width: 100%;
 			}
 
-			&-info {
-				@extend .flex-gt-sm-75;
-				min-width: $width-middle-part;
-				width: $width-middle-part;
-			}
-
 			&-counter {
 				font: 16px $oswald;
 				color: $white;
@@ -46,24 +34,30 @@
 				min-width: 16px;
 				width: 16px;
 				&_left {
-					margin-left: 0px;
+					margin-left: 0;
 				}
 				&_right {
-					margin-right: 0px;
+					margin-right: 0;
 				}
+			}
+
+			&-name {
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
 			}
 		}
 
 		&__info {
-			@extend .flex-gt-sm-75;
+			clear: both;
+			display: block;
 			color: $TrolleyGrey;
-			margin-top: 16px;
+			margin: 16px auto 0;
 			font: 13px $oswald;
 			letter-spacing: 0.1px;
 			line-height: 24px;
-			min-width: $width-middle-part;
 			text-align: left;
-			width: $width-middle-part;
+			max-width: $width-middle-part;
 			&-distance {
 				margin-left: 6px;
 			}
@@ -74,12 +68,10 @@
 			background-size: cover;
 			background-position: center;
 			&_medium {
-				@extend .flex-gt-sm-75;
-				margin-top: 14px;
 				height: 372px;
 				min-height: 372px;
-				min-width: $width-middle-part;
-				width: $width-middle-part;
+				max-width: $width-middle-part;
+				margin: 14px auto 0;
 			}
 			&_small {
 				&:not(:first-child) {
@@ -93,8 +85,8 @@
 		}
 
 		&__switch-foto {
-			@extend .flex-gt-sm-75;
-			margin-top: 20px;
+			margin: 20px auto 0;
+			max-width: $width-middle-part;
 		}
 
 		&__invite {
