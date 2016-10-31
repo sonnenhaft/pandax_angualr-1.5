@@ -100,6 +100,7 @@ export default class Order {
       .then(
         result => {
           this.listInvited = result.data && result.data.items;
+          this.fillConfirmedList(this.listInvited);
           return this.sortList();
         },
         error => console.log(error)
@@ -200,6 +201,7 @@ export default class Order {
     entertainer.status = data.action;
     entertainer.datetime = data.datetime;
     this.sortList();
+    this.fillConfirmedList([entertainer]);
   }
 
   sortList (list = this.listInvited) {
@@ -231,7 +233,6 @@ export default class Order {
             return result;
           }
         );
-      return data;
     });
   }
 
@@ -283,6 +284,35 @@ export default class Order {
         this.Constants.api.payForOrder.uri(this.User.get('role'), orderId),
         {card_id: cardId}
       );
+  }
+
+  cancelOrder (ev, orderId, messageType = 0) {
+    let confirm = this.$mdDialog.confirm()
+          .title(this.Constants.order.cancelOrderMessages[messageType].title)
+          .htmlContent(this.Constants.order.cancelOrderMessages[messageType].content)
+          .ariaLabel('Canceling Order')
+          .targetEvent(ev)
+          .ok('Yes')
+          .cancel('No');
+
+    return this.$mdDialog.show(confirm).then((_data) => {
+      return this
+        .Request
+        .send(
+          null,
+          this.Constants.api.cancelOrder.method,
+          this.Constants.api.cancelOrder.uri(this.User.get('role'), orderId)
+        )
+        .then(response => response.data);
+    });
+  }
+
+  fillConfirmedList (invites) {
+    invites.forEach((invite, _i, _arr) => {
+      if (invite.status == this.Constants.order.statuses.accepted) {
+        this.listConfirmed.push(invite);
+      }
+    });
   }
 
 }

@@ -15,6 +15,7 @@ import 'angular-filter/dist/angular-filter.min.js';
 import JWT from 'angular-jwt';
 import angularStripe from 'angular-stripe';
 import ngInfiniteScroll from 'ng-infinite-scroll';
+import ngSanitize from 'angular-sanitize';              // for material dialog to show text as html
 
 import Common from './common/common';
 import Components from './components/components';
@@ -36,7 +37,8 @@ angular
     angularMessages,
     JWT,
     angularStripe,
-    ngInfiniteScroll
+    ngInfiniteScroll,
+    ngSanitize
   ])
   .config(($locationProvider, $urlRouterProvider, $mdThemingProvider, uiGmapGoogleMapApiProvider, $mdDateLocaleProvider, moment, $mdGestureProvider, jwtInterceptorProvider, $httpProvider, stripeProvider) => {
 
