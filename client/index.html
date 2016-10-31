@@ -13,7 +13,10 @@
   </head>
   <body ng-app="app" ng-strict-di ng-cloak>
 
-    <app layout="row" layout-xs="column">
+    <app
+      ng-class="{'full-height': $state.current.name === 'home'}"
+      layout="row"
+      layout-xs="column">
       Loading...
     </app>
 
