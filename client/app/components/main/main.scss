@@ -2,9 +2,13 @@
   width: 100%;
   height: 100%;
   position: relative;
-  overflow: hidden;
+
+  navbar {
+    height: 100%;
+  }
 
   .main-pages {
+    height: 100%;
     display: block;
     position: relative;
     background-color: $DarkJungleGreen;
