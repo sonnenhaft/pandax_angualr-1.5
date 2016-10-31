@@ -52,12 +52,12 @@
 			clear: both;
 			display: block;
 			color: $TrolleyGrey;
-			margin-top: 16px;
+			margin: 16px auto 0;
 			font: 13px $oswald;
 			letter-spacing: 0.1px;
 			line-height: 24px;
-			text-align: center;
-			width: 100%;
+			text-align: left;
+			max-width: $width-middle-part;
 			&-distance {
 				margin-left: 6px;
 			}
@@ -86,6 +86,7 @@
 
 		&__switch-foto {
 			margin: 20px auto 0;
+			max-width: $width-middle-part;
 		}
 
 		&__invite {
