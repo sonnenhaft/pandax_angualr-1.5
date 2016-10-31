@@ -4,6 +4,14 @@
 
 @import "dialog";
 
+#order {
+  overflow-x: hidden;
+
+  .order-map {
+    height: 100%;
+  }
+}
+
 #order,
 #orderConfirm {
   height: 100%;
