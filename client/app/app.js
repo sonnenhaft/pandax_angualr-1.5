@@ -134,9 +134,4 @@ angular
     // Stripe integration
     stripeProvider.setPublishableKey(config.STRIPE.PUBLIC_KEY);
   })
-  .run(($state, $rootScope) => {
-    'ngInject';
-
-    $rootScope.$state = $state;
-  })
   .component('app', AppComponent);
