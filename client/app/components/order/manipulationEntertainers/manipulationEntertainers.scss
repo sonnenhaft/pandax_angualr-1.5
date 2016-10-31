@@ -1,14 +1,6 @@
-.left-side-size {
-	max-width: 420px;
-	padding-left: 30px;
-	padding-right: 30px;
-	width: 420px;
-}
+.left-side-size,
 .right-side-size {
-	max-width: 374px;
-	padding-left: 30px;
-	padding-right: 30px;
-	width: 374px;
+	padding: 0 30px;
 }
 
 .left-side-size,
@@ -30,7 +22,7 @@
 	&__main > * {
 		width: 100%;
 	}
-	
+
 	.manipulation-entertainers {
 
 		&__header {
