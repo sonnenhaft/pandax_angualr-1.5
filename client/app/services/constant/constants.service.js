@@ -189,6 +189,11 @@ export default class Constants {
           uri: (role, orderId) => path + `/${role}/orders/${orderId}?include=invites`,
           method: 'GET'
         }
+      },
+
+      cancelOrder: {
+        uri: (role, orderId) => path + `/${role}/orders/${orderId}/complete`,
+        method: 'POST'
       }
 
     };
@@ -278,7 +283,19 @@ export default class Constants {
       maxPeriodForCreating: {
         value: 14,
         key: 'days'
-      }
+      },
+
+      cancelOrderMessages: [{
+        title: 'Cancel order',
+        content: 'Are you sure want to cancel order?'
+      },{
+        title: 'Cancel unconfirmed invites',
+        content: 'Are you sure want to cancel unconfirmed invites and cancel order?'
+      },{
+        title: 'Cancel unconfirmed invites',
+        content: 'Are you sure want to cancel unconfirmed invites and complete this order? <br/> \
+                 Note: We will do a refund of the money that you paid for unconfirmed entertainers'
+      }],
 
     };
 
