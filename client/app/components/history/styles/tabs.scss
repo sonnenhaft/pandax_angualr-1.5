@@ -6,9 +6,11 @@ md-tabs {
     md-pagination-wrapper {
       height: 58px;
       width: 100% !important;
+      display: flex;
+      flex-direction: row;
 
       md-tab-item {
-        width: 50%;
+        flex: 1;
         font-size: 1.063em;
         color: white;
         background: $Charcoal;
