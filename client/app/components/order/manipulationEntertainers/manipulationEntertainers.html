@@ -1,31 +1,31 @@
-<md-content 
+<md-content
   id="manipulation-entertainers"
   flex="100"
   layout-padding
-  layout="column" 
+  layout="column"
   layout-align="start stretch"
   class="animated fadeIn manipulation-entertainers">
 
-  <div 
-    layout="row" 
+  <div
+    layout="row"
     layout-align="start"
     class="manipulation-entertainers__header">
 
     <div flex="100" flex-gt-sm="50" class="manipulation-entertainers__header_left">
-      <div 
-        layout="row" 
+      <div
+        layout="row"
         layout-align="space-between start">
         <h1 class="page-name">Create Order</h1>
-        <md-icon 
+        <md-icon
           flex="1"
-          md-svg-icon="/assets/images/icons/svg/Close_Menu.svg" 
+          md-svg-icon="/assets/images/icons/svg/Close_Menu.svg"
           class="manipulation-entertainers__icon_close manipulation-entertainers__icon_close"
           disabled="disabled"></md-icon>
       </div>
 
-      <div 
+      <div
         class="buttons-group"
-        layout="row" 
+        layout="row"
         layout-align="end center"
         layout-wrap
         layout-nowrap-gt-sm
@@ -54,10 +54,10 @@
           ng-click="vm.OrderService.fetchEntertainers(vm.$stateParams.orderId); vm.itemActiveIndex = 0;">
           <span>REFRESH</span>
           <img
-            src="/assets/images/icons/refresh-3x.png" 
+            src="/assets/images/icons/refresh-3x.png"
             class="icon_medium manipulation-entertainers__refresh-image manipulation-entertainers__icon"></img>
         </a>
-        <md-button 
+        <md-button
           flex-xs="100"
           flex-sm="100"
           flex-gt-sm="nogrow"
@@ -72,32 +72,35 @@
 
 
   <div
-    layout="row" 
-    layout-align="start"
-    layout-wrap>
+    layout="row"
+    layout-align="start">
 
-    <div flex="100" flex-gt-sm="50" class="manipulation-entertainers__search-entertainers-wrapper">
-      <search-entertainers 
+    <div
+      flex="100" flex-gt-sm="50"
+      class="manipulation-entertainers__search-entertainers-wrapper"
+      ng-if="vm.entertainers.length > 0 && (vm.showComponentOnly.length == 0 || vm.showComponentOnly == 'searchEntertainers')">
+      <search-entertainers
         entertainers="vm.entertainers"
         item-active-index="vm.itemActiveIndex"
         entertainers-invited="vm.entertainersInvited"
         flex="100"
-        flex-gt-sm="50"
-        ng-if="vm.entertainers.length > 0 && (vm.showComponentOnly.length == 0 || vm.showComponentOnly == 'searchEntertainers')">
+        flex-gt-sm="50">
       </search-entertainers>
-      <h2 
+      <h2
         class="no-items-text"
         ng-if="vm.entertainers.length == 0">
         NO ENTARNAINERS ARE AVAILABLE
       </h2>
     </div>
 
-    <div flex="100" flex-gt-sm="50" class="manipulation-entertainers__confirmed-entertainers-wrapper">
-      <confirmed-entertainers 
+    <div
+      flex="100" flex-gt-sm="50"
+      class="manipulation-entertainers__confirmed-entertainers-wrapper"
+      ng-if="vm.entertainersInvited.length > 0 && (vm.$mdMedia('gt-sm') || vm.showComponentOnly === 'confirmedEntertainers')">
+      <confirmed-entertainers
         entertainers="vm.entertainersInvited"
         count-of-required-entertainers="vm.countOfRequiredEntertainers"
-        service-type-price="vm.serviceTypePrice"
-        ng-if="vm.entertainersInvited.length > 0 && (vm.$mdMedia('gt-sm') || vm.showComponentOnly === 'confirmedEntertainers')">
+        service-type-price="vm.serviceTypePrice">
       </confirmed-entertainers>
     </div>
 
