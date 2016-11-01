@@ -1,8 +1,9 @@
 #billing {
-	padding: 52px 30px 15px 30px;	
+	padding: 52px 30px 15px 30px;
 
   @media (min-width: 960px) {
-		width: 50%;
+		max-width: 420px;
+		width: 100%;
   }
 
 	.billing {
