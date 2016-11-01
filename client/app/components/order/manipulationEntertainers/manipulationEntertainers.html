@@ -86,9 +86,13 @@
         flex="100"
         flex-gt-sm="50">
       </search-entertainers>
-      <h2
-        class="no-items-text"
-        ng-if="vm.entertainers.length == 0">
+    </div>
+
+    <div
+      flex="100" flex-gt-sm="50"
+      class="manipulation-entertainers__search-entertainers-wrapper"
+      ng-if="vm.entertainers.length == 0 && (vm.showComponentOnly.length == 0 || vm.showComponentOnly == 'searchEntertainers')">
+      <h2 class="no-items-text">
         NO ENTARNAINERS ARE AVAILABLE
       </h2>
     </div>
