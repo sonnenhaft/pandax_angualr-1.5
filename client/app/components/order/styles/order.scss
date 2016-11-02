@@ -26,3 +26,23 @@
   }
 
 }
+
+#order {
+  .order-form {
+    .input {
+      .descr {
+        p {
+          a {
+            position: absolute;
+            bottom: 0;
+            right: -10px;
+
+            @media (max-width: 960px) {
+              position: static;
+            }
+          }
+        }
+      }
+    }
+  }
+}
