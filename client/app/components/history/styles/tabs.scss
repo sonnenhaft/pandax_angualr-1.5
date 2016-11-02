@@ -1,3 +1,13 @@
+#history-tabs-wrapper {
+  &.hide-tabs {
+    md-tabs {
+      md-tabs-wrapper {
+        display: none;
+      }
+    }
+  }
+}
+
 md-tabs {
 
   md-tabs-canvas {
@@ -6,9 +16,11 @@ md-tabs {
     md-pagination-wrapper {
       height: 58px;
       width: 100% !important;
+      display: flex;
+      flex-direction: row;
 
       md-tab-item {
-        width: 50%;
+        flex: 1;
         font-size: 1.063em;
         color: white;
         background: $Charcoal;
