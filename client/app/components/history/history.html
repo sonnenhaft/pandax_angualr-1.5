@@ -3,7 +3,7 @@
   <div class="history-container" flex="60">
     <h1 class="page-name">Order History</h1>
 
-    <div id="history-tabs-wrapper">
+    <div id="history-tabs-wrapper" ng-class="{'hide-tabs': $ctrl.role === 'provider'}">
       <md-tabs md-dynamic-height md-selected="$ctrl.tab" ng-if="$ctrl.role != 'provider' || !$ctrl.isOnPending">
         <md-tab label="Future" ng-if="$ctrl.role == 'customer'">
           <future-orders></future-orders>

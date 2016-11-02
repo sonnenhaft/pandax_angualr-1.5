@@ -1,3 +1,13 @@
+#history-tabs-wrapper {
+  &.hide-tabs {
+    md-tabs {
+      md-tabs-wrapper {
+        display: none;
+      }
+    }
+  }
+}
+
 md-tabs {
 
   md-tabs-canvas {
