@@ -417,7 +417,9 @@ export default class Constants {
             }
           },
           hint: 'Logout',
-          bottom: true
+          bottom: true,
+          isComponent: true,
+          component: 'logout'
         }
       ],
 

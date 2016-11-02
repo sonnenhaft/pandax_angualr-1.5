@@ -37,11 +37,11 @@
               <a ng-if="!subnav.isComponent" href="" ui-sref="{{subnav.url}}" ui-sref-active="active">
                 {{subnav.text}}
               </a>
-              <p ng-if="subnav.isComponent" href="javascript:void(0)">
+              <a ng-if="subnav.isComponent" href="javascript:void(0)">
                 <div ng-if="subnav.component == 'logout'">
                   <logout />
                 </div>
-              </p>
+              </a>
             </li>
           </ul>
         </li>
