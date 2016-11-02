@@ -1,0 +1,39 @@
+// =============================================================================
+// $ Contact Us template styles
+// =============================================================================
+
+#contact {
+
+  .contact-container {
+
+    .page-name {
+      margin-bottom: 90px;
+    }
+
+    .contact-content {
+      h2 {
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        line-height: 40px;
+        margin-bottom: 35px;
+        font: {
+          size: 1.500em;
+          weight: normal;
+        }
+      }
+
+      p {
+        font: 0.938em $open-sans, sans-serif;
+        color: #696e79;
+
+        a {
+          color: white;
+          text-decoration: none;
+        }
+      }
+    }
+
+  }
+
+}

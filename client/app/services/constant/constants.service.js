@@ -15,6 +15,7 @@ export default class Constants {
     this.api = this.apiConstants();
     this.terms = this.termsConstants();
     this.admin = this.adminConstants();
+    this.email = 'support@minxnow.com';
   }
 
   apiConstants () {
@@ -145,14 +146,14 @@ export default class Constants {
       },
 
       entertainers: {
-        get: {        
+        get: {
           uri: (page = 1) => path + `/provider?page=${page}`,
           method: 'GET'
         }
       },
 
       customers: {
-        get: {        
+        get: {
           uri: (page = 1) => path + `/admin/customers?page=${page}`,
           method: 'GET'
         }
@@ -268,8 +269,8 @@ export default class Constants {
 
       entertainersCountInfo: 'Just trying to get to know you better for the safety of our Minx.',
 
-      cancelEntertainerMessage: (penaltyAmount) => penaltyAmount > 0 ? 
-        `Canceling the order will cost $ ${penaltyAmount} penalty. Are you sure want to cancel order for the minx?` : 
+      cancelEntertainerMessage: (penaltyAmount) => penaltyAmount > 0 ?
+        `Canceling the order will cost $ ${penaltyAmount} penalty. Are you sure want to cancel order for the minx?` :
         'Are you sure want to cancel order for the minx?',
 
       // time to cancel entertainer by customer without penalty in minutes
@@ -332,9 +333,9 @@ export default class Constants {
           url: 'main.history'
         },
         {
-          role: ['customer'],
+          role: ['customer', 'provider'],
           text: 'Contact Us',
-          url: 'contact'
+          url: 'main.contact'
         },
         {
           role: ['customer', 'provider'],
@@ -593,7 +594,7 @@ export default class Constants {
           return `${this.admin.getCorrectStatusName(targetStatus)} ${role}`;
         },
         content: (role, targetStatus) => {
-          return `Are you sure want to ${this.admin.getCorrectStatusName(targetStatus, false)} the ${role}?`; 
+          return `Are you sure want to ${this.admin.getCorrectStatusName(targetStatus, false)} the ${role}?`;
         }
       },
 
