@@ -5,7 +5,7 @@ let logoutComponent = {
   bindings: {},
   template: `
     <div class="logout">
-      <span ng-click="$ctrl.showWarning($event)">Log out</span>
+      <span ng-click="$ctrl.showWarning($event)" class="name">Log out</span>
       <div style="visibility: hidden">
         <div class="md-dialog-container" id="logout-window">
           <md-dialog aria-label="logout" class="logout-modal">
