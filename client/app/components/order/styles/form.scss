@@ -207,6 +207,12 @@
       }
 
       .location {
+        flex-direction: column;
+
+        find-location {
+          max-width: 100%;
+        }
+
         .map {
           margin-top: 30px;
           height: 200px;
