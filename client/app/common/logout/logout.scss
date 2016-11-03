@@ -1,0 +1,80 @@
+.logout {
+  .name {
+    display: block;
+  }
+
+  .icon {
+    display: flex;
+  }
+}
+
+.logout-modal {
+  background: white;
+  border-radius: 0;
+  position: relative;
+  padding: 35px 50px 40px;
+  width: 100%;
+  height: 100%;
+  max-width: 430px;
+  max-height: 180px;
+
+  .close {
+    display: block;
+    position: absolute;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    top: 15px;
+    right: 15px;
+    background: url('../assets/images/close_gray.png') no-repeat center;
+  }
+
+  .text {
+    text-align: center;
+    margin-bottom: 34px;
+    overflow: visible;
+    display: block;
+    clear: both;
+    font: 0.938em $open-sans, sans-serif;
+    font-weight: 600;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    padding: 0;
+
+    button {
+      padding: 0;
+      margin: 0;
+      flex: 1;
+      height: 54px;
+      color: white;
+
+      &:first-child {
+        margin-right: 4px;
+      }
+
+      &.cancel {
+        background: $Charcoal;
+
+        &:hover {
+          background: $Charcoal;
+        }
+      }
+
+      &.yes {
+        background: $Cardinal;
+
+        &:hover {
+          background: $Cardinal;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 960px) {
+    margin: 0 10px;
+  }
+}

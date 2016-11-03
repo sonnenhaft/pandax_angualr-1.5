@@ -417,7 +417,9 @@ export default class Constants {
             }
           },
           hint: 'Logout',
-          bottom: true
+          bottom: true,
+          isComponent: true,
+          component: 'logout'
         }
       ],
 
@@ -453,10 +455,11 @@ export default class Constants {
           url: "main.profile.view"
         },
         {
-          role: ['customer'],
+          role: ['customer', 'provider'],
           parent: 'Settings',
           text: 'Log out',
-          url: 'settings.logout'
+          isComponent: true,
+          component: 'logout'
         }
       ]
 
