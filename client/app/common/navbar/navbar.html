@@ -9,14 +9,13 @@
     </div>
     <md-icon
       flex
-      hide-gt-sm
       aria-label="menu"
       ng-click="vm.mobile = !vm.mobile"
       ng-class="{mobile: vm.mobile}">
     </md-icon>
   </div>
 
-  <div class="mobilemenu" ng-if="vm.mobile">
+  <div class="mobilemenu">
     <div class="avatar" ui-sref="main.profile.view({mode: 'main.profile.view'})" ng-style="{'background-image': 'url(' + vm.userAvatarSrc + ')'}">
       <!-- <img ng-src="{{vm.userAvatarSrc}}" alt=""/> -->
     </div>
