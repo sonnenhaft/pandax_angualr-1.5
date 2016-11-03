@@ -26,6 +26,7 @@ md-tabs {
         background: $Charcoal;
         overflow: visible;
         padding: 15px 24px;
+        line-height: 1.8;
 
         &:first-child {
           border-right: 1px solid $primary;
