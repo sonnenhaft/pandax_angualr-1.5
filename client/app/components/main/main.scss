@@ -5,6 +5,17 @@
 
   navbar {
     max-width: 230px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 25;
+
+    @media (max-width: 960px) {
+      max-width: 100%;
+      position: relative;
+    }
   }
 
   .main-pages {
@@ -13,6 +24,7 @@
     display: block;
     position: relative;
     background-color: $DarkJungleGreen;
+    padding-left: 230px;
 
     .page {
       height: 100%;
@@ -46,6 +58,7 @@
     @media (max-width: 960px) {
       max-width: 100%;
       width: 100%;
+      padding-left: 0;
     }
   }
 
