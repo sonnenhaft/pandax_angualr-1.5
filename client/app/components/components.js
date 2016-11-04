@@ -9,6 +9,7 @@ import Payments from './payments/payments';
 import History from './history/history';
 import HistoryMinx from './historyMinx/historyMinx';
 import Password from './password/password';
+import Contact from './contact/contact';
 import Admin from './admin/admin';
 
 
@@ -23,6 +24,7 @@ let componentModule = angular.module('app.components', [
   History,
   HistoryMinx,
   Password,
+  Contact,
   Admin
 ])
 
