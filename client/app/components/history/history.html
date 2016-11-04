@@ -1,7 +1,7 @@
 <div id="history" layout-gt-sm="row" class="animated fadeIn">
 
   <div class="history-container" flex="60">
-    <h1 class="page-name">Order History</h1>
+    <h1 class="page-name">{{ $ctrl.role != 'provider' ? 'Orders' : 'Order History' }}</h1>
 
     <div id="history-tabs-wrapper" ng-class="{'hide-tabs': $ctrl.role === 'provider'}">
       <md-tabs md-dynamic-height md-selected="$ctrl.tab" ng-if="$ctrl.role != 'provider' || !$ctrl.isOnPending">

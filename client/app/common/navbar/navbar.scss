@@ -15,6 +15,14 @@
   z-index: 80;
 
   &_mobile-opened {
+    .mobilemenu {
+      display: block !important;
+
+      .avatar, .navigation {
+        display: block !important;
+      }
+    }
+
     @media (max-width: 960px) {
       position: fixed;
       overflow: auto;
@@ -38,6 +46,7 @@
     }
 
     md-icon {
+      display: none;
       cursor: pointer;
       width: 24px;
       height: 24px;
@@ -45,6 +54,10 @@
 
       &.mobile {
         background: url('../assets/images/close.png') no-repeat center;
+      }
+
+      @media (max-width: 960px) {
+        display: block;
       }
     }
   }
@@ -70,6 +83,10 @@
       bottom: 0;
       margin: auto;
     } */
+
+    @media (max-width: 960px) {
+      display: none;
+    }
   }
 
   .navigation {
@@ -114,9 +131,14 @@
         }
       }
     }
+
+    @media (max-width: 960px) {
+      display: none;
+    }
   }
 
   .mobilemenu {
+    display: none;
     position: absolute;
     top: 66px;
     left: 0;

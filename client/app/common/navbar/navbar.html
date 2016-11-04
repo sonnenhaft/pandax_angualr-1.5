@@ -5,19 +5,19 @@
 
   <div class="logo" layout="row">
     <div class="name" show-gt-sm flex>
-      <a ui-sref="main.order" class="logo__link">MINX</a>
+      <a ui-sref="{{vm.defaultLink}}" class="logo__link">MINX</a>
     </div>
     <md-icon
       flex
-      hide-gt-sm
       aria-label="menu"
       ng-click="vm.mobile = !vm.mobile"
       ng-class="{mobile: vm.mobile}">
     </md-icon>
   </div>
 
-  <div class="mobilemenu" ng-if="vm.mobile">
-    <div class="avatar" ui-sref="main.profile.view({mode: 'main.profile.view'})" ng-style="{'background-image': 'url(' + vm.userAvatarSrc + ')'}">
+  <div class="mobilemenu">
+    <div class="avatar" ui-sref="main.profile.view({mode: 'main.profile.view'})"
+         ng-style="{'background-image': 'url(' + vm.userAvatarSrc + ')'}">
       <!-- <img ng-src="{{vm.userAvatarSrc}}" alt=""/> -->
     </div>
 
@@ -25,7 +25,7 @@
       <ul active-menu-item>
         <li
           ng-repeat="nav in vm.navigation"
-          ng-click="vm.mobile = (nav.url.length > 0 ? false : true)">
+          ng-click="vm.hideSubMenu(nav)">
           <a href="" ui-sref="{{nav.url.length > 0 ? nav.url : '#'}}" ui-sref-active="active">
             {{nav.text}}
           </a>
@@ -33,7 +33,7 @@
             class="navigation_sub">
             <li
               ng-repeat="subnav in vm.submenu | filterBy: ['parent']: nav.text"
-              ng-click="vm.mobile = false">
+              ng-click="vm.hideSubMenu(subnav)">
               <a ng-if="!subnav.isComponent" href="" ui-sref="{{subnav.url}}" ui-sref-active="active">
                 {{subnav.text}}
               </a>

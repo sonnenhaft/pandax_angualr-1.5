@@ -321,6 +321,11 @@ export default class Constants {
         empty: '../assets/images/avatar.png'
       },
 
+      defaultPage: {
+        customer: 'main.order',
+        provider: 'main.profile.view'
+      },
+
       navigation: [
         {
           role: ['customer'],
@@ -328,8 +333,13 @@ export default class Constants {
           url: 'main.order'
         },
         {
-          role: ['customer', 'provider'],
+          role: ['provider'],
           text: 'Order History',
+          url: 'main.history'
+        },
+        {
+          role: ['customer'],
+          text: 'Orders',
           url: 'main.history'
         },
         {
