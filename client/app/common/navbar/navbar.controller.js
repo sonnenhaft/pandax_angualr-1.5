@@ -11,7 +11,7 @@ class NavbarController {
 
     this.isCustomer = User.get('role') === 'customer';
     this.isProvider = User.get('role') === 'provider';
-
+    this.defaultLink = Constants.user.defaultPage[User.get('role')];
     this.navigation = _.filter(Constants.user.navigation, navItem => navItem.role.indexOf(User.get('role')) >= 0);
     this.submenu = _.filter(Constants.user.submenu, navItem => navItem.role.indexOf(User.get('role')) >= 0);
     this.mobile = false;

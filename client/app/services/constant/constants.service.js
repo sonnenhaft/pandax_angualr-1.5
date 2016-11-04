@@ -320,6 +320,11 @@ export default class Constants {
         empty: '../assets/images/avatar.png'
       },
 
+      defaultPage: {
+        customer: 'main.order',
+        provider: 'main.profile.view'
+      },
+
       navigation: [
         {
           role: ['customer'],
