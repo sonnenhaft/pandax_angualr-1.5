@@ -15,6 +15,7 @@ export default class Constants {
     this.api = this.apiConstants();
     this.terms = this.termsConstants();
     this.admin = this.adminConstants();
+    this.email = 'support@minxnow.com';
   }
 
   apiConstants () {
@@ -332,9 +333,9 @@ export default class Constants {
           url: 'main.history'
         },
         {
-          role: ['customer'],
+          role: ['customer', 'provider'],
           text: 'Contact Us',
-          url: 'contact'
+          url: 'main.contact'
         },
         {
           role: ['customer', 'provider'],
