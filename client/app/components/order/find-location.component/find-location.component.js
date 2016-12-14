@@ -1,6 +1,13 @@
-export default class findLocation {
+import angular from 'angular';
+import uiRouter from 'angular-ui-router';
+import Location from '../../../services/location/location';
+import Constants from '../../../services/constant/constants';
+import Validation from '../../../services/validation/validation';
+import template from './find-location.html';
 
-  constructor (Location, Constants, Validation, $timeout) {
+class controller {
+
+  constructor(Location, Constants, Validation, $timeout) {
     'ngInject';
 
     _.assign(this, {
@@ -12,26 +19,26 @@ export default class findLocation {
 
   }
 
-  $onChanges (changes) {
+  $onChanges(changes) {
 
     if (
       _.isBoolean(changes.input.currentValue) ||
       (changes.input.currentValue && !changes.input.currentValue.location)
     ) {
-      this.validate({location: this.location});
+      this.validate({ location: this.location });
     }
 
     if (changes.input.currentValue) {
       this.locationName = changes.input.currentValue.location ?
         changes.input.currentValue.location.formatted_address : 'Unknown place';
       this.location = changes.input.currentValue;
-      this.output({location: this.location});
+      this.output({ location: this.location });
       this.locations = this.locationError = false;
     }
 
   }
 
-  getLocation (str) {
+  getLocation(str) {
     this.location = str;
     this.loading = true;
     this.locations = this.locationError = false;
@@ -44,7 +51,7 @@ export default class findLocation {
       });
   }
 
-  setLocation (item) {
+  setLocation(item) {
     this.locationError = false;
     this.location = {
       coords: {
@@ -55,25 +62,25 @@ export default class findLocation {
     };
 
     this.locationName = item.formatted_address;
-    this.output({location: _.assign(this.location, {zoom: 19})});
+    this.output({ location: _.assign(this.location, { zoom: 19 }) });
   }
 
-  clearLocation () {
+  clearLocation() {
     this.locationName = '';
     this.locations = this.location = false;
-    this.output({location: this.location});
+    this.output({ location: this.location });
   }
 
-  checkLocation () {
+  checkLocation() {
     if (this.locations && this.locations.length) {
       this.setLocation(_.head(this.locations));
       return false;
     }
-    this.output({location: this.location});
-    this.validate({location: this.location});
+    this.output({ location: this.location });
+    this.validate({ location: this.location });
   }
 
-  validate (field) {
+  validate(field) {
     if (this.Validation.error(field).length) {
       _.map(this.Validation.error(field), error => {
         this[error.name + 'Error'] = error.text;
@@ -84,3 +91,18 @@ export default class findLocation {
   }
 
 }
+
+
+export default angular.module('findLocation', [
+  uiRouter,
+  Location,
+  Constants,
+  Validation
+]).component('findLocation', {
+  bindings: {
+    input: '<',
+    output: '&'
+  },
+  template,
+  controller
+}).name;

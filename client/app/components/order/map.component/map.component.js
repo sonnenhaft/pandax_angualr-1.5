@@ -1,9 +1,15 @@
-class MpaController {
+import angular from 'angular';
+import uiRouter from 'angular-ui-router';
+import Location from '../../../services/location/location';
+import Constants from '../../../services/constant/constants';
+import template from './map.html';
 
-  constructor ($timeout, Location, Constants, $window) {
+class controller {
+
+  constructor($timeout, Location, Constants, $window) {
     'ngInject';
 
-    _.assign(this, {$timeout, Location, $window});
+    _.assign(this, { $timeout, Location, $window });
 
     //default positions
     this.styles = Constants.map.styles;
@@ -15,7 +21,7 @@ class MpaController {
 
   }
 
-  $onChanges (changes) {
+  $onChanges(changes) {
     if (changes.input.currentValue) {
       this.blocked = false;
       this.$timeout(() => {
@@ -25,11 +31,11 @@ class MpaController {
     }
   }
 
-  $onInit () {
+  $onInit() {
     this.getCurrentLocation();
   }
 
-  getCurrentLocation () {
+  getCurrentLocation() {
     this.progress = true;
     this.blocked = false;
 
@@ -59,7 +65,7 @@ class MpaController {
       );
   }
 
-  mapOptions () {
+  mapOptions() {
     return {
       events: {
         tilesloaded: map => {
@@ -71,7 +77,7 @@ class MpaController {
                 .google
                 .maps
                 .ControlPosition[
-                  this.$window.innerWidth <= 960 ? 'RIGHT_TOP' : 'RIGHT_CENTER'
+                this.$window.innerWidth <= 960 ? 'RIGHT_TOP' : 'RIGHT_CENTER'
                 ]
             }
           });
@@ -90,12 +96,12 @@ class MpaController {
     }
   }
 
-  markerOptions () {
+  markerOptions() {
     return {
       options: {
         draggable: true,
         icon: {
-          url: require('../../../assets/images/pin_map.png'),
+          url: require('../../../../assets/images/pin_map.png'),
           anchor: {
             x: 25,
             y: 25
@@ -108,13 +114,23 @@ class MpaController {
     }
   }
 
-  markerCallback (marker) {
+  markerCallback(marker) {
     this.Location
       .getMarkerLocation(marker, location => {
-        this.output({location});
+        this.output({ location });
       });
   }
-
 }
 
-export default MpaController;
+export default angular.module('map', [
+  uiRouter,
+  Location,
+  Constants
+]).component('map', {
+  bindings: {
+    input: '<',
+    output: '&'
+  },
+  template,
+  controller
+}).name;

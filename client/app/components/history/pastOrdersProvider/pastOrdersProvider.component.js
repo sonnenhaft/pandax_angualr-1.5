@@ -3,7 +3,6 @@ import controller from './pastOrdersProvider.controller';
 import './pastOrdersProvider.scss';
 
 let pastOrdersProviderComponent = {
-  restrict: 'E',
   bindings: {},
   template,
   controller

@@ -1,6 +1,10 @@
-export default class cardListController {
+import angular from 'angular';
 
-  constructor (Cards, User) {
+import template from './card-list.component.html';
+import './card-list.component.scss';
+
+class controller {
+  constructor(Cards, User) {
     'ngInject';
 
     _.assign(this, {
@@ -10,7 +14,7 @@ export default class cardListController {
     });
   }
 
-  setDefaultCard () {
+  setDefaultCard() {
     this.saveLoading = true;
     this.Cards.setDefaultCard(this.Cards.defaultCardId)
       .then((data) => {
@@ -21,7 +25,7 @@ export default class cardListController {
       })
   }
 
-  deleteCard (cardId) {
+  deleteCard(cardId) {
     this.saveLoading = true;
     this.Cards.deleteCard(cardId)
       .then((data) => {
@@ -33,3 +37,10 @@ export default class cardListController {
   }
 
 }
+
+
+export default angular.module('cardList', []).component('cardList', {
+  bindings: { cards: '<' },
+  template,
+  controller
+}).name;

@@ -57,7 +57,8 @@
     z-index: 40;
     right: 30px;
     bottom: 50px;
-    background: $Cardinal url('../assets/images/location.png') no-repeat center;
+
+    background: $Cardinal url('/assets/images/location.png') no-repeat center;
 
     @media (max-width: 960px) {
       bottom: 20px;
@@ -65,3 +66,4 @@
     }
   }
 }
+

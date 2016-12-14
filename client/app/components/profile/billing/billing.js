@@ -3,9 +3,9 @@ import uiRouter from 'angular-ui-router';
 import billingComponent from './billing.component';
 import User from '../../../services/user/user';
 import Cards from '../../../services/card/card';
-import personalInformation from '../../../common/profileFields/personalInformation/personalInformation';
-import cardList from '../../../common/profileFields/cardList/cardList';
-import cardInfo from '../../../common/profileFields/cardInfo/cardInfo';
+import personalInformation from '../profile-fields.component/personal-information.component/personal-information.component';
+import cardList from '../profile-fields.component/card-list.component/card-list.component';
+import cardInfo from '../profile-fields.component/card-info.component/card-info.component';
 
 let billingModule = angular.module('billing', [
   uiRouter,

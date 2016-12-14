@@ -1,10 +1,10 @@
 import angular from 'angular';
 import Navbar from './navbar/navbar';
-import Map from './map/map';
-import profileFields from './profileFields/profile.fields';
+import Map from '../components/order/map.component/map.component';
+import profileFields from '../components/profile/profile-fields.component/profile.fields.component';
 import Spinner from './spinner/spinner';
-import findLocation from './findLocation/findLocation';
-import orderDetails from './orderDetails/orderDetails';
+import findLocation from '../components/order/find-location.component/find-location.component';
+import orderDetails from '../components/profile/order-details.component/order-details.component';
 import Logout from './logout/logout';
 
 let commonModule = angular.module('app.common', [

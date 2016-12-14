@@ -1,4 +1,7 @@
-let ActiveMenuItemDirective = ['$state', '$timeout', '$rootScope', function($state, $timeout, $rootScope) {
+import angular from 'angular';
+
+export default angular.module('activeMenuItemDirective', [
+]).directive('activeMenuItem', ['$state', '$timeout', '$rootScope', function ($state, $timeout, $rootScope) {
   'ngInject';
 
   const STYLES = {
@@ -12,18 +15,18 @@ let ActiveMenuItemDirective = ['$state', '$timeout', '$rootScope', function($sta
     link: (scope, element, attrs) => {
       let menuItems = [];
 
-      function toggleOpened (menuItem) {
+      function toggleOpened(menuItem) {
         if (!menuItem.hasClass(STYLES.CSS_CLASS_OPENED_SUB_ITEMS)) {
           clearAll();
         }
         angular.element(menuItem).toggleClass(STYLES.CSS_CLASS_OPENED_SUB_ITEMS);
       }
 
-      function clearAll () {
+      function clearAll() {
         menuItems.removeClass(STYLES.CSS_CLASS_OPENED_SUB_ITEMS);
       }
 
-      function checkActiveSubItem () {
+      function checkActiveSubItem() {
         _.each(menuItems, menuItem => {
           if (menuItem.querySelector('ul>li>a.' + STYLES.CSS_CLASS_LINK_ACTIVE)) {
             angular.element(menuItem).addClass(STYLES.CSS_CLASS_OPENED_SUB_ITEMS);
@@ -32,7 +35,7 @@ let ActiveMenuItemDirective = ['$state', '$timeout', '$rootScope', function($sta
         });
       }
 
-      function init () {
+      function init() {
         menuItems = angular.element(element).children('li');
 
         checkActiveSubItem();
@@ -44,7 +47,7 @@ let ActiveMenuItemDirective = ['$state', '$timeout', '$rootScope', function($sta
         });
 
 
-        $rootScope.$on("$stateChangeSuccess", function(event, next, current) {
+        $rootScope.$on("$stateChangeSuccess", function (event, next, current) {
           clearAll();
           $timeout(checkActiveSubItem, 100);
         });
@@ -54,6 +57,4 @@ let ActiveMenuItemDirective = ['$state', '$timeout', '$rootScope', function($sta
       $timeout(init, 100);
     }
   }
-}];
-
-export default ActiveMenuItemDirective;
+}]).name;

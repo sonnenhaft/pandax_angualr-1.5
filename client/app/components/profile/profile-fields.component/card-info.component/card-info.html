@@ -4,21 +4,21 @@
 		class="form_1-field__container"
 		layout="column"
 		flex="100">
-		<label class="form_1__label">Card Number</label>
+		<label class="form_1__label">Debit Card Number</label>
 		<input
 			type="text"
 			name="card_number"
 			class="form_1__input"
-			ng-model="vm.model.number"
-			ng-change="vm.checkCardNumber()"
+			ng-model="$ctrl.model.number"
+			ng-change="$ctrl.checkCardNumber()"
 			required/>
 	  <div
-	  	ng-messages="vm.formObject.card_number.$error"
-	  	ng-show="(vm.formObject.card_number.$touched || vm.formObject.$submitted) && vm.formObject.card_number.$invalid"
+	  	ng-messages="$ctrl.formObject.card_number.$error"
+	  	ng-show="($ctrl.formObject.card_number.$touched || $ctrl.formObject.$submitted) && $ctrl.formObject.card_number.$invalid"
 	  	class="validation-messages"
 	  	role="alert">
 	    <!-- <div ng-messages-include="/app/common/messages/messages.html"></div> -->
-	    <messages></messages>	    
+	    <messages></messages>
 	  </div>
 	</div>
 </div>
@@ -36,12 +36,12 @@
 			type="text"
 			name="expiry"
 			class="form_1__input"
-			ng-model="vm.model.expiry"
-			ng-change="vm.checkCardExpiry()"
+			ng-model="$ctrl.model.expiry"
+			ng-change="$ctrl.checkCardExpiry()"
 			required/>
 	  <div
-	  	ng-messages="vm.formObject.expiry.$error"
-	  	ng-show="(vm.formObject.expiry.$touched || vm.formObject.$submitted) && vm.formObject.expiry.$invalid"
+	  	ng-messages="$ctrl.formObject.expiry.$error"
+	  	ng-show="($ctrl.formObject.expiry.$touched || $ctrl.formObject.$submitted) && $ctrl.formObject.expiry.$invalid"
 	  	class="validation-messages"
 	  	role="alert">
 	    <messages></messages>
@@ -56,12 +56,12 @@
 			type="text"
 			name="cvc"
 			class="form_1__input"
-			ng-model="vm.model.cvc"
-			ng-change="vm.checkCardCvc()"
+			ng-model="$ctrl.model.cvc"
+			ng-change="$ctrl.checkCardCvc()"
 			required/>
 	  <div
-	  	ng-messages="vm.formObject.cvc.$error"
-	  	ng-show="(vm.formObject.cvc.$touched || vm.formObject.$submitted) && vm.formObject.cvc.$invalid"
+	  	ng-messages="$ctrl.formObject.cvc.$error"
+	  	ng-show="($ctrl.formObject.cvc.$touched || $ctrl.formObject.$submitted) && $ctrl.formObject.cvc.$invalid"
 	  	class="validation-messages"
 	  	role="alert">
 	    <messages></messages>
@@ -76,11 +76,11 @@
 			type="text"
 			name="zip"
 			class="form_1__input"
-			ng-model="vm.model.zip"
+			ng-model="$ctrl.model.zip"
 			required/>
 	  <div
-	  	ng-messages="vm.formObject.zip.$error"
-	  	ng-show="(vm.formObject.zip.$touched || vm.formObject.$submitted) && vm.formObject.zip.$invalid"
+	  	ng-messages="$ctrl.formObject.zip.$error"
+	  	ng-show="($ctrl.formObject.zip.$touched || $ctrl.formObject.$submitted) && $ctrl.formObject.zip.$invalid"
 	  	class="validation-messages"
 	  	role="alert">
 	    <messages></messages>
