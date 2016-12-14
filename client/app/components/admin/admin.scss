@@ -25,23 +25,23 @@
   }
 
   .admin {
-		&__page {
-			padding: 0px 20px;
+    &__page {
+      padding: 0 20px;
       &_orders {
         min-width: $ordersContentMinWidth;
       }
-		}
+    }
 
-  	&__header {
-  		height: 89px;
-  		padding-left: 10px;
-  	}
+    &__header {
+      height: 89px;
+      padding-left: 10px;
+    }
 
-  	&__page-name {
-			@extend .font_header;
-  		margin-bottom: -10px;
-			text-transform: uppercase;
-  	}
+    &__page-name {
+      @extend .font_header;
+      margin-bottom: -10px;
+      text-transform: uppercase;
+    }
 
     &__manip {
       &-row {
@@ -70,7 +70,7 @@
         margin-left: 10px;
       }
       &-field {
-        margin: 3px 0px 0px 0px;
+        margin: 3px 0 0 0;
       }
     }
     &__datepicker {
@@ -80,7 +80,7 @@
       flex-direction: row;
       justify-content: flex-start;
       min-width: 50%;
-      padding-right: 0px;
+      padding-right: 0;
       &:first-child {
         margin-right: 1px;
       }
@@ -98,7 +98,7 @@
     &__table {
       width: 100%;
       &_orders {
-        margin-top: 0px;
+        margin-top: 0;
         .table_admin__cell {
           max-width: 130px;
           overflow: hidden;
@@ -110,7 +110,7 @@
 
   /* Angular Material overwritten */
   md-select {
-		margin: 0px 0px 0px 22.3px;
+    margin: 0 0 0 22.3px;
   }
   .md-datepicker-triangle-button {
     display: none;
@@ -120,14 +120,13 @@
   }
   .md-button.md-icon-button {
     order: 2;
-    margin: 0px;
+    margin: 0;
   }
   .md-datepicker-input {
-    min-width: 0px;
+    min-width: 0;
     width: 95px;
   }
 }
-
 
 md-option {
   ._md-text {

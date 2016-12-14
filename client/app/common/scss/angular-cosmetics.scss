@@ -1,5 +1,5 @@
 .md-button {
-  border-radius: 0px;
+  border-radius: 0;
   &.md-accent[disabled] {
     color: $white;
   }
@@ -7,7 +7,7 @@
 
 md-dialog {
   background: none;
-  border-radius: 0px;
+  border-radius: 0;
   box-shadow: none;
   overflow: visible;
   @media (max-width: 960px) {
@@ -82,14 +82,14 @@ md-icon {
 
 
 /***  Remove riple effect for radio button ***/
-md-radio-group.md-default-theme.md-focused:not(:empty) .md-checked ._md-container:before, 
+md-radio-group.md-default-theme.md-focused:not(:empty) .md-checked ._md-container:before,
 md-radio-group.md-focused:not(:empty) .md-checked ._md-container:before {
   background-color: $white;
 }
 
 md-radio-group.md-focused .md-checked ._md-container:before {
-  left: 0px;
-  top: 0px;
-  right: 0px;
-  bottom: 0px; 
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
 }
