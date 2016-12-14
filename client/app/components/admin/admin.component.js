@@ -1,12 +1,26 @@
+import angular from 'angular';
+import uiRouter from 'angular-ui-router';
+import navbarAdmin from '../../common/navbar/navbarAdmin/navbarAdmin';
+import entertainers from './entertainers.page/entertainers.page.component';
+import customers from './customers.page/customers.page.component';
+import orders from './orders.page/orders.page.component';
+
 import template from './admin.html';
-import controller from './admin.controller';
 
-let adminComponent = {
-  restrict: 'E',
-  bindings: {},
-  template,
-  controller,
-  controllerAs: 'vm'
-};
+export default angular.module('admin', [
+  uiRouter,
+  navbarAdmin,
+  entertainers,
+  customers,
+  orders
+]).config(($stateProvider) => {
+  "ngInject";
 
-export default adminComponent;
+  $stateProvider.state('admin', {
+    url: '/admin',
+    abstract: true,
+    component: 'admin'
+  });
+}).component('admin', {
+  template
+}).name;

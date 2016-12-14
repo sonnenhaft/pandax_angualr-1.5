@@ -3,7 +3,7 @@ import navbarAdminComponent from './navbarAdmin.component';
 import User from '../../../services/user/user';
 import Constants from '../../../services/constant/constants';
 import activeMenuItem from '../../../directives/activeMenuItem/activeMenuItem';
-import navByPosition from '../../filters/navByPosition.filter';
+import navByPosition from './navByPosition.filter';
 
 let navbarAdminModule = angular.module('navbarAdmin', [
   User,

@@ -2,7 +2,7 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import historyMinxComponent from './historyMinx.component';
 import OrderService from '../../services/orderService/orderService';
-import hoursToTime from '../../common/filters/hoursToTime.filter';
+import hoursToTime from '../../common/hoursToTime.filter';
 import timer from '../../directives/timer/timer';
 import showInTime from '../../directives/showInTime/showInTime';
 

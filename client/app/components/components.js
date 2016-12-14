@@ -10,7 +10,7 @@ import History from './history/history';
 import HistoryMinx from './historyMinx/historyMinx';
 import Password from './password/password';
 import Contact from './contact/contact';
-import Admin from './admin/admin';
+import Admin from './admin/admin.component';
 
 
 let componentModule = angular.module('app.components', [

@@ -1,5 +1,5 @@
-import photoFullPageTpl from '../photoFullPage/photoFullPage.html';
-import photoFullPageCtrl from '../photoFullPage/photoFullPage.controller.js';
+import photoFullPageTemplate from '../photoFullPage/photoFullPage.html';
+import photoFullPageController from '../photoFullPage/photoFullPage.controller.js';
 
 class searchEntertainersController {
 
@@ -7,7 +7,7 @@ class searchEntertainersController {
      'ngInject';
 
      _.assign(this, {
-     		OrderService, 
+     		OrderService,
         $state,
         $mdDialog,
         $stateParams,
@@ -26,13 +26,13 @@ class searchEntertainersController {
 
   showPopup(ev) {
     this.$mdDialog.show({
-        controller: photoFullPageCtrl,
+        controller: photoFullPageController,
         controllerAs: 'vm',
         clickOutsideToClose: true,
         template: '<div layout="row" layout-align="end" class="icon_modal-close">\
                     <div class="icon_modal-close__image" ng-click="vm.$mdDialog.hide()"></div>\
-                  </div>' + 
-                  photoFullPageTpl,
+                  </div>' +
+                  photoFullPageTemplate,
         targetEvent: ev,
         bindToController: true,
         locals: {
@@ -42,7 +42,7 @@ class searchEntertainersController {
       });
   }
 
-  goToNextStep() {    
+  goToNextStep() {
     if (this.entertainersInvited.length == 0) {
       this.$state.go('main.billing', {orderId: this.$stateParams.orderId, entertainerId: this.entertainers[this.itemActiveIndex].id, from: 'main.manipulationEntertainers'});
     } else {

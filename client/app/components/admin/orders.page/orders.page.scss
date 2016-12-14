@@ -1,0 +1,65 @@
+#orders {
+	$ordersContentMinWidth: 914px;
+	$ordersListMinWidth: 275px;
+	$ordersListWidth: 34%;
+	$ordersListMaxHeight: 650px;
+
+	.orders {
+		&-list {
+			background: {
+				color: white;
+			}
+			max-height: $ordersListMaxHeight;
+			min-width: $ordersListMinWidth;
+			overflow: auto;
+			padding-top: 2px;
+			padding-bottom: 4px;
+			width: $ordersListWidth;
+		}
+
+		&-content {
+			margin-top: 20px;
+			min-width: $ordersContentMinWidth;
+		}
+	}
+
+	.order {
+		padding: 11px 17px 0 17px;
+		width: 100%;
+
+		&-param {
+			@extend .font_admin-manip__label;
+			background: {
+				repeat: no-repeat;
+				position: center;
+				size: 23px 15px;
+			}
+			padding-left: 21px;
+
+			&_date {
+				@include getImage('history/date')
+			}
+			&_name {
+				margin-top: 9px;
+				@include getImage('history/guest')
+			}
+		}
+
+		&_active {
+			background: {
+				color: $Munsell;
+			}
+		}
+
+		&__content {
+			border-bottom: 1px solid $Timberwolf;
+			padding-bottom: 14px;
+		}
+	}
+
+	.infinite-scroll-wrapper {
+		display: block;
+		position: relative;
+		/* height: 100%; */
+	}
+}

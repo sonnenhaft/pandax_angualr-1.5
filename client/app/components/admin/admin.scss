@@ -16,6 +16,7 @@
   height: 100%;
   position: relative;
   overflow: hidden;
+  overflow-y: auto;
   width: 100%;
 
   .main-pages_admin {
@@ -134,4 +135,4 @@ md-option {
   }
 }
 
-@import "orders/orders";
+@import "orders.page/orders.page";
