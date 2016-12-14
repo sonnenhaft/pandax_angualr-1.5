@@ -16,3 +16,10 @@ Tools needed to run this app:
 ### Running the App
 `gulp`
 
+### For windows users
+Before npm install run
+`npm install --global --production windows-build-tool`
+
+May be you will need to run 
+`npm rebuild node-sass`
+
