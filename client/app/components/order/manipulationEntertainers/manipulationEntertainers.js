@@ -2,7 +2,7 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import manipulationEntertainersComponent from './manipulationEntertainers.component';
 import OrderService from '../../../services/orderService/orderService';
-import searchEntertainers from './searchEntertainers/searchEntertainers';
+import searchEntertainers from './search-entertainers.page/search-entertainers.page.component';
 import confirmedEntertainers from './confirmedEntertainers/confirmedEntertainers';
 
 export default angular
