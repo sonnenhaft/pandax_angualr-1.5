@@ -22,4 +22,5 @@ Before npm install run
 
 May be you will need to run 
 `npm rebuild node-sass`
+'npm install angular-ui-router@1.0.0-beta.1'
 

@@ -18,7 +18,7 @@ export default class User {
 
   get (param) {
     return param ?
-      this.Storage.getObject('MINX').user[param] :
+      (this.Storage.getObject('MINX').user || {})[param] :
       this.Storage.getObject('MINX').user;
   }
 
@@ -169,7 +169,7 @@ export default class User {
   getUserProfile (user, type, redirectUser = true) {
     let result;
 
-    if (type == 'admin') {      
+    if (type == 'admin') {
       result = this.$q.defer().resolve(user);
       if (redirectUser == true) {
         this.redirectUser();
@@ -304,7 +304,7 @@ export default class User {
   fetchBillingInfo () {
     return this.billingInfo;
   }
-  
+
   getActualStatus () {
     return this.Request
       .send(
