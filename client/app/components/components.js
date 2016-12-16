@@ -2,7 +2,7 @@ import angular from 'angular';
 import Home from './home/home.component';
 import Main from './main/main.component';
 import Profile from './profile/profile';
-import ProfileCreate from './profile/create/profile.create';
+import ProfileCreate from './profile/create-profile.page.component/create-profile.page.component';
 import ProfileView from './profile/view/profile.view';
 import Order from './order/order';
 import Payments from './payments/payments';

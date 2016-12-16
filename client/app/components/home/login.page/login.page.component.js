@@ -1,7 +1,7 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import Validation from '../../../services/validation/validation';
-import User from '../../../services/user/user';
+import User from '../../../services/user.service';
 
 import template from './login.page.html';
 

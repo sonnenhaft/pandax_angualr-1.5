@@ -1,7 +1,7 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import passwordComponent from './password.component';
-import User from '../../services/user/user';
+import User from '../../services/user.service';
 import Validation from '../../services/validation/validation';
 
 export default angular

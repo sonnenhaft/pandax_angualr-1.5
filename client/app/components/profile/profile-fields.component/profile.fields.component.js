@@ -1,6 +1,6 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
-import User from '../../../services/user/user';
+import User from '../../../services/user.service';
 import Constants from '../../../services/constants.service';
 import Validation from '../../../services/validation/validation';
 import Storage from '../../../services/storage/storage';
