@@ -94,9 +94,9 @@ app {
 }
 
 // components
-@import "./navbar/navbar";
-@import "./map/map";
+@import "../components/main/navbar.component/navbar";
+@import "../components/order/map.component/map";
 @import "./spinner/spinner";
-@import "./findLocation/findLocation";
-@import "./orderDetails/orderDetails";
+@import "../components/order/find-location.component/find-location";
+@import "../components/profile/order-details.component/order-details";
 @import "./logout/logout";

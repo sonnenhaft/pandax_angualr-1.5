@@ -3,9 +3,9 @@ import uiRouter from 'angular-ui-router';
 import confirmedEntertainersComponent from './confirmedEntertainers.component';
 import OrderService from '../../../../services/orderService/orderService';
 import WebSocket from '../../../../services/webSocket/webSocket';
-import timer from '../../../../directives/timer/timer';
-import byStatuses from '../../../../common/filters/byStatuses.filter';
-import showInTime from '../../../../directives/showInTime/showInTime';
+import timer from '../../../../common/timer.directive';
+import byStatuses from './byStatuses.filter';
+import showInTime from '../../../../common/show-in-time.directive';
 
 export default angular
   .module('confirmedEntertainers', [

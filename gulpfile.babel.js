@@ -40,7 +40,7 @@ let paths = {
   ],
   entry: [
     'babel-polyfill',
-    path.join(__dirname, root, 'app/app.js')
+    path.join(__dirname, root, 'app/panda-app.js')
   ],
   output: root,
   blankTemplates: path.join(__dirname, 'generator', 'component/**/*.**'),
@@ -79,8 +79,8 @@ gulp.task('serve', () => {
   var compiler = webpack(config);
 
   serve({
-    port: process.env.PORT || 3000,
-    open: false,
+    port: process.env.PORT || 3020,
+    open: 'local',
     server: {baseDir: root},
     https: true,
     middleware: [

@@ -1,0 +1,158 @@
+<div id="entertainers" class="admin__page">
+
+
+	<div
+		layout="column"
+		layout-align="end"
+		class="admin__header">
+		<span class="admin__page-name">Entertainers</span>
+	</div>
+
+
+<!--	<div class="admin__manip-row">
+		<div
+			layout="row"
+			layout-align="start center"
+			class="manip-row__block manip-row__block_left">
+			<span class="admin__filter-name">Status</span>
+      <md-select
+      	ng-model="weapon"
+      	placeholder="Status"
+      	class="select-container_admin">
+        <md-option ng-repeat="(key, val) in $ctrl.statuses" value="{{val}}">{{key}}</md-option>
+      </md-select>
+		</div>
+	</div>-->
+
+
+	<table
+		class="admin__table table_admin"
+    infinite-scroll="$ctrl.fetchMoreItems()"
+    infinite-scroll-disabled='$ctrl.isOnProgress || $ctrl.isLastPage'>
+		<tr
+			class="table_admin__row table_admin__row_start"
+			ng-repeat-start="entertainer in $ctrl.EntertainersService.list">
+			<td
+				class="table_admin__cell table_admin__cell_rowspaned"
+				rowspan="3">
+				<!-- <div ng-style="{'background-image': 'url(' + entertainer.photos[0].preview + ')'}" alt="{{entertainer.displaying_name}}"></div> -->
+				<div class="avatar-wrapper">
+					<img ng-src="{{entertainer.photos[0].preview}}" alt="{{entertainer.displaying_name}}">
+				</div>
+			</td>
+			<td
+				class="table_admin__cell table_admin__cell_label">
+				Status
+			</td>
+			<td
+				class="table_admin__cell table_admin__cell_status">
+				<span class="table_admin__cell_status-icon table_admin__cell_status-icon-{{entertainer.status}}"></span>
+				<span class="table_admin__cell_status-value">{{entertainer.status}}</span>
+			</td>
+			<td
+				class="table_admin__cell table_admin__cell_label">
+				Email
+			</td>
+			<td
+				class="table_admin__cell">
+				{{entertainer.email}}
+			</td>
+			<td
+				class="table_admin__cell table_admin__cell_label">
+				Raiting
+			</td>
+			<td
+				class="table_admin__cell">
+				{{entertainer.rating}}
+			</td>
+			<td
+				class="table_admin__cell table_admin__cell_actions">
+ 			<!--	<img
+ 					ng-if="entertainer.status == $ctrl.statuses.pending"
+ 					src="/assets/images/icons/admin/icon_approve.png"
+ 					ng-click="$ctrl.EntertainersService.setStatus($event, entertainer, $ctrl.statuses.active, false)"
+ 					title="Approve"
+ 					alt="Approve">
+
+ 				<img
+ 					ng-if="entertainer.status == $ctrl.statuses.rejected"
+ 					src="/assets/images/icons/admin/icon_approve.png"
+ 					ng-click="$ctrl.EntertainersService.setStatus($event, entertainer, $ctrl.statuses.active, true, $ctrl.statuses.approved)"
+ 					title="Approve"
+ 					alt="Approve">-->
+
+				<img
+					ng-if="entertainer.status == $ctrl.statuses.pending"
+					src="/assets/images/icons/admin/icon_reject.png"
+					ng-click="$ctrl.EntertainersService.setStatus($event, entertainer, $ctrl.statuses.rejected, true)"
+					title="Reject"
+					alt="Reject">
+
+				<img
+					ng-if="entertainer.status == $ctrl.statuses.active || entertainer.status == $ctrl.statuses.offline"
+					src="/assets/images/icons/admin/icon_block.png"
+					ng-click="$ctrl.EntertainersService.setStatus($event, entertainer, $ctrl.statuses.blocked, true)"
+					title="Block"
+					alt="Block">
+
+				<img
+					ng-if="entertainer.status == $ctrl.statuses.blocked"
+					src="/assets/images/icons/admin/icon_unblock.png"
+					ng-click="$ctrl.EntertainersService.setStatus($event, entertainer, $ctrl.statuses.active, true, $ctrl.statuses.unblocked)"
+					title="Unblock"
+					alt="Ubblock">
+			</td>
+		</tr>
+		<tr
+			class="table_admin__row">
+			<td
+				class="table_admin__cell table_admin__cell_label">
+				Name
+			</td>
+			<td
+				class="table_admin__cell">
+				{{entertainer.first_name}} {{entertainer.last_name}}
+			</td>
+			<td
+				class="table_admin__cell table_admin__cell_label">
+				Phone
+			</td>
+			<td
+				class="table_admin__cell">
+				{{entertainer.phone}}
+			</td>
+			<td
+				class="table_admin__cell table_admin__cell_label">
+				Photos
+			</td>
+			<td
+				class="table_admin__cell table_admin__cell_link"
+				ng-click="$ctrl.showPopup($event, $index)">
+				{{entertainer.photos.length}}
+			</td>
+			<td></td>
+		</tr>
+		<tr
+			class="table_admin__row table_admin__row_end"
+			ng-repeat-end>
+			<td
+				class="table_admin__cell table_admin__cell_label">
+				Display Name
+			</td>
+			<td
+				class="table_admin__cell">
+				{{entertainer.displaying_name}}
+			</td>
+			<td
+				class="table_admin__cell table_admin__cell_label">
+				City
+			</td>
+			<td
+				class="table_admin__cell">
+				{{entertainer.city}}
+			</td>
+			<td class="table_admin__cell_rowspaned"></td><td class="table_admin__cell_rowspaned"></td><td class="table_admin__cell_rowspaned"></td>
+		</tr>
+	</table>
+
+</div>

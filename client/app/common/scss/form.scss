@@ -61,7 +61,7 @@
 			}
 			letter-spacing: 0.1px;
 			line-height: 24px;
-			margin: 0px;
+			margin: 0;
 			padding-top: 13px;
 			padding-bottom: 17px;
 			text-align: center;
@@ -118,7 +118,7 @@
 }
 
 .validation-messages {
-	color: $Cardinal;	
+	color: $Cardinal;
   display: block;
   line-height: 24px;
   margin-left: 8px;
@@ -146,7 +146,7 @@
     		-ms-flex-align: stretch;
 			border: none;
 			padding-bottom: 2px;
-			padding-top: 0px;
+			padding-top: 0;
 			._md-select-icon {
 				text-align: center;
 				&::after {

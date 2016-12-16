@@ -1,7 +1,7 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import pastOrdersProviderComponent from './pastOrdersProvider.component';
-import hoursToTime from '../../../common/filters/hoursToTime.filter';
+import hoursToTime from '../../../common/hoursToTime.filter';
 
 export default angular
   .module('pastOrdersProvider', [

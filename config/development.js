@@ -1,9 +1,11 @@
-module.exports = {
-  API_URL: 'https://dev2-panda-aws.isdev.info/api',
-  COPYRIGHT: (new Date()).getFullYear() + 'Panda',
-  VERSION: '0.0.1',
+var apiurl = 'dev3-panda-aws.isdev.info/api';
+
+module.exports = Object.assign({
+  VERSION: '0.0.2',
+}, {
+  API_URL: `https://${apiurl}`,
+  WS_URL: `wss://${apiurl}/ws`,
   STRIPE: {
-  	PUBLIC_KEY: 'pk_test_53uGNlHfMPbElFTnPN8sXQ9N'
-  },
-  WS_URL: 'wss://dev2-panda-aws.isdev.info/ws',
-};
+    PUBLIC_KEY: 'pk_test_53uGNlHfMPbElFTnPN8sXQ9N'
+  }
+});

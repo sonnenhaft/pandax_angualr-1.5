@@ -1,8 +1,8 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import orderConfirmComponent from './orderConfirm.component';
-import timer from '../../../directives/timer/timer';
-import showInTime from '../../../directives/showInTime/showInTime';
+import timer from '../../../common/timer.directive';
+import showInTime from '../../../common/show-in-time.directive';
 
 export default angular
   .module('orderConfirm', [

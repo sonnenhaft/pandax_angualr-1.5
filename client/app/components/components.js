@@ -1,6 +1,6 @@
 import angular from 'angular';
-import Home from './home/home';
-import Main from './main/main';
+import Home from './home/home.component';
+import Main from './main/main.component';
 import Profile from './profile/profile';
 import ProfileCreate from './profile/create/profile.create';
 import ProfileView from './profile/view/profile.view';
@@ -9,11 +9,10 @@ import Payments from './payments/payments';
 import History from './history/history';
 import HistoryMinx from './historyMinx/historyMinx';
 import Password from './password/password';
-import Contact from './contact/contact';
-import Admin from './admin/admin';
+import Contact from './contact-us.page.component/contact-us.page.component';
+import Admin from './admin/admin.component';
 
-
-let componentModule = angular.module('app.components', [
+export default angular.module('app.components', [
   Home,
   Main,
   Profile,
@@ -26,8 +25,4 @@ let componentModule = angular.module('app.components', [
   Password,
   Contact,
   Admin
-])
-
-.name;
-
-export default componentModule;
+]).name;

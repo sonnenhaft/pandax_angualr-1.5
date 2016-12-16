@@ -1,7 +1,7 @@
 import angular from 'angular';
 import User from './user.service';
 import Storage from '../storage/storage';
-import Constants from '../constant/constants';
+import Constants from '../constants.service';
 import Request from '../request/request';
 
 export default angular
