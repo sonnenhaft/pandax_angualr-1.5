@@ -1,13 +1,19 @@
-export default class Signin {
+import angular from 'angular';
+import uiRouter from 'angular-ui-router';
+import Validation from '../../../services/validation/validation';
+import User from '../../../services/user/user';
 
-  constructor (Validation, User) {
+import template from './login.page.html';
+
+class controller {
+  constructor(Validation, User) {
     'ngInject';
 
     _.assign(this, {Validation, User});
 
   }
 
-  onSubmit (credentials) {
+  onSubmit(credentials) {
     if (this.validate(credentials)) {
       this.loginError = false;
       return this.login(credentials);
@@ -16,7 +22,7 @@ export default class Signin {
     return false;
   }
 
-  validate (field) {
+  validate(field) {
     if (this.Validation.error(field).length) {
       _.map(this.Validation.error(field), error => {
         this[error.name + 'Error'] = error.text;
@@ -26,7 +32,7 @@ export default class Signin {
     return true;
   }
 
-  login (credentials) {
+  login(credentials) {
     this.loginLoading = true;
     this.User
       .login(credentials)
@@ -46,3 +52,16 @@ export default class Signin {
   }
 
 }
+
+
+export default angular.module('loginPage', [
+  uiRouter,
+  Validation,
+  User
+]).component('loginPage', {
+  bindings: {
+    output: '&'
+  },
+  template,
+  controller
+}).name;

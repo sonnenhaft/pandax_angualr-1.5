@@ -1,5 +1,5 @@
 import angular from 'angular';
-import Home from './home/home';
+import Home from './home/home.component';
 import Main from './main/main.component';
 import Profile from './profile/profile';
 import ProfileCreate from './profile/create/profile.create';

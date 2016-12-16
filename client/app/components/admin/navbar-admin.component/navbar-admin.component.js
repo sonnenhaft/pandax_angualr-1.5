@@ -5,24 +5,23 @@ import activeMenuItem from '../../../common/active-menu-item.directive';
 
 import template from './navbar-admin.html';
 import './navbar-admin.scss';
+import NAV_BAR_MENU_ITEMS from '../../../common/NAV_BAR_MENU_ITEMS'
 
 class controller {
   constructor(User, Constants, $state) {
     'ngInject';
 
-    _.assign(this, {
+    Object.assign(this, {
       User,
       Constants,
       $state,
       collapsed: true
     });
 
-    // this.navigation = _.filter(Constants.user.navigation, navItem => navItem.role.indexOf(User.get('role')) >= 0);
-    this.navigation = _.filter(Constants.user.navigation, navItem => navItem.role.indexOf('admin') >= 0);
-
+    // this.navigation = NAV_BAR_MENU_ITEMS.filter(navItem => navItem.role.indexOf(User.get('role')) >= 0);
+    this.navigation = NAV_BAR_MENU_ITEMS.filter(navItem => navItem.role.indexOf('admin') >= 0);
   }
 }
-
 
 export default angular.module('navbarAdmin', [
   User,

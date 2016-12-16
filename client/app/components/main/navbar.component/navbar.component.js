@@ -4,13 +4,14 @@ import User from '../../../services/user/user';
 import Constants from '../../../services/constant/constants';
 import activeMenuItem from '../../../common/active-menu-item.directive';
 import template from './navbar.html';
+import NAV_BAR_MENU_ITEMS from '../../../common/NAV_BAR_MENU_ITEMS'
+import NAV_BAR_SUB_MENU from './NAV_BAR_SUB_MENU'
 
 class controller {
-
   constructor(User, Constants, $state) {
     'ngInject';
 
-    _.assign(this, {
+    Object.assign(this, {
       User,
       Constants,
       $state
@@ -19,8 +20,8 @@ class controller {
     this.isCustomer = User.get('role') === 'customer';
     this.isProvider = User.get('role') === 'provider';
     this.defaultLink = Constants.user.defaultPage[User.get('role')];
-    this.navigation = _.filter(Constants.user.navigation, navItem => navItem.role.indexOf(User.get('role')) >= 0);
-    this.submenu = _.filter(Constants.user.submenu, navItem => navItem.role.indexOf(User.get('role')) >= 0);
+    this.navigation = NAV_BAR_MENU_ITEMS.filter(navItem => navItem.role.indexOf(User.get('role')) >= 0);
+    this.submenu = NAV_BAR_SUB_MENU.filter(navItem => navItem.role.indexOf(User.get('role')) >= 0);
     this.mobile = false;
   }
 

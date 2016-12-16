@@ -9,7 +9,7 @@
 	</div>
 
 
-	<div class="admin__manip-row">
+<!--	<div class="admin__manip-row">
 		<div
 			layout="row"
 			layout-align="start center"
@@ -22,7 +22,7 @@
         <md-option ng-repeat="(key, val) in $ctrl.statuses" value="{{val}}">{{key}}</md-option>
       </md-select>
 		</div>
-	</div>
+	</div>-->
 
 
 	<table
@@ -67,7 +67,7 @@
 			</td>
 			<td
 				class="table_admin__cell table_admin__cell_actions">
- 				<img
+ 			<!--	<img
  					ng-if="entertainer.status == $ctrl.statuses.pending"
  					src="/assets/images/icons/admin/icon_approve.png"
  					ng-click="$ctrl.EntertainersService.setStatus($event, entertainer, $ctrl.statuses.active, false)"
@@ -79,7 +79,7 @@
  					src="/assets/images/icons/admin/icon_approve.png"
  					ng-click="$ctrl.EntertainersService.setStatus($event, entertainer, $ctrl.statuses.active, true, $ctrl.statuses.approved)"
  					title="Approve"
- 					alt="Approve">
+ 					alt="Approve">-->
 
 				<img
 					ng-if="entertainer.status == $ctrl.statuses.pending"
