@@ -3,15 +3,15 @@ import messages from '../../../../common/messages/messages';
 
 import template from './card-info.html';
 class controller {
-
-  constructor(stripe) {
+  constructor(stripe, User) {
     'ngInject';
 
     this.stripe = stripe;
+    this.isCustomer = User.get('role') === 'customer'
   }
 
   checkCardNumber() {
-    this.formObject.card_number.$setValidity('invalid_card_number', this.stripe.card.validateCardNumber(this.model.number));
+    this.formObject.card_number.$setValidity(this.isCustomer ? 'invalid_credit_card_number' : 'invalid_card_number', this.stripe.card.validateCardNumber(this.model.number));
   }
 
   checkCardExpiry() {

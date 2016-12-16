@@ -1,9 +1,13 @@
-export default class User {
+import angular from 'angular';
+import Storage from './storage/storage';
+import Constants from './constants.service';
+import Request from './request/request';
 
+class User {
   constructor (Storage, Constants, Request, $state, $http, Helper, $q, $mdDialog) {
     'ngInject';
 
-    _.assign(this, {Storage, Constants, Request, $state, $http, Helper, $q, $mdDialog, userAvatarSrc: '', billingInfo: {}});
+    Object.assign(this, {Storage, Constants, Request, $state, $http, Helper, $q, $mdDialog, userAvatarSrc: '', billingInfo: {}});
   }
 
   isAuth () {
@@ -319,3 +323,9 @@ export default class User {
   }
 }
 
+
+export default angular.module('user', [
+  Storage,
+  Constants,
+  Request
+]).service('User', User).name;

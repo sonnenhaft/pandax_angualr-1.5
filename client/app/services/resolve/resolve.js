@@ -1,6 +1,6 @@
 import angular from 'angular';
 import Resolve from './resolve.service';
-import User from '../user/user';
+import User from '../user.service';
 import OrderService from '../orderService/orderService';
 import Constants from '../constants.service';
 import Request from '../request/request';

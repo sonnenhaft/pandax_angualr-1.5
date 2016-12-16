@@ -1,6 +1,6 @@
 import angular from 'angular';
 import Cards from './card.service';
-import User from '../user/user';
+import User from '../user.service';
 import Constants from '../constants.service';
 import Request from '../request/request';
 

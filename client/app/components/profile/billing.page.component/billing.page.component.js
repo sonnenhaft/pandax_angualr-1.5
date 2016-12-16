@@ -1,5 +1,13 @@
-class BillingController {
+import angular from 'angular';
+import uiRouter from 'angular-ui-router';
+import User from '../../../services/user.service';
+import Cards from '../../../services/card/card';
+import personalInformation from '../profile-fields.component/personal-information.component/personal-information.component';
+import cardList from '../profile-fields.component/card-list.component/card-list.component';
+import cardInfo from '../profile-fields.component/card-info.component/card-info.component';
+import template from './billing.page.html';
 
+class controller {
   constructor ($state, User, Cards, $stateParams, Resolve, $mdToast, $q, OrderService, Constants, $mdDialog) {
     'ngInject';
 
@@ -109,7 +117,7 @@ class BillingController {
         .textContent(this.Constants.order.moneyReservationFailedMessage.content)
         .ariaLabel('Ban Dialog')
         .ok('Ok')
-    );    
+    );
   }
 
   goToPreviousStep () {
@@ -118,4 +126,55 @@ class BillingController {
 
 }
 
-export default BillingController;
+
+
+export default angular.module('billing', [
+  uiRouter,
+  personalInformation,
+  cardList,
+  cardInfo,
+  Cards
+])
+
+  .config(($stateProvider) => {
+    "ngInject";
+
+    $stateProvider
+      .state('main.billing', {
+        url: '/billing/:orderId/:entertainerId?from',
+        parent: 'main',
+        template: '<billing \
+                    billing-info="billingInfo" \
+                    order-details="orderDetails" \
+                  </billing>',
+        controller: function ($scope, billingInfo, orderDetails) {
+          $scope.billingInfo = billingInfo;
+          $scope.orderDetails = orderDetails;
+        },
+        resolve: {
+          orderId: function ($stateParams) {
+            return $stateParams['orderId'] || 0;
+          },
+          billingInfo: function (User, Cards) {
+            let billingInfo = User.get();
+            return Cards.getCards()
+              .then((data) => {
+                if (data) {
+                  billingInfo = _.assign(billingInfo, {cards: data});
+                }
+                return billingInfo;
+              });
+          },
+          orderDetails: function (OrderService, orderId) {
+            return OrderService.fetchOrderDetails(orderId).then(data => data);
+          }
+        }
+      });
+  }).component('billing', {
+  bindings: {
+    billingInfo: '=',
+    orderDetails: '='
+  },
+  template,
+  controller
+}).name;

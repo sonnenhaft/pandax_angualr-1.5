@@ -1,6 +1,6 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
-import User from '../../../services/user/user';
+import User from '../../../services/user.service';
 import Constants from '../../../services/constants.service';
 import activeMenuItem from '../../../common/active-menu-item.directive';
 import template from './navbar.html';
