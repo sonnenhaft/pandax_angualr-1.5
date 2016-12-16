@@ -19,7 +19,7 @@ class controller {
       $mdDialog,
       isOnProgress: false,
       isLastPage: false,
-      currentPage: 1,
+      currentPage: 0,
       statuses: Constants.admin.statuses.entertainer
     });
   }
