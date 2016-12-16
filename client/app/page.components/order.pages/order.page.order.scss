@@ -1,0 +1,49 @@
+// =============================================================================
+// $ Order template styles
+// =============================================================================
+
+@import "order.page.dialog";
+
+#order {
+  overflow-x: hidden;
+
+  .order-map {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+#order,
+#orderConfirm {
+  height: 100%;
+
+  @import "order.page.types";
+  @import "order.page.form";
+
+  @media (max-width: 960px) {
+    .page-name {
+      padding: 0 5%;
+    }
+  }
+
+}
+
+#order {
+  .order-form {
+    .input {
+      .descr {
+        p {
+          a {
+            position: absolute;
+            bottom: 0;
+            right: -10px;
+
+            @media (max-width: 960px) {
+              position: static;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,12 +1,19 @@
-import template from './<%= name %>.html';
-import controller from './<%= name %>.controller';
-import './<%= name %>.scss';
+import angular from 'angular';
+import uiRouter from 'angular-ui-router';
+import template from './<%= dashName %>.html';
+import './<%= dashName %>.scss';
 
-let <%= name %>Component = {
+class controller {
+  constructor() {
+    'ngInject'
+
+  }
+}
+
+export default angular.module('<%= name %>', [
+  uiRouter
+]).component('<%= name %>', {
   bindings: {},
   template,
-  controller,
-  controllerAs: 'vm'
-};
-
-export default <%= name %>Component;
+  controller
+}).name;

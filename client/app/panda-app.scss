@@ -1,10 +1,121 @@
-@import './common/common.scss';
+// base styles
+@import url(https://fonts.googleapis.com/css?family=Oswald:400,300,700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
+@import "common-scss/colors";
+@import "common-scss/fonts";
+@import "common-scss/form";
+@import "common-scss/typography";
+@import "common-scss/icons";
+@import "common-scss/angular-cosmetics";
+@import "common-scss/tables";
 
-.app {
-  background-color: $primary;
-  width: 100%;
-  height: 100%;
-  position: relative;
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	&:focus {
+		outline: none;
+	}
 }
 
-@import './components/components.scss';
+html,
+body {
+  height: 100%;
+  width: 100%
+}
+
+a {
+  text-decoration: none;
+	outline: none;
+}
+
+body {
+  // browsers default to 16px for font-size,
+  // so setting top-level font-size to 62.5%
+  // scales 1rem to equal 10px.
+	font: 100% 'Oswald', sans-serif;
+}
+
+app {
+	display: flex;
+	min-height: 100%;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background-color: $primary;
+
+	#wrapper {
+		width: 100%;
+		height: 100%;
+
+		main {
+			height: 100%;
+		}
+	}
+
+	@media (max-width: 960px) {
+		height: 100%;
+
+		#wrapper {
+			main {
+				height: auto;
+			}
+		}
+	}
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.disabled {
+	opacity: .5;
+}
+
+.photo_active {
+	border: 4px solid $Cardinal;
+}
+
+.attention {
+	color: $Cardinal;
+}
+
+@mixin getImage($path) {
+  background: url('../assets/images/' + $path + '.png') no-repeat center left;
+}
+
+.avatar-bg {
+	background: {
+		repeat: no-repeat;
+		size: cover;
+		position: center;
+	}
+}
+
+// components
+@import "page.components/main.page.component/navbar.component/navbar";
+@import "page.components/order.pages/map.component/map";
+@import "common/spinner.component/spinner";
+@import "page.components/order.pages/find-location.page.component/find-location.page";
+@import "page.components/profile.pages/order-details.component/order-details";
+@import "common/logout.modal.component/logout.modal";
+
+.app {
+	background-color: $primary;
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+// pages
+@import "page.components/home.pages/home.page.home";
+@import "page.components/profile.pages/profile.page";
+@import "page.components/main.page.component/main.page";
+@import "page.components/order.pages/order.page";
+@import "page.components/payments.page.component/payments.page";
+@import "page.components/history.pages/history.page";
+@import "page.components/history-minx.page.component/history-minx.page";
+@import "page.components/password.page.component/password.page";
+@import "page.components/contact-us.page.component/contact-us.page";
+@import "page.components/admin.pages/admin";

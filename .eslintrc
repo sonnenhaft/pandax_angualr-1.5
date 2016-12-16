@@ -1,12 +1,32 @@
 {
-    "parserOptions": {
-        "ecmaVersion": 6,
-        "sourceType": "module",
-        "ecmaFeatures": {
-            
-        }
-    },
-    "rules": {
-        "semi": 1
-    }
+  "extends": "airbnb-base",
+  "env": {
+    "node": true,
+    "jasmine": true,
+    "browser": true
+  },
+  "rules": {
+    "import/extensions": [0], // configure to ignore config and fix whenever
+    "no-unused-vars": [0], // fix whenever
+    "eqeqeq": "off", // fix whenever
+    "max-len": ["error", { "ignoreComments": true, "code": 160 }], // dectease to 120 whenever
+    "no-console": [0], // fix whenver
+    "comma-dangle": [0],
+    "no-shadow": [0],
+
+    "consistent-return": [0], // fix whenver
+    "no-else-return": [0],
+    "no-return-assign": [0],
+    "no-param-reassign": [0],
+
+    "class-methods-use-this": [0],
+    "import/no-extraneous-dependencies": [0],
+    "import/no-unresolved": [2, {"ignore": ["config"]}]
+  },
+  "globals": {
+    "angular": true,
+    "inject": true,
+    "_": true // TODO: fix whenever
+  },
+  "parser": "babel-eslint"
 }

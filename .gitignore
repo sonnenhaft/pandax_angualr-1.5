@@ -1,10 +1,14 @@
-.idea
-.vscode
 .DS_Store
 .tmp
 .git
 node_modules
 .settings
 *.log
+*.log.*
 dist/
+.idea
 builds/
+coverage
+
+# non-free font sources
+*.otf

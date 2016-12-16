@@ -1,0 +1,56 @@
+<md-radio-group
+	id="cardList"
+	class="card-list"
+	md-no-ink
+	ng-change="$ctrl.setDefaultCard()"
+	ng-model="$ctrl.Cards.defaultCardId"
+	ng-disabled="$ctrl.saveLoading">
+
+	<div
+		layout="row"
+		layout-align="space-between"
+		class="card"
+		ng-repeat="card in $ctrl.cards">
+
+		<div flex="10" class="card-manipulation_left">
+      <md-radio-button
+      	ng-model="card.default"
+      	ng-value="card.id"
+      	aria-label="Set default card"></md-radio-button>
+		</div>
+
+		<div
+			layout="column"
+			flex="90"
+			class="card-information">
+			<div class="card-information__top">
+				<span class="card-information__name">{{card.brand}}</span>
+				<span class="card-information__default" ng-if="card.is_default == true">(default)</span>
+			</div>
+			<div class="card-information__bottom">
+				**** **** **** {{card.last4}}
+			</div>
+			<div class="card-information__valid-thru">
+				Valid Thru: {{card.exp_month}}/{{card.exp_year ? card.exp_year.toString().substr(-2) : ''}}
+			</div>
+		</div>
+
+		<div
+			class="card-manipulation_right"
+			ng-hide="$ctrl.User.get('role') == 'provider' && ($ctrl.cards.length < 2 || card.is_default == true)">
+			<img
+				src="/assets/images/icons/trash-3x.png"
+				class="pointer icon_medium card-icon_trash"
+				ng-click="$ctrl.deleteCard(card.id)"></img>
+		</div>
+
+	</div>
+
+  <md-progress-circular
+  	md-mode="indeterminate"
+  	md-diameter="30"
+  	class="md-progress-circular_absolute md-progress-circular_dark"
+  	ng-if="$ctrl.saveLoading">
+  </md-progress-circular>
+
+</md-radio-group>
