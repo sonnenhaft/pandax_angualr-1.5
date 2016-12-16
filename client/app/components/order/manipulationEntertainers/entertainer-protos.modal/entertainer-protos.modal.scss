@@ -1,0 +1,32 @@
+#photo-full-page {
+	overflow: hidden;
+
+  @media (max-width: 960px) {
+    width: 100%;
+  }
+
+	.photo-full-page {
+		&__image {
+		  @media (max-width: 960px) {
+				max-width: 90%;
+		  }
+		  @media (min-width: 960px) {
+				min-height: 400px;
+				min-width: 375px;
+		  }
+		}
+		&__manip-arrow {
+			width: 15px;
+			&_left {
+				@media (min-width: 960px) {
+					margin-right: 24px;
+				}
+			}
+			&_right {
+				@media (min-width: 960px) {
+					margin-left: 24px;
+				}
+			}
+		}
+	}
+}

@@ -1,18 +1,18 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 
-import photoFullPageTemplate from '../../order/manipulationEntertainers/photoFullPage/photoFullPage.html';
-import photoFullPageController from '../../order/manipulationEntertainers/photoFullPage/photoFullPage.controller.js';
+import entertainerPhotosModal from '../../order/manipulationEntertainers/entertainer-protos.modal/entertainer-protoes.modal.js';
 import EntertainersService from '../../../services/entertainersService/entertainersService';
 
 import template from './entertainers.page.html';
 
 class controller {
-  constructor(EntertainersService, Constants, $mdDialog, $window) {
+  constructor(EntertainersService, Constants, $mdDialog, entertainerPhotosModal, $window) {
     'ngInject';
 
     _.assign(this, {
       EntertainersService,
+      entertainerPhotosModal,
       Constants,
       // so we expect that in required 'admin' component there is #admin div, sorry for this
       $scrollableElement: angular.element($window.document.getElementById('admin')),
@@ -43,28 +43,18 @@ class controller {
   }
 
   showPopup(ev, index) {
-    this.$mdDialog.show({
-      controller: photoFullPageController,
-      controllerAs: '$ctrl',
-      clickOutsideToClose: true,
-      template: '<div layout="row" layout-align="end" class="icon_modal-close">\
-                    <div class="icon_modal-close__image" ng-click="$ctrl.$mdDialog.hide()"></div>\
-                  </div>' +
-      photoFullPageTemplate,
-      targetEvent: ev,
-      bindToController: true,
-      locals: {
-        photos: this.EntertainersService.list[index].photos,
-        photoIndexActive: 0
-      }
-    });
+    this.entertainerPhotosModal({
+      photos: this.EntertainersService.list[index].photos,
+      photoIndexActive: 0
+    }, ev)
   }
 }
 
 var name = 'entertainersPage';
 export default angular.module(name, [
   uiRouter,
-  EntertainersService
+  EntertainersService,
+  entertainerPhotosModal
 ]).config(($stateProvider) => {
   "ngInject";
 

@@ -10,36 +10,36 @@
         <md-icon
           md-svg-icon="/assets/images/icons/svg/arrow_left.svg"
           class="pointer search-entertainers__manip-arrow search-entertainers__manip-arrow_left"
-          ng-class="{'disabled': vm.itemActiveIndex == 0}"
-          ng-click="vm.goToEntertainerByIndex(-1)"></md-icon>
+          ng-class="{'disabled': $ctrl.itemActiveIndex == 0}"
+          ng-click="$ctrl.goToEntertainerByIndex(-1)"></md-icon>
       </div>
       <div flex="75" layout="row" layout-align="space-between center" class="search-entertainers__manip-info">
-        <span class="search-entertainers__manip-name">{{vm.entertainers[vm.itemActiveIndex].displaying_name}}</span>
-        <span flex="25" class="search-entertainers__manip-counter">{{vm.itemActiveIndex + 1}} / {{vm.entertainers.length}}</span>
+        <span class="search-entertainers__manip-name">{{$ctrl.entertainers[$ctrl.itemActiveIndex].displaying_name}}</span>
+        <span flex="25" class="search-entertainers__manip-counter">{{$ctrl.itemActiveIndex + 1}} / {{$ctrl.entertainers.length}}</span>
       </div>
       <div flex="15" layout="row" layout-align="end">
         <md-icon
           md-svg-icon="/assets/images/icons/svg/arrow_right.svg"
           class="pointer search-entertainers__manip-arrow search-entertainers__manip-arrow_right"
-          ng-class="{'disabled': (vm.itemActiveIndex + 1) == vm.entertainers.length}"
-          ng-click="vm.goToEntertainerByIndex(+1)"></md-icon>
+          ng-class="{'disabled': ($ctrl.itemActiveIndex + 1) == $ctrl.entertainers.length}"
+          ng-click="$ctrl.goToEntertainerByIndex(+1)"></md-icon>
       </div>
     </div>
 
     <div class="search-entertainers__info">
       <span class="search-entertainers__info-raiting">
-        {{vm.entertainers[vm.itemActiveIndex].rating}}
+        {{$ctrl.entertainers[$ctrl.itemActiveIndex].rating}}
         <img
           src="/assets/images/icons/raiting.png"
           class="icon_small"></img>
       </span>
-      <span class="search-entertainers__info-distance">{{vm.entertainers[vm.itemActiveIndex].distance.toFixed(2)}}M AWAY</span>
+      <span class="search-entertainers__info-distance">{{$ctrl.entertainers[$ctrl.itemActiveIndex].distance.toFixed(2)}}M AWAY</span>
     </div>
 
     <div
       class="search-entertainers__preview search-entertainers__preview_medium pointer"
-      ng-style="{'background-image': 'url(' + vm.entertainers[vm.itemActiveIndex].photos[vm.photoActiveIndex].original + ')'}"
-      ng-click="vm.showPopup($event)">
+      ng-style="{'background-image': 'url(' + $ctrl.entertainers[$ctrl.itemActiveIndex].photos[$ctrl.photoActiveIndex].original + ')'}"
+      ng-click="$ctrl.showPopup($event)">
     </div>
 
     <div
@@ -50,19 +50,19 @@
       <div
         flex="33"
         class="search-entertainers__preview search-entertainers__preview_small"
-        ng-repeat="photo in vm.entertainers[vm.itemActiveIndex].photos track by $index"
-        ng-class="{'photo_active': vm.photoActiveIndex === $index}"
+        ng-repeat="photo in $ctrl.entertainers[$ctrl.itemActiveIndex].photos track by $index"
+        ng-class="{'photo_active': $ctrl.photoActiveIndex === $index}"
         ng-style="{'background-image': 'url(' + photo.preview + ')'}"
-        ng-click="vm.photoActiveIndex = $index">
+        ng-click="$ctrl.photoActiveIndex = $index">
       </div>
     </div>
 
     <md-button
       class="md-raised md-accent search-entertainers__invite"
-      ng-class="{'button_gradient': (vm.entertainersInvited | filterBy: ['provider.id']: vm.entertainers[vm.itemActiveIndex].id).length > 0}"
-      ng-click="vm.goToNextStep()"
-      ng-disabled="(vm.entertainersInvited | filterBy: ['provider.id']: vm.entertainers[vm.itemActiveIndex].id).length > 0">
-      {{(vm.entertainersInvited | filterBy: ['provider.id']: vm.entertainers[vm.itemActiveIndex].id).length > 0 ? 'INVITED' : 'INVITE'}}
+      ng-class="{'button_gradient': ($ctrl.entertainersInvited | filterBy: ['provider.id']: $ctrl.entertainers[$ctrl.itemActiveIndex].id).length > 0}"
+      ng-click="$ctrl.goToNextStep()"
+      ng-disabled="($ctrl.entertainersInvited | filterBy: ['provider.id']: $ctrl.entertainers[$ctrl.itemActiveIndex].id).length > 0">
+      {{($ctrl.entertainersInvited | filterBy: ['provider.id']: $ctrl.entertainers[$ctrl.itemActiveIndex].id).length > 0 ? 'INVITED' : 'INVITE'}}
     </md-button>
   </div>
 

@@ -1,0 +1,26 @@
+<div
+  id="photo-full-page"
+  layout="row"
+  layout-align="center center"
+  class="photo-full-page">
+
+  <md-icon
+    flex="none"
+    md-svg-icon="/assets/images/icons/svg/arrow_left.svg"
+    class="pointer photo-full-page__manip-arrow photo-full-page__manip-arrow_left"
+    ng-class="{'disabled': $ctrl.photoIndexActive == 0}"
+    ng-click="$ctrl.goToPhotoByIndex(-1)"></md-icon>
+
+  <img
+    class="photo-full-page__image"
+    ng-src="{{$ctrl.photos[$ctrl.photoIndexActive].original}}"
+    ng-style="$ctrl.imageStyles">
+
+  <md-icon
+    flex="none"
+    md-svg-icon="/assets/images/icons/svg/arrow_right.svg"
+    class="pointer photo-full-page__manip-arrow photo-full-page__manip-arrow_right"
+    ng-class="{'disabled': ($ctrl.photoIndexActive + 1) == $ctrl.len}"
+    ng-click="$ctrl.goToPhotoByIndex(+1)"></md-icon>
+
+</div>
