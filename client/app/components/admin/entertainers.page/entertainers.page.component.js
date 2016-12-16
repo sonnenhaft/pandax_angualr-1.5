@@ -8,12 +8,14 @@ import EntertainersService from '../../../services/entertainersService/entertain
 import template from './entertainers.page.html';
 
 class controller {
-  constructor(EntertainersService, Constants, $mdDialog) {
+  constructor(EntertainersService, Constants, $mdDialog, $window) {
     'ngInject';
 
     _.assign(this, {
       EntertainersService,
       Constants,
+      // so we expect that in required 'admin' component there is #admin div, sorry for this
+      $scrollableElement: angular.element($window.document.getElementById('admin')),
       $mdDialog,
       isOnProgress: false,
       isLastPage: false,
@@ -23,23 +25,17 @@ class controller {
   }
 
   $onInit() {
-    this.isOnProgress = true;
-    this.EntertainersService.fetchEntertainers()
-      .then(data => {
-        this.isOnProgress = false;
-        this.isLastPage = this.checkIsLastPage(data.meta.pagination.total_pages);
-      });
+    this.fetchMoreItems()
   }
 
   fetchMoreItems() {
     this.isOnProgress = true;
 
-    this.EntertainersService.fetchEntertainers(this.currentPage + 1)
-      .then((data) => {
-        this.isOnProgress = false;
-        this.currentPage = data.meta.pagination.current_page;
-        this.isLastPage = this.checkIsLastPage(data.meta.pagination.total_pages);
-      });
+    this.EntertainersService.fetchEntertainers(this.currentPage + 1).then((data) => {
+      this.isOnProgress = false;
+      this.currentPage = data.meta.pagination.current_page;
+      this.isLastPage = this.checkIsLastPage(data.meta.pagination.total_pages);
+    });
   };
 
   checkIsLastPage(totalPages) {
@@ -65,7 +61,7 @@ class controller {
   }
 }
 
-var name = 'entertainers';
+var name = 'entertainersPage';
 export default angular.module(name, [
   uiRouter,
   EntertainersService
@@ -78,6 +74,7 @@ export default angular.module(name, [
     component: name
   });
 }).component(name, {
+  require: 'admin',
   template,
   controller
 }).name;
