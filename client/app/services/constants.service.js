@@ -1,6 +1,7 @@
-var config = require('config');
+import angular from 'angular';
+import config from 'config'
 
-export default class Constants {
+class Constants {
 
   constructor ($window) {
     'ngInject';
@@ -15,12 +16,11 @@ export default class Constants {
     this.api = this.apiConstants();
     this.terms = this.termsConstants();
     this.admin = this.adminConstants();
-    this.email = 'support@minxnow.com';
   }
 
   apiConstants () {
     const path = config.API_URL,
-          pathWS = config.WS_URL;
+      pathWS = config.WS_URL;
 
     let apiConstants = {
 
@@ -130,11 +130,11 @@ export default class Constants {
       orderHistory: {
         uri: (user, page = 1) => {
           let result = path + `/${user}/orders/history?page=${page}&include=invites`;
-/*        if (user == 'customer') {
-            result += `?page=${page}&status[]=finished&status[]=canceled&include=invites`;
-          } else {
-            result += `/history?page=${page}`;
-          }*/
+          /*        if (user == 'customer') {
+           result += `?page=${page}&status[]=finished&status[]=canceled&include=invites`;
+           } else {
+           result += `/history?page=${page}`;
+           }*/
           return result;
         },
         method: 'GET'
@@ -487,3 +487,9 @@ export default class Constants {
     return adminConstants;
   }
 }
+
+
+export default angular
+  .module('constant', [])
+  .service('Constants', Constants)
+  .name;

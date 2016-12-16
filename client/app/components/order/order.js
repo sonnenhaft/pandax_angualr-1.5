@@ -2,7 +2,7 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import orderComponent from './order.component';
 import User from '../../services/user/user';
-import Constants from '../../services/constant/constants';
+import Constants from '../../services/constants.service';
 import Helper from '../../services/helper/helper';
 import Validation from '../../services/validation/validation';
 import OrderService from '../../services/orderService/orderService';

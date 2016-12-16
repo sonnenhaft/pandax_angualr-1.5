@@ -1,7 +1,7 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import Location from '../../../services/location/location';
-import Constants from '../../../services/constant/constants';
+import Constants from '../../../services/constants.service';
 import template from './map.html';
 
 class controller {

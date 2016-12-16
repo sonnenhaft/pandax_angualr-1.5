@@ -7,7 +7,7 @@ import findLocation from '../components/order/find-location.component/find-locat
 import orderDetails from '../components/profile/order-details.component/order-details.component';
 import Logout from './logout/logout';
 
-let commonModule = angular.module('app.common', [
+export default angular.module('app.common', [
   Navbar,
   Map,
   profileFields,
@@ -15,8 +15,4 @@ let commonModule = angular.module('app.common', [
   findLocation,
   orderDetails,
   Logout
-])
-
-.name;
-
-export default commonModule;
+]).name;

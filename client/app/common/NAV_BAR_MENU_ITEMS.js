@@ -2,7 +2,7 @@ export default [
   {role: ['customer'], text: 'Create order', url: 'main.order'},
   {role: ['provider'], text: 'Order History', url: 'main.history'},
   // {role: ['customer'], text: 'Orders', url: 'main.history'},
-  {role: ['customer', 'provider'], text: 'Contact Us', url: 'main.contact'},
+  {role: ['customer', 'provider'], text: 'Contact Us', url: 'main.contact-us'},
   {role: ['customer', 'provider'], text: 'Settings', url: ''},
   {
     role: ['admin'],

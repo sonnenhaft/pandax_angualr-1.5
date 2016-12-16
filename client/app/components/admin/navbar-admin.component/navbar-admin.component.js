@@ -1,6 +1,6 @@
 import angular from 'angular';
 import User from '../../../services/user/user';
-import Constants from '../../../services/constant/constants';
+import Constants from '../../../services/constants.service';
 import activeMenuItem from '../../../common/active-menu-item.directive';
 
 import template from './navbar-admin.html';

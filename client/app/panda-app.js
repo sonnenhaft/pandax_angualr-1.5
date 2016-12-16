@@ -2,7 +2,8 @@ import angular from 'angular';
 import angularMaterial from 'angular-material';
 import 'angular-material/angular-material.css';
 import uiRouter from 'angular-ui-router';
-import 'angular-ui-router/release/stateEvents.js';    // enable All state events, (i.e. $stateChange* and friends), due to https://github.com/angular-ui/ui-router/releases/tag/1.0.0alpha0
+// enable All state events, (i.e. $stateChange* and friends), due to https://github.com/angular-ui/ui-router/releases/tag/1.0.0alpha0
+import 'angular-ui-router/release/stateEvents.js';
 import 'angular-simple-logger';
 import 'moment';
 import 'angular-moment';
@@ -19,7 +20,9 @@ import ngSanitize from 'angular-sanitize';              // for material dialog t
 
 import Common from './common/common';
 import Components from './components/components';
-import AppComponent from './app.component';
+
+import template from './panda-app.html';
+import styles from './panda-app.scss';
 
 let config = require('config');
 
@@ -136,4 +139,4 @@ angular
     // Stripe integration
     stripeProvider.setPublishableKey(config.STRIPE.PUBLIC_KEY);
   })
-  .component('app', AppComponent);
+  .component('app', {template});
