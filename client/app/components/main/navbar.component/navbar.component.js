@@ -1,6 +1,13 @@
-class NavbarController {
+import angular from 'angular';
+import uiRouter from 'angular-ui-router';
+import User from '../../../services/user/user';
+import Constants from '../../../services/constant/constants';
+import activeMenuItem from '../../../common/active-menu-item.directive';
+import template from './navbar.html';
 
-  constructor (User, Constants, $state, $window) {
+class controller {
+
+  constructor(User, Constants, $state) {
     'ngInject';
 
     _.assign(this, {
@@ -24,4 +31,17 @@ class NavbarController {
   }
 }
 
-export default NavbarController;
+
+export default angular.module('navbar', [
+  uiRouter,
+  User,
+  Constants,
+  activeMenuItem
+]).component('navbar', {
+  bindings: {
+    userAvatarSrc: '='
+  },
+  template,
+  controller
+}).name;
+

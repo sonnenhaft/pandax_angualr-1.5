@@ -1,12 +1,12 @@
 <nav
   id="navbar-admin"
   class="navbar navbar_admin"
-  ng-class="{'navbar_collapsed': vm.collapsed == true}"
+  ng-class="{'navbar_collapsed': $ctrl.collapsed == true}"
   flex-sm="100">
 
   <div class="logo logo_admin" layout="row">
     <div class="name name_admin">
-      <a class="logo__link" ng-click="vm.collapsed = !vm.collapsed">MINX</a>
+      <a class="logo__link" ng-click="$ctrl.collapsed = !$ctrl.collapsed">MINX</a>
     </div>
   </div>
 
@@ -19,10 +19,10 @@
       active-menu-item
       layout="column"
       layout-align="start start"
-      ng-if="(vm.navigation | navByPosition : 'bottom' : undefined).length > 0">
+      ng-if="($ctrl.navigation | navByPosition : 'bottom' : undefined).length > 0">
       <li
         class="navbar_admin__row"
-        ng-repeat="nav in vm.navigation | navByPosition : 'bottom' : undefined"
+        ng-repeat="nav in $ctrl.navigation | navByPosition : 'bottom' : undefined"
         layout="row"
         layout-align="start"
         title="{{nav.hint}}">
@@ -40,10 +40,10 @@
       active-menu-item
       layout="column"
       layout-align="start start"
-      ng-if="(vm.navigation | navByPosition : 'bottom' : true).length > 0">
+      ng-if="($ctrl.navigation | navByPosition : 'bottom' : true).length > 0">
       <li
         class="navbar_admin__row"
-        ng-repeat="nav in vm.navigation | navByPosition : 'bottom' : true"
+        ng-repeat="nav in $ctrl.navigation | navByPosition : 'bottom' : true"
         layout="row"
         layout-align="start"
         title="{{nav.hint}}">

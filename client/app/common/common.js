@@ -1,5 +1,5 @@
 import angular from 'angular';
-import Navbar from './navbar/navbar';
+import Navbar from '../components/main/navbar.component/navbar.component';
 import Map from '../components/order/map.component/map.component';
 import profileFields from '../components/profile/profile-fields.component/profile.fields.component';
 import Spinner from './spinner/spinner';

@@ -94,7 +94,7 @@ app {
 }
 
 // components
-@import "./navbar/navbar";
+@import "../components/main/navbar.component/navbar";
 @import "../components/order/map.component/map";
 @import "./spinner/spinner";
 @import "../components/order/find-location.component/find-location";
