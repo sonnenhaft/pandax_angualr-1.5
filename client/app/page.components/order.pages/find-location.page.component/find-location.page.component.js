@@ -7,7 +7,7 @@ import template from './find-location.page.html';
 
 class controller {
 
-  constructor(Location, Constants, Validation, $timeout) {
+  constructor (Location, Constants, Validation, $timeout) {
     'ngInject';
 
     Object.assign(this, {
@@ -16,11 +16,9 @@ class controller {
       Validation,
       $timeout
     });
-
   }
 
-  $onChanges(changes) {
-
+  $onChanges (changes) {
     if (
       _.isBoolean(changes.input.currentValue) ||
       (changes.input.currentValue && !changes.input.currentValue.location)
@@ -35,28 +33,27 @@ class controller {
       this.output({ location: this.location });
       this.locations = this.locationError = false;
     }
-
   }
 
-  getLocation(str) {
+  getLocation (str) {
     this.location = str;
     this.loading = true;
     this.locations = this.locationError = false;
     this.Location
       .getLocationByString(str, locations => {
-        this.$timeout(() => {
+        this.$timeout(( ) => {
           this.loading = false;
           this.locations = locations && locations.length ? locations : false;
         });
       });
   }
 
-  setLocation(item) {
+  setLocation (item) {
     this.locationError = false;
     this.location = {
       coords: {
-        latitude: item.geometry.location.lat(),
-        longitude: item.geometry.location.lng()
+        latitude: item.geometry.location.lat( ),
+        longitude: item.geometry.location.lng( )
       },
       location: item
     };
@@ -65,13 +62,13 @@ class controller {
     this.output({ location: Object.assign(this.location, { zoom: 19 }) });
   }
 
-  clearLocation() {
+  clearLocation ( ) {
     this.locationName = '';
     this.locations = this.location = false;
     this.output({ location: this.location });
   }
 
-  checkLocation() {
+  checkLocation ( ) {
     if (this.locations && this.locations.length) {
       this.setLocation(_.head(this.locations));
       return false;
@@ -80,10 +77,10 @@ class controller {
     this.validate({ location: this.location });
   }
 
-  validate(field) {
+  validate (field) {
     if (this.Validation.error(field).length) {
       _.map(this.Validation.error(field), error => {
-        this[error.name + 'Error'] = error.text;
+        this[`${error.name}Error`] = error.text;
       });
       return false;
     }

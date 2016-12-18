@@ -5,14 +5,13 @@ import User from '../../../common-services/user.service';
 import template from './reset-password.page.html';
 
 class controller {
-  constructor(Validation, User, $stateParams) {
+  constructor (Validation, User, $stateParams) {
     'ngInject';
 
-    Object.assign(this, {Validation, User, $stateParams});
-
+    Object.assign(this, { Validation, User, $stateParams });
   }
 
-  onSubmit(credentials) {
+  onSubmit (credentials) {
     if (this.validate(credentials)) {
       this.resetError = false;
       return this.reset(credentials.password, this.$stateParams.reset);
@@ -21,20 +20,20 @@ class controller {
     return false;
   }
 
-  validate(field) {
+  validate (field) {
     if (this.Validation.error(field).length) {
       _.map(this.Validation.error(field), error => {
-        this[error.name + 'Error'] = error.text;
+        this[`${error.name}Error`] = error.text;
       });
       return false;
     }
     return true;
   }
 
-  reset(password, token) {
+  reset (password, token) {
     this.resetLoading = true;
     this.User
-      .reset({password}, token)
+      .reset({ password }, token)
       .then(
         result => {
           this.resetLoading = false;
@@ -53,7 +52,7 @@ class controller {
       )
       .then(result => {
         if (result) {
-          this.output({view: 'signIn'});
+          this.output({ view: 'signIn' });
         }
       });
   }

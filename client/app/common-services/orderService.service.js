@@ -2,7 +2,7 @@ import angular from 'angular';
 import Helper from './helper.service';
 
 class OrderService {
-  constructor(User, Constants, Request, Helper, moment, WebSocket, $mdDialog) {
+  constructor (User, Constants, Request, Helper, moment, WebSocket, $mdDialog) {
     'ngInject';
 
     Object.assign(this, {
@@ -22,10 +22,9 @@ class OrderService {
       listConfirmed: [],
       listFutures: []
     });
-
   }
 
-  fetchEntertainers(orderId) {
+  fetchEntertainers (orderId) {
     return this
       .Request
       .send(
@@ -34,22 +33,20 @@ class OrderService {
         this.Constants.api.searchEntertainers.uri(orderId)
       )
       .then(
-        result => {
-          return this.list = result.data;
-        },
+        result => this.list = result.data,
         error => console.log(error)
       );
   }
 
-  getEntertainers() {
+  getEntertainers ( ) {
     return this.list;
   }
 
-  getProviders() {
+  getProviders ( ) {
     return this.providers;
   }
 
-  fetchFuturesOrders(page = 1) {
+  fetchFuturesOrders (page = 1) {
     return this
       .Request
       .send(
@@ -66,7 +63,7 @@ class OrderService {
       );
   }
 
-  fetchHistoryOrders(page = 1) {
+  fetchHistoryOrders (page = 1) {
     return this
       .Request
       .send(
@@ -82,7 +79,7 @@ class OrderService {
       );
   }
 
-  getOrdersWithParam(orderId) {
+  getOrdersWithParam (orderId) {
     return this.fetchOrderDetails(orderId, 'invites')
       .then(data => data);
   }
@@ -90,7 +87,7 @@ class OrderService {
   /*
    Invited entertainers
    */
-  fetchEntertainersInvited(orderId) {
+  fetchEntertainersInvited (orderId) {
     return this
       .Request
       .send(
@@ -102,36 +99,36 @@ class OrderService {
         result => {
           this.listInvited = result.data && result.data.items;
           this.fillConfirmedList(this.listInvited);
-          return this.sortList();
+          return this.sortList( );
         },
         error => console.log(error)
       );
   }
 
 
-  buildOrder(form) {
+  buildOrder (form) {
     return {
-      service_type: Number(_.head(this.Helper.getActiveObjectFromArray(this.getProviders())).type),
-      length: parseFloat(form.hour).toString(),
+      service_type: Number(_.head(this.Helper.getActiveObjectFromArray(this.getProviders( ))).type),
+      length: parseFloat(form.hour).toString( ),
       location: form.geo.location.formatted_address,
       coordinates: {
-        lat: form.geo.coords.latitude.toString(),
-        long: form.geo.coords.longitude.toString()
+        lat: form.geo.coords.latitude.toString( ),
+        long: form.geo.coords.longitude.toString( )
       },
       location_notes: form.notes ? form.notes : '',
       apartment: form.apt,
       asap: form.asap,
       datetime: form.asap ?
-        this.moment() :
-        this.moment(new Date(this.moment(form.date).format('YYYY/MM/DD') + ' ' + form.time)),
+        this.moment( ) :
+        this.moment(new Date(`${this.moment(form.date).format('YYYY/MM/DD')} ${form.time}`)),
       entertainers_number: Number(form.entertainer),
-      guests_number: form.guest.toString(),
-      cost: form.price.toString()
+      guests_number: form.guest.toString( ),
+      cost: form.price.toString( )
     };
   }
 
 
-  fetchOrderDetails(orderId, include = '') {
+  fetchOrderDetails (orderId, include = '') {
     return this
       .Request
       .send(
@@ -140,15 +137,13 @@ class OrderService {
         this.Constants.api.orderDetails.uri(orderId, include)
       )
       .then(
-        result => {
-          return this.orderDetails = result.data;
-        },
+        result => this.orderDetails = result.data,
         error => console.log(error)
       );
   }
 
 
-  fetchProviderPastOrders(page = 1) {
+  fetchProviderPastOrders (page = 1) {
     return this
       .Request
       .send(
@@ -166,7 +161,7 @@ class OrderService {
   }
 
 
-  inviteEntertainer(orderId, entertainerId) {
+  inviteEntertainer (orderId, entertainerId) {
     return this
       .Request
       .send(
@@ -176,43 +171,41 @@ class OrderService {
       )
       .then(
         result => {
-          this.addEntertainerToInvitedList({ id: result.data.invite_id, entertainerId: entertainerId });
+          this.addEntertainerToInvitedList({ id: result.data.invite_id, entertainerId });
           return result.data;
         }
       );
   }
 
 
-  addEntertainerToInvitedList(invite) {
-    let entertainer = _.find(this.list, { id: invite.entertainerId });
+  addEntertainerToInvitedList (invite) {
+    const entertainer = _.find(this.list, { id: invite.entertainerId });
     this.listInvited.push({ id: invite.id, provider: entertainer });
     return this.listInvited;
   }
 
-  subcribeOnEntertainerInvite(channelName) {
+  subcribeOnEntertainerInvite (channelName) {
     this.WebSocket.invites(channelName, this.setEntertainerStatus.bind(this));
   }
 
-  unsubcribeOnEntertainerInvite() {
-    this.WebSocket.close();
+  unsubcribeOnEntertainerInvite ( ) {
+    this.WebSocket.close( );
   }
 
-  setEntertainerStatus(data) {
-    let entertainer = _.find(this.listInvited, (item) => item.provider.id == data.provider_id);
+  setEntertainerStatus (data) {
+    const entertainer = _.find(this.listInvited, item => item.provider.id == data.provider_id);
     entertainer.status = data.action;
     entertainer.datetime = data.datetime;
-    this.sortList();
+    this.sortList( );
     this.fillConfirmedList([entertainer]);
   }
 
-  sortList(list = this.listInvited) {
-    list.sort((itemA, itemB) => {
-      return this.moment(itemA.datetime) - this.moment(itemB.datetime);
-    });
+  sortList (list = this.listInvited) {
+    list.sort((itemA, itemB) => this.moment(itemA.datetime) - this.moment(itemB.datetime));
   }
 
-  cancelOrderForEntertainer(ev, invite, cost) {
-    let confirm = this.$mdDialog.confirm()
+  cancelOrderForEntertainer (ev, invite, cost) {
+    const confirm = this.$mdDialog.confirm( )
       .title('Cancel Minx')
       .textContent(this.Constants.order.cancelEntertainerMessage(cost))
       .ariaLabel('Canceling Entertainer')
@@ -220,8 +213,7 @@ class OrderService {
       .ok('Yes')
       .cancel('No');
 
-    return this.$mdDialog.show(confirm).then((data) => {
-      return this
+    return this.$mdDialog.show(confirm).then(data => this
         .Request
         .send(
           null,
@@ -233,18 +225,17 @@ class OrderService {
             this.setEntertainerCanceled(invite);
             return result;
           }
-        );
-    });
+        ));
   }
 
-  setEntertainerCanceled(invite) {
+  setEntertainerCanceled (invite) {
     invite.status = this.Constants.order.statuses.canceledbyCustomer;
   }
 
   /*
    Confirmed entertainers
    */
-  fetchEntertainersConfirmed(orderId) {
+  fetchEntertainersConfirmed (orderId) {
     return this
       .Request
       .send(
@@ -261,7 +252,7 @@ class OrderService {
       );
   }
 
-  fetchLastNotAccomplishedOrder() {
+  fetchLastNotAccomplishedOrder ( ) {
     return this
       .Request
       .send(
@@ -270,13 +261,11 @@ class OrderService {
         this.Constants.api.lastNotAccomplishedOrder.uri(this.User.get('role'))
       )
       .then(
-        result => {
-          return result.data;
-        }
+        result => result.data
       );
   }
 
-  payForOrder(orderId, cardId) {
+  payForOrder (orderId, cardId) {
     return this
       .Request
       .send(
@@ -287,8 +276,8 @@ class OrderService {
       );
   }
 
-  cancelOrder(ev, orderId, messageType = 0) {
-    let confirm = this.$mdDialog.confirm()
+  cancelOrder (ev, orderId, messageType = 0) {
+    const confirm = this.$mdDialog.confirm( )
       .title(this.Constants.order.cancelOrderMessages[messageType].title)
       .htmlContent(this.Constants.order.cancelOrderMessages[messageType].content)
       .ariaLabel('Canceling Order')
@@ -296,19 +285,17 @@ class OrderService {
       .ok('Yes')
       .cancel('No');
 
-    return this.$mdDialog.show(confirm).then((_data) => {
-      return this
+    return this.$mdDialog.show(confirm).then(_data => this
         .Request
         .send(
           null,
           this.Constants.api.cancelOrder.method,
           this.Constants.api.cancelOrder.uri(this.User.get('role'), orderId)
         )
-        .then(response => response.data);
-    });
+        .then(response => response.data));
   }
 
-  fillConfirmedList(invites) {
+  fillConfirmedList (invites) {
     invites.forEach((invite, _i, _arr) => {
       if (invite.status == this.Constants.order.statuses.accepted) {
         this.listConfirmed.push(invite);

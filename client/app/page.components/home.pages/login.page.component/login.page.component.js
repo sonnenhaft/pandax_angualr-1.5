@@ -6,14 +6,13 @@ import User from '../../../common-services/user.service';
 import template from './login.page.html';
 
 class controller {
-  constructor(Validation, User) {
+  constructor (Validation, User) {
     'ngInject';
 
-    Object.assign(this, {Validation, User});
-
+    Object.assign(this, { Validation, User });
   }
 
-  onSubmit(credentials) {
+  onSubmit (credentials) {
     if (this.validate(credentials)) {
       this.loginError = false;
       return this.login(credentials);
@@ -22,17 +21,17 @@ class controller {
     return false;
   }
 
-  validate(field) {
+  validate (field) {
     if (this.Validation.error(field).length) {
       _.map(this.Validation.error(field), error => {
-        this[error.name + 'Error'] = error.text;
+        this[`${error.name}Error`] = error.text;
       });
       return false;
     }
     return true;
   }
 
-  login(credentials) {
+  login (credentials) {
     this.loginLoading = true;
     this.User
       .login(credentials)

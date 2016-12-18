@@ -1,7 +1,7 @@
-import template from './entertainer-protos.modal.html'
+import template from './entertainer-protos.modal.html';
 
 class controller {
-  constructor($state, $mdDialog, $scope, $mdMedia) {
+  constructor ($state, $mdDialog, $scope, $mdMedia) {
     'ngInject';
 
     Object.assign(this, {
@@ -14,7 +14,7 @@ class controller {
     });
 
     this.len = this.photos.length;
-    this.setImageStyles()
+    this.setImageStyles( );
 
     /*
      For future: add handlers for arrow keyup event
@@ -24,11 +24,10 @@ class controller {
      document.removeEventListener("keyup", this.keyEventHandler);    // not working. Look at best way
      });
      */
-
   }
 
-  goToPhotoByIndex(direction/*, byKeyboard = false*/) {
-    let possibleIndex = this.photoIndexActive + direction;
+  goToPhotoByIndex (direction/* , byKeyboard = false*/) {
+    const possibleIndex = this.photoIndexActive + direction;
     if (possibleIndex >= 0 && possibleIndex < this.len) {
       this.photoIndexActive = possibleIndex;
       /*      if (byKeyboard) {       //  angular doesn't update value in the scope after keypress
@@ -54,12 +53,12 @@ class controller {
    }
    }*/
 
-  setImageStyles() {
+  setImageStyles ( ) {
     if (this.$mdMedia('gt-sm')) {   // desktop
       this.imageStyles = {
-        'max-height': (window.innerHeight * 80 / 100) + 'px',
-        'max-width': (window.innerWidth * 80 / 100) + 'px'
-      }
+        'max-height': `${(window.innerHeight * 80) / 100}px`,
+        'max-width': `${(window.innerWidth * 80) / 100}px`
+      };
     }
   }
 }
@@ -69,11 +68,11 @@ export default angular.module('entertainerPhotosModal', [
   targetEvent,
   controller,
   locals,
-  template: '<div layout="row" layout-align="end" class="icon_modal-close">\
+  template: `<div layout="row" layout-align="end" class="icon_modal-close">\
                     <div class="icon_modal-close__image" ng-click="$ctrl.$mdDialog.hide()"></div>\
-                  </div>' +
-  template,
+                  </div>${
+  template}`,
   controllerAs: '$ctrl',
   clickOutsideToClose: true,
   bindToController: true
-})).name
+})).name;

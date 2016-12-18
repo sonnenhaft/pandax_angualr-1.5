@@ -1,7 +1,7 @@
 import angular from 'angular';
 
 class CustomersService {
-  constructor(Constants, Request, $mdDialog, $q) {
+  constructor (Constants, Request, $mdDialog, $q) {
     'ngInject';
 
     Object.assign(this, {
@@ -11,10 +11,9 @@ class CustomersService {
       $q,
       list: []
     });
-
   }
 
-  fetchCustomers(page = 1) {
+  fetchCustomers (page = 1) {
     return this
       .Request
       .send(
@@ -30,11 +29,11 @@ class CustomersService {
       );
   }
 
-  getCustomers() {
+  getCustomers ( ) {
     return this.list;
   }
 
-  setStatus(ev, customer, targetStatus, showPopup = true, targetStatusForPopup) {
+  setStatus (ev, customer, targetStatus, showPopup = true, targetStatusForPopup) {
     if (!targetStatusForPopup) {
       targetStatusForPopup = targetStatus;
     }
@@ -42,7 +41,7 @@ class CustomersService {
 
     if (showPopup) {
       confirm = this.$mdDialog.show(
-        this.$mdDialog.confirm()
+        this.$mdDialog.confirm( )
           .title(this.Constants.admin.setStatusMessage.title('customer', targetStatusForPopup))
           .textContent(this.Constants.admin.setStatusMessage.content('customer', targetStatusForPopup))
           .ariaLabel('Set status')
@@ -50,13 +49,12 @@ class CustomersService {
           .ok('Yes')
           .cancel('No'));
     } else {
-      confirm = this.$q.defer();
-      confirm.resolve();
+      confirm = this.$q.defer( );
+      confirm.resolve( );
       confirm = confirm.promise;
     }
 
-    return confirm.then((_data) => {
-      return this
+    return confirm.then(_data => this
         .Request
         .send(
           null,
@@ -69,11 +67,10 @@ class CustomersService {
             this.updateCustomerInList(customer, result.data.status);
             return result.data;
           }
-        );
-    });
+        ));
   }
 
-  updateCustomerInList(customer, targetStatus) {
+  updateCustomerInList (customer, targetStatus) {
     customer.status = targetStatus;
   }
 

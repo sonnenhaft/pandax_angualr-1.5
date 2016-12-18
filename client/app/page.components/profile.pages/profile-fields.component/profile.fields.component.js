@@ -1,10 +1,11 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
+import ngFileUpload from 'ng-file-upload';
+
 import User from '../../../common-services/user.service';
 import Constants from '../../../common-services/constants.service';
 import Validation from '../../../common-services/validation.service';
 import Storage from '../../../common-services/storage.service';
-import ngFileUpload from 'ng-file-upload';
 
 import template from './profile.fields.html';
 
@@ -12,16 +13,17 @@ const CUSTOMER_FIELDS = [
   {
     combined: [
       { name: 'First Name', model: 'first_name', type: 'text' },
-      { name: 'Last Name', model: 'last_name', type: 'text', desc: `We won't display your last name` }
+      { name: 'Last Name', model: 'last_name', type: 'text', desc: 'We won\'t display your last name' }
     ]
   },
   { name: 'Phone Number', model: 'phone', type: 'tel' },
   { name: 'Email', model: 'email', type: 'email' }
-]
+];
 
 class controller {
-  constructor(User, Constants, Validation, Storage, $state, $q, $timeout, Helper, Cards) {
+  constructor (User, Constants, Validation, Storage, $state, $q, $timeout, Helper, Cards) {
     'ngInject';
+
     Object.assign(this, { User, Constants, Validation, Storage, $state, $q, $timeout, Helper, Cards, images: [], backupModel: {}, photosBuffer: [] });
 
     this.session = Storage.getObject('MINX');
@@ -29,22 +31,22 @@ class controller {
     this.isCustomer = User.get('role') === 'customer';
     this.isProvider = User.get('role') === 'provider';
     if (User.get('role') === 'customer') {
-      this.fields = CUSTOMER_FIELDS
-    } else  if (User.get('role') === 'provider') {
-      this.fields = CUSTOMER_FIELDS.slice()
+      this.fields = CUSTOMER_FIELDS;
+    } else if (User.get('role') === 'provider') {
+      this.fields = CUSTOMER_FIELDS.slice( );
       this.fields.push([{ name: 'Display Name', model: 'displaying_name', type: 'text' }]);
     }
-    this.profileImage();
+    this.profileImage( );
   }
 
-  $onChanges(changes) {
-    this.$timeout(() => {
+  $onChanges (changes) {
+    this.$timeout(( ) => {
       this.mode = changes.mode.currentValue;
     });
   }
 
-  $onInit() {
-    switch ( this.mode ) {
+  $onInit ( ) {
+    switch (this.mode) {
       case 'main.profile.create':
         this.email = this.User.get('email');
         this.backupModel.email = this.email;
@@ -52,27 +54,27 @@ class controller {
         break;
 
       default:
-        this.buildProfileModels();
+        this.buildProfileModels( );
         break;
     }
   }
 
-  profileImage() {
-    let role = this.User.get('role');
+  profileImage ( ) {
+    const role = this.User.get('role');
 
-    let images = {
+    const images = {
       customer: [{ file: '' }],
       provider: [{ file: '' }, { file: '' }, { file: '' }]
-    }
+    };
 
     this.images = images[role];
 
     this.User.getUserProfile(
       Object.assign(this.session.user,
-        { token: this.User.token() }),
+        { token: this.User.token( ) }),
       role,
       false)
-      .then((data) => {
+      .then(data => {
         let photoSrc = '';
 
         if (data.photo) {
@@ -84,47 +86,47 @@ class controller {
             if (photo) {
               this.images[i] = { file: photo.preview };
             }
-          })
+          });
         }
 
-        this.backupPhotos();
+        this.backupPhotos( );
         this.profilePhoto(photoSrc);
 
         return data;
       });
   }
 
-  profilePhoto(photoSrc = '') {
+  profilePhoto (photoSrc = '') {
     this.photo = {
-      background: 'url(' + photoSrc + '?' + this.Helper.getUniqueNumberByTime() + ') no-repeat fixed center'     // add string to tell browser
+      background: `url(${photoSrc}?${this.Helper.getUniqueNumberByTime( )}) no-repeat fixed center`     // add string to tell browser
     };                                                                                              // to send request, instead of get image from cache
 
     this.backupModel.photo = angular.copy(this.photo);
   }
 
-  backupPhotos(photos = this.images) {
+  backupPhotos (photos = this.images) {
     this.backupModel.images = [];
     _.each(photos, (photo, i) => {
       this.backupPhoto(photo, i);
     });
   }
 
-  backupPhoto(photo, i) {
+  backupPhoto (photo, i) {
     this.backupModel.images[i] = {
-      file: photo.file + '?' + this.Helper.getUniqueNumberByTime()
+      file: `${photo.file}?${this.Helper.getUniqueNumberByTime( )}`
     };
   }
 
-  buildProfileModels() {
+  buildProfileModels ( ) {
     this.mode = 'main.profile.view';
 
-    _.mapValues(this.User.get(), (model, key) => {
+    _.mapValues(this.User.get( ), (model, key) => {
       this[key] = model;
       this.backupModel[key] = angular.copy(model);
     });
   }
 
-  rebuildProfileModelsFromBackup() {
+  rebuildProfileModelsFromBackup ( ) {
     this.mode = 'main.profile.view';
 
     _.mapValues(this.backupModel, (model, key) => {
@@ -134,19 +136,19 @@ class controller {
     this.newCard = {};
   }
 
-  validate(field) {
+  validate (field) {
     if (this.Validation.error(field).length) {
       _.map(this.Validation.error(field), error => {
-        this[error.name + 'Error'] = error.text;
+        this[`${error.name}Error`] = error.text;
       });
       return false;
     }
     return true;
   }
 
-  onReady(profile, form) {
+  onReady (profile, form) {
     profile = this.addAbsentFields(profile);
-    form.$setSubmitted();                                         // show error messages if
+    form.$setSubmitted( );                                         // show error messages if
 
     if (!this.validate(profile) || form.$invalid) {               // all validations messages should be shown at one moment
       return false;
@@ -154,7 +156,7 @@ class controller {
 
     this.saveLoading = true;
 
-    this.addCard()
+    this.addCard( )
       .then(
         data => {
           this.UpdateUserProfile(profile)
@@ -169,38 +171,38 @@ class controller {
         });
   }
 
-  onSave(profile) {
+  onSave (profile) {
     profile = this.addAbsentFields(profile);
 
     if (this.validate(profile)) {
       this.saveLoading = true;
       this.UpdateUserProfile(profile, 'main.profile.view')
-        .finally((_data) => {
+        .finally(_data => {
           this.saveLoading = false;
         });
     }
   }
 
-  onImageChange(image, slot) {
+  onImageChange (image, slot) {
     if (image) {
-      let indexFounded = _.findIndex(this.photosBuffer, { slot: slot });
+      const indexFounded = _.findIndex(this.photosBuffer, { slot });
       if (indexFounded >= 0) {
-        this.photosBuffer[indexFounded] = { image: image, slot: slot };
+        this.photosBuffer[indexFounded] = { image, slot };
       } else {
-        this.photosBuffer.push({ image: image, slot: slot });
+        this.photosBuffer.push({ image, slot });
       }
     }
   }
 
-  UpdateUserPhotos() {
-    let promises = [];
+  UpdateUserPhotos ( ) {
+    const promises = [];
 
-    _.each(this.photosBuffer, (photo) => {
-      let query = this.User
+    _.each(this.photosBuffer, photo => {
+      const query = this.User
         .UpdateUserPhoto(photo.image, photo.slot)
         .then(
           result => {
-            let photoResult = result.photo ? result.photo : result.photos[photo.slot - 1];
+            const photoResult = result.photo ? result.photo : result.photos[photo.slot - 1];
 
             if (photoResult) {
               this.backupPhoto({ file: photoResult.preview }, photo.slot - 1);
@@ -215,13 +217,13 @@ class controller {
       promises.push(query);
     });
 
-    return this.$q.all(promises).then((data) => {
+    return this.$q.all(promises).then(data => {
       this.photosBuffer = [];
     });
   }
 
-  UpdateUserProfile(profile, mode) {
-    let queryToUpdatePersonalInfo = this.User
+  UpdateUserProfile (profile, mode) {
+    const queryToUpdatePersonalInfo = this.User
       .UpdateUserProfile(profile)
       .then(
         result => {
@@ -229,15 +231,15 @@ class controller {
         }
       );
 
-    return this.$q.all([this.UpdateUserPhotos(), queryToUpdatePersonalInfo])
-      .then((data) => {
+    return this.$q.all([this.UpdateUserPhotos( ), queryToUpdatePersonalInfo])
+      .then(data => {
         this.mode = mode;
-        this.buildProfileModels();
+        this.buildProfileModels( );
         return data;
       });
   }
 
-  addAbsentFields(profile) {
+  addAbsentFields (profile) {
     if (this.displaying_name) {
       profile = Object.assign(profile, {                             // maybe, should be replace with better logic
         displaying_name: this.displaying_name,                   //
@@ -248,7 +250,7 @@ class controller {
     return profile;
   }
 
-  addCard(card = this.newCard) {
+  addCard (card = this.newCard) {
     return this.Cards
       .add(card)
       .then(result => result);

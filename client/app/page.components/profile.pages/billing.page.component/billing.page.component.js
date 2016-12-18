@@ -12,9 +12,9 @@ class controller {
     'ngInject';
 
     Object.assign(this, {
-    	$state,
-    	User,
-    	$stateParams,
+      $state,
+      User,
+      $stateParams,
       Resolve,
       Cards,
       $mdToast,
@@ -22,30 +22,30 @@ class controller {
       OrderService,
       Constants,
       $mdDialog,
-      newCard: {},   //temporary
+      newCard: {},   // temporary
       saveLoading: false,
       defaultCardId: 0,
       hasPersonalInfo: false
     });
 
-    this.defaultCardId = this.getDefaultCardId();
+    this.defaultCardId = this.getDefaultCardId( );
     this.hasPersonalInfo = this.billingInfo && this.billingInfo.first_name && this.billingInfo.last_name && this.billingInfo.phone;
   }
 
-  saveInfo () {
-    let promises = [];
+  saveInfo ( ) {
+    const promises = [];
 
     this.saveLoading = true;
 
     if (!this.hasPersonalInfo) {                                          // should save personal information
-      let query = this.User
+      const query = this.User
         .UpdateUserProfile(this.billingInfo);
       promises.push(query);
     }
 
 
     if (!this.billingInfo.cards || !this.billingInfo.cards.length) {      // should add card
-      let query = this.Cards
+      const query = this.Cards
         .add(this.newCard)
         .then(card => {
           if (card.message) {
@@ -53,33 +53,31 @@ class controller {
           }
         });
       promises.push(query);
-    } else {
-      if (this.defaultCardId != this.getDefaultCardId()) {
-        /*
-          ToDo: send request to change default card
-          promises.push(query);
-         */
-      }
+    } else if (this.defaultCardId != this.getDefaultCardId( )) {
+      /*
+       ToDo: send request to change default card
+       promises.push(query);
+       */
     }
 
-    return this.$q.all(promises).then((data) => {
-      this.payForOrder()
+    return this.$q.all(promises).then(data => {
+      this.payForOrder( )
         .then(data => {
-          this.$state.go(this.$stateParams.from, {orderId: this.$stateParams.orderId});
+          this.$state.go(this.$stateParams.from, { orderId: this.$stateParams.orderId });
         })
-        .finally(() => {
+        .finally(( ) => {
           this.saveLoading = false;
         });
     })
-    .finally((_data) => {
-      this.saveLoading = false;
-    });
+      .finally(_data => {
+        this.saveLoading = false;
+      });
   }
 
-  getDefaultCardId () {
+  getDefaultCardId ( ) {
     let result = 0;
     if (this.billingInfo.cards && this.billingInfo.cards.length > 0) {
-      let defaultCardIndex = _.findIndex(this.billingInfo.cards, {is_default: true});
+      const defaultCardIndex = _.findIndex(this.billingInfo.cards, { is_default: true });
       result = defaultCardIndex >= 0 ? this.billingInfo.cards[defaultCardIndex].id : 0;
     }
     return result;
@@ -87,7 +85,7 @@ class controller {
 
   showError (message) {
     this.$mdToast.show(
-      this.$mdToast.simple()
+      this.$mdToast.simple( )
         .content(message || message.type)
         .position('top right')
         .hideDelay(200000)
@@ -95,23 +93,21 @@ class controller {
     );
   }
 
-  payForOrder () {
-    return this.OrderService.payForOrder(this.$stateParams.orderId, this.getDefaultCardId())
+  payForOrder ( ) {
+    return this.OrderService.payForOrder(this.$stateParams.orderId, this.getDefaultCardId( ))
       .then(
-        data => {
-          return this.OrderService.inviteEntertainer(this.$stateParams.orderId, parseInt(this.$stateParams.entertainerId));
-        },
+        data => this.OrderService.inviteEntertainer(this.$stateParams.orderId, parseInt(this.$stateParams.entertainerId, 10)),
         error => {
-          this.showMoneyReservationFailedPopUp();
-          let defer = this.$q.defer();
+          this.showMoneyReservationFailedPopUp( );
+          const defer = this.$q.defer( );
           defer.reject(error);
           return defer.promise;
         });
   }
 
-  showMoneyReservationFailedPopUp () {
+  showMoneyReservationFailedPopUp ( ) {
     this.$mdDialog.show(
-      this.$mdDialog.alert()
+      this.$mdDialog.alert( )
         .clickOutsideToClose(true)
         .title(this.Constants.order.moneyReservationFailedMessage.title)
         .textContent(this.Constants.order.moneyReservationFailedMessage.content)
@@ -120,12 +116,11 @@ class controller {
     );
   }
 
-  goToPreviousStep () {
-    this.$state.go(this.$stateParams.from, {orderId: this.$stateParams.orderId});
+  goToPreviousStep ( ) {
+    this.$state.go(this.$stateParams.from, { orderId: this.$stateParams.orderId });
   }
 
 }
-
 
 
 export default angular.module('billing', [
@@ -136,45 +131,42 @@ export default angular.module('billing', [
   Cards
 ])
 
-  .config(($stateProvider) => {
-    "ngInject";
+  .config($stateProvider => {
+    'ngInject';
 
     $stateProvider
       .state('main.billing', {
         url: '/billing/:orderId/:entertainerId?from',
         parent: 'main',
-        template: '<billing \
-                    billing-info="billingInfo" \
-                    order-details="orderDetails" \
-                  </billing>',
-        controller: function ($scope, billingInfo, orderDetails) {
+        template: '<billing billing-info="billingInfo"  order-details="orderDetails" </billing>',
+        controller ($scope, billingInfo, orderDetails) {
           $scope.billingInfo = billingInfo;
           $scope.orderDetails = orderDetails;
         },
         resolve: {
-          orderId: function ($stateParams) {
-            return $stateParams['orderId'] || 0;
+          orderId ($stateParams) {
+            return $stateParams.orderId || 0;
           },
-          billingInfo: function (User, Cards) {
-            let billingInfo = User.get();
-            return Cards.getCards()
-              .then((data) => {
+          billingInfo (User, Cards) {
+            let billingInfo = User.get( );
+            return Cards.getCards( )
+              .then(data => {
                 if (data) {
-                  billingInfo = Object.assign(billingInfo, {cards: data});
+                  billingInfo = Object.assign(billingInfo, { cards: data });
                 }
                 return billingInfo;
               });
           },
-          orderDetails: function (OrderService, orderId) {
+          orderDetails (OrderService, orderId) {
             return OrderService.fetchOrderDetails(orderId).then(data => data);
           }
         }
       });
   }).component('billing', {
-  bindings: {
-    billingInfo: '=',
-    orderDetails: '='
-  },
-  template,
-  controller
-}).name;
+    bindings: {
+      billingInfo: '=',
+      orderDetails: '='
+    },
+    template,
+    controller
+  }).name;

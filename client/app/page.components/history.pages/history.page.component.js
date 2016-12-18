@@ -8,19 +8,20 @@ import pastOrdersProvider from './past-orders-privider.page.component/past-order
 import template from './history.page.html';
 
 class controller {
-  constructor($stateParams, User) {
+  constructor ($stateParams, User) {
     'ngInject';
-    Object.assign(this, {$stateParams, User, role: User.get('role')});
+
+    Object.assign(this, { $stateParams, User, role: User.get('role') });
   }
 
-  $onInit() {
+  $onInit ( ) {
     if (this.$stateParams.type) {
-      this.tab = this.switchActiveTab();
+      this.tab = this.switchActiveTab( );
     }
   }
 
-  switchActiveTab() {
-    switch (this.$stateParams.type) {
+  switchActiveTab ( ) {
+    switch (this.$stateParams.type) { // eslint-disable-line default-case
       case 'past':
         return 1;
 
@@ -37,8 +38,8 @@ export default angular.module('history', [
   pastOrders,
   OrderService,
   pastOrdersProvider
-]).config(($stateProvider) => {
-  "ngInject";
+]).config($stateProvider => {
+  'ngInject';
 
   $stateProvider.state('main.history', {
     url: '/orders-history',
@@ -51,10 +52,10 @@ export default angular.module('history', [
       isOnPending: (User, Constants, $q) => {
         let result;
         if (User.get('role') == 'provider') {
-          result = User.getActualStatus()
+          result = User.getActualStatus( )
             .then(status => status == Constants.admin.statuses.entertainer.pending);
         } else {
-          let defer = $q.defer();
+          const defer = $q.defer( );
           defer.resolve(false);
           result = defer.promise;
         }

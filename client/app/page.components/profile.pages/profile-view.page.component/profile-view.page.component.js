@@ -9,10 +9,9 @@ class controller {
 
     this.$stateParams = $stateParams;
     this.mode = $state.current.name;
-
   }
 
-  $onInit () {
+  $onInit ( ) {
     if (this.$stateParams.mode) {
       this.mode = this.$stateParams.mode;
     }
@@ -21,8 +20,8 @@ class controller {
 
 export default angular.module('profileView', [
   uiRouter
-]).config(($stateProvider) => {
-  "ngInject";
+]).config($stateProvider => {
+  'ngInject';
 
   $stateProvider.state('main.profile.view', {
     url: '/view',

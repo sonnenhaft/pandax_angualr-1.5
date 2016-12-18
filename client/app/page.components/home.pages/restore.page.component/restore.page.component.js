@@ -5,13 +5,13 @@ import User from '../../../common-services/user.service';
 import template from './restore.page.html';
 
 class controller {
-  constructor(Validation, User, $mdDialog) {
+  constructor (Validation, User, $mdDialog) {
     'ngInject';
 
-    Object.assign(this, {Validation, User, $mdDialog});
+    Object.assign(this, { Validation, User, $mdDialog });
   }
 
-  onSubmit(email, $event) {
+  onSubmit (email, $event) {
     if (this.validate(email)) {
       this.restoreError = false;
       return this.restore(email, $event);
@@ -20,17 +20,17 @@ class controller {
     return false;
   }
 
-  validate(field) {
+  validate (field) {
     if (this.Validation.error(field).length) {
       _.map(this.Validation.error(field), error => {
-        this[error.name + 'Error'] = error.text;
+        this[`${error.name}Error`] = error.text;
       });
       return false;
     }
     return true;
   }
 
-  restore(email, $event) {
+  restore (email, $event) {
     this.restoreLoading = true;
     return this
       .User
@@ -57,7 +57,7 @@ class controller {
       });
   }
 
-  showMessage($event) {
+  showMessage ($event) {
     this.$mdDialog
       .show({
         contentElement: '#restore-success',
@@ -67,9 +67,9 @@ class controller {
       });
   }
 
-  hideMessage() {
-    this.$mdDialog.hide();
-    this.output({view: 'signIn'});
+  hideMessage ( ) {
+    this.$mdDialog.hide( );
+    this.output({ view: 'signIn' });
   }
 
 }

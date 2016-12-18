@@ -1,21 +1,21 @@
 import angular from 'angular';
 import User from '../../common-services/user.service';
-import template from './logout.modal.html'
+import template from './logout.modal.html';
 
 class controller {
-  constructor(User, $mdDialog) {
+  constructor (User, $mdDialog) {
     'ngInject';
 
-    Object.assign(this, {User, $mdDialog});
+    Object.assign(this, { User, $mdDialog });
   }
 
-  logout() {
-    this.$mdDialog.hide();
-    this.User.logout();
+  logout ( ) {
+    this.$mdDialog.hide( );
+    this.User.logout( );
   }
 
-  showWarning(event) {
-    event.stopPropagation();
+  showWarning (event) {
+    event.stopPropagation( );
 
     this.$mdDialog.show({
       parent: document.body,

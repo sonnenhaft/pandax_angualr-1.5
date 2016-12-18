@@ -5,8 +5,8 @@ import template from './profile.page.html';
 
 export default angular.module('profile', [
   uiRouter
-]).config(($stateProvider) => {
-  "ngInject";
+]).config($stateProvider => {
+  'ngInject';
 
   $stateProvider.state('main.profile', {
     url: '/profile',

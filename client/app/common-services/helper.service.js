@@ -5,8 +5,7 @@ class Helper {
   constructor (moment, $mdToast, $mdDialog) {
     'ngInject';
 
-    Object.assign(this, {moment, $mdToast, $mdDialog});
-
+    Object.assign(this, { moment, $mdToast, $mdDialog });
   }
 
   getActiveObjectFromArray (arr) {
@@ -18,88 +17,78 @@ class Helper {
   }
 
   getNearestTime (type, newDate) {
-    const
-      TIME_PARTITION_IN_MINUTES = 15,
-      TIME_PARTITIONS_LEFT = parseInt(this.moment().minute() / TIME_PARTITION_IN_MINUTES) + 1;
+    const TIME_PARTITION_IN_MINUTES = 15;
+    const TIME_PARTITIONS_LEFT = parseInt(this.moment( ).minute( ) / TIME_PARTITION_IN_MINUTES, 10) + 1;
 
-    let date, round, current, time, hours, halfhours, range, object, quarterHoursBeforeHalfHours, quarterHoursAfterHalfHours;
+    let range;
 
-    round = (TIME_PARTITION_IN_MINUTES * 4) * 60 * 1000;
-    date = this.moment().format('YYYY-MM-DD');
-    current = this.moment();
-    current = this.moment(Math.ceil((+current) / round) * round);
-    hours = _.range(Number(current.format('HH')), 25);
-    time = current.format('h:mm A');
+    const round = (TIME_PARTITION_IN_MINUTES * 4) * 60 * 1000;
+    const date = this.moment( ).format('YYYY-MM-DD');
+    const current = this.moment(Math.ceil((this.moment( )) / round) * round);
+    let hours = _.range(Number(current.format('HH')), 25);
+    let time = current.format('h:mm A');
 
     if (this.moment(newDate).format('YYYY-MM-DD') != date) {
       hours = _.range(25);
     }
 
-    halfhours = _
-      .chain(hours)
-      .map(hour => {
-        if (hour >= 0 && hour <= 9) {
-          return '0' + hour + ':30';
-        }
+    const halfhours = _.chain(hours).map(hour => { // eslint-disable-line array-callback-return
+      if (hour >= 0 && hour <= 9) {
+        return `0${hour}:30`;
+      } else if (hour != 24) {
+        return `${hour}:30`;
+      }
+    }).remove(undefined).value( );
 
-        if (hour != 24) {
-          return hour + ':30';
-        }
-      })
-      .remove(undefined)
-      .value();
+    const quarterHoursBeforeHalfHours = _.chain(hours).map(hour => { // eslint-disable-line array-callback-return
+      if (hour >= 0 && hour <= 9) {
+        return `0${hour}:15`;
+      }
 
-    quarterHoursBeforeHalfHours = _
-      .chain(hours)
-      .map(hour => {
-        if (hour >= 0 && hour <= 9) {
-          return '0' + hour + ':15';
-        }
+      if (hour != 24) {
+        return `${hour}:15`;
+      }
+    }).remove(undefined).value( );
 
-        if (hour != 24) {
-          return hour + ':15';
-        }
-      })
-      .remove(undefined)
-      .value();
+    const quarterHoursAfterHalfHours = _.chain(hours).map(hour => { // eslint-disable-line array-callback-return
+      if (hour >= 0 && hour <= 9) {
+        return `0${hour}:45`;
+      }
 
-    quarterHoursAfterHalfHours = _
-      .chain(hours)
-      .map(hour => {
-        if (hour >= 0 && hour <= 9) {
-          return '0' + hour + ':45';
-        }
-
-        if (hour != 24) {
-          return hour + ':45';
-        }
-      })
-      .remove(undefined)
-      .value();
+      if (hour != 24) {
+        return `${hour}:45`;
+      }
+    }).remove(undefined).value( );
 
     range = _
       .chain(hours)
-      .map(hour => hour >= 1 && hour <= 9 ? '0' + hour + ':00' : hour + ':00')
+      .map(hour => {
+        if (hour >= 1 && hour <= 9) {
+          return `0${hour}:00`;
+        } else {
+          return `${hour}:00`;
+        }
+      })
       .union(halfhours)
       .union(quarterHoursBeforeHalfHours)
       .union(quarterHoursAfterHalfHours)
-      .sortBy(hour => this.moment(date + ' ' + hour))
-      .map(hour => this.moment(date + ' ' + hour).format('h:mm A'))
-      .uniq()
-      .value();
+      .sortBy(hour => this.moment(`${date} ${hour}`))
+      .map(hour => this.moment(`${date} ${hour}`).format('h:mm A'))
+      .uniq( )
+      .value( );
 
     if (this.moment(newDate).format('YYYY-MM-DD') === date) {
       range = _.slice(range, TIME_PARTITIONS_LEFT, range.length);
       time = _.head(range);
     }
 
-    object = {time, range, hours, halfhours, quarterHoursBeforeHalfHours, quarterHoursAfterHalfHours};
+    const object = { time, range, hours, halfhours, quarterHoursBeforeHalfHours, quarterHoursAfterHalfHours };
 
     return type ? object[type] : object;
   }
 
-  getUniqueNumberByTime () {
-    return Date.parse(new Date());
+  getUniqueNumberByTime ( ) {
+    return Date.parse(new Date( ));
   }
 
   showToast (message, duration = 200000) {
@@ -107,7 +96,7 @@ class Helper {
       message = message.join(', ');
     }
     this.$mdToast.show(
-      this.$mdToast.simple()
+      this.$mdToast.simple( )
         .content(message || message.type)
         .position('top right')
         .hideDelay(duration)
@@ -116,12 +105,12 @@ class Helper {
   }
 
   showBanPopUp (message = '') {
-    let title = message.slice(message.indexOf('account'), message.indexOf('.'));
+    const title = message.slice(message.indexOf('account'), message.indexOf('.'));
 
     this.$mdDialog.show(
-      this.$mdDialog.alert()
+      this.$mdDialog.alert( )
         .clickOutsideToClose(true)
-        .title(title.substr(0, 1).toUpperCase() + title.substr(1))
+        .title(title.substr(0, 1).toUpperCase( ) + title.substr(1))
         .textContent(message)
         .ariaLabel('Ban Dialog')
         .ok('Ok')

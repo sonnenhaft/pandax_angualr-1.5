@@ -1,10 +1,10 @@
 import angular from 'angular';
-import template from './oreder-terms.page.html';
-
 import uiRouter from 'angular-ui-router';
 
+import template from './oreder-terms.page.html';
+
 class controller {
-  constructor(Constants, User, Request, $state) {
+  constructor (Constants, User, Request, $state) {
     'ngInject';
 
     Object.assign(this, {
@@ -15,12 +15,12 @@ class controller {
     });
   }
 
-  onAccept() {
+  onAccept ( ) {
     if (this.accepted) {
       this.orderLoading = true;
       this.Request
         .send(
-          this.User.token(),
+          this.User.token( ),
           this.Constants.api.order.method,
           this.Constants.api.order.uri,
           this.order
@@ -29,11 +29,11 @@ class controller {
           result => {
             if (result.status == 200) {
               this.User.update(result.data.customer);
-              this.$state.go('main.manipulationEntertainers', {orderId: result.data.id, channelName: result.data.channel_name});
+              this.$state.go('main.manipulationEntertainers', { orderId: result.data.id, channelName: result.data.channel_name });
             }
           }
         )
-        .finally((_data) => {
+        .finally(_data => {
           this.orderLoading = false;
         });
     }
@@ -45,7 +45,7 @@ class controller {
 export default angular.module('orderTerms', [
   uiRouter
 ]).config($stateProvider => {
-  "ngInject";
+  'ngInject';
 
   $stateProvider.state('main.accept', {
     url: '/order/accept-terms',
@@ -58,9 +58,7 @@ export default angular.module('orderTerms', [
     },
     template: '<order-terms order="order"></order-terms>',
     resolve: {
-      order: $stateParams => {
-        return $stateParams.order;
-      }
+      order: $stateParams => $stateParams.order
     }
   });
 }).component('orderTerms', {

@@ -5,10 +5,10 @@ import activeMenuItem from '../../../common/active-menu-item.directive';
 
 import template from './navbar-admin.html';
 import './navbar-admin.scss';
-import NAV_BAR_MENU_ITEMS from '../../../common/NAV_BAR_MENU_ITEMS'
+import NAV_BAR_MENU_ITEMS from '../../../common/NAV_BAR_MENU_ITEMS';
 
 class controller {
-  constructor(User, Constants, $state) {
+  constructor (User, Constants, $state) {
     'ngInject';
 
     Object.assign(this, {
@@ -27,11 +27,7 @@ export default angular.module('navbarAdmin', [
   User,
   Constants,
   activeMenuItem
-]).filter('navByPosition', function navByPosition() {
-  return function(navs, field, val) {
-    return _.filter(navs, item => item[field] == val);
-  };
-}).component('navbarAdmin', {
+]).filter('navByPosition', ( ) => (navs, field, val) => _.filter(navs, item => item[field] == val)).component('navbarAdmin', {
   template,
   controller,
 }).name;

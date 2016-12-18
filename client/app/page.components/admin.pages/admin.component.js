@@ -13,8 +13,8 @@ export default angular.module('admin', [
   entertainers,
   customers,
   orders
-]).config(($stateProvider) => {
-  "ngInject";
+]).config($stateProvider => {
+  'ngInject';
 
   $stateProvider.state('admin', {
     url: '/admin',

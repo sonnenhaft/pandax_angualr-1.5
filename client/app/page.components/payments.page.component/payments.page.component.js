@@ -14,8 +14,8 @@ class controller {
       $q
     });
 
-    Cards.getCards()
-      .then((data) => {
+    Cards.getCards( )
+      .then(data => {
         this.cards = data;
       });
   }
@@ -26,7 +26,6 @@ class controller {
       .add(card)
       .then(
         cards => {
-
           if (!cards.message) {
             this.cards = cards;
             this.add = false;
@@ -39,7 +38,7 @@ class controller {
         error => {
           this.saveLoading = false;
 
-          let defer = this.$q.defer();
+          const defer = this.$q.defer( );
           defer.reject(error);
           return defer.promise;
         })
@@ -47,14 +46,14 @@ class controller {
         if (result.message) {
           this.showError(result.message.message || result.message);
         } else {
-          this.resetCardInfo();
+          this.resetCardInfo( );
         }
       });
   }
 
   showError (message) {
     this.$mdToast.show(
-      this.$mdToast.simple()
+      this.$mdToast.simple( )
         .content(message || message.type)
         .position('top right')
         .hideDelay(200000)
@@ -62,26 +61,26 @@ class controller {
     );
   }
 
-  resetCardInfo () {
+  resetCardInfo ( ) {
     this.newCard = {};
   }
 
 }
 
 export default angular.module('payments', [
-    uiRouter,
-    User,
-    Cards
-  ]).config(($stateProvider) => {
-    "ngInject";
+  uiRouter,
+  User,
+  Cards
+]).config($stateProvider => {
+  'ngInject';
 
-    $stateProvider
+  $stateProvider
       .state('main.payments', {
         url: '/payments',
         parent: 'main',
         component: 'payments'
       });
-  }).component('payments', {
+}).component('payments', {
   template,
   controller
 }).name;

@@ -5,7 +5,7 @@ import template from './past-orders-privider.page.html';
 import './past-orders-privider.page.scss';
 
 class controller {
-  constructor(OrderService, Constants) {
+  constructor (OrderService, Constants) {
     'ngInject';
 
     Object.assign(this, {
@@ -17,21 +17,21 @@ class controller {
       currentPage: 1,
     });
 
-    this.OrderService.fetchProviderPastOrders()
+    this.OrderService.fetchProviderPastOrders( )
       .then(data => {
         this.isOnProgress = false;
         if (this.currentPage == data.meta.pagination.total_pages) {
           this.isLastPage = true;
         }
-        return this.history = data.items
+        return this.history = data.items;
       });
   }
 
-  fetchMoreItems() {
+  fetchMoreItems ( ) {
     this.isOnProgress = true;
 
     this.OrderService.fetchProviderPastOrders(this.currentPage + 1)
-      .then((data) => {
+      .then(data => {
         this.isOnProgress = false;
         this.currentPage = data.meta.pagination.current_page;
         this.history = this.history.concat(data.items);
@@ -39,8 +39,8 @@ class controller {
         if (this.currentPage == data.meta.pagination.total_pages) {
           this.isLastPage = true;
         }
-      })
-  };
+      });
+  }
 
 }
 

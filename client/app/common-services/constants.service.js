@@ -1,57 +1,57 @@
 import angular from 'angular';
-import config from 'config'
+import config from 'config';
 
 /** @deprecated */
 class Constants {
-  constructor($window) {
+  constructor ($window) {
     'ngInject';
 
     this.$window = $window;
-    this.order = this.orderConstants();
-    this.billing = this.billingConstants();
-    this.api = this.apiConstants();
-    this.admin = this.adminConstants();
+    this.order = this.orderConstants( );
+    this.billing = this.billingConstants( );
+    this.api = this.apiConstants( );
+    this.admin = this.adminConstants( );
   }
 
-  apiConstants() {
+  apiConstants ( ) {
     const path = config.API_URL;
-    var pathWS = config.WS_URL;
+    const pathWS = config.WS_URL;
 
     return {
-      login: { method: 'POST', uri: path + '/sessions' },
-      signup: { method: 'POST', uri: user => path + '/signup/' + user }, // user is a type of user,
+      login: { method: 'POST', uri: `${path}/sessions` },
+      signup: { method: 'POST', uri: user => `${path}/signup/${user}` }, // user is a type of user,
       password: {
-        restore: { method: 'POST', uri: path + '/sessions/password/reset' },
-        change: { method: 'PUT', uri: token => path + '/sessions/password/' + token },
-        changeByOld: { method: 'POST', uri: () => path + '/password/change' }
+        restore: { method: 'POST', uri: `${path}/sessions/password/reset` },
+        change: { method: 'PUT', uri: token => `${path}/sessions/password/${token}` },
+        changeByOld: { method: 'POST', uri: ( ) => `${path}/password/change` }
       },
       profile: {
         method: {
           PUT: 'PUT', // to update profile
           GET: 'GET' // to get profile information
         },
-        uri: user => path + '/' + user + '/profile', // user is a type of user
+        uri: user => `${path}/${user}/profile`, // user is a type of user
       },
-      photo: { method: 'PUT', uri: (user, slot_id) => path + '/' + user + '/profile/photo' + (user === 'provider' ? '/' + slot_id : ''), }, // slot_id is an index of photo,
-      order: { method: 'POST', uri: path + '/order' },
-      service: { method: 'GET', uri: user => path + `/${user}/service-types` },
-      searchEntertainers: { method: 'GET', uri: (orderId) => path + `/orders/${orderId}/entertainers/search` },
-      orderDetails: { method: 'GET', uri: (orderId, include) => path + `/orders/${orderId}` + (!!include ? `?include=${include}` : '') },
+      photo: { method: 'PUT', uri: (user, slotId) => `${path}/${user}/profile/photo${user === 'provider' ? `/${slotId}` : ''}`, }, // slotId is an index of photo,
+      order: { method: 'POST', uri: `${path}/order` },
+      service: { method: 'GET', uri: user => `${path}/${user}/service-types` },
+      searchEntertainers: { method: 'GET', uri: orderId => `${path}/orders/${orderId}/entertainers/search` },
+      orderDetails: { method: 'GET', uri: (orderId, include) => `${path}/orders/${orderId}${include ? `?include=${include}` : ''}` },
       cards: {
         add: { method: 'POST', uri: user => `${path}/${user}/cards/add` },
         get: { method: 'GET', uri: user => `${path}/${user}/cards` },
         delete: { method: 'DELETE', uri: (user, cardId) => `${path}/${user}/cards/${cardId}` },
         setDefault: { method: 'PUT', uri: (user, cardId) => `${path}/${user}/cards/${cardId}/default` }
       },
-      inviteEntertainer: { method: 'POST', uri: (orderId, entertainerId) => path + `/orders/${orderId}/entertainers/${entertainerId}/invite` },
-      ws: { invites: { uri: (channelName) => pathWS + `/orders/${channelName}/invites` } },
-      invitedEntertainers: { method: 'GET', uri: (orderId) => path + `/customer/orders/${orderId}/invites` },
-      cancelEntertainerByCustomer: { method: 'PUT', uri: (inviteId) => path + `/invite/${inviteId}/cancel` },
-      orderFutures: { method: 'GET', uri: (user, page = 1) => path + `/${user}/orders?page=${page}&status[]=accepted&status[]=in+progress&include=invites` },
+      inviteEntertainer: { method: 'POST', uri: (orderId, entertainerId) => `${path}/orders/${orderId}/entertainers/${entertainerId}/invite` },
+      ws: { invites: { uri: channelName => `${pathWS}/orders/${channelName}/invites` } },
+      invitedEntertainers: { method: 'GET', uri: orderId => `${path}/customer/orders/${orderId}/invites` },
+      cancelEntertainerByCustomer: { method: 'PUT', uri: inviteId => `${path}/invite/${inviteId}/cancel` },
+      orderFutures: { method: 'GET', uri: (user, page = 1) => `${path}/${user}/orders?page=${page}&status[]=accepted&status[]=in+progress&include=invites` },
       orderHistory: {
         method: 'GET',
         uri: (user, page = 1) => {
-          let result = path + `/${user}/orders/history?page=${page}&include=invites`;
+          const result = `${path}/${user}/orders/history?page=${page}&include=invites`;
           /*        if (user == 'customer') {
            result += `?page=${page}&status[]=finished&status[]=canceled&include=invites`;
            } else {
@@ -60,40 +60,40 @@ class Constants {
           return result;
         }
       },
-      confirmedEntertainers: { method: 'GET', uri: (orderId) => path + `/customer/orders/${orderId}/invites?status[]=accepted&status[]=canceled` },
-      entertainers: { get: { method: 'GET', uri: (page = 1) => path + `/provider?page=${page}` } },
-      customers: { get: { method: 'GET', uri: (page = 1) => path + `/admin/customers?page=${page}` } },
-      admin: { setStatus: { method: 'POST', uri: (role, userId) => path + `/admin/${role}/${userId}/status` } },
-      lastNotAccomplishedOrder: { method: 'GET', uri: (user) => path + `/${user}/orders/last-not-accomplished` },
-      payForOrder: { method: 'POST', uri: (user, orderId) => path + `/${user}/orders/${orderId}/pay` },
-      actualStatusOfCurrentUser: { method: 'GET', uri: path + '/status' },
+      confirmedEntertainers: { method: 'GET', uri: orderId => `${path}/customer/orders/${orderId}/invites?status[]=accepted&status[]=canceled` },
+      entertainers: { get: { method: 'GET', uri: (page = 1) => `${path}/provider?page=${page}` } },
+      customers: { get: { method: 'GET', uri: (page = 1) => `${path}/admin/customers?page=${page}` } },
+      admin: { setStatus: { method: 'POST', uri: (role, userId) => `${path}/admin/${role}/${userId}/status` } },
+      lastNotAccomplishedOrder: { method: 'GET', uri: user => `${path}/${user}/orders/last-not-accomplished` },
+      payForOrder: { method: 'POST', uri: (user, orderId) => `${path}/${user}/orders/${orderId}/pay` },
+      actualStatusOfCurrentUser: { method: 'GET', uri: `${path}/status` },
       orders: {
-        getAll: { method: 'GET', uri: (role, page = 1) => path + `/${role}/orders?page=${page}` },
-        getOne: { method: 'GET', uri: (role, orderId) => path + `/${role}/orders/${orderId}?include=invites` }
+        getAll: { method: 'GET', uri: (role, page = 1) => `${path}/${role}/orders?page=${page}` },
+        getOne: { method: 'GET', uri: (role, orderId) => `${path}/${role}/orders/${orderId}?include=invites` }
       },
-      cancelOrder: { method: 'POST', uri: (role, orderId) => path + `/${role}/orders/${orderId}/complete` }
+      cancelOrder: { method: 'POST', uri: (role, orderId) => `${path}/${role}/orders/${orderId}/complete` }
     };
   }
 
-  orderConstants() {
+  orderConstants ( ) {
     return {
       models: {
-        date: new Date(),
-        currentDate: new Date(),
+        date: new Date( ),
+        currentDate: new Date( ),
         entertainers: _.range(1, 7),
-        entertainer: function () {
+        entertainer ( ) {
           this.entertainer = _.head(this.entertainers);
           return this;
         },
         hours: ['0.5 H', '1 H', '1.5 H', '2 H', '2.5 H', '3 H', '3.5 H', '4 H'],
-        hour: function () {
+        hour ( ) {
           this.hour = _.head(this.hours);
           return this;
         },
         guests: ['1', '2-3', '4-5', '5-10', '10-15', '15+'],
         guest: 1,
         asap: true
-      }.hour().entertainer(),
+      }.hour( ).entertainer( ),
 
       statuses: {
         accepted: 'accepted',
@@ -114,7 +114,7 @@ class Constants {
 
       entertainersCountInfo: 'Just trying to get to know you better for the safety of our Minx.',
 
-      cancelEntertainerMessage: (penaltyAmount) => penaltyAmount > 0 ?
+      cancelEntertainerMessage: penaltyAmount => penaltyAmount > 0 ? // eslint-disable-line no-confusing-arrow
         `Canceling the order will cost $ ${penaltyAmount} penalty. Are you sure want to cancel order for the minx?` :
         'Are you sure want to cancel order for the minx?',
 
@@ -130,16 +130,15 @@ class Constants {
         {
           title: 'Cancel unconfirmed invites',
           content: `
-            Are you sure want to cancel unconfirmed invites and complete this order? 
-            <br/> \ Note: We will do a refund of the money that you paid for 
-            unconfirmed entertainers`
+              Are you sure want to cancel unconfirmed invites and complete this order?  <br/> 
+              Note: We will do a refund of the money that you paid for  unconfirmed entertainers`
         }
       ],
 
     };
   }
 
-  billingConstants() {
+  billingConstants ( ) {
     return {
       fields: {
         customer: [
@@ -151,21 +150,21 @@ class Constants {
           },
           { name: 'Phone Number', model: 'phone', type: 'tel' }
         ],
-        provider: function () {
+        provider ( ) {
           this.provider = _.union(
             [{ name: 'Display Name', model: 'displaying_name', type: 'text' }],
             this.customer
           );
           return this;
         }
-      }.provider(),
+      }.provider( ),
 
       defaultCurrency: 'usd'
 
     };
   }
 
-  adminConstants() {
+  adminConstants ( ) {
     return {
 
       statuses: {
@@ -196,10 +195,10 @@ class Constants {
         let statusResult = status.substr(0, 1);
 
         if (isCapitalize) {
-          statusResult = status.substr(0, 1).toUpperCase();
+          statusResult = status.substr(0, 1).toUpperCase( );
         }
 
-        switch ( status ) {
+        switch (status) {
           case 'active':
             statusResult += status.substr(1);
             break;

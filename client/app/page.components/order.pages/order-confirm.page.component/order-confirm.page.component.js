@@ -6,7 +6,7 @@ import showInTime from '../../../common/show-in-time.directive';
 import template from './order-confirm.page.component.html';
 
 class controller {
-  constructor(Constants, moment, $state, OrderService, Helper) {
+  constructor (Constants, moment, $state, OrderService, Helper) {
     'ngInject';
 
     Object.assign(this, {
@@ -19,10 +19,10 @@ class controller {
     });
   }
 
-  cancelOrder(ev, invite) {
-    let cost = this.moment(invite.datetime).add(this.timeToCleanCancel, 'm') > this.moment() ? 0 : invite.type.penalty_amount;
+  cancelOrder (ev, invite) {
+    const cost = this.moment(invite.datetime).add(this.timeToCleanCancel, 'm') > this.moment( ) ? 0 : invite.type.penalty_amount;
 
-    this.OrderService.cancelOrderForEntertainer(ev, invite, cost).then((_data) => {
+    this.OrderService.cancelOrderForEntertainer(ev, invite, cost).then(_data => {
       this.Helper.showToast('Done');
     });
   }
@@ -33,23 +33,21 @@ export default angular.module('orderConfirm', [
   uiRouter,
   timer,
   showInTime
-]).config(($stateProvider) => {
-  "ngInject";
+]).config($stateProvider => {
+  'ngInject';
 
   $stateProvider.state('main.orderConfirm', {
     url: '/:orderId/orderConfirm',
     parent: 'main',
-    template: '<order-confirm \
-                    invites="OrderService.listConfirmed">\
-                  </order-confirm>',
-    controller: function ($scope, OrderService) {
+    template: '<order-confirm  invites="OrderService.listConfirmed"></order-confirm>',
+    controller ($scope, OrderService) {
       $scope.OrderService = OrderService;
     },
     resolve: {
-      orderId: function ($stateParams) {
-        return $stateParams['orderId'] || 0;
+      orderId ($stateParams) {
+        return $stateParams.orderId || 0;
       },
-      entertainersConfirmed: function (OrderService, orderId) {
+      entertainersConfirmed (OrderService, orderId) {
         return OrderService.fetchEntertainersConfirmed(orderId);
       }
     }

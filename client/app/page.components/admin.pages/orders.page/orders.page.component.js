@@ -10,7 +10,7 @@ import template from './orders.page.html';
 
 class controller {
 
-  constructor(OrdersService, Constants, Resolve) {
+  constructor (OrdersService, Constants, Resolve) {
     'ngInject';
 
     Object.assign(this, {
@@ -27,40 +27,40 @@ class controller {
     });
   }
 
-  $onInit() {
+  $onInit ( ) {
     this.isOnProgress = true;
 
-    this.OrdersService.fetchOrders()
+    this.OrdersService.fetchOrders( )
       .then(data => {
         this.isOnProgress = false;
         this.isLastPage = this.checkIsLastPage(data.meta.pagination.total_pages);
       });
 
-    this.Resolve.providers()
+    this.Resolve.providers( )
       .then(data => this.typesOfService = data);
   }
 
-  fetchMoreItems() {
+  fetchMoreItems ( ) {
     this.isOnProgress = true;
 
     this.OrdersService.fetchOrders(this.currentPage + 1)
-      .then((data) => {
+      .then(data => {
         this.isOnProgress = false;
         this.currentPage = data.meta.pagination.current_page;
         this.isLastPage = this.checkIsLastPage(data.meta.pagination.total_pages);
       });
-  };
+  }
 
-  checkIsLastPage(totalPages) {
+  checkIsLastPage (totalPages) {
     return this.currentPage == totalPages;
   }
 
-  getOrderDetails(index) {
+  getOrderDetails (index) {
     this.isOnProgress = true;
     this.orderActiveIndex = index;
 
     this.OrdersService.getOrderDetails(this.OrdersService.list[this.orderActiveIndex].id)
-      .then((data) => {
+      .then(data => {
         this.isOnProgress = false;
         return this.orderActive = data;
       });
@@ -71,8 +71,8 @@ export default angular.module('orders', [
   uiRouter,
   OrdersService,
   statusCorrection
-]).config(($stateProvider) => {
-  "ngInject";
+]).config($stateProvider => {
+  'ngInject';
 
   $stateProvider.state('admin.orders', {
     url: '/orders',

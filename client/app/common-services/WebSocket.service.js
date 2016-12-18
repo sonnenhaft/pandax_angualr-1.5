@@ -3,7 +3,7 @@ import 'angular-websocket';
 
 class WebSocket {
 
-  constructor(Constants, $websocket, Helper) {
+  constructor (Constants, $websocket, Helper) {
     'ngInject';
 
     Object.assign(this, {
@@ -12,38 +12,37 @@ class WebSocket {
       Helper,
       dataStream: {}
     });
-
   }
 
-  open(channelName, cbOnOpen, cbOnClose) {
+  open (channelName, cbOnOpen, cbOnClose) {
     this.dataStream = this.$websocket(this.Constants.api.ws.invites.uri(channelName));
 
-    this.dataStream.onOpen((response) => {
+    this.dataStream.onOpen(response => {
       console.log('onOpen:', response);
       if (cbOnOpen) {
-        cbOnOpen();
+        cbOnOpen( );
       }
     });
 
-    this.dataStream.onClose((response) => {
+    this.dataStream.onClose(response => {
       console.log('onClose:', response);
       if (cbOnClose) {
-        cbOnClose();
+        cbOnClose( );
       }
     });
 
     return this.dataStream;
   }
 
-  invites(channelName = '', cbOnMessage, cbOnOpen) {
+  invites (channelName = '', cbOnMessage, cbOnOpen) {
     this.open(channelName, cbOnOpen);
 
-    this.dataStream.onMessage((message) => {
+    this.dataStream.onMessage(message => {
       console.log('onmessage:', message);
-      let data = JSON.parse(message.data);
+      const data = JSON.parse(message.data);
 
       if (data.action == 'close') {
-        this.close();
+        this.close( );
         return data;
       }
 
@@ -59,9 +58,9 @@ class WebSocket {
     });
   }
 
-  close() {
+  close ( ) {
     console.log('close directly:');
-    this.dataStream.close();
+    this.dataStream.close( );
   }
 }
 

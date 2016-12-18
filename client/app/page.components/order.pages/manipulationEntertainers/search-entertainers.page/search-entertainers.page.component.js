@@ -2,12 +2,12 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import OrderService from '../../../../common-services/orderService.service';
 import billing from '../../../profile.pages/billing.page.component/billing.page.component';
-import entertainerPhotosModal from '../entertainer-protos.modal/entertainer-protoes.modal.js';
+import entertainerPhotosModal from '../entertainer-protos.modal/entertainer-protoes.modal';
 
 import template from './search-entertainers.page.html';
 
 class controller {
-  constructor(OrderService, $state, $mdDialog, $stateParams, Constants, entertainerPhotosModal) {
+  constructor (OrderService, $state, $mdDialog, $stateParams, Constants, entertainerPhotosModal) {
     'ngInject';
 
     Object.assign(this, {
@@ -21,24 +21,28 @@ class controller {
     });
   }
 
-  goToEntertainerByIndex(direction) {
-    let possibleIndex = this.itemActiveIndex + direction;
+  goToEntertainerByIndex (direction) {
+    const possibleIndex = this.itemActiveIndex + direction;
     if (possibleIndex >= 0 && possibleIndex < this.entertainers.length) {
       this.itemActiveIndex = possibleIndex;
       this.photoActiveIndex = 0;
     }
   }
 
-  showPopup(ev) {
+  showPopup (ev) {
     this.entertainerPhotosModal({
       photos: this.entertainers[this.itemActiveIndex].photos,
       photoIndexActive: this.photoActiveIndex
-    }, ev)
+    }, ev);
   }
 
-  goToNextStep() {
+  goToNextStep ( ) {
     if (this.entertainersInvited.length == 0) {
-      this.$state.go('main.billing', { orderId: this.$stateParams.orderId, entertainerId: this.entertainers[this.itemActiveIndex].id, from: 'main.manipulationEntertainers' });
+      this.$state.go('main.billing', {
+        orderId: this.$stateParams.orderId,
+        entertainerId: this.entertainers[this.itemActiveIndex].id,
+        from: 'main.manipulationEntertainers'
+      });
     } else {
       this.OrderService.inviteEntertainer(this.$stateParams.orderId, this.entertainers[this.itemActiveIndex].id);
     }

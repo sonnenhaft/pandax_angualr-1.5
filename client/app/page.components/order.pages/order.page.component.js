@@ -1,5 +1,6 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
+
 import User from '../../common-services/user.service';
 import Constants from '../../common-services/constants.service';
 import Helper from '../../common-services/helper.service';
@@ -14,7 +15,7 @@ import template from './order.page.html';
 
 class controller {
 
-  constructor(User, Constants, Helper, Validation, OrderService, Request, $window, $state, $mdDialog, moment) {
+  constructor (User, Constants, Helper, Validation, OrderService, Request, $window, $state, $mdDialog, moment) {
     'ngInject';
 
     Object.assign(this, {
@@ -26,19 +27,18 @@ class controller {
       Request,
       $state,
       $mdDialog,
-      maxDateForCreating: moment().add(Constants.order.maxPeriodForCreating.value, Constants.order.maxPeriodForCreating.key).toDate()
+      maxDateForCreating: moment( ).add(Constants.order.maxPeriodForCreating.value, Constants.order.maxPeriodForCreating.key).toDate( )
     });
     this.mobile = $window.innerWidth <= 960;
 
-    $window.addEventListener('resize', () => {
+    $window.addEventListener('resize', ( ) => {
       this.mobile = $window.innerWidth <= 960;
     });
-
   }
 
-  $onInit() {
-    this.providers = _.map(this.OrderService.getProviders(), (provider, i) => {
-      provider.active = i == 0 ? true : false;
+  $onInit ( ) {
+    this.providers = _.map(this.OrderService.getProviders( ), (provider, i) => {
+      provider.active = i == 0;
       return provider;
     });
 
@@ -60,43 +60,43 @@ class controller {
     }
   }
 
-  showDescription(event, index) {
+  showDescription (event, index) {
     this.$mdDialog
       .show({
-        contentElement: '#typeDescr-' + index,
+        contentElement: `#typeDescr-${index}`,
         parent: document.body,
         targetEvent: event,
         clickOutsideToClose: true
       });
   }
 
-  onDateChange(date) {
+  onDateChange (date) {
     this.dateError = false;
-    if (this.validate({date})) {
+    if (this.validate({ date })) {
       this.range = this.Helper.getNearestTime('range', date);
     }
   }
 
-  getTotalPrice() {
+  getTotalPrice ( ) {
     return _
         .chain(this.Helper.getActiveObjectFromArray(this.providers))
         .map('price')
-        .sum()
-        .value() * parseFloat(this.hour) * Number(this.entertainer);
+        .sum( )
+        .value( ) * parseFloat(this.hour) * Number(this.entertainer);
   }
 
-  validate(field) {
+  validate (field) {
     if (this.Validation.error(field).length) {
       _.map(this.Validation.error(field), error => {
-        this[error.name + 'Error'] = error.text;
+        this[`${error.name}Error`] = error.text;
       });
       return false;
     }
     return true;
   }
 
-  onSearch(orderModel, form) {
-    if ((this.typeError = !this.Helper.getActiveObjectFromArray(this.providers).length) || form.$invalid) {
+  onSearch (orderModel, form) {
+    if ((this.typeError = !this.Helper.getActiveObjectFromArray(this.providers).length) || form.$invalid) { // eslint-disable-line no-cond-assign
       return false;
     }
 
@@ -115,13 +115,13 @@ class controller {
     }
 
     if (this.User.get('is_newcomer')) {
-      this.$state.go('main.accept', {order: this.orderData(orderModel)});
+      this.$state.go('main.accept', { order: this.orderData(orderModel) });
       return false;
     }
 
     this.Request
       .send(
-        this.User.token(),
+        this.User.token( ),
         this.Constants.api.order.method,
         this.Constants.api.order.uri,
         this.orderData(orderModel)
@@ -130,7 +130,7 @@ class controller {
         result => {
           this.orderLoading = false;
           this.User.update(result.data.customer);
-          this.$state.go('main.manipulationEntertainers', {orderId: result.data.id, channelName: result.data.channel_name});
+          this.$state.go('main.manipulationEntertainers', { orderId: result.data.id, channelName: result.data.channel_name });
         },
         error => {
           this.orderLoading = false;
@@ -139,18 +139,18 @@ class controller {
       );
   }
 
-  orderData(orderModel) {
+  orderData (orderModel) {
     return this
       .OrderService
       .buildOrder(
         Object.assign(orderModel, {
           geo: this.inputLocation,
-          price: this.getTotalPrice()
+          price: this.getTotalPrice( )
         })
       );
   }
 
-  showEntertainersCountInfo(event) {
+  showEntertainersCountInfo (event) {
     this.$mdDialog
       .show({
         contentElement: '#entertainers-count-info',
@@ -170,23 +170,23 @@ export default angular.module('order', [
   manipulationEntertainers,
   Request,
   orderTerms
-]).config(($stateProvider) => {
-  "ngInject";
+]).config($stateProvider => {
+  'ngInject';
 
   $stateProvider.state('main.order', {
     url: '/order',
     parent: 'main',
     component: 'order',
     resolve: {
-      notAccomplishedOrder: function (OrderService) {
-        return OrderService.fetchLastNotAccomplishedOrder()
+      notAccomplishedOrder (OrderService) {
+        return OrderService.fetchLastNotAccomplishedOrder( )
           .then(data => data);
       }
     },
     onEnter: ($transition$, notAccomplishedOrder, $state, Constants, $timeout) => {
       if (notAccomplishedOrder) {
-        $timeout(() => {
-          $state.go('main.manipulationEntertainers', {orderId: notAccomplishedOrder.id});
+        $timeout(( ) => {
+          $state.go('main.manipulationEntertainers', { orderId: notAccomplishedOrder.id });
         }, 100);
       }
     }

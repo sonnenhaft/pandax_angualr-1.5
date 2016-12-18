@@ -4,7 +4,7 @@ import Resolve from '../../common-services/resolve.service';
 import template from './main.page.html';
 
 class controller {
-  constructor(User) {
+  constructor (User) {
     'ngInject';
 
     Object.assign(this, {
@@ -12,7 +12,7 @@ class controller {
       userAvatarSrc: ''
     });
 
-    this.User.fetchUserAvatarSrc();
+    this.User.fetchUserAvatarSrc( );
   }
 
 }
@@ -20,15 +20,15 @@ class controller {
 export default angular.module('main', [
   uiRouter,
   Resolve
-]).config(($stateProvider) => {
-  "ngInject";
+]).config($stateProvider => {
+  'ngInject';
 
   $stateProvider.state('main', {
     url: '/main',
     abstract: true,
     component: 'main',
     resolve: {
-      providers: Resolve => Resolve.providers()
+      providers: Resolve => Resolve.providers( )
     }
   });
 }).component('main', {

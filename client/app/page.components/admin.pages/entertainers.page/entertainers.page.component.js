@@ -1,13 +1,13 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 
-import entertainerPhotosModal from '../../order.pages/manipulationEntertainers/entertainer-protos.modal/entertainer-protoes.modal.js';
+import entertainerPhotosModal from '../../order.pages/manipulationEntertainers/entertainer-protos.modal/entertainer-protoes.modal';
 import EntertainersService from '../../../common-services/entertainersService.service';
 
 import template from './entertainers.page.html';
 
 class controller {
-  constructor(EntertainersService, Constants, $mdDialog, entertainerPhotosModal, $window) {
+  constructor (EntertainersService, Constants, $mdDialog, entertainerPhotosModal, $window) {
     'ngInject';
 
     Object.assign(this, {
@@ -24,39 +24,39 @@ class controller {
     });
   }
 
-  $onInit() {
-    this.fetchMoreItems()
+  $onInit ( ) {
+    this.fetchMoreItems( );
   }
 
-  fetchMoreItems() {
+  fetchMoreItems ( ) {
     this.isOnProgress = true;
 
-    this.EntertainersService.fetchEntertainers(this.currentPage + 1).then((data) => {
+    this.EntertainersService.fetchEntertainers(this.currentPage + 1).then(data => {
       this.isOnProgress = false;
       this.currentPage = data.meta.pagination.current_page;
       this.isLastPage = this.checkIsLastPage(data.meta.pagination.total_pages);
     });
-  };
+  }
 
-  checkIsLastPage(totalPages) {
+  checkIsLastPage (totalPages) {
     return this.currentPage == totalPages;
   }
 
-  showPopup(ev, index) {
+  showPopup (ev, index) {
     this.entertainerPhotosModal({
       photos: this.EntertainersService.list[index].photos,
       photoIndexActive: 0
-    }, ev)
+    }, ev);
   }
 }
 
-var name = 'entertainersPage';
+const name = 'entertainersPage';
 export default angular.module(name, [
   uiRouter,
   EntertainersService,
   entertainerPhotosModal
-]).config(($stateProvider) => {
-  "ngInject";
+]).config($stateProvider => {
+  'ngInject';
 
   $stateProvider.state('admin.entertainers', {
     url: '/entertainers',

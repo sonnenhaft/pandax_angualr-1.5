@@ -7,19 +7,18 @@ import Reset from './reset-password.page.component/reset-password.page.component
 import template from './home.page.html';
 
 class controller {
-  copyright = `Copyright © ${(new Date()).getFullYear()} MNX USA LLC`
+  copyright = `Copyright © ${(new Date( )).getFullYear( )} MNX USA LLC`
 
-  constructor($stateParams) {
+  constructor ($stateParams) {
     'ngInject';
 
-    Object.assign(this, {$stateParams});
+    Object.assign(this, { $stateParams });
 
     this.signIn = true;
     this.signUp = false;
-
   }
 
-  $onInit() {
+  $onInit ( ) {
     if (this.$stateParams.signup && this.$stateParams.user) {
       this.signIn = false;
       this.signUp = true;
@@ -36,7 +35,7 @@ class controller {
     }
   }
 
-  switchTo(form) {
+  switchTo (form) {
     this.signIn = this.signUp = this.restore = this.reset = false;
     this[form] = true;
   }
@@ -52,8 +51,8 @@ export default angular
     Restore,
     Reset
   ])
-  .config(($stateProvider) => {
-    "ngInject";
+  .config($stateProvider => {
+    'ngInject';
 
     $stateProvider
       .state('home', {
@@ -62,8 +61,8 @@ export default angular
       });
   })
   .component('home', {
-  template,
-  controller
-})
+    template,
+    controller
+  })
   .name;
 

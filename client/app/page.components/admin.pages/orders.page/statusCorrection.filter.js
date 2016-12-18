@@ -1,12 +1,12 @@
 import angular from 'angular';
 
 export default angular.module('statusCorrection', [
-]).filter('statusCorrection', function(Constants) {
+]).filter('statusCorrection', Constants => {
   'ngInject';
 
-  let statusesViewCorrection = Constants.order.statusesViewCorrection;
+  const statusesViewCorrection = Constants.order.statusesViewCorrection;
 
-  return function(status) {
+  return function statusCorrection (status) {
     return statusesViewCorrection[status] || status;
   };
 }).name;

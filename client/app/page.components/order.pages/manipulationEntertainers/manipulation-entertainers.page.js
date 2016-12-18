@@ -7,7 +7,7 @@ import confirmedEntertainers from './confirmed-entertainers.page.component/confi
 import template from './manipulation-entertainers.page.html';
 
 class controller {
-  constructor($state, $mdMedia, $stateParams, OrderService, Constants) {
+  constructor ($state, $mdMedia, $stateParams, OrderService, Constants) {
     'ngInject';
 
     Object.assign(this, {
@@ -21,7 +21,7 @@ class controller {
     });
   }
 
-  cancelOrder(ev) {
+  cancelOrder (ev) {
     let messageType = 0;
 
     if (this.OrderService.listConfirmed.length > 0) {
@@ -31,9 +31,9 @@ class controller {
     }
 
     this.OrderService.cancelOrder(ev, this.$stateParams.orderId, messageType)
-      .then((data) => {
+      .then(data => {
         if (data.status == this.Constants.order.statuses.accepted) {
-          this.$state.go('main.orderConfirm', {orderId: this.$stateParams.orderId});
+          this.$state.go('main.orderConfirm', { orderId: this.$stateParams.orderId });
         } else {
           this.$state.go('main.order');
         }
@@ -46,49 +46,49 @@ export default angular.module('manipulationEntertainers', [
   OrderService,
   searchEntertainers,
   confirmedEntertainers
-]).config(($stateProvider) => {
-  "ngInject";
+]).config($stateProvider => {
+  'ngInject';
 
   $stateProvider.state('main.manipulationEntertainers', {
     url: '/:orderId/manipulationEntertainers',
     parent: 'main',
-    template: '<manipulation-entertainers \
-                    entertainers="OrderService.list" \
-                    entertainers-invited="OrderService.listInvited"\
-                    count-of-required-entertainers="countOfRequiredEntertainers"\
-                    service-type-price="serviceTypePrice">\
-                  </manipulation-entertainers>',
-    controller: function ($scope, OrderService, countOfRequiredEntertainers, serviceTypePrice) {
+    template: `<manipulation-entertainers 
+                    entertainers="OrderService.list" 
+                    entertainers-invited="OrderService.listInvited"
+                    count-of-required-entertainers="countOfRequiredEntertainers"
+                    service-type-price="serviceTypePrice">
+                  </manipulation-entertainers>`,
+    controller ($scope, OrderService, countOfRequiredEntertainers, serviceTypePrice) {
       $scope.OrderService = OrderService;
       $scope.countOfRequiredEntertainers = countOfRequiredEntertainers;
       $scope.serviceTypePrice = serviceTypePrice;
     },
     resolve: {
-      orderId: function ($stateParams) {
-        return $stateParams['orderId'] || 0;
+      orderId ($stateParams) {
+        return $stateParams.orderId || 0;
       },
-      entertainers: function (OrderService, orderId) {
+      entertainers (OrderService, orderId) {
         return OrderService.fetchEntertainers(orderId);
       },
-      orderDetails: function (OrderService, orderId) {
+      orderDetails (OrderService, orderId) {
         return OrderService.fetchOrderDetails(orderId);
       },
-      channelName: function (orderDetails) {
+      channelName (orderDetails) {
         return orderDetails.channel_name;
       },
-      entertainersInvited: function (OrderService, channelName, orderId) {
+      entertainersInvited (OrderService, channelName, orderId) {
         OrderService.subcribeOnEntertainerInvite(channelName);
         return OrderService.fetchEntertainersInvited(orderId);
       },
-      countOfRequiredEntertainers: function (orderDetails) {
+      countOfRequiredEntertainers (orderDetails) {
         return orderDetails.entertainers_number;
       },
-      serviceTypePrice: function (orderDetails) {
+      serviceTypePrice (orderDetails) {
         return orderDetails.serviceType.price;
       }
     },
-    onExit: function (OrderService) {
-      OrderService.unsubcribeOnEntertainerInvite();
+    onExit (OrderService) {
+      OrderService.unsubcribeOnEntertainerInvite( );
     }
   });
 }).component('manipulationEntertainers', {

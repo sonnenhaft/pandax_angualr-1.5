@@ -2,11 +2,11 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import template from './contact-us.page.html';
 
-var componentName = 'contactUsPage';
+const componentName = 'contactUsPage';
 export default angular.module(componentName, [
   uiRouter
 ]).config($stateProvider => {
-  "ngInject";
+  'ngInject';
 
   $stateProvider.state('main.contact-us', {
     url: '/contact-us',

@@ -9,8 +9,8 @@ class controller {
     'ngInject';
 
     Object.assign(this, {
-    	OrderService,
-    	history: [],
+      OrderService,
+      history: [],
       isOnProgress: false,
       isLastPage: false,
       currentPage: 1,
@@ -18,39 +18,39 @@ class controller {
     });
   }
 
-  $onInit () {
-  	this.isOnProgress = true;
+  $onInit ( ) {
+    this.isOnProgress = true;
 
-    this.OrderService.fetchHistoryOrders()
+    this.OrderService.fetchHistoryOrders( )
       .then(data => {
-      	this.isOnProgress = false;
+        this.isOnProgress = false;
         this.isLastPage = this.checkIsLastPage(data.meta.pagination.total_pages);
         return this.history = data.items;
       });
   }
 
-  fetchMoreItems () {
+  fetchMoreItems ( ) {
     this.isOnProgress = true;
 
     this.OrderService.fetchHistoryOrders(this.currentPage + 1)
-      .then((data) => {
+      .then(data => {
         this.isOnProgress = false;
         this.currentPage = data.meta.pagination.current_page;
-        this.history = this.history.concat( data.items );
+        this.history = this.history.concat(data.items);
 
         this.isLastPage = this.checkIsLastPage(data.meta.pagination.total_pages);
-      })
-  };
+      });
+  }
 
   checkIsLastPage (totalPages) {
-		return this.currentPage == totalPages;
+    return this.currentPage == totalPages;
   }
 
 }
 
 export default angular.module('pastOrders', [
-    uiRouter
-  ]).filter('hoursToTime', hoursToTime).component('pastOrders', {
+  uiRouter
+]).filter('hoursToTime', hoursToTime).component('pastOrders', {
   template,
   controller
 }).name;

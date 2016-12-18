@@ -2,8 +2,9 @@ import angular from 'angular';
 
 class Request {
 
-  constructor($http, $q) {
+  constructor ($http, $q) {
     'ngInject';
+
     Object.assign(this, { $http, $q });
 
     this.headers = {
@@ -11,15 +12,15 @@ class Request {
     };
   }
 
-  send(token, method, url, data) {
-    let params = {
+  send (token, method, url, data) {
+    const params = {
       method,
       url,
       headers: this.headers,
       data: JSON.stringify(data)
     };
     if (token) {
-      params.headers = Object.assign(params.headers, { 'Authorization': 'Bearer ' + token });
+      params.headers = Object.assign(params.headers, { Authorization: `Bearer ${token}` });
     }
     if (!data) {
       _.unset(params, 'data');
@@ -28,7 +29,7 @@ class Request {
       params.data = data;
       params.headers = {
         'Content-Type': data.type,
-        'Authorization': 'Bearer ' + token
+        Authorization: `Bearer ${token}`
       };
     }
     return this
@@ -36,7 +37,7 @@ class Request {
       .then(
         result => result,
         error => {
-          let defer = this.$q.defer();
+          const defer = this.$q.defer( );
           defer.reject(error);
           return defer.promise;
         }

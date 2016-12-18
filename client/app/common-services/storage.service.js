@@ -1,31 +1,32 @@
 import angular from 'angular';
 
 class Storage {
-  constructor($window) {
+  constructor ($window) {
     'ngInject';
+
     Object.assign(this, { $window });
   }
 
-  set(key, value) {
+  set (key, value) {
     this.$window.localStorage[key] = value;
   }
 
-  get(key, defaultValue) {
+  get (key, defaultValue) {
     return this.$window.localStorage[key] || defaultValue;
   }
 
-  remove(key) {
+  remove (key) {
     delete this.$window.localStorage[key];
   }
 
-  setObject(key, value) {
+  setObject (key, value) {
     this.$window.localStorage[key] = JSON.stringify(value);
   }
 
-  getObject(key) {
+  getObject (key) {
     try {
       return JSON.parse(this.$window.localStorage[key] || '{}');
-    } catch ( E ) {
+    } catch (E) {
       console.log(E);
     }
     return undefined;

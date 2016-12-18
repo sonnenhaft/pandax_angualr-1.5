@@ -5,7 +5,7 @@ import Constants from './constants.service';
 import Request from './request.service';
 
 class Resolve {
-  constructor(User, OrderService, Constants, Request, moment, $timeout) {
+  constructor (User, OrderService, Constants, Request, moment, $timeout) {
     'ngInject';
 
     Object.assign(this, {
@@ -16,7 +16,6 @@ class Resolve {
       moment,
       $timeout
     });
-
   }
 
   /*
@@ -42,23 +41,19 @@ class Resolve {
    .then(billingInfo => this.User.billingInfo = billingInfo);
    }*/
 
-  providers() {
+  providers ( ) {
     return this
       .Request
       .send(
-        this.User.token(),
+        this.User.token( ),
         this.Constants.api.service.method,
         this.Constants.api.service.uri(this.User.get('role'))
       )
       .then(
-        result => {
-          return _.map(result.data, provider => {
-            return Object.assign(provider, {
-              price: _.round(provider.price),
-              img: require('../../assets/images/services/' + provider.name.toLowerCase().replace(/\s+/g, '_') + '.png')
-            });
-          });
-        },
+        result => _.map(result.data, provider => Object.assign(provider, {
+          price: _.round(provider.price),
+          img: require(`../../assets/images/services/${provider.name.toLowerCase().replace(/\s+/g, '_')}.png`) // eslint-disable-line
+        })),
         error => console.log(error)
       )
       .then(providers => this.OrderService.providers = providers);

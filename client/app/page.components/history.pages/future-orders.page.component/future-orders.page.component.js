@@ -19,7 +19,7 @@ class controller {
       asapOrders: []
     });
 
-    OrderService.fetchFuturesOrders()
+    OrderService.fetchFuturesOrders( )
       .then(data => {
         if (this.currentPage == data.meta.pagination.total_pages) {
           this.isLastPage = true;
@@ -34,7 +34,7 @@ class controller {
       .chain(list)
       .filter(order => order[param])
       .sortBy(order => order.datetime)
-      .value();
+      .value( );
   }
 
   moveActiveOrdersToHead (list = this.futures) {
@@ -42,23 +42,23 @@ class controller {
       .chain(list)
       .remove(['active', true])
       .union(this.activeOrders, this.asapOrders, list)
-      .value();
+      .value( );
   }
 
-  fetchMoreItems () {
+  fetchMoreItems ( ) {
     this.isOnProgress = true;
 
     this.OrderService.fetchFuturesOrders(this.currentPage + 1)
-      .then((data) => {
+      .then(data => {
         this.isOnProgress = false;
         this.currentPage = data.meta.pagination.current_page;
-        this.futures = this.futures.concat( this.resortList(data.items) );
+        this.futures = this.futures.concat(this.resortList(data.items));
 
         if (this.currentPage == data.meta.pagination.total_pages) {
           this.isLastPage = true;
         }
-      })
-  };
+      });
+  }
 
   /**
    * Search and lift up 'ASAP' orders and orders with 'active' status

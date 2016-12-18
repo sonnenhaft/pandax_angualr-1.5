@@ -2,23 +2,25 @@ import angular from 'angular';
 import messages from '../../../../common/messages.component';
 
 import template from './card-info.html';
+
 class controller {
-  constructor(stripe, User) {
+  constructor (stripe, User) {
     'ngInject';
 
     this.stripe = stripe;
-    this.isCustomer = User.get('role') === 'customer'
+    this.isCustomer = User.get('role') === 'customer';
   }
 
-  checkCardNumber() {
-    this.formObject.card_number.$setValidity(this.isCustomer ? 'invalid_credit_card_number' : 'invalid_card_number', this.stripe.card.validateCardNumber(this.model.number));
+  checkCardNumber ( ) {
+    const validationKey = this.isCustomer ? 'invalid_credit_card_number' : 'invalid_card_number';
+    this.formObject.card_number.$setValidity(validationKey, this.stripe.card.validateCardNumber(this.model.number));
   }
 
-  checkCardExpiry() {
+  checkCardExpiry ( ) {
     this.formObject.expiry.$setValidity('invalid_card_expiry', this.stripe.card.validateExpiry(this.model.expiry));
   }
 
-  checkCardCvc() {
+  checkCardCvc ( ) {
     this.formObject.cvc.$setValidity('invalid_card_cvc', this.stripe.card.validateCVC(this.model.cvc));
   }
 }

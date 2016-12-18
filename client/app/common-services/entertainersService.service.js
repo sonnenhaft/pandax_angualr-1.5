@@ -5,13 +5,12 @@ class EntertainersService {
     'ngInject';
 
     Object.assign(this, {
-        Constants,
-        Request,
-        $mdDialog,
-        $q,
-        list: []
+      Constants,
+      Request,
+      $mdDialog,
+      $q,
+      list: []
     });
-
   }
 
   fetchEntertainers (page = 1) {
@@ -30,7 +29,7 @@ class EntertainersService {
       );
   }
 
-  getEntertainers () {
+  getEntertainers ( ) {
     return this.list;
   }
 
@@ -42,7 +41,7 @@ class EntertainersService {
 
     if (showPopup) {
       confirm = this.$mdDialog.show(
-        this.$mdDialog.confirm()
+        this.$mdDialog.confirm( )
           .title(this.Constants.admin.setStatusMessage.title('entertainer', targetStatusForPopup))
           .textContent(this.Constants.admin.setStatusMessage.content('entertainer', targetStatusForPopup))
           .ariaLabel('Set status')
@@ -50,35 +49,33 @@ class EntertainersService {
           .ok('Yes')
           .cancel('No'));
     } else {
-      confirm = this.$q.defer();
-      confirm.resolve();
+      confirm = this.$q.defer( );
+      confirm.resolve( );
       confirm = confirm.promise;
     }
 
-    return confirm.then((_data) => {
-      return this
+    return confirm.then(_data => this
         .Request
         .send(
           null,
           this.Constants.api.admin.setStatus.method,
           this.Constants.api.admin.setStatus.uri('providers', entertainer.id),
-          {set: targetStatus}
+          { set: targetStatus }
         )
         .then(
           result => {
             this.updateEntertainerInList(entertainer, result.data.status);
             return result.data;
           }
-        );
-      });
+        ));
   }
 
   updateEntertainerInList (entertainer, targetStatus) {
     entertainer.status = targetStatus;
-    this.sortItems();
+    this.sortItems( );
   }
 
-  sortItems () {
+  sortItems ( ) {
     this.list.sort((itemA, itemB) => {
       if (itemA.status == this.Constants.admin.statuses.entertainer.pending && itemB.status != itemA.status) {
         return -1;   // move itemA up

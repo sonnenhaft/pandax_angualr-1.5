@@ -27,7 +27,7 @@ export default [
     role: ['provider'],
     parent: 'Settings',
     text: 'View profile',
-    url: "main.profile.view"
+    url: 'main.profile.view'
   },
   {
     role: ['customer', 'provider'],
@@ -36,4 +36,4 @@ export default [
     isComponent: true,
     component: 'logout'
   }
-]
+];

@@ -21,7 +21,13 @@
 
     "class-methods-use-this": [0],
     "import/no-extraneous-dependencies": [0],
-    "import/no-unresolved": [2, {"ignore": ["config"]}]
+    "import/no-unresolved": [2, {"ignore": ["config"]}],
+
+    // added
+    "object-curly-spacing": ["error", "always"],
+    "arrow-parens": ["error", "as-needed"],
+    "space-before-function-paren": ["error", "always"],
+    "space-in-parens": ["error", "never", { "exceptions": ["empty"] }]
   },
   "globals": {
     "angular": true,

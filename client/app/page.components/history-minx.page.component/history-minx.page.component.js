@@ -7,7 +7,7 @@ import showInTime from '../../common/show-in-time.directive';
 import template from './history-minx.page.html';
 
 class controller {
-  constructor($stateParams, Constants, moment, OrderService, Helper) {
+  constructor ($stateParams, Constants, moment, OrderService, Helper) {
     'ngInject';
 
     Object.assign(this, {
@@ -22,10 +22,10 @@ class controller {
     this.type = $stateParams.type;
   }
 
-  cancelOrder(ev, invite) {
-    let cost = this.moment(invite.datetime).add(this.timeToCleanCancel, 'm') > this.moment() ? 0 : invite.type.penalty_amount;
+  cancelOrder (ev, invite) {
+    const cost = this.moment(invite.datetime).add(this.timeToCleanCancel, 'm') > this.moment( ) ? 0 : invite.type.penalty_amount;
 
-    this.OrderService.cancelOrderForEntertainer(ev, invite, cost).then((_data) => {
+    this.OrderService.cancelOrderForEntertainer(ev, invite, cost).then(_data => {
       this.Helper.showToast('Done');
     });
   }
@@ -37,8 +37,8 @@ export default angular.module('historyMinx', [
   OrderService,
   timer,
   showInTime
-]).config(($stateProvider) => {
-  "ngInject";
+]).config($stateProvider => {
+  'ngInject';
 
   $stateProvider.state('main.minx', {
     url: '/orders-history/:type/:id',
@@ -48,10 +48,8 @@ export default angular.module('historyMinx', [
       $scope.order = order;
     },
     resolve: {
-      order: (OrderService, $stateParams) => {
-        return OrderService
-          .getOrdersWithParam($stateParams.id);
-      }
+      order: (OrderService, $stateParams) => OrderService
+          .getOrdersWithParam($stateParams.id)
     }
   });
 }).filter('hoursToTime', hoursToTime).component('historyMinx', {

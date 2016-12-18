@@ -4,11 +4,11 @@ import User from '../../../common-services/user.service';
 import Constants from '../../../common-services/constants.service';
 import activeMenuItem from '../../../common/active-menu-item.directive';
 import template from './navbar.html';
-import NAV_BAR_MENU_ITEMS from '../../../common/NAV_BAR_MENU_ITEMS'
-import NAV_BAR_SUB_MENU from './NAV_BAR_SUB_MENU'
+import NAV_BAR_MENU_ITEMS from '../../../common/NAV_BAR_MENU_ITEMS';
+import NAV_BAR_SUB_MENU from './NAV_BAR_SUB_MENU';
 
 class controller {
-  constructor(User, Constants, $state) {
+  constructor (User, Constants, $state) {
     'ngInject';
 
     Object.assign(this, {
@@ -28,7 +28,7 @@ class controller {
     this.mobile = false;
   }
 
-  hideSubMenu(item) {
+  hideSubMenu (item) {
     if (item.url.length) {
       this.mobile = false;
     }

@@ -1,7 +1,7 @@
 import angular from 'angular';
 
 class OrdersService {
-  constructor(Constants, Request, User) {
+  constructor (Constants, Request, User) {
     'ngInject';
 
     Object.assign(this, {
@@ -10,10 +10,9 @@ class OrdersService {
       User,
       list: []
     });
-
   }
 
-  fetchOrders(page = 1) {
+  fetchOrders (page = 1) {
     return this
       .Request
       .send(
@@ -29,11 +28,11 @@ class OrdersService {
       );
   }
 
-  getOrders() {
+  getOrders ( ) {
     return this.list;
   }
 
-  getOrderDetails(orderId) {
+  getOrderDetails (orderId) {
     return this
       .Request
       .send(

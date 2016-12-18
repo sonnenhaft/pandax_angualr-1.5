@@ -5,8 +5,7 @@ class Validation {
   constructor (moment, Constants) {
     'ngInject';
 
-    Object.assign(this, {moment, Constants});
-
+    Object.assign(this, { moment, Constants });
   }
 
   message (field, bool, txt) {
@@ -14,7 +13,7 @@ class Validation {
       name: field,
       valid: bool,
       text: !bool ? txt : 'Field is valid.'
-    }
+    };
   }
 
   check (field, credentials) {
@@ -26,7 +25,7 @@ class Validation {
       case 'last_name':
       case 'displaying_name':
       // case 'apt':
-      case 'old_password':
+      case 'old_password': // eslint-disable-line no-fallthrough
         return this.isEmpty(field, credentials[field]);
 
       default:
@@ -35,7 +34,7 @@ class Validation {
   }
 
   error (credentials) {
-    let messages = _.map(credentials, (field, key) => {
+    const messages = _.map(credentials, (field, key) => {
       if (!this.check(key, credentials).valid) {
         return this.check(key, credentials);
       }
@@ -62,15 +61,15 @@ class Validation {
       case !date:
         return this.message('date', false, 'This field is required');
 
-      case !this.moment(date, 'MMMM DD, YYYY').isValid():
+      case !this.moment(date, 'MMMM DD, YYYY').isValid( ):
         return this.message('date', false, 'Wrong date format');
 
-      case this.moment(date).startOf('date').isBefore(this.moment().startOf('date')):
+      case this.moment(date).startOf('date').isBefore(this.moment( ).startOf('date')):
         return this.message('date', false, 'Date should be in the future');
 
       case this.moment(date).startOf('date').isAfter(
-              this.moment().add(this.Constants.order.maxPeriodForCreating.value, this.Constants.order.maxPeriodForCreating.key).startOf('date')
-            ):
+        this.moment( ).add(this.Constants.order.maxPeriodForCreating.value, this.Constants.order.maxPeriodForCreating.key).startOf('date')
+      ):
         return this.message('date', false, 'Date should be to 14 days in the future');
 
       default:
@@ -86,7 +85,7 @@ class Validation {
       case str.length > 100:
         return this.message('email', false, 'Max 100 characters allowed');
 
-      case !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(str.toLowerCase()):
+      case !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(str.toLowerCase( )): // eslint-disable-line max-len
         return this.message('email', false, 'Email is not valid');
 
       default:
@@ -115,16 +114,14 @@ class Validation {
   }
 
   images (arr) {
-    let files, validation;
-
-    files = _.map(arr, 'file');
-    validation = _
+    const files = _.map(arr, 'file');
+    const validation = _
       .chain(files)
       .map(file => _.isEmpty(file))
       .filter(boolean => boolean === false)
-      .value();
+      .value( );
 
-    return this.message('images', validation.length === 3, 'Please upload 3 photos')
+    return this.message('images', validation.length === 3, 'Please upload 3 photos');
   }
 
   phone (number) {
@@ -136,7 +133,7 @@ class Validation {
         return this.message('phone', false, 'Phone number is invalid');
 
       default:
-        return this.message('phone', true)
+        return this.message('phone', true);
     }
   }
 
@@ -145,7 +142,7 @@ class Validation {
   }
 
   apt (field, value) {
-    return this.message('apt', true)
+    return this.message('apt', true);
   }
 
 }

@@ -1,21 +1,21 @@
 export default [
-  {role: ['customer'], text: 'Create order', url: 'main.order'},
-  {role: ['provider'], text: 'Order History', url: 'main.history'},
+  { role: ['customer'], text: 'Create order', url: 'main.order' },
+  { role: ['provider'], text: 'Order History', url: 'main.history' },
   // {role: ['customer'], text: 'Orders', url: 'main.history'},
-  {role: ['customer', 'provider'], text: 'Contact Us', url: 'main.contact-us'},
-  {role: ['customer', 'provider'], text: 'Settings', url: ''},
+  { role: ['customer', 'provider'], text: 'Contact Us', url: 'main.contact-us' },
+  { role: ['customer', 'provider'], text: 'Settings', url: '' },
   {
     role: ['admin'],
     text: 'Dashboard',
     url: 'admin.dashboard',
-    icon: {path: '/assets/images/icons/svg/navbar-admin/icon_dashboard.svg', styles: {height: '14px', width: '17px'}},
+    icon: { path: '/assets/images/icons/svg/navbar-admin/icon_dashboard.svg', styles: { height: '14px', width: '17px' } },
     hint: 'Dashboard'
   },
   {
     role: ['admin'],
     text: 'Entertainers',
     url: 'admin.entertainers',
-    icon: {path: '/assets/images/icons/svg/navbar-admin/icon_providers.svg', styles: {height: '17px', width: '12px'}},
+    icon: { path: '/assets/images/icons/svg/navbar-admin/icon_providers.svg', styles: { height: '17px', width: '12px' } },
     hint: 'Entertainers'
   },
  /* {
@@ -32,7 +32,7 @@ export default [
     icon: {path: '/assets/images/icons/svg/navbar-admin/icon_orders.svg', styles: {height: '15px', width: '12px'}},
     hint: 'Orders'
   },*/
-  /*{
+  /* {
    role: ['admin'],
    text: 'Paysheet',
    url: 'admin.paysheet',
@@ -42,10 +42,10 @@ export default [
     role: ['admin'],
     text: 'Log Out',
     url: 'admin.logout',
-    icon: {path: '/assets/images/icons/svg/navbar-admin/icon_exit.svg', styles: {height: '16px', width: '16px'}},
+    icon: { path: '/assets/images/icons/svg/navbar-admin/icon_exit.svg', styles: { height: '16px', width: '16px' } },
     hint: 'Logout',
     bottom: true,
     isComponent: true,
     component: 'logout'
   }
-]
+];

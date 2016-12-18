@@ -6,24 +6,23 @@ import template from './signup.page.html';
 
 class controller {
 
-  constructor(Validation, User, $stateParams) {
+  constructor (Validation, User, $stateParams) {
     'ngInject';
 
-    Object.assign(this, {Validation, User, $stateParams});
+    Object.assign(this, { Validation, User, $stateParams });
 
     this.isCustomer = true;
     this.isProvider = false;
-
   }
 
-  $onInit() {
+  $onInit ( ) {
     if (this.$stateParams.signup && this.$stateParams.user) {
       this.isCustomer = this.isProvider = false;
-      this['is' + _.capitalize(this.$stateParams.user)] = true;
+      this[`is${_.capitalize(this.$stateParams.user)}`] = true;
     }
   }
 
-  onSubmit(credentials) {
+  onSubmit (credentials) {
     if (this.validate(credentials)) {
       credentials = Object.assign(credentials, {
         type: this.isCustomer ? 'customer' : 'provider'
@@ -35,17 +34,17 @@ class controller {
     return false;
   }
 
-  validate(field) {
+  validate (field) {
     if (this.Validation.error(field).length) {
       _.map(this.Validation.error(field), error => {
-        this[error.name + 'Error'] = error.text;
+        this[`${error.name}Error`] = error.text;
       });
       return false;
     }
     return true;
   }
 
-  register(credentials) {
+  register (credentials) {
     this.registerLoading = true;
     this.User
       .register(credentials)
