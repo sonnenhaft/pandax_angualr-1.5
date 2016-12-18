@@ -22,7 +22,7 @@ class CustomersService {
         this.Constants.api.customers.get.uri(page)
       )
       .then(
-        result => {
+        (result) => {
           this.list = this.list.concat(result.data.items);
           return result.data;
         }
@@ -63,7 +63,7 @@ class CustomersService {
           { set: targetStatus }
         )
         .then(
-          result => {
+          (result) => {
             this.updateCustomerInList(customer, result.data.status);
             return result.data;
           }
