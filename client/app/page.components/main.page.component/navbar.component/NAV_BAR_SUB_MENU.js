@@ -6,10 +6,10 @@ export default [
     url: 'main.payments'
   },
   {
-    role: ['customer'],
+    role: ['customer', 'provider'],
     parent: 'Settings',
     text: 'Terms',
-    url: 'settings.terms'
+    url: 'main.acceptTermsAndConditionsPage'
   },
   {
     role: ['customer', 'provider'],

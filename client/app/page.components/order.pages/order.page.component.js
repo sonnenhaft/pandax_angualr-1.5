@@ -9,7 +9,7 @@ import OrderService from '../../common-services/orderService.service';
 import orderConfirm from './order-confirm.page.component/order-confirm.page.component';
 import manipulationEntertainers from './manipulationEntertainers/manipulation-entertainers.page';
 import Request from '../../common-services/request.service';
-import orderTerms from './oreder-terms.page.component/oreder-terms.page.component';
+import acceptTermsAndConditionsPage from './accept-terms-and-conditions.page.component/accept-terms-and-conditions.page.component';
 
 import template from './order.page.html';
 
@@ -115,7 +115,7 @@ class controller {
     }
 
     if (this.User.get('is_newcomer')) {
-      this.$state.go('main.accept', { order: this.orderData(orderModel) });
+      this.$state.go('main.accept-terms-and-conditions', { order: this.orderData(orderModel) });
       return false;
     }
 
@@ -169,7 +169,7 @@ export default angular.module('order', [
   orderConfirm,
   manipulationEntertainers,
   Request,
-  orderTerms
+  acceptTermsAndConditionsPage
 ]).config($stateProvider => {
   'ngInject';
 

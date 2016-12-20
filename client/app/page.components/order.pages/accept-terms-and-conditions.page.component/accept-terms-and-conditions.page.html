@@ -1,14 +1,9 @@
 <div class="order-terms animated fadeIn" layout="row">
-  <div class="order-terms-container" flex="50">
-    <h1 class="page-name">TERMS OF SERVICE</h1>
+  <div class="order-terms-container">
+    <h1 class="page-name">TERMS AND CONDITIONS OF SERVICE OVERVIEW</h1>
     <p class="sub-head">YOU AGREE TO THE FOLLOWING TERMS<br/> AND CONDITIONS:</p>
 
-    <ul>
-      <li ng-repeat="term in $ctrl.Constants.terms track by $index" layout="row">
-        <div flex="5" class="suffix">{{$index + 1}}.</div>
-        <div flex="90" class="terms-text">{{term}}</div>
-      </li>
-    </ul>
+    <pandax-terms-page-component></pandax-terms-page-component>
 
     <div class="accept">
       <md-checkbox aria-label="Agree" ng-model="$ctrl.accepted">
