@@ -1,0 +1,15 @@
+<form name="dateOfBirth">
+    <div class="form-block">
+        <div class="month">
+            <input type="text" placeholder="Month" ng-model="$ctrl.month" ng-click="$ctrl.showMenu($event, 'month', $ctrl.months)" ng-blur="$ctrl.parseMonth()">
+        </div>
+        <div class="day">
+            <input type="number" placeholder="Day" ng-model="$ctrl.day" name="day" ng-click="$ctrl.showMenu($event, 'day', $ctrl.days)">
+        </div>
+
+        <div class="year">
+            <input type="number" placeholder="Year" ng-model="$ctrl.year" name="year" ng-click="$ctrl.showMenu($event, 'year', $ctrl.years)" ng-change="$ctrl.updateDays();$ctrl.setDate()"
+                   min="{{$ctrl.years[$ctrl.years.length - 1]}}">
+        </div>
+    </div>
+</form>

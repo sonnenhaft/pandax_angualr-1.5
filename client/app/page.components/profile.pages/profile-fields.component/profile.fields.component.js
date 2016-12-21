@@ -12,12 +12,13 @@ import template from './profile.fields.html';
 const CUSTOMER_FIELDS = [
   {
     combined: [
-      { name: 'First Name', model: 'first_name', type: 'text' },
-      { name: 'Last Name', model: 'last_name', type: 'text', desc: 'We won\'t display your last name' }
+            { name: 'First Name', model: 'first_name', type: 'text' },
+            { name: 'Last Name', model: 'last_name', type: 'text', desc: 'We won\'t display your last name' }
     ]
   },
-  { name: 'Phone Number', model: 'phone', type: 'tel' },
-  { name: 'Email', model: 'email', type: 'email' }
+    { name: 'Phone Number', model: 'phone', type: 'tel' },
+    { type: 'dob' },
+    { name: 'Email', model: 'email', type: 'email' }
 ];
 
 class controller {
@@ -70,30 +71,30 @@ class controller {
     this.images = images[role];
 
     this.User.getUserProfile(
-      Object.assign(this.session.user,
-        { token: this.User.token( ) }),
-      role,
-      false)
-      .then(data => {
-        let photoSrc = '';
+            Object.assign(this.session.user,
+                { token: this.User.token( ) }),
+            role,
+            false)
+            .then(data => {
+              let photoSrc = '';
 
-        if (data.photo) {
-          photoSrc = data.photo.original;
-          this.images[0] = { file: data.photo.preview };
-        } else if (data.photos && data.photos.length > 0) {
-          photoSrc = data.photos[0] && data.photos[0].original;
-          _.each(data.photos, (photo, i) => {
-            if (photo) {
-              this.images[i] = { file: photo.preview };
-            }
-          });
-        }
+              if (data.photo) {
+                photoSrc = data.photo.original;
+                this.images[0] = { file: data.photo.preview };
+              } else if (data.photos && data.photos.length > 0) {
+                photoSrc = data.photos[0] && data.photos[0].original;
+                _.each(data.photos, (photo, i) => {
+                  if (photo) {
+                    this.images[i] = { file: photo.preview };
+                  }
+                });
+              }
 
-        this.backupPhotos( );
-        this.profilePhoto(photoSrc);
+              this.backupPhotos( );
+              this.profilePhoto(photoSrc);
 
-        return data;
-      });
+              return data;
+            });
   }
 
   profilePhoto (photoSrc = '') {
@@ -157,18 +158,18 @@ class controller {
     this.saveLoading = true;
 
     this.addCard( )
-      .then(
-        data => {
-          this.UpdateUserProfile(profile)
             .then(
-              _data => {
-                this.saveLoading = false;
-                this.$state.go('main.profile.view');
-              });
-        },
-        error => {
-          this.saveLoading = false;
-        });
+                data => {
+                  this.UpdateUserProfile(profile)
+                        .then(
+                            _data => {
+                              this.saveLoading = false;
+                              this.$state.go('main.profile.view');
+                            });
+                },
+                error => {
+                  this.saveLoading = false;
+                });
   }
 
   onSave (profile) {
@@ -177,9 +178,9 @@ class controller {
     if (this.validate(profile)) {
       this.saveLoading = true;
       this.UpdateUserProfile(profile, 'main.profile.view')
-        .finally(_data => {
-          this.saveLoading = false;
-        });
+                .finally(_data => {
+                  this.saveLoading = false;
+                });
     }
   }
 
@@ -199,21 +200,21 @@ class controller {
 
     _.each(this.photosBuffer, photo => {
       const query = this.User
-        .UpdateUserPhoto(photo.image, photo.slot)
-        .then(
-          result => {
-            const photoResult = result.photo ? result.photo : result.photos[photo.slot - 1];
+                .UpdateUserPhoto(photo.image, photo.slot)
+                .then(
+                    result => {
+                      const photoResult = result.photo ? result.photo : result.photos[photo.slot - 1];
 
-            if (photoResult) {
-              this.backupPhoto({ file: photoResult.preview }, photo.slot - 1);
-              if (photo.slot == 1) {
-                this.profilePhoto(photoResult.original);
-              }
-            }
+                      if (photoResult) {
+                        this.backupPhoto({ file: photoResult.preview }, photo.slot - 1);
+                        if (photo.slot == 1) {
+                          this.profilePhoto(photoResult.original);
+                        }
+                      }
 
-            return this.User.update({ [this.isCustomer ? 'photo' : 'photos']: result.photo });
-          }
-        );
+                      return this.User.update({ [this.isCustomer ? 'photo' : 'photos']: result.photo });
+                    }
+                );
       promises.push(query);
     });
 
@@ -224,19 +225,19 @@ class controller {
 
   UpdateUserProfile (profile, mode) {
     const queryToUpdatePersonalInfo = this.User
-      .UpdateUserProfile(profile)
-      .then(
-        result => {
-          this.User.update(Object.assign(result, { auth: true }));
-        }
-      );
+            .UpdateUserProfile(profile)
+            .then(
+                result => {
+                  this.User.update(Object.assign(result, { auth: true }));
+                }
+            );
 
     return this.$q.all([this.UpdateUserPhotos( ), queryToUpdatePersonalInfo])
-      .then(data => {
-        this.mode = mode;
-        this.buildProfileModels( );
-        return data;
-      });
+            .then(data => {
+              this.mode = mode;
+              this.buildProfileModels( );
+              return data;
+            });
   }
 
   addAbsentFields (profile) {
@@ -252,8 +253,8 @@ class controller {
 
   addCard (card = this.newCard) {
     return this.Cards
-      .add(card)
-      .then(result => result);
+            .add(card)
+            .then(result => result);
   }
 }
 
