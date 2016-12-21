@@ -53,7 +53,7 @@ gulp.task('webpack', ['clean'], (cb) => {
   config.entry.app = paths.entry;
 
   webpack(config, (err, stats) => {
-    if(err)  {
+    if (err) {
       throw new gutil.PluginError("webpack", err);
     }
 
@@ -129,9 +129,9 @@ gulp.task('clean', (cb) => {
 gulp.task('build', ['webpack', 'copy_images'], () => {
 
   return gulp.src('./dist/**')
-     .pipe(tar('build.tar'))
-     .pipe(gzip())
-     .pipe(gulp.dest('./builds/'));
+    .pipe(tar('build.tar'))
+    .pipe(gzip())
+    .pipe(gulp.dest('./builds/'));
 });
 
 gulp.task('copy_images', ['clean'], () => {
@@ -140,3 +140,17 @@ gulp.task('copy_images', ['clean'], () => {
 });
 
 gulp.task('default', ['watch']);
+
+gulp.task('sass:landing:watch', function () {
+  var sourcemaps = require('gulp-sourcemaps');
+  gulp.task('sass:landing', function () {
+    const sass = require('gulp-sass');
+    return gulp.src('./client/landing/index.scss')
+      .pipe(sourcemaps.init())
+      .pipe(sass().on('error', sass.logError))
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest('./client/landing/'));
+  });
+
+  gulp.watch('./client/landing/*.scss', ['sass:landing']);
+});
