@@ -28,13 +28,21 @@ class controller {
 
   $onInit ( ) {
     this.ngModel.$render = ( ) => {
+      let date;
       if (this.ngModel.$viewValue) {
-        this.date = new Date(this.ngModel.$viewValue);
-        this.month = this.months[this.date.getMonth( )];
-        this.day = this.date.getDate( );
-        this.year = this.date.getFullYear( );
+        if (this.asObject) {
+          date = this.ngModel.$viewValue;
+          this.month = this.months[date.month];
+          this.day = date.day;
+          this.year = date.year;
+        } else {
+          date = new Date(this.ngModel.$viewValue);
+          this.month = this.months[date.getMonth( )];
+          this.day = date.getDate( );
+          this.year = date.getFullYear( );
+        }
       }
-      this.ngModel.$setValidity('required', !!this.date);
+      this.ngModel.$setValidity('required', !!date);
     };
 
     this.minAge = this.minAge || 0;
@@ -56,16 +64,25 @@ class controller {
   }
 
   setDate ( ) {
-    this.date = new Date(`${this.month}/${this.day}/${this.year}`);
-    if (isNaN(this.date.getTime( ))) {
-      this.date = null;
+    let date = new Date(`${this.month}/${this.day}/${this.year}`);
+    if (isNaN(date.getTime( ))) {
+      date = null;
       this.ngModel.$setValidity('minAge', true);
     }
-    this.ngModel.$setValidity('required', !!this.date);
+    this.ngModel.$setValidity('required', !!date);
     if (this.minAge) {
-      this.ngModel.$setValidity('minAge', this.minAge && this.date < this.minDate);
+      this.ngModel.$setValidity('minAge', this.minAge && date < this.minDate);
     }
-    this.ngModel.$setViewValue(this.date);
+    if (this.asObject && date) {
+      this.ngModel.$setViewValue({
+        year: date.getFullYear( ),
+        day: date.getDate( ),
+        month: date.getMonth( )
+      });
+    } else {
+      this.ngModel.$setViewValue(date);
+    }
+
     this.ngModel.$setTouched( );
   }
 
@@ -127,7 +144,7 @@ class controller {
 
 export default angular.module('dateOfBirthInput', []).component('dateOfBirthInput', {
   require: { ngModel: '^ngModel' },
-  bindings: { minAge: '<' },
+  bindings: { minAge: '<', asObject: '<' },
   controller,
   template
 }).name;

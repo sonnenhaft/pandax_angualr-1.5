@@ -21,14 +21,16 @@
             <div ng-if="field.type === 'dob'" class="input">
                 <label>Date of birth</label>
                 <div ng-if="$ctrl.mode === 'profile.edit'">
-                    <date-of-birth-input ng-model="$ctrl.myDob" min-age="18" required name="dob"></date-of-birth-input>
+                    <date-of-birth-input ng-model="$ctrl.myDob" min-age="18" required name="dob" as-object="true"></date-of-birth-input>
                     <span class="error" ng-messages="profileForm.dob.$error" ng-show="profileForm.dob.$touched">
                         <div ng-message="required">Date of birth is required</div>
                         <div ng-message="minAge">Minimum allowed age is 18 years</div>
                     </span>
                 </div>
                 <div ng-show="$ctrl.mode !== 'profile.edit'" class="fake-input">
-                    {{$ctrl.myDob | date : 'MMM dd, YYYY'}}
+                    <span>
+                        {{$ctrl.myDob | customDate | date : 'MMM d, yyyy'}}
+                    </span>
                 </div>
 
             </div>
