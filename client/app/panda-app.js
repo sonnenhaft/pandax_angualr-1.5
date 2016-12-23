@@ -58,7 +58,7 @@ angular.module('app', [
   JWT,
   angularStripe,
   ngInfiniteScroll,
-  ngSanitize
+  ngSanitize,
 ].concat([
   Navbar,
   Map,
