@@ -29,7 +29,7 @@ class Validation {
         return this.isEmpty(field, credentials[field]);
 
       default:
-        return this[field](credentials[field]);
+        return this[field] ? this[field](credentials[field]) : false;
     }
   }
 

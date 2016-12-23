@@ -16,7 +16,7 @@ export default angular.module('spinner', [
   },
   template: `
 <div id="spinner" ng-if="$ctrl.display">
-  <div layout="row" layout-sm="column" layout-align="space-around">
+  <div layout="row" layout-sm="column" layout-align="space-around" style="display: flex;align-items: center;">
     <md-progress-circular md-mode="indeterminate" md-diameter="30"></md-progress-circular>
   </div>
 </div>

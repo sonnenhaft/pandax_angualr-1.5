@@ -1,0 +1,9 @@
+<div class="dob-panel" aria-label="Select {{::$ctrl.key}}" role="listbox">
+    <div class="dob-panel-item" ng-class="{selected : item == $ctrl.selectedValue}"
+         aria-selected="{{item === $ctrl.selectedValue}}"
+         role="option"
+         ng-repeat="item in $ctrl.values"
+         ng-click="$ctrl.select(item)">
+        {{ item }}
+    </div>
+</div>

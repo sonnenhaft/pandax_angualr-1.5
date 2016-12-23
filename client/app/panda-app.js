@@ -43,9 +43,9 @@ import Admin from './page.components/admin.pages/admin.component';
 
 import template from './panda-app.html';
 import './panda-app.scss';
+import dateOfBirthInput from './common/date-of-birth.input.component/date-of-birth.input.component';
 
 const config = require('config');
-
 
 angular.module('app', [
   uiRouter,
@@ -66,6 +66,7 @@ angular.module('app', [
   Spinner,
   findLocation,
   orderDetails,
+  dateOfBirthInput,
   Logout
 ]).concat([
   Home,

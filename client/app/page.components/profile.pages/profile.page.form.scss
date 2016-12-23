@@ -30,11 +30,11 @@
 
   &.view-mode {
     .input {
-      input {
+      input, .fake-input {
         background: transparent;
         color: $AuroMetalSaurus;
         font-weight: bold;
-
+        padding: 0 10px;
         &.first {
           border: 0;
         }
