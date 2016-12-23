@@ -5,7 +5,7 @@
 import angular from 'angular';
 
 export default angular.module('timerDirective', [
-]).directive('timer', ['$compile', 'moment', function ($compile, moment) {
+]).directive('timer', ($compile, moment) => {
   'ngInject';
 
   const CSS_CLASS = 'ng-hide';
@@ -13,41 +13,41 @@ export default angular.module('timerDirective', [
   return {
     scope: true,
     link: (scope, element, attrs) => {
-      let intervalId = null,
-        timerPeriod = 1000;   // in ms
+      let intervalId = null;
+      const timerPeriod = 1000;   // in ms
 
-      scope.counter = parseInt(attrs.timer) - moment().valueOf();
+      scope.counter = parseInt(attrs.timer, 10) - moment( ).valueOf( );
       scope.$$watchers = [];
 
-      function start() {
-        intervalId = setInterval(onInterval, timerPeriod);
+      function hideTimer ( ) {
+        element.addClass(CSS_CLASS);
       }
 
-      function onInterval() {
-        scope.counter = scope.counter - timerPeriod;
+      function onInterval ( ) {
+        scope.counter -= timerPeriod;
 
         if (scope.counter <= timerPeriod) {
           clearInterval(intervalId);
-          hideTimer();
+          hideTimer( );
           return;
         }
         element.text(moment(scope.counter).format('mm:ss'));
       }
 
-      function hideTimer() {
-        element.addClass(CSS_CLASS);
+      function start ( ) {
+        intervalId = setInterval(onInterval, timerPeriod);
       }
 
       if (scope.counter > timerPeriod) {
-        start();
+        start( );
       } else {
-        hideTimer();
+        hideTimer( );
       }
 
-      scope.$on('$destroy', (_ev) => {
+      scope.$on('$destroy', _ev => {
         clearInterval(intervalId);
       });
     }
-  }
-}]).name;
-;
+  };
+}).name;
+

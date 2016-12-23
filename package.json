@@ -29,6 +29,11 @@
     "utf-8-validate": "^1.2.1"
   },
   "devDependencies": {
+    "eslint": "^3.10.2",
+    "eslint-config-airbnb-base": "^10.0.1",
+    "eslint-loader": "^1.6.1",
+    "eslint-plugin-import": "^2.2.0",
+    "babel-eslint": "^7.1.1",
     "angular-mocks": "^1.5.0",
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",
@@ -82,8 +87,13 @@
     "yargs": "^3.9.0"
   },
   "scripts": {
+    "test": "karma start",
     "build": "gulp build",
-    "serve": "gulp serve"
+    "serve": "gulp serve",
+    "test:watch": "karma start --autoWatch=true --singleRun=false",
+    "create-component": "gulp create-component --gulpfile gulpfile.templates.js",
+    "lint": "eslint client",
+    "lint:fix": "npm run lint -- --fix"
   },
   "keywords": [
     "angular",

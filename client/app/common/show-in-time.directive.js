@@ -1,15 +1,16 @@
+import angular from 'angular';
+
 /**
  We don't use $timeout, because it runs the $digest cycle very often
  */
-import angular from 'angular';
-export default angular.module('showInTimeDirective', []).directive('showInTime', ['$compile', 'moment', function ($compile, moment) {
+export default angular.module('showInTimeDirective', []).directive('showInTime', ($compile, moment) => {
   'ngInject';
 
-  const CSS_CLASS = 'ng-hide',
-    ACTOINS = {
-      SHOW: 'show',
-      HIDE: 'hide'
-    };
+  const CSS_CLASS = 'ng-hide';
+  const ACTOINS = {
+    SHOW: 'show',
+    HIDE: 'hide'
+  };
 
   return {
     scope: true,
@@ -19,18 +20,10 @@ export default angular.module('showInTimeDirective', []).directive('showInTime',
      * show-in-time-action: 'show' or 'hide'
      */
     link: (scope, element, attrs) => {
-      let timeoutId = null,
-        timerPeriod = parseInt(attrs.showInTime) - moment().valueOf() + 1000;   // in ms
+      let timeoutId = null;
+      const timerPeriod = (parseInt(attrs.showInTime, 10) - moment( ).valueOf( )) + 1000;   // in ms
 
-      function startTimeout() {
-        timeoutId = setTimeout(onTimeout, timerPeriod);
-      }
-
-      function onTimeout() {
-        showHide(attrs.showInTimeAction);
-      }
-
-      function showHide(action) {
+      function showHide (action) {
         if (action == ACTOINS.SHOW) {
           element.removeClass(CSS_CLASS);
         } else {
@@ -38,23 +31,31 @@ export default angular.module('showInTimeDirective', []).directive('showInTime',
         }
       }
 
-      function init() {
+      function onTimeout ( ) {
+        showHide(attrs.showInTimeAction);
+      }
+
+      function startTimeout ( ) {
+        timeoutId = setTimeout(onTimeout, timerPeriod);
+      }
+
+      function init ( ) {
         if (attrs.showInTimeAction == ACTOINS.SHOW) {
           showHide(ACTOINS.HIDE);
         }
 
         if (timerPeriod > 0) {
-          startTimeout();
+          startTimeout( );
         } else {
           showHide(attrs.showInTimeAction);
         }
       }
 
-      init();
+      init( );
 
-      scope.$on('$destroy', (_ev) => {
+      scope.$on('$destroy', _ev => {
         clearTimeout(timeoutId);
       });
     }
-  }
-}]).name;
+  };
+}).name;

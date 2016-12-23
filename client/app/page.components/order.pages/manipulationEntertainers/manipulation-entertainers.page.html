@@ -1,0 +1,113 @@
+<md-content
+  id="manipulation-entertainers"
+  flex="100"
+  layout-padding
+  layout="column"
+  layout-align="start stretch"
+  class="animated fadeIn manipulation-entertainers">
+
+  <div
+    layout="row"
+    layout-align="start"
+    class="manipulation-entertainers__header">
+
+    <div flex="100" flex-gt-sm="50" class="manipulation-entertainers__header_left">
+      <div
+        layout="row"
+        layout-align="space-between start">
+        <h1 class="page-name">Create Order</h1>
+        <md-icon
+          flex="1"
+          md-svg-icon="/assets/images/icons/svg/Close_Menu.svg"
+          class="manipulation-entertainers__icon_close manipulation-entertainers__icon_close"
+          disabled="disabled"></md-icon>
+      </div>
+
+      <div
+        class="buttons-group"
+        layout="row"
+        layout-align="end center"
+        layout-wrap
+        layout-nowrap-gt-sm
+        layout-align-gt-sm="space-between center">
+        <a
+          hide-gt-sm
+          class="pointer manipulation-entertainers__head-link"
+          ng-class="{'manipulation-entertainers__head-link_active': $ctrl.showComponentOnly.length == 0 || $ctrl.showComponentOnly === 'searchEntertainers'}"
+          ng-click="$ctrl.showComponentOnly = 'searchEntertainers'">
+          <span>MINX</span>
+        </a>
+        <a
+          flex="50"
+          hide-gt-sm
+          class="pointer manipulation-entertainers__head-link manipulation-entertainers__head-link_middle"
+          ng-class="{'manipulation-entertainers__head-link_active': $ctrl.showComponentOnly === 'confirmedEntertainers'}"
+          ng-click="$ctrl.showComponentOnly = 'confirmedEntertainers'">
+          <span>
+            CONFIRMATIONS {{($ctrl.entertainersInvited | filterBy: ['status']: $ctrl.Constants.order.statuses.accepted).length}}/{{$ctrl.countOfRequiredEntertainers}}
+          </span>
+        </a>
+        <a
+          flex="30"
+          flex-order-gt-sm="1"
+          class="pointer manipulation-entertainers__head-link manipulation-entertainers__head-link_depends-on-width"
+          ng-click="$ctrl.OrderService.fetchEntertainers($ctrl.$stateParams.orderId); $ctrl.itemActiveIndex = 0;">
+          <span>REFRESH</span>
+          <img
+            src="/assets/images/icons/refresh-3x.png"
+            class="icon_medium manipulation-entertainers__refresh-image manipulation-entertainers__icon"></img>
+        </a>
+        <md-button
+          flex-xs="100"
+          flex-sm="100"
+          flex-gt-sm="nogrow"
+          flex-order-gt-sm="2"
+          class="md-raised manipulation-entertainers__cancel-order"
+          ng-click="$ctrl.cancelOrder($event)">
+          {{$ctrl.entertainersInvited.length == 0 ? 'Cancel Order' : 'Cancel Unconfirmed Invites' }}
+        </md-button>
+      </div>
+    </div>
+  </div>
+
+
+  <div
+    layout="row"
+    layout-align="start">
+
+    <div
+      flex="100" flex-gt-sm="50"
+      class="manipulation-entertainers__search-entertainers-wrapper"
+      ng-if="$ctrl.entertainers.length > 0 && ($ctrl.showComponentOnly.length == 0 || $ctrl.showComponentOnly == 'searchEntertainers')">
+      <search-entertainers
+        entertainers="$ctrl.entertainers"
+        item-active-index="$ctrl.itemActiveIndex"
+        entertainers-invited="$ctrl.entertainersInvited"
+        flex="100"
+        flex-gt-sm="50">
+      </search-entertainers>
+    </div>
+
+    <div
+      flex="100" flex-gt-sm="50"
+      class="manipulation-entertainers__search-entertainers-wrapper"
+      ng-if="$ctrl.entertainers.length == 0 && ($ctrl.showComponentOnly.length == 0 || $ctrl.showComponentOnly == 'searchEntertainers')">
+      <h2 class="no-items-text">
+        NO ENTARNAINERS ARE AVAILABLE
+      </h2>
+    </div>
+
+    <div
+      flex="100" flex-gt-sm="50"
+      class="manipulation-entertainers__confirmed-entertainers-wrapper"
+      ng-if="$ctrl.entertainersInvited.length > 0 && ($ctrl.$mdMedia('gt-sm') || $ctrl.showComponentOnly === 'confirmedEntertainers')">
+      <confirmed-entertainers
+        entertainers="$ctrl.entertainersInvited"
+        count-of-required-entertainers="$ctrl.countOfRequiredEntertainers"
+        service-type-price="$ctrl.serviceTypePrice">
+      </confirmed-entertainers>
+    </div>
+
+  </div>
+
+</md-content>

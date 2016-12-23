@@ -1,31 +1,30 @@
-export default function hoursToTime(moment) {
+export default moment => {
   'ngInject';
 
-  return function (val, valType = 'default') {
-    let hh, mm,
-      resultString = '';
+  return function hoursToTimeFilter (val, valType = 'default') {
+    let hh;
+    let mm;
+    let resultString = '';
 
     if (valType == 'default') {
-      hh = parseInt(val);
+      hh = parseInt(val, 10);
       mm = parseFloat(val) - hh;
 
       if (hh > 0) {
         resultString += `${hh}h `;
       }
       if (mm > 0) {
-        resultString += `${parseInt(mm * 60)}m `;
+        resultString += `${parseInt(mm * 60, 10)}m `;
       }
-    } else {
-      if (valType == 'seconds') {
-        hh = moment.duration(val * 1000).hours();
-        mm = moment.duration(val * 1000).minutes();
+    } else if (valType == 'seconds') {
+      hh = moment.duration(val * 1000).hours( );
+      mm = moment.duration(val * 1000).minutes( );
 
-        if (hh > 0) {
-          resultString += `${hh}h `;
-        }
-        if (mm > 0) {
-          resultString += `${mm}m `;
-        }
+      if (hh > 0) {
+        resultString += `${hh}h `;
+      }
+      if (mm > 0) {
+        resultString += `${mm}m `;
       }
     }
 
