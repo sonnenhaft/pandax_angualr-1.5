@@ -21,7 +21,7 @@ class OrdersService {
         this.Constants.api.orders.getAll.uri(this.User.get('role'), page)
       )
       .then(
-        (result) => {
+        result => {
           this.list = this.list.concat(result.data.items);
           return result.data;
         }

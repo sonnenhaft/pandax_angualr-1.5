@@ -1,7 +1,9 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
-import signIn from './login.page.component/login.page.component';
-import signUp from './signup.page.component/signup.page.component';
+
+import LoginPageComponent from './login.page.component/login.page.component';
+import SignUpPageComponent from './signup.page.component/signup.page.component';
+
 import Restore from './restore.page.component/restore.page.component';
 import Reset from './reset-password.page.component/reset-password.page.component';
 import template from './home.page.html';
@@ -19,6 +21,7 @@ class controller {
   }
 
   $onInit ( ) {
+    console.log(this.$stateParams);
     if (this.$stateParams.signup && this.$stateParams.user) {
       this.signIn = false;
       this.signUp = true;
@@ -39,30 +42,23 @@ class controller {
     this.signIn = this.signUp = this.restore = this.reset = false;
     this[form] = true;
   }
-
 }
 
+export default angular.module('home', [
+  uiRouter,
+  LoginPageComponent,
+  SignUpPageComponent,
+  Restore,
+  Reset
+]).config($stateProvider => {
+  'ngInject';
 
-export default angular
-  .module('home', [
-    uiRouter,
-    signIn,
-    signUp,
-    Restore,
-    Reset
-  ])
-  .config($stateProvider => {
-    'ngInject';
-
-    $stateProvider
-      .state('home', {
-        url: '/?signup&user&restore&reset',
-        component: 'home'
-      });
-  })
-  .component('home', {
-    template,
-    controller
-  })
-  .name;
+  $stateProvider.state('home', {
+    url: '/?signup&user&restore&reset',
+    component: 'home'
+  });
+}).component('home', {
+  template,
+  controller
+}).name;
 

@@ -2,7 +2,7 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 
 class controller {
-  $onChanges(changes) {
+  $onChanges (changes) {
     this.display = changes.input.currentValue;
   }
 }
