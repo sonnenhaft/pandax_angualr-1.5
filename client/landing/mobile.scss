@@ -1,0 +1,124 @@
+@media (max-width: 400px) {
+    #welcome {
+        background-image: url('./images/legs-mobile.background.png');
+        background-size: cover;
+    }
+}
+@media (max-width: 800px) {
+    body {
+        margin: 0;
+    }
+    section {
+        padding: 0 32px;
+    }
+    .features-page .content .service-title  {
+        font-size: 18px;
+    }
+    #entertainer, .features-page.black {
+        background-image: none;
+    }
+    section.dark-gray {
+        background: black;
+    }
+    .header {
+        position: relative;
+        top: 0;
+        background: transparent;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        a {
+            font-size: 18px;
+            margin: 32px;
+        }
+    }
+    #welcome {
+        h1 {
+            margin: 0;
+        }
+        .arrow-rect {
+            margin-top: 8px
+        }
+    }
+    #service .wrapper {
+        padding: 0 32px;
+    }
+    #service .content {
+        flex-direction: column;
+        .service-offer {
+            width: 100%;
+        }
+    }
+    .features-page .content {
+        flex-direction: column;
+        .service-offer {
+            width: 100%;
+            img {
+                display: none;
+            }
+        }
+    }
+    footer {
+        flex-direction: column;
+        height: auto;
+        position: relative;
+        line-height: 24px;
+        padding-bottom: 8px;
+    }
+    #entertainer {
+        img {
+            position: relative;
+        }
+        .minx-info {
+            width: 100%;
+            padding: 0 16px;
+        }
+        .get-minx {
+            width: 100%;
+            text-align: center;
+            margin: 30px 0;
+            p {
+                text-align: center;
+            }
+        }
+    }
+    #customer {
+        .minx-info {
+            width: 100%;
+            padding: 0 16px;
+        }
+        .get-minx {
+            width: 100%;
+            text-align: center;
+            margin: 30px 0;
+            p {
+                text-align: center;
+            }
+        }
+    }
+    #service {
+        .content {
+            width: 100%;
+        }
+        img {
+            position: relative;
+        }
+    }
+    #service .service-offer {
+        margin: 0;
+    }
+    #customer .get-minx, #entertainer .get-minx {
+        float: none;
+    }
+    #customer img {
+        position: relative;
+    }
+    #advantages {
+        .content {
+            flex-direction: column;
+        }
+        .advantages-list {
+            width: auto;
+        }
+    }
+}

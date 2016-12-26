@@ -17,7 +17,6 @@ class controller {
       this.loginError = false;
       return this.login(credentials);
     }
-
     return false;
   }
 
@@ -33,34 +32,25 @@ class controller {
 
   login (credentials) {
     this.loginLoading = true;
-    this.User
-      .login(credentials)
-      .then(
-        result => {
-          if (result && result.error) {
-            this.loginLoading = false;
-            this.loginError = result.error;
-          }
-
-          return true;
-        },
-        error => {
+    this.User.login(credentials).then(
+      result => {
+        if (result && result.error) {
           this.loginLoading = false;
+          this.loginError = result.error;
         }
-      );
+        return true;
+      },
+      ignoredError => this.loginLoading = false
+    );
   }
-
 }
-
 
 export default angular.module('loginPage', [
   uiRouter,
   Validation,
   User
 ]).component('loginPage', {
-  bindings: {
-    output: '&'
-  },
+  bindings: { output: '&' },
   template,
   controller
 }).name;
