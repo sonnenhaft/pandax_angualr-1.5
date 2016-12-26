@@ -17,7 +17,13 @@ class controller {
 
   $onInit ( ) {
     if (this.$stateParams.signup && this.$stateParams.user) {
-      this.isCustomer = this.isProvider = false;
+      if (this.$stateParams.type) {
+        this.isCustomer = this.$stateParams.type === 'customer';
+        this.isProvider = this.$stateParams.type === 'provider';
+      } else {
+        this.isCustomer = this.isProvider = false;
+      }
+
       this[`is${_.capitalize(this.$stateParams.user)}`] = true;
     }
   }

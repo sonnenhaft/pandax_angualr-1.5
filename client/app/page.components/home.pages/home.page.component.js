@@ -54,7 +54,7 @@ export default angular.module('home', [
   'ngInject';
 
   $stateProvider.state('home', {
-    url: '/?signup&user&restore&reset',
+    url: '/?signup&user&restore&reset&type',
     component: 'home'
   });
 }).component('home', {

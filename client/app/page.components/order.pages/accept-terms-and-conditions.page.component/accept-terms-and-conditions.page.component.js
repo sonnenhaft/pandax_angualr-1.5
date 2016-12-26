@@ -46,7 +46,7 @@ export default angular.module(name, [
     controller: (order, $scope) => { $scope.order = order; },
     template: '<accept-terms-and-conditions-page order="order"></accept-terms-and-conditions-page>',
     resolve: { order: $stateParams => $stateParams.order }
-  }).state(`pandaxTermsPageComponent`, {
+  }).state('pandaxTermsPageComponent', {
     url: '/terms-and-conditions',
     template: '<div style="padding: 16px"><pandax-terms-page-component></pandax-terms-page-component></div>'
   });
