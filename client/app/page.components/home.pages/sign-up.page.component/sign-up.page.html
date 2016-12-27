@@ -1,16 +1,11 @@
 <div class="register-form">
   <form name="registerForm" class="animated fadeIn" novalidate>
     <div class="type-of-user">
-      <md-button class="customer-user"
-                 ng-hide="$ctrl.$stateParams.type && $ctrl.$stateParams.type ==='provider'"
-                 ng-class="{active: $ctrl.isCustomer, wide: $ctrl.$stateParams.type && $ctrl.$stateParams.type ==='customer'}"
-                 ng-click="$ctrl.isCustomer = true; $ctrl.isProvider = false">
+      <md-button class="customer-user" ng-class="{active: $ctrl.isCustomer}" ng-click="$ctrl.setIsCustomer(true)" ng-disabled="true"
+      title="coming soon">
         Customer
       </md-button>
-      <md-button class="provider-user"
-                 ng-hide="$ctrl.$stateParams.type && $ctrl.$stateParams.type ==='customer'"
-                 ng-class="{active: $ctrl.isProvider, wide: $ctrl.$stateParams.type && $ctrl.$stateParams.type ==='provider'}"
-                 ng-click="$ctrl.isProvider = true; $ctrl.isCustomer = false">
+      <md-button class="provider-user" ng-class="{active: !$ctrl.isCustomer}" ng-click="$ctrl.setIsCustomer(false)">
         Entertainer
       </md-button>
     </div>
@@ -51,6 +46,6 @@
     </div>
   </form>
   <div class="account-ready">
-    Already have an account? <a href="" ng-click="$ctrl.output({view: 'signIn'})">Log in</a>
+    Already have an account? <a ui-sref="loginPage">Log in</a>
   </div>
 </div>

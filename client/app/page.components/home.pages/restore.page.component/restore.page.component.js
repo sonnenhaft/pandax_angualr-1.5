@@ -5,19 +5,19 @@ import User from '../../../common-services/user.service';
 import template from './restore.page.html';
 
 class controller {
-  constructor (Validation, User, $mdDialog) {
+  constructor (Validation, User, $mdDialog, $state) {
     'ngInject';
 
-    Object.assign(this, { Validation, User, $mdDialog });
+    Object.assign(this, { Validation, User, $mdDialog, $state });
   }
 
   onSubmit (email, $event) {
     if (this.validate(email)) {
       this.restoreError = false;
       return this.restore(email, $event);
+    } else {
+      return false;
     }
-
-    return false;
   }
 
   validate (field) {
@@ -26,63 +26,47 @@ class controller {
         this[`${error.name}Error`] = error.text;
       });
       return false;
+    } else {
+      return true;
     }
-    return true;
   }
 
   restore (email, $event) {
     this.restoreLoading = true;
-    return this
-      .User
-      .restore(email)
-      .then(
-        result => {
-          this.restoreLoading = false;
-
-          if (result && result.error) {
-            this.restoreError = result.error;
-            return false;
-          }
-
-          return true;
-        },
-        error => {
-          this.restoreLoading = false;
-        }
-      )
-      .then(result => {
-        if (result) {
-          this.showMessage($event);
-        }
-      });
+    return this.User.restore(email).then(result => {
+      if (result && result.error) {
+        this.restoreError = result.error;
+        return false;
+      } else {
+        return true;
+      }
+    }).then(result => {
+      if (result) {
+        this.showMessage($event);
+      }
+    }).finally(error => this.restoreLoading = false);
   }
 
   showMessage ($event) {
-    this.$mdDialog
-      .show({
-        contentElement: '#restore-success',
-        parent: document.body,
-        targetEvent: $event,
-        clickOutsideToClose: false
-      });
+    this.$mdDialog.show({
+      contentElement: '#restore-success',
+      parent: document.body,
+      targetEvent: $event,
+      clickOutsideToClose: false
+    });
   }
 
   hideMessage ( ) {
     this.$mdDialog.hide( );
-    this.output({ view: 'signIn' });
+    this.$state.go('loginPage');
   }
-
 }
 
-
-export default angular.module('restore', [
+export default angular.module('restorePage', [
   uiRouter,
   Validation,
   User
-]).component('restore', {
-  bindings: {
-    output: '&'
-  },
+]).component('restorePage', {
   template,
   controller
 }).name;

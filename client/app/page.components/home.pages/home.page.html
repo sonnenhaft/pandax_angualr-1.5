@@ -1,14 +1,7 @@
-<section id="home" flex md-colors="{color:'primary-50'}">
+<section id="home" flex md-colors="::{color:'primary-50'}">
   <div id="form">
     <h1>MINX</h1>
-    <div class="enter-form">
-
-      <login-page ng-if="$ctrl.signIn" output="$ctrl.switchTo(view)"></login-page>
-      <sign-up ng-if="$ctrl.signUp" output="$ctrl.switchTo(view)"></sign-up>
-      <restore ng-if="$ctrl.restore" output="$ctrl.switchTo(view)"></restore>
-      <reset ng-if="$ctrl.reset" output="$ctrl.switchTo(view)"></reset>
-
-    </div>
+    <div class="enter-form" ui-view></div>
   </div>
-  <div id="copyright">{{:: $ctrl.copyright }}</div>
+  <div id="copyright">Copyright © {{ ::$ctrl.year }} MNX USA LLC</div>
 </section>

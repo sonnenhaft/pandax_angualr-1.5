@@ -5,19 +5,19 @@ import User from '../../../common-services/user.service';
 import template from './reset-password.page.html';
 
 class controller {
-  constructor (Validation, User, $stateParams) {
+  constructor (Validation, User, $stateParams, $state) {
     'ngInject';
 
-    Object.assign(this, { Validation, User, $stateParams });
+    Object.assign(this, { Validation, User, $stateParams, $state });
   }
 
   onSubmit (credentials) {
     if (this.validate(credentials)) {
       this.resetError = false;
       return this.reset(credentials.password, this.$stateParams.reset);
+    } else {
+      return false;
     }
-
-    return false;
   }
 
   validate (field) {
@@ -26,47 +26,39 @@ class controller {
         this[`${error.name}Error`] = error.text;
       });
       return false;
+    } else {
+      return true;
     }
-    return true;
   }
 
   reset (password, token) {
     this.resetLoading = true;
-    this.User
-      .reset({ password }, token)
-      .then(
-        result => {
-          this.resetLoading = false;
+    this.User.reset({ password }, token).then(
+      result => {
+        this.resetLoading = false;
 
-          if (result && result.error) {
-            this.resetLoading = result.error;
-            this.registerError = result.error;
-            return false;
-          }
-
+        if (result && result.error) {
+          this.resetLoading = result.error;
+          this.registerError = result.error;
+          return false;
+        } else {
           return true;
-        },
-        error => {
-          this.resetLoading = false;
         }
-      )
-      .then(result => {
-        if (result) {
-          this.output({ view: 'signIn' });
-        }
-      });
+      },
+      error => this.resetLoading = false
+    ).then(result => {
+      if (result) {
+        this.$state.go('signUpPage');
+      }
+    });
   }
-
 }
 
-export default angular.module('reset', [
+export default angular.module('resetPasswordPage', [
   uiRouter,
   Validation,
   User
-]).component('reset', {
-  bindings: {
-    output: '&'
-  },
+]).component('resetPasswordPage', {
   template,
   controller
 }).name;

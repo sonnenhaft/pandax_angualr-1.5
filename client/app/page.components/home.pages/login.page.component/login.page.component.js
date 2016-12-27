@@ -16,8 +16,9 @@ class controller {
     if (this.validate(credentials)) {
       this.loginError = false;
       return this.login(credentials);
+    } else {
+      return false;
     }
-    return false;
   }
 
   validate (field) {
@@ -26,8 +27,9 @@ class controller {
         this[`${error.name}Error`] = error.text;
       });
       return false;
+    } else {
+      return true;
     }
-    return true;
   }
 
   login (credentials) {
@@ -50,7 +52,6 @@ export default angular.module('loginPage', [
   Validation,
   User
 ]).component('loginPage', {
-  bindings: { output: '&' },
   template,
   controller
 }).name;
