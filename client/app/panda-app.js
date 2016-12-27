@@ -134,7 +134,7 @@ angular.module('app', [
 
   $urlRouterProvider.otherwise($injector => {
     const $state = $injector.get('$state');
-    return $state.go('home');
+    return $state.go('loginPage');
   });
 
 

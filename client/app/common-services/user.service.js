@@ -180,49 +180,44 @@ class User {
       }
     } else {
       result = this
-      .Request
-      .send(
-        user.token,
-        this.Constants.api.profile.method.GET,
-        this.Constants.api.profile.uri(type)
-      )
-      .then(
-        result => {
-          this.update(result.data);
+        .Request
+        .send(
+          user.token,
+          this.Constants.api.profile.method.GET,
+          this.Constants.api.profile.uri(type)
+        )
+        .then(
+          result => {
+            this.update(result.data);
+            if (redirectUser == true) {
+              this.redirectUser( );
+            }
+            this.setUserAvatarSrc(result.data);
+            return result.data;
+          },
+          error => error
+        )
+        .then(data => {
           if (redirectUser == true) {
             this.redirectUser( );
           }
-          this.setUserAvatarSrc(result.data);
-          return result.data;
-        },
-        error => error
-      )
-      .then(data => {
-        if (redirectUser == true) {
-          this.redirectUser( );
-        }
-        return data;
-      });
+          return data;
+        });
     }
 
     return result;
   }
 
-  UpdateUserProfile (fields) {
-    return this
-      .Request
-      .send(
-        this.token( ),
-        this.Constants.api.profile.method.PUT,
-        this.Constants.api.profile.uri(this.get('role')),
-        fields
-      )
-      .then(
-        result => {
-          this.update(result.data);
-          return result.data;
-        }
-      );
+  UpdateUserProfile (data) {
+    return this.Request.send(
+      this.token( ),
+      this.Constants.api.profile.method.PUT,
+      this.Constants.api.profile.uri(this.get('role')),
+      data
+    ).then(result => {
+      this.update(result.data);
+      return result.data;
+    });
   }
 
   UpdateUserPhoto (file, slot) {
@@ -264,11 +259,11 @@ class User {
 
   logout ( ) {
     this.Storage.remove('MINX');
-    setTimeout(( ) => this.$state.go('home'), 1);    // 'setTimeout' - waiting for finishing current state transition
+    setTimeout(( ) => this.$state.go('loginPage'), 1);    // 'setTimeout' - waiting for finishing current state transition
   }
 
   /*
-    User avatar section
+   User avatar section
    */
   fetchUserAvatarSrc ( ) {
     let result = this.getUserAvatarSrc( );

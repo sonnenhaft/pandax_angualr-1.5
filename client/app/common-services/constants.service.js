@@ -30,7 +30,7 @@ class Constants {
           PUT: 'PUT', // to update profile
           GET: 'GET' // to get profile information
         },
-        uri: user => `${path}/${user}/profile`, // user is a type of user
+        uri: user => `${path}/${user}/profile?t=${Date.now( )}`, // user is a type of user
       },
       photo: { method: 'PUT', uri: (user, slotId) => `${path}/${user}/profile/photo${user === 'provider' ? `/${slotId}` : ''}`, }, // slotId is an index of photo,
       order: { method: 'POST', uri: `${path}/order` },
