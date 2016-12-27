@@ -10,6 +10,11 @@
     .wrapper img {
         max-width: 100% !important;
     }
+    #customer, #entertainer {
+        img {
+            margin-bottom: -70px;
+        }
+    }
     section {
         padding: 0 32px;
     }
@@ -116,6 +121,7 @@
     #entertainer, #customer {
         .minx-info, .get-minx {
             margin: 0;
+            padding-bottom: 8px;
         }
     }
 }
