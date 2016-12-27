@@ -231,7 +231,8 @@ section {
         position: absolute;
         left: 0;
         bottom: 0;
-        max-height: 535px;
+        margin-bottom: -100px;
+        max-height: 595px;
         width: auto;
     }
     .minx-info, .get-minx {
