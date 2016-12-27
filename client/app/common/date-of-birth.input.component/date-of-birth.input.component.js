@@ -32,7 +32,7 @@ class controller {
       if (this.ngModel.$viewValue) {
         if (this.asObject) {
           date = this.ngModel.$viewValue;
-          this.month = this.months[date.month];
+          this.month = this.months[date.month - 1];
           this.day = date.day;
           this.year = date.year;
         } else {
@@ -77,7 +77,7 @@ class controller {
       this.ngModel.$setViewValue({
         year: date.getFullYear( ),
         day: date.getDate( ),
-        month: date.getMonth( )
+        month: date.getMonth( ) + 1
       });
     } else {
       this.ngModel.$setViewValue(date);

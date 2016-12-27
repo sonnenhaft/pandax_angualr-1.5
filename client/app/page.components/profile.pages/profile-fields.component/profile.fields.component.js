@@ -241,6 +241,7 @@ export default angular.module('profileFields', [
   template,
   controller
 }).filter('customDate', ( ) => dateLikeObject => {
+  console.log(dateLikeObject);
   if (dateLikeObject) {
     return new Date(`${dateLikeObject.month}/${dateLikeObject.day}/${dateLikeObject.year}`);
   } else {
