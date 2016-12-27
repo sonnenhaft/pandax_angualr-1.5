@@ -43,6 +43,9 @@
         button {
           width: 49%;
           float: left;
+          &.wide {
+                width: 100%;
+          }
 
           &:last-child {
             float: right;
