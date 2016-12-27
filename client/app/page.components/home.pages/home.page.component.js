@@ -32,7 +32,7 @@ export default angular.module(HomePageComponent, [
     .state({ url: 'sign-up?customer', parent: HomePageComponent, name: SignUpPageComponent, reloadOnSearch: false, template: '<sign-up-page></sign-up-page>', })
     .state({ url: 'reset-password', parent: HomePageComponent, name: ResetPasswordPageComponent, template: '<reset-password-page></reset-password-page>', })
     .state({ url: 'restore', parent: HomePageComponent, name: RestorePageComponent, template: '<restore-page></restore-page>', });
-  $urlRouterProvider.when('/', '/login');
+  $urlRouterProvider.when('/', '/login').when('', '/login');
 }).component(HomePageComponent, {
   template,
   controller
