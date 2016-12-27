@@ -2,17 +2,18 @@
     #welcome {
         background-image: url('./images/legs-mobile.background.png');
         background-size: cover;
+        .arrow-rect {
+            margin-top: 8px
+        }
     }
+
     .wrapper img {
-        max-width: 100%!important;
-    }
-    body {
-        margin: 0;
+        max-width: 100% !important;
     }
     section {
         padding: 0 32px;
     }
-    .features-page .content .service-title  {
+    .features-page .content .service-title {
         font-size: 18px;
     }
     #entertainer, .features-page.black {
@@ -33,28 +34,16 @@
             margin: 32px;
         }
     }
-    #welcome {
-        h1 {
-            margin: 0;
-        }
-        .arrow-rect {
-            margin-top: 8px
-        }
-    }
+
+    .features-page .content,
     #service .content {
         flex-direction: column;
         .service-offer {
             width: 100%;
         }
     }
-    .features-page .content {
-        flex-direction: column;
-        .service-offer {
-            width: 100%;
-            img {
-                display: none;
-            }
-        }
+    .features-page .content .service-offer img {
+        display: none;
     }
     footer {
         flex-direction: column;
@@ -63,24 +52,12 @@
         line-height: 24px;
         padding-bottom: 8px;
     }
-    #entertainer {
-        img {
-            position: relative;
-        }
-        .minx-info {
-            width: 100%;
-            padding: 0;
-        }
-        .get-minx {
-            width: 100%;
-            text-align: center;
-            margin: 30px 0;
-            p {
-                text-align: center;
-            }
-        }
+    #entertainer img {
+        position: relative;
     }
-    #customer {
+
+    #customer,
+    #entertainer {
         .minx-info {
             width: 100%;
             padding: 0;
@@ -102,14 +79,11 @@
             position: relative;
         }
     }
-    #service .service-offer {
-        margin: 0;
-    }
+
     #customer .get-minx, #entertainer .get-minx {
         float: none;
     }
     #customer img {
-
         position: relative;
         max-width: 100%;
     }
@@ -125,21 +99,24 @@
     .wrapper h2, #entertainer h2 {
         margin: 16px 0;
     }
-
-    #customer .minx-info, #entertainer .minx-info {
-        margin: 0;
-    }
     #welcome, .features-page, .wrapper {
         min-height: 0;
-    }
-    #customer .get-minx, #entertainer .get-minx {
-        margin:0;
     }
     .wrapper {
         padding: 0;
     }
     #entertainer {
         padding-bottom: 20px;
+    }
+    #service .service-offer,
+    #welcome h1,
+    body {
+        margin: 0;
+    }
+    #entertainer, #customer {
+        .minx-info, .get-minx {
+            margin: 0;
+        }
     }
 }
 
