@@ -26,31 +26,14 @@ export default angular.module(HomePageComponent, [
 ]).config(($stateProvider, $urlRouterProvider) => {
   'ngInject';
 
-  $stateProvider.state(HomePageComponent, {
-    url: '/',
-    abstract: true,
-    component: HomePageComponent
-  }).state(LoginPageComponent, {
-    url: 'login',
-    parent: HomePageComponent,
-    template: '<login-page></login-page>',
-  }).state(SignUpPageComponent, {
-    reloadOnSearch: false,
-    url: 'sign-up?customer',
-    parent: HomePageComponent,
-    template: '<sign-up-page></sign-up-page>',
-  }).state(ResetPasswordPageComponent, {
-    url: 'reset-password',
-    parent: HomePageComponent,
-    template: '<reset-password-page></reset-password-page>',
-  }).state(RestorePageComponent, {
-    url: 'restore',
-    parent: HomePageComponent,
-    template: '<restore-page></restore-page>',
-  });
+  $stateProvider
+    .state({ url: '/', name: HomePageComponent, abstract: true, component: HomePageComponent })
+    .state({ url: 'login', parent: HomePageComponent, name: LoginPageComponent, template: '<login-page></login-page>', })
+    .state({ url: 'sign-up?customer', parent: HomePageComponent, name: SignUpPageComponent, reloadOnSearch: false, template: '<sign-up-page></sign-up-page>', })
+    .state({ url: 'reset-password', parent: HomePageComponent, name: ResetPasswordPageComponent, template: '<reset-password-page></reset-password-page>', })
+    .state({ url: 'restore', parent: HomePageComponent, name: RestorePageComponent, template: '<restore-page></restore-page>', });
   $urlRouterProvider.when('/', '/login');
 }).component(HomePageComponent, {
   template,
   controller
 }).name;
-
