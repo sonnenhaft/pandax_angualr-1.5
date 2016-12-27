@@ -35,7 +35,7 @@ class controller {
       this.fields = CUSTOMER_FIELDS;
     } else if (User.get('role') === 'provider') {
       this.fields = CUSTOMER_FIELDS.slice( );
-      this.fields.push([{ name: 'Display Name', model: 'displaying_name', type: 'text' }]);
+      this.fields.unshift({ name: 'Display Name', model: 'displaying_name', type: 'text' });
     }
     this.profileImage( );
   }
