@@ -1,8 +1,8 @@
 // =============================================================================
-// $ Home template styles
+// $ LoginPagesComponent template styles
 // =============================================================================
 
-@import "home.page.modal";
+@import "restore.page/restore-modal";
 
 #home {
 
@@ -16,8 +16,8 @@
   align-items: center;
 
   #form {
-    @import "home.page.buttons";
-    @import "home.page.inputs";
+    @import "login.pages.buttons";
+    @import "login.pages.inputs";
 
     width: 100%;
     max-width: 375px;

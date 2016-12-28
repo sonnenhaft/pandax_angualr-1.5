@@ -43,7 +43,7 @@
   }
 
   .input {
-    @import "profile.page.types";
+    @import "profile.pages.types";
 
     width: 100%;
 
@@ -205,9 +205,10 @@
 
     width: 100%;
 
-    button {
+    .md-button {
       padding: 0;
       margin: 0;
+      line-height: 55px;
       background: $Cardinal;
       border-radius: 0;
       width: 100%;

@@ -21,18 +21,15 @@ import ngSanitize from 'angular-sanitize';              // for material dialog t
 // common
 import Navbar from './page.components/main.page.component/navbar.component/navbar.component';
 import Map from './page.components/order.pages/map.component/map.component';
-import profileFields from './page.components/profile.pages/profile-fields.component/profile.fields.component';
+import ProfilePagesComponent from './page.components/profile.pages/profile.pages.component';
 import Spinner from './common/spinner.component/spinner.component';
 import findLocation from './page.components/order.pages/find-location.page.component/find-location.page.component';
-import orderDetails from './page.components/profile.pages/order-details.component/order-details.component';
+import orderDetails from './page.components/main.page.component/billing.page.component/order-details.component/order-details.component';
 import Logout from './common/logout.modal.component/logout.modal.component';
 
 // pages
-import Home from './page.components/home.pages/home.page.component';
+import LoginPagesComponent from './page.components/login.pages/login.pages.routes';
 import Main from './page.components/main.page.component/main.page.component';
-import Profile from './page.components/profile.pages/profile.page.component';
-import ProfileCreate from './page.components/profile.pages/create-profile.page.component/create-profile.page.component';
-import ProfileView from './page.components/profile.pages/profile-view.page.component/profile-view.page.component';
 import Order from './page.components/order.pages/order.page.component';
 import Payments from './page.components/payments.page.component/payments.page.component';
 import History from './page.components/history.pages/history.page.component';
@@ -62,18 +59,15 @@ angular.module('app', [
 ].concat([
   Navbar,
   Map,
-  profileFields,
   Spinner,
   findLocation,
   orderDetails,
   dateOfBirthInput,
   Logout
 ]).concat([
-  Home,
+  ProfilePagesComponent,
+  LoginPagesComponent,
   Main,
-  Profile,
-  ProfileCreate,
-  ProfileView,
   Order,
   Payments,
   History,

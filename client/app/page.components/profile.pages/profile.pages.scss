@@ -1,5 +1,5 @@
 // =============================================================================
-// $ Home template styles
+// $ LoginPagesComponent template styles
 // =============================================================================
 
 #profile {
@@ -35,8 +35,8 @@
       position: relative;
     }
 
-    @import "profile.page.form";
-    @import "profile.page.view";
+    @import "profile.pages.form";
+    @import "view-profile.page";
 
     @media (max-width: 960px) {
       padding: 50px 5%;
@@ -50,4 +50,4 @@
 
 }
 
-@import "billing.page.component/billing.page";
+@import "../main.page.component/billing.page.component/billing.page";

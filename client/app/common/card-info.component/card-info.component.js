@@ -1,5 +1,5 @@
 import angular from 'angular';
-import messages from '../../../../common/messages.component';
+import messages from '../messages.component';
 
 import template from './card-info.html';
 
@@ -29,11 +29,7 @@ class controller {
 export default angular.module('cardInfo', [
   messages
 ]).component('cardInfo', {
-  bindings: {
-    formObject: '=',
-    model: '=',
-    output: '&'
-  },
+  bindings: { formObject: '=', model: '=', },
   template,
   controller
 }).name;

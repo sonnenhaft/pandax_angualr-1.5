@@ -98,7 +98,7 @@ app {
 @import "page.components/order.pages/map.component/map";
 @import "common/spinner.component/spinner";
 @import "page.components/order.pages/find-location.page.component/find-location.page";
-@import "page.components/profile.pages/order-details.component/order-details";
+@import "page.components/main.page.component/billing.page.component/order-details.component/order-details";
 @import "common/logout.modal.component/logout.modal";
 
 .app {
@@ -109,8 +109,8 @@ app {
 }
 
 // pages
-@import "page.components/home.pages/home.page.home";
-@import "page.components/profile.pages/profile.page";
+@import "page.components/login.pages/login.pages";
+@import "page.components/profile.pages/profile.pages";
 @import "page.components/main.page.component/main.page";
 @import "page.components/order.pages/order.page";
 @import "page.components/payments.page.component/payments.page";

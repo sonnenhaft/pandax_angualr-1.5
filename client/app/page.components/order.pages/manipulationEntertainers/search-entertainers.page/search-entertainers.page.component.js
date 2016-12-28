@@ -1,7 +1,7 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import OrderService from '../../../../common-services/orderService.service';
-import billing from '../../../profile.pages/billing.page.component/billing.page.component';
+import billing from '../../../main.page.component/billing.page.component/billing.page.component';
 import entertainerPhotosModal from '../entertainer-protos.modal/entertainer-protoes.modal';
 
 import template from './search-entertainers.page.html';

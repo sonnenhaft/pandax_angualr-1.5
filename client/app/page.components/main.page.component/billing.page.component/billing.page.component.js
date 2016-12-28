@@ -1,10 +1,9 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
-import User from '../../../common-services/user.service';
 import Cards from '../../../common-services/card.service';
-import personalInformation from '../profile-fields.component/personal-information.component/personal-information.component';
-import cardList from '../profile-fields.component/card-list.component/card-list.component';
-import cardInfo from '../profile-fields.component/card-info.component/card-info.component';
+import personalInformation from './personal-information.component/personal-information.component';
+import cardList from './card-list.component/card-list.component';
+import cardInfo from '../../../common/card-info.component/card-info.component';
 import template from './billing.page.html';
 
 class controller {
@@ -39,7 +38,7 @@ class controller {
 
     if (!this.hasPersonalInfo) {                                          // should save personal information
       const query = this.User
-        .UpdateUserProfile(this.billingInfo);
+        ._updateProfileOnServer(this.billingInfo);
       promises.push(query);
     }
 
@@ -119,9 +118,7 @@ class controller {
   goToPreviousStep ( ) {
     this.$state.go(this.$stateParams.from, { orderId: this.$stateParams.orderId });
   }
-
 }
-
 
 export default angular.module('billing', [
   uiRouter,
@@ -129,44 +126,41 @@ export default angular.module('billing', [
   cardList,
   cardInfo,
   Cards
-])
+]).config($stateProvider => {
+  'ngInject';
 
-  .config($stateProvider => {
-    'ngInject';
-
-    $stateProvider
-      .state('main.billing', {
-        url: '/billing/:orderId/:entertainerId?from',
-        parent: 'main',
-        template: '<billing billing-info="billingInfo"  order-details="orderDetails" </billing>',
-        controller ($scope, billingInfo, orderDetails) {
-          $scope.billingInfo = billingInfo;
-          $scope.orderDetails = orderDetails;
-        },
-        resolve: {
-          orderId ($stateParams) {
-            return $stateParams.orderId || 0;
-          },
-          billingInfo (User, Cards) {
-            let billingInfo = User.get( );
-            return Cards.getCards( )
-              .then(data => {
-                if (data) {
-                  billingInfo = Object.assign(billingInfo, { cards: data });
-                }
-                return billingInfo;
-              });
-          },
-          orderDetails (OrderService, orderId) {
-            return OrderService.fetchOrderDetails(orderId).then(data => data);
-          }
-        }
-      });
-  }).component('billing', {
-    bindings: {
-      billingInfo: '=',
-      orderDetails: '='
+  $stateProvider.state('main.billing', {
+    url: '/billing/:orderId/:entertainerId?from',
+    parent: 'main',
+    template: '<billing billing-info="billingInfo"  order-details="orderDetails" </billing>',
+    controller ($scope, billingInfo, orderDetails) {
+      $scope.billingInfo = billingInfo;
+      $scope.orderDetails = orderDetails;
     },
-    template,
-    controller
-  }).name;
+    resolve: {
+      orderId ($stateParams) {
+        return $stateParams.orderId || 0;
+      },
+      billingInfo (User, Cards) {
+        let billingInfo = User.get( );
+        return Cards.getCards( )
+          .then(data => {
+            if (data) {
+              billingInfo = Object.assign(billingInfo, { cards: data });
+            }
+            return billingInfo;
+          });
+      },
+      orderDetails (OrderService, orderId) {
+        return OrderService.fetchOrderDetails(orderId).then(data => data);
+      }
+    }
+  });
+}).component('billing', {
+  bindings: {
+    billingInfo: '=',
+    orderDetails: '='
+  },
+  template,
+  controller
+}).name;
