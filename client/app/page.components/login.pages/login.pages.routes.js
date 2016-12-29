@@ -25,10 +25,10 @@ export default angular.module(LoginPagesLayout, [
 
   $stateProvider.state({ url: '/', name: LoginPagesLayout, abstract: true, component: LoginPagesLayout });
   const loginStatesMap = {
-    login: LoginPageComponent,
-    restore: RestorePageComponent,
-    'sign-up?customer': SignUpPageComponent,
-    'reset-password': ResetPasswordPageComponent
+    'login?email&password&auto': LoginPageComponent,
+    'restore?password&auto': RestorePageComponent,
+    'sign-up?email&password&customer&auto': SignUpPageComponent,
+    'reset-password?email&auto': ResetPasswordPageComponent
   };
   Object.keys(loginStatesMap).forEach(url => $stateProvider.state({
     url,

@@ -38,7 +38,11 @@ class User {
       const errorMessage = result.data.message;
       const userToken = result.data.token;
       const user = result.data.data;
-      if (errorMessage) { return { error: errorMessage }; } else {
+      console.log(1);
+      if (errorMessage) {
+        return { error: errorMessage };
+      } else {
+        console.log(1);
         const role = user.role = user.role === 'client' ? 'customer' : user.role;
         this.Storage.setObject('MINX', { token: userToken, user: Object.assign(user, { auth: user.first_name && user.last_name }) });
         return this.getUserProfile(result.data, role);
@@ -74,22 +78,19 @@ class User {
   }
 
   getUserProfile (user, type, redirectUser = true) {
-    if (type == 'admin') {
-      return this.$q.defer( ).resolve(user);
-    } else {
-      return this.Request.send(user.token, this.Constants.api.profile.method.GET, this.Constants.api.profile.uri(type)).then(result => {
+    let q = this.$q.when(user);
+    if (type !== 'admin') {
+      q = this.Request.send(user.token, this.Constants.api.profile.method.GET, this.Constants.api.profile.uri(type)).then(result => {
         this.update(result.data);
-        if (redirectUser) {
-          this.redirectUser( );
-        }
         this.setUserAvatarSrc(result.data);
         return result.data;
-      }, error => error).then(data => data).finally(( ) => {
-        if (redirectUser) {
-          this.redirectUser( );
-        }
-      });
+      }, error => error).then(data => data);
     }
+    return q.finally(( ) => {
+      if (redirectUser) {
+        this.redirectUser( );
+      }
+    });
   }
 
   UpdateUserProfile (data) {

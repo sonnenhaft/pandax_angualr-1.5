@@ -69,20 +69,17 @@ gulp.task('webpack', ['clean'], (cb) => {
 
 gulp.task('serve', () => {
   const config = require('./webpack.dev.config');
-  config.entry.app = [
-    // this modules required to make HRM working
-    // it responsible for all this webpack magic
-    'webpack-hot-middleware/client?reload=true',
-    // application entry point
-  ].concat(paths.entry);
+  config.entry.app = ['webpack-hot-middleware/client?reload=true'].concat(paths.entry);
 
   var compiler = webpack(config);
-
   var proxyOptions = require('url').parse('https://dev3-panda-aws.isdev.info/api');
-  proxyOptions.route = '/api';
 
+  proxyOptions.route = '/api';
   serve({
     port: process.env.PORT || 3020,
+    startPath: '/#!/login?email=admin@panda.com&password=Password1&auto',
+    // startPath: '/#!/login?email=provider1@panda.com&password=Password1&auto',
+    // startPath: '/#!/login?email=customer1@panda.com&password=Password1&auto',
     open: 'local',
     server: {baseDir: root},
     https: true,
@@ -100,6 +97,7 @@ gulp.task('serve', () => {
       webpackHotMiddelware(compiler)
     ]
   });
+
 });
 
 gulp.task('watch', ['serve']);

@@ -4,6 +4,21 @@ import TouchedInvalidDirective from './touched-invalid.directive';
 import template from './credentials-inputs.html';
 
 class controller {
+  constructor ($stateParams, $timeout) {
+    'ngInject';
+
+    this.$stateParams = $stateParams;
+    this.$timeout = $timeout;
+  }
+
+  $onInit ( ) {
+    const { email, password } = this.$stateParams;
+    this.credentials = Object.assign(this.credentials || {}, { email, password });
+    if (this.$stateParams.auto) {
+      this.$timeout(( ) => this.submit( ), 0, false);
+    }
+  }
+
   submit ($event) {
     if (!this.form.$submitted) {
       this.form.$setSubmitted( );

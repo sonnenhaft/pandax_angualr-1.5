@@ -1,26 +1,14 @@
 var webpack = require('webpack');
-var path    = require('path');
-var config  = require('./webpack.config');
+var path = require('path');
+var config = require('./webpack.config');
 
-config.devtool = 'eval';
-config.output = {
-  filename: '[name].bundle.js',
-  publicPath: '/',
-  path: path.resolve(__dirname, 'client')
-};
-
-config.plugins = config.plugins.concat([
-
-  // Adds webpack HMR support. It act's like livereload,
-  // reloading page after webpack rebuilt modules.
-  // It also updates stylesheets and inline assets without page reloading.
-  new webpack.HotModuleReplacementPlugin()
-]);
-
-config.resolve = {
-  alias: {
-    config: path.join(__dirname, 'config/development')
-  }
-};
-
-module.exports = config;
+module.exports = Object.assign(config, {
+  devtool: 'eval',
+  output: {
+    filename: '[name].bundle.js',
+    publicPath: '/',
+    path: path.resolve(__dirname, 'client')
+  },
+  plugins: config.plugins.concat([new webpack.HotModuleReplacementPlugin()]),
+  resolve: { alias: { config: path.join(__dirname, 'config/development') } }
+})

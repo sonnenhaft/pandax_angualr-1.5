@@ -2,20 +2,20 @@
   <div layout="column" layout-align="end" class="admin__header">
     <span class="admin__page-name">Entertainers</span>
   </div>
-  <!--	<div class="admin__manip-row">
-          <div
-              layout="row"
-              layout-align="start center"
-              class="manip-row__block manip-row__block_left">
-              <span class="admin__filter-name">Status</span>
-        <md-select
-            ng-model="weapon"
-            placeholder="Status"
-            class="select-container_admin">
-          <md-option ng-repeat="(key, val) in $ctrl.statuses" value="{{val}}">{{key}}</md-option>
-        </md-select>
-          </div>
-      </div>-->
+  <div class="admin__manip-row">
+    <div
+      layout="row"
+      layout-align="start center"
+      class="manip-row__block manip-row__block_left">
+      <span class="admin__filter-name">Status</span>
+      <md-select
+        ng-model="weapon"
+        placeholder="Status"
+        class="select-container_admin">
+        <md-option ng-repeat="(key, val) in $ctrl.statuses" value="{{val}}">{{key}}</md-option>
+      </md-select>
+    </div>
+  </div>
   <table
     class="admin__table table_admin"
     infinite-scroll="$ctrl.fetchMoreItems()"
@@ -40,20 +40,18 @@
       <td class="table_admin__cell table_admin__cell_label"> Raiting</td>
       <td class="table_admin__cell"> {{entertainer.rating}}</td>
       <td class="table_admin__cell table_admin__cell_actions">
-        <!--	<img
-                      ng-if="entertainer.status == $ctrl.statuses.pending"
-                      src="/assets/images/icons/admin/icon_approve.png"
-                      ng-click="$ctrl.EntertainersService.setStatus($event, entertainer, $ctrl.statuses.active, false)"
-                      title="Approve"
-                      alt="Approve">
-
-                  <img
-                      ng-if="entertainer.status == $ctrl.statuses.rejected"
-                      src="/assets/images/icons/admin/icon_approve.png"
-                      ng-click="$ctrl.EntertainersService.setStatus($event, entertainer, $ctrl.statuses.active, true, $ctrl.statuses.approved)"
-                      title="Approve"
-                      alt="Approve">-->
-
+        <!--<img
+          ng-if="entertainer.status == $ctrl.statuses.pending"
+          src="/assets/images/icons/admin/icon_approve.png"
+          ng-click="$ctrl.EntertainersService.setStatus($event, entertainer, $ctrl.statuses.active, false)"
+          title="Approve"
+          alt="Approve">-->
+        <img
+            ng-if="entertainer.status == $ctrl.statuses.rejected"
+            src="/assets/images/icons/admin/icon_approve.png"
+            ng-click="$ctrl.EntertainersService.setStatus($event, entertainer, $ctrl.statuses.active, true, $ctrl.statuses.approved)"
+            title="Approve"
+            alt="Approve">
         <img
           ng-if="entertainer.status == $ctrl.statuses.pending"
           src="/assets/images/icons/admin/icon_reject.png"
