@@ -18,20 +18,20 @@ export default [
     icon: { path: '/assets/images/icons/svg/navbar-admin/icon_providers.svg', styles: { height: '17px', width: '12px' } },
     hint: 'Entertainers'
   },
- /* {
+  {
     role: ['admin'],
     text: 'Customers',
     url: 'admin.customers',
     icon: {path: '/assets/images/icons/svg/navbar-admin/icon_customers.svg', styles: {height: '17px', width: '10px'}},
     hint: 'Customers'
-  },*/
- /* {
+  },
+  {
     role: ['admin'],
     text: 'Orders',
     url: 'admin.orders',
     icon: {path: '/assets/images/icons/svg/navbar-admin/icon_orders.svg', styles: {height: '15px', width: '12px'}},
     hint: 'Orders'
-  },*/
+  },
   /* {
    role: ['admin'],
    text: 'Paysheet',
