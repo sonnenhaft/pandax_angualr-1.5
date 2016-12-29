@@ -1,25 +1,32 @@
-import angular from 'angular';
-import User from '../../../common-services/user.service';
-import CredentialsInputsComponent from '../credentials-inputs.component/credentials-inputs.component';
-
 import template from './login.page.html';
 
-class controller {
-  constructor (User) {
+export default angular.module('loginPage', []).component('loginPage', {
+  template,
+  controller (LoginResource, $stateParams, $location, Storage, User) {
     'ngInject';
 
-    Object.assign(this, { User });
+    console.log($location.hash( ));
+    this.login = ( ) => LoginResource.login({}, this.credentials).$promise.then(({ data, token }) => {
+      // TODO: refactor this
+      const user = Object.assign(data, { auth: data.first_name && data.last_name, token });
+      const role = user.role = user.role === 'client' ? 'customer' : user.role;
+      Storage.setObject('MINX', { token, user });
+      return User.getUserProfile(user, role);
+    }).then(user => {
+      if ($stateParams.redirectUrl) {
+        $location.search({});
+        $location.replace( );
+        $location.path($stateParams.redirectUrl);
+      } else if (user.role === 'customer') {
+        this.$state.go('main.order');
+      } else if (user.role === 'admin') {
+        this.$state.go('admin.entertainers');
+      } else if (!user.first_name || user.last_name) {
+        this.$state.go('main.profile.create');
+      } else {
+        this.$state.go('main.profile.view');
+      }
+    });
   }
-
-  login ( ) {
-    return this.User.login(this.credentials);
-  }
-}
-
-export default angular.module('loginPage', [
-  CredentialsInputsComponent,
-  User
-]).component('loginPage', {
-  template,
-  controller
 }).name;
+

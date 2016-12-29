@@ -1,39 +1,21 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
-import User from '../../../common-services/user.service';
 import template from './restore.page.html';
 
-class controller {
-  constructor (User, $mdDialog) {
+export default angular.module('restorePage', []).component('restorePage', {
+  template,
+  controller (LoginResource, $mdDialog) {
     'ngInject';
 
-    Object.assign(this, { User, $mdDialog });
-  }
-
-  restorePassword (targetEvent) {
-    const email = this.credentials.email;
-    return this.User.restore({ email }).then(result => {
-      if (!result.error) {
-        this.$mdDialog.show({
+    this.$mdDialog = $mdDialog;
+    this.restorePassword = targetEvent => {
+      const email = this.credentials.email;
+      return LoginResource.restorePassword({}, { email }).$promise.then(( ) => {
+        $mdDialog.show({
           contentElement: '#restore-success',
           parent: document.body,
           clickOutsideToClose: false,
           targetEvent
         });
-      }
-      return result;
-    });
+      });
+    };
   }
-
-  hideMessage ( ) {
-    this.$mdDialog.hide( );
-  }
-}
-
-export default angular.module('restorePage', [
-  uiRouter,
-  User
-]).component('restorePage', {
-  template,
-  controller
 }).name;

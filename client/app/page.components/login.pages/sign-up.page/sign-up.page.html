@@ -11,5 +11,5 @@
   <credentials-inputs credentials="$ctrl.credentials" submit-title="Sign up" on-submit="$ctrl.signUp()"></credentials-inputs>
 </form>
 <div class="login-pages-text-under-button">
-  Already have an account? <a ui-sref="loginPage">Log in</a>
+  Already have an account? <a ui-sref="loginPage($ctrl.credentials)">Log in</a>
 </div>

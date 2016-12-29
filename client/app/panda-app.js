@@ -13,7 +13,6 @@ import 'normalize.css';
 import 'animate.css';
 import angularMessages from 'angular-messages';
 import 'angular-filter/dist/angular-filter.min';
-import JWT from 'angular-jwt';
 import angularStripe from 'angular-stripe';
 import ngInfiniteScroll from 'ng-infinite-scroll';
 import ngSanitize from 'angular-sanitize';              // for material dialog to show text as html
@@ -52,7 +51,6 @@ angular.module('app', [
   'angular.filter',
   angularMaterial,
   angularMessages,
-  JWT,
   angularStripe,
   ngInfiniteScroll,
   ngSanitize,
@@ -77,33 +75,18 @@ angular.module('app', [
   Admin
 ])).config(($locationProvider, $urlRouterProvider, $mdThemingProvider,
             uiGmapGoogleMapApiProvider, $mdDateLocaleProvider, moment,
-            $mdGestureProvider, jwtInterceptorProvider, $httpProvider, stripeProvider) => {
+            $mdGestureProvider, $httpProvider, stripeProvider) => {
   'ngInject';
 
-  // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions
-  // #how-to-configure-your-server-to-work-with-html5mode
   $locationProvider.html5Mode(false);
 
-  // Extend the default angular 'grey' theme
-  const primaryMap = $mdThemingProvider.extendPalette('grey', {
-    900: 'FFFFFF'
-  });
-  const accentMap = $mdThemingProvider.extendPalette('red', {
-    A200: 'ba192f',
-  });
-  const backgroundMap = $mdThemingProvider.extendPalette('grey', {
-    50: '151520'
-  });
-
-  $mdThemingProvider.definePalette('primaryMap', primaryMap);
-  $mdThemingProvider.definePalette('accentMap', accentMap);
-  $mdThemingProvider.definePalette('backgroundMap', backgroundMap);
-
+  $mdThemingProvider.definePalette('primaryMap', $mdThemingProvider.extendPalette('grey', { 900: 'FFFFFF' }));
+  $mdThemingProvider.definePalette('accentMap', $mdThemingProvider.extendPalette('red', { A200: 'ba192f', }));
+  $mdThemingProvider.definePalette('backgroundMap', $mdThemingProvider.extendPalette('grey', { 50: '151520' }));
   $mdThemingProvider.theme('default')
     .primaryPalette('primaryMap')
     .accentPalette('accentMap')
     .backgroundPalette('backgroundMap');
-
 
   $mdDateLocaleProvider.formatDate = date => moment(date).format('MMMM DD, YYYY');
 
@@ -112,15 +95,6 @@ angular.module('app', [
     v: '3', // defaults to latest 3.X anyhow
     libraries: 'weather,geometry,visualization'
   });
-
-  // JWT interceptor will take care of sending the JWT in every request (More info: https://github.com/auth0/angular-jwt#jwtinterceptor)
-  jwtInterceptorProvider.tokenGetter = function tokenGetter (User) {
-    'ngInject';
-
-    return User.token( );
-  };
-  $httpProvider.interceptors.push('jwtInterceptor');
-
 
   // without this line tap on 'md-button' with 'ng-file-upload' not working in iPhone https://github.com/danialfarid/ng-file-upload/issues/1049
   $mdGestureProvider.skipClickHijack( );
@@ -131,15 +105,18 @@ angular.module('app', [
     return $state.go('loginPage');
   });
 
-
   $httpProvider.interceptors.push(($q, $injector) => {
     const responseHandler = response => {
       const defer = $q.defer( );
       const Helper = $injector.get('Helper');
+      const User = $injector.get('User');
       if (response.status === -1 && !response.statusText) {
         response.statusText = 'Not able to connect to remote server';
         response.data = response.data || { message: response.statusText };
         Helper.showToast(response.statusText, 5000);
+      }
+      if (response.detail) {
+        response.statusText = response.detail;
       }
       if (response.status >= 400 && response.status != 403) { // for 403 status we have another handler only in userService.login()
         let messageText = response.statusText;
@@ -152,12 +129,9 @@ angular.module('app', [
         }
         Helper.showToast(messageText, 5000);
         if (response.status == 401) {
-          const User = $injector.get('User');
           User.logout( );
         }
       } else if (response.status == 403) {
-        const Helper = $injector.get('Helper');
-        const User = $injector.get('User');
         Helper.showBanPopUp(response.data && response.data.detail);
         User.logout( );
       }

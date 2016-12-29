@@ -12,9 +12,7 @@ class User {
     Object.assign(this, { Storage, Constants, Request, $state, $http, Helper, $q, $mdDialog, userAvatarSrc: '', billingInfo: {} });
   }
 
-  isAuth ( ) { return this.Storage.getObject('MINX').user; }
-
-  token ( ) { if (this.isAuth( )) { return this.Storage.getObject('MINX').token; } }
+  token ( ) { return this.Storage.getObject('MINX').token; }
 
   get (param) { return param ? (this.Storage.getObject('MINX').user || {})[param] : this.Storage.getObject('MINX').user; }
 
@@ -23,74 +21,26 @@ class User {
     this.Storage.setObject('MINX', Object.assign(session, { user: Object.assign(session.user, object) }));
   }
 
-  register (credentials) {
-    return this.Request.send(false, this.Constants.api.signup.method, this.Constants.api.signup.uri(credentials.type), {
-      email: credentials.email,
-      password: credentials.password
-    }).then(result => {
-      if (result.data.detail) { return { error: result.data.detail }; }
-      return this.login(credentials);
-    });
-  }
-
-  login ({ email, password }) {
-    return this.Request.send(false, 'POST', `${config.API_URL}/sessions`, { email, password }).then(result => {
-      const errorMessage = result.data.message;
-      const userToken = result.data.token;
-      const user = result.data.data;
-      console.log(1);
-      if (errorMessage) {
-        return { error: errorMessage };
-      } else {
-        console.log(1);
-        const role = user.role = user.role === 'client' ? 'customer' : user.role;
-        this.Storage.setObject('MINX', { token: userToken, user: Object.assign(user, { auth: user.first_name && user.last_name }) });
-        return this.getUserProfile(result.data, role);
-      }
-    });
-  }
-
-  restore (email) {
-    return this.Request.send(false, 'POST', `${config.API_URL}/sessions/password/reset`, email).then(result => {
-      if (result.data.detail) { return { error: result.data.detail }; }
-      return result;
-    });
-  }
-
-  reset (password, token) {
-    return this.Request.send(false, this.Constants.api.password.change.method, this.Constants.api.password.change.uri(token), password).then(result => {
-      if (result.data.detail) {
-        return { error: result.data.detail };
-      } else {
-        return result;
-      }
-    });
-  }
-
-  changeByOld (passwordOld, passwordNew) {
+  changeByOld (old_password, new_password) { // eslint-disable-line camelcase
     return this.Request.send(false, this.Constants.api.password.changeByOld.method, this.Constants.api.password.changeByOld.uri( ), {
-      old_password: passwordOld,
-      new_password: passwordNew
+      old_password, // eslint-disable-line camelcase
+      new_password // eslint-disable-line camelcase
     }).then(result => {
       if (result.data.detail) { return { error: result.data.detail }; }
       return result;
     });
   }
 
-  getUserProfile (user, type, redirectUser = true) {
-    let q = this.$q.when(user);
-    if (type !== 'admin') {
-      q = this.Request.send(user.token, this.Constants.api.profile.method.GET, this.Constants.api.profile.uri(type)).then(result => {
+  getUserProfile (user, type) {
+    if (type === 'admin') {
+      return this.$q.when(user);
+    } else {
+      return this.Request.send(this.token( ), 'GET', `${config.API_URL}/api/${type}/profile`).then(result => {
         this.update(result.data);
         this.setUserAvatarSrc(result.data);
-        return result.data;
-      }, error => error).then(data => data);
+        return Object.assign({}, user, result.data);
+      });
     }
-    return q.finally(( ) => {
-      if (redirectUser) {
-        this.redirectUser( );
-      }
-    });
   }
 
   UpdateUserProfile (data) {
@@ -107,22 +57,6 @@ class User {
     });
   }
 
-  redirectUser ( ) {
-    switch (true) {
-      case this.get('role') === 'customer':
-        this.$state.go('main.order');
-        return false;
-      case this.get('role') === 'admin':
-        this.$state.go('admin.entertainers');
-        return false;
-      case !this.get('first_name') || !this.get('last_name'):
-        this.$state.go('main.profile.create');
-        return false;
-      default:
-        this.$state.go('main.profile.view');
-    }
-  }
-
   logout ( ) {
     this.Storage.remove('MINX');
     setTimeout(( ) => this.$state.go('loginPage'), 1);    // 'setTimeout' - waiting for finishing current state transition
@@ -130,7 +64,7 @@ class User {
 
   /* User avatar section */
   fetchUserAvatarSrc ( ) {
-    return this.getUserAvatarSrc( ) || this.getUserProfile(Object.assign(this.get( ), { token: this.token( ) }), this.get('role'), false)
+    return this.userAvatarSrc || this.getUserProfile(Object.assign(this.get( ), { token: this.token( ) }), this.get('role'), false)
         .then(data => this.setUserAvatarSrc(data));
   }
 
@@ -147,15 +81,13 @@ class User {
     return this.userAvatarSrc = `${photoSrc}?${this.Helper.getUniqueNumberByTime( )}`;
   }
 
-  getUserAvatarSrc ( ) { return this.userAvatarSrc; }
-
-  fetchBillingInfo ( ) { return this.billingInfo; }
-
   getActualStatus ( ) {
-    return this.Request.send(null, this.Constants.api.actualStatusOfCurrentUser.method, this.Constants.api.actualStatusOfCurrentUser.uri).then(result => {
+    return this.Request.send(null, 'GET', `${config.API_URL}/api/status`).then(result => {
       this.update(result.data);
       return result.data && result.data.status;
     });
   }
 }
-export default angular.module('user', [Storage, Constants, Request]).service('User', User).name;
+export default angular.module('user', [
+  Storage, Constants, Request
+]).service('User', User).name;

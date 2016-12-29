@@ -17,20 +17,23 @@ class controller {
     if (this.$stateParams.auto) {
       this.$timeout(( ) => this.submit( ), 0, false);
     }
+    if (this.passwordOnly && this.credentials.password) {
+      this.repeatedPassword = this.credentials.password;
+    }
   }
 
   submit ($event) {
     if (!this.form.$submitted) {
       this.form.$setSubmitted( );
     }
-    if (this.form.$valid) {
-      this.ajaxError = null;
-      this.loading = true;
-      this.onSubmit($event).then(
-        result => this.ajaxError = (result || {}).error || (result || {}).message,
-        error => this.ajaxError = error.message || error.data.message
-      ).finally(( ) => this.loading = false);
+    if (!this.form.$valid) {
+      return;
     }
+    this.ajaxError = null;
+    this.loading = true;
+    this.onSubmit($event).catch(e => {
+      this.ajaxError = e.statusText;
+    }).finally(( ) => this.loading = false);
   }
 }
 

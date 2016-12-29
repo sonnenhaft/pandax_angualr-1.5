@@ -77,7 +77,8 @@ gulp.task('serve', () => {
   proxyOptions.route = '/api';
   serve({
     port: process.env.PORT || 3020,
-    startPath: '/#!/login?email=admin@panda.com&password=Password1&auto',
+    // startPath: '/#!/login?email=admin@panda.com&password=Password1&auto',
+    startPath: '/#!/login?email=provider1@panda.com&password=Password1&auto&redirectUrl=/main/profile/edit',
     // startPath: '/#!/login?email=provider1@panda.com&password=Password1&auto',
     // startPath: '/#!/login?email=customer1@panda.com&password=Password1&auto',
     open: 'local',

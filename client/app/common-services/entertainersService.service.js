@@ -4,29 +4,15 @@ class EntertainersService {
   constructor (Constants, Request, $mdDialog, $q) {
     'ngInject';
 
-    Object.assign(this, {
-      Constants,
-      Request,
-      $mdDialog,
-      $q,
-      list: []
-    });
+    Object.assign(this, { Constants, Request, $mdDialog, $q, list: [] });
   }
 
   fetchEntertainers (page = 1) {
-    return this
-      .Request
-      .send(
-        null,
-        this.Constants.api.entertainers.get.method,
-        this.Constants.api.entertainers.get.uri(page)
-      )
-      .then(
-        result => {
-          this.list = this.list.concat(result.data.items);
-          return result.data;
-        }
-      );
+    return this.Request.send(null, this.Constants.api.entertainers.get.method, this.Constants.api.entertainers.get.uri(page)).then(result => {
+      this.list = this.list.concat(result.data.items);
+      return result.data;
+    }
+    );
   }
 
   getEntertainers ( ) {
@@ -54,20 +40,16 @@ class EntertainersService {
       confirm = confirm.promise;
     }
 
-    return confirm.then(_data => this
-        .Request
-        .send(
-          null,
-          this.Constants.api.admin.setStatus.method,
-          this.Constants.api.admin.setStatus.uri('providers', entertainer.id),
-          { set: targetStatus }
-        )
-        .then(
-          result => {
-            this.updateEntertainerInList(entertainer, result.data.status);
-            return result.data;
-          }
-        ));
+    return confirm.then(_data => this.Request.send(
+      null,
+      this.Constants.api.admin.setStatus.method,
+      this.Constants.api.admin.setStatus.uri('providers', entertainer.id),
+      { set: targetStatus }
+    ).then(result => {
+      this.updateEntertainerInList(entertainer, result.data.status);
+      return result.data;
+    }
+    ));
   }
 
   updateEntertainerInList (entertainer, targetStatus) {
@@ -88,7 +70,4 @@ class EntertainersService {
   }
 }
 
-export default angular
-  .module('entertainersService', [])
-  .service('EntertainersService', EntertainersService)
-  .name;
+export default angular.module('EntertainersService', []).service('EntertainersService', EntertainersService).name;

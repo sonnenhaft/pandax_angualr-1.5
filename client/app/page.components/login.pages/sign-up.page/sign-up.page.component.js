@@ -1,15 +1,10 @@
-import angular from 'angular';
-
-import User from '../../../common-services/user.service';
-import CredentialsInputsComponent from '../credentials-inputs.component/credentials-inputs.component';
-
 import template from './sign-up.page.html';
 
 class controller {
-  constructor (User, $stateParams, $location) {
+  constructor (LoginResource, $stateParams, $location, $state) {
     'ngInject';
 
-    Object.assign(this, { User, $location });
+    Object.assign(this, { LoginResource, $location, $state });
 
     this.isCustomer = $stateParams.customer;
   }
@@ -21,15 +16,15 @@ class controller {
   }
 
   signUp ( ) {
-    const type = this.isCustomer ? 'customer' : 'provider';
-    return this.User.register({ ...this.credentials, ...{ type } });
+    const userType = this.isCustomer ? 'customer' : 'provider';
+    const { email, password } = this.credentials;
+    return this.LoginResource.signup({ userType }, { email, password }).$promise.then(( ) => {
+      this.$state.go('loginPage', { email, password, auto: true });
+    });
   }
 }
 
-export default angular.module('signUpPage', [
-  CredentialsInputsComponent,
-  User
-]).component('signUpPage', {
+export default angular.module('signUpPage', []).component('signUpPage', {
   template,
   controller
 }).name;

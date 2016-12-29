@@ -14,63 +14,52 @@ class Constants {
   }
 
   apiConstants ( ) {
-    const path = config.API_URL;
     const pathWS = config.WS_URL;
 
     return {
-      signup: { method: 'POST', uri: user => `${path}/signup/${user}` }, // user is a type of user,
       password: {
-        restore: { method: 'POST', uri: `${path}/sessions/password/reset` },
-        change: { method: 'PUT', uri: token => `${path}/sessions/password/${token}` },
-        changeByOld: { method: 'POST', uri: ( ) => `${path}/password/change` }
+        changeByOld: { method: 'POST', uri: ( ) => `${config.API_URL}/api/password/change` }
       },
       profile: {
         method: {
           PUT: 'PUT', // to update profile
           GET: 'GET' // to get profile information
         },
-        uri: user => `${path}/${user}/profile?t=${Date.now( )}`, // user is a type of user
+        uri: user => `${config.API_URL}/api/${user}/profile`, // user is a type of user
       },
-      photo: { method: 'PUT', uri: (user, slotId) => `${path}/${user}/profile/photo${user === 'provider' ? `/${slotId}` : ''}`, }, // slotId is an index of photo,
-      order: { method: 'POST', uri: `${path}/order` },
-      service: { method: 'GET', uri: user => `${path}/${user}/service-types` },
-      searchEntertainers: { method: 'GET', uri: orderId => `${path}/orders/${orderId}/entertainers/search` },
-      orderDetails: { method: 'GET', uri: (orderId, include) => `${path}/orders/${orderId}${include ? `?include=${include}` : ''}` },
+      photo: { method: 'PUT', uri: (user, slotId) => `${config.API_URL}/api/${user}/profile/photo${user === 'provider' ? `/${slotId}` : ''}`, }, // slotId is an index of photo,
+      order: { method: 'POST', uri: `${config.API_URL}/api/order` },
+      service: { method: 'GET', uri: user => `${config.API_URL}/api/${user}/service-types` },
+      searchEntertainers: { method: 'GET', uri: orderId => `${config.API_URL}/api/orders/${orderId}/entertainers/search` },
+      orderDetails: { method: 'GET', uri: (orderId, include) => `${config.API_URL}/api/orders/${orderId}${include ? `?include=${include}` : ''}` },
       cards: {
-        add: { method: 'POST', uri: user => `${path}/${user}/cards/add` },
-        get: { method: 'GET', uri: user => `${path}/${user}/cards` },
-        delete: { method: 'DELETE', uri: (user, cardId) => `${path}/${user}/cards/${cardId}` },
-        setDefault: { method: 'PUT', uri: (user, cardId) => `${path}/${user}/cards/${cardId}/default` }
+        add: { uri: user => `${config.API_URL}/api/${user}/cards/add` },
+        get: { method: 'GET', uri: user => `${config.API_URL}/api/${user}/cards` },
+        delete: { uri: (user, cardId) => `${config.API_URL}/api/${user}/cards/${cardId}` },
+        setDefault: { uri: (user, cardId) => `${config.API_URL}/api/${user}/cards/${cardId}/default` }
       },
-      inviteEntertainer: { method: 'POST', uri: (orderId, entertainerId) => `${path}/orders/${orderId}/entertainers/${entertainerId}/invite` },
+      inviteEntertainer: { method: 'POST', uri: (orderId, entertainerId) => `${config.API_URL}/api/orders/${orderId}/entertainers/${entertainerId}/invite` },
       ws: { invites: { uri: channelName => `${pathWS}/orders/${channelName}/invites` } },
-      invitedEntertainers: { method: 'GET', uri: orderId => `${path}/customer/orders/${orderId}/invites` },
-      cancelEntertainerByCustomer: { method: 'PUT', uri: inviteId => `${path}/invite/${inviteId}/cancel` },
-      orderFutures: { method: 'GET', uri: (user, page = 1) => `${path}/${user}/orders?page=${page}&status[]=accepted&status[]=in+progress&include=invites` },
+      invitedEntertainers: { method: 'GET', uri: orderId => `${config.API_URL}/api/customer/orders/${orderId}/invites` },
+      cancelEntertainerByCustomer: { method: 'PUT', uri: inviteId => `${config.API_URL}/api/invite/${inviteId}/cancel` },
+      orderFutures: {
+        method: 'GET', uri: (user, page = 1) => `${config.API_URL}/api/${user}/orders?page=${page}&status[]=accepted&status[]=in+progress&include=invites`
+      },
       orderHistory: {
         method: 'GET',
-        uri: (user, page = 1) => {
-          const result = `${path}/${user}/orders/history?page=${page}&include=invites`;
-          /*        if (user == 'customer') {
-           result += `?page=${page}&status[]=finished&status[]=canceled&include=invites`;
-           } else {
-           result += `/history?page=${page}`;
-           }*/
-          return result;
-        }
+        uri: (user, page = 1) => `${config.API_URL}/api/${user}/orders/history?page=${page}&include=invites`
       },
-      confirmedEntertainers: { method: 'GET', uri: orderId => `${path}/customer/orders/${orderId}/invites?status[]=accepted&status[]=canceled` },
-      entertainers: { get: { method: 'GET', uri: (page = 1) => `${path}/provider?page=${page}` } },
-      customers: { get: { method: 'GET', uri: (page = 1) => `${path}/admin/customers?page=${page}` } },
-      admin: { setStatus: { method: 'POST', uri: (role, userId) => `${path}/admin/${role}/${userId}/status` } },
-      lastNotAccomplishedOrder: { method: 'GET', uri: user => `${path}/${user}/orders/last-not-accomplished` },
-      payForOrder: { method: 'POST', uri: (user, orderId) => `${path}/${user}/orders/${orderId}/pay` },
-      actualStatusOfCurrentUser: { method: 'GET', uri: `${path}/status` },
+      confirmedEntertainers: { method: 'GET', uri: orderId => `${config.API_URL}/api/customer/orders/${orderId}/invites?status[]=accepted&status[]=canceled` },
+      entertainers: { get: { method: 'GET', uri: (page = 1) => `${config.API_URL}/api/provider?page=${page}` } },
+      customers: { get: { method: 'GET', uri: (page = 1) => `${config.API_URL}/api/admin/customers?page=${page}` } },
+      admin: { setStatus: { method: 'POST', uri: (role, userId) => `${config.API_URL}/api/admin/${role}/${userId}/status` } },
+      lastNotAccomplishedOrder: { method: 'GET', uri: user => `${config.API_URL}/api/${user}/orders/last-not-accomplished` },
+      payForOrder: { method: 'POST', uri: (user, orderId) => `${config.API_URL}/api/${user}/orders/${orderId}/pay` },
       orders: {
-        getAll: { method: 'GET', uri: (role, page = 1) => `${path}/${role}/orders?page=${page}` },
-        getOne: { method: 'GET', uri: (role, orderId) => `${path}/${role}/orders/${orderId}?include=invites` }
+        getAll: { method: 'GET', uri: (role, page = 1) => `${config.API_URL}/api/${role}/orders?page=${page}` },
+        getOne: { method: 'GET', uri: (role, orderId) => `${config.API_URL}/api/${role}/orders/${orderId}?include=invites` }
       },
-      cancelOrder: { method: 'POST', uri: (role, orderId) => `${path}/${role}/orders/${orderId}/complete` }
+      cancelOrder: { method: 'POST', uri: (role, orderId) => `${config.API_URL}/api/${role}/orders/${orderId}/complete` }
     };
   }
 

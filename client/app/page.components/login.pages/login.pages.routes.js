@@ -6,14 +6,20 @@ import SignUpPageComponent from './sign-up.page/sign-up.page.component';
 
 import RestorePageComponent from './restore.page/restore.page.component';
 import ResetPasswordPageComponent from './reset-password.page/reset-password.page.component';
+
+import LoginResource from './LoginResource';
+import CredentialsInputsComponent from './credentials-inputs.component/credentials-inputs.component';
+
 import template from './login.pages.layout.html';
 
 const LoginPagesLayout = 'home';
 export default angular.module(LoginPagesLayout, [
   uiRouter,
+  LoginResource,
   LoginPageComponent,
   SignUpPageComponent,
   RestorePageComponent,
+  CredentialsInputsComponent,
   ResetPasswordPageComponent
 ]).component(LoginPagesLayout, {
   template,
@@ -23,12 +29,13 @@ export default angular.module(LoginPagesLayout, [
 }).config(($stateProvider, $urlRouterProvider) => {
   'ngInject';
 
+  const params = '?email&password&customer&auto&redirectUrl';
   $stateProvider.state({ url: '/', name: LoginPagesLayout, abstract: true, component: LoginPagesLayout });
   const loginStatesMap = {
-    'login?email&password&auto': LoginPageComponent,
-    'restore?password&auto': RestorePageComponent,
-    'sign-up?email&password&customer&auto': SignUpPageComponent,
-    'reset-password?email&auto': ResetPasswordPageComponent
+    [`login${params}`]: LoginPageComponent,
+    [`restore${params}`]: RestorePageComponent,
+    [`sign-up${params}`]: SignUpPageComponent,
+    [`reset-password${params}`]: ResetPasswordPageComponent
   };
   Object.keys(loginStatesMap).forEach(url => $stateProvider.state({
     url,
