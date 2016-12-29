@@ -1,11 +1,6 @@
-// =============================================================================
-// $ LoginPagesComponent template styles
-// =============================================================================
-
 @import "restore.page/restore-modal";
 
-#home {
-
+.login-pages-layout {
   width: 100%;
   height: 100%;
   padding: 0 5%;
@@ -15,102 +10,7 @@
   display: flex;
   align-items: center;
 
-  #form {
-    @import "login.pages.buttons";
-    @import "login.pages.inputs";
-
-    width: 100%;
-    max-width: 375px;
-    margin: auto;
-
-    h1 {
-      text-align: center;
-      letter-spacing: 1.5px;
-      margin: 0 0 60px 0;
-      line-height: 36px;
-      font: {
-        weight: 400;
-        size: 1.875em;
-      };
-    }
-
-    .enter-form {
-      .type-of-user {
-        margin-bottom: 42px;
-        overflow: hidden;
-        width: 100%;
-
-        button {
-          width: 49%;
-          float: left;
-          &.wide {
-                width: 100%;
-          }
-
-          &:last-child {
-            float: right;
-          }
-        }
-      }
-
-      .credentials {
-        margin-bottom: 30px;
-      }
-
-      .sign-button {
-        margin-bottom: 23px;
-
-        .sign-error {
-          color: $Cardinal;
-          display: block;
-          text-align: center;
-          margin-top: 23px;
-          font: 0.938em $open-sans, sans-serif;
-        }
-
-        button {
-          background: $Cardinal;
-          border-color: $Cardinal;
-          font-size: 0.938em;
-
-          &.disabled {
-            background: black;
-            border-color: $Davy-grey;
-          }
-        }
-      }
-
-      .account-ready {
-        text-align: center;
-        font: 0.938em $open-sans, sans-serif;
-        line-height: 24px;
-
-        a {
-          color: $Cardinal;
-        }
-      }
-
-      .form-info {
-        span {
-          display: block;
-          letter-spacing: 1px;
-          text-align: center;
-          text-transform: uppercase;
-          color: $AuroMetalSaurus;
-          font-size: 1.063em;
-          margin-bottom: 28px;
-        }
-
-        p {
-          margin: 0 8px 16px 8px;
-          font: 0.938em $open-sans, sans-serif;
-          line-height: 24px;
-        }
-      }
-    }
-  }
-
-  #copyright {
+  .login-pages-layout-copyright {
     position: absolute;
     width: 100%;
     max-width: 1024px;
@@ -122,5 +22,65 @@
     font: 0.813em $open-sans, sans-serif;
     color: white;
   }
+  .login-pages-layout-wrapper {
+    width: 100%;
+    max-width: 375px;
+    margin: auto;
+  }
 
+  h1 {
+    text-align: center;
+    letter-spacing: 1.5px;
+    margin: 0 0 60px 0;
+    line-height: 36px;
+    font: {
+      weight: 400;
+      size: 1.875em;
+    }
+  }
+
+  .md-button {
+    width: 100%;
+    margin: 0;
+    letter-spacing: -.16px;
+    font: {
+      size: 1.125em;
+    }
+  }
+
+  @import "./login.md-button.scss";
+
+  .login-pages-text-under-button {
+    text-align: center;
+    font: 0.938em $open-sans, sans-serif;
+    line-height: 24px;
+
+    a {
+      color: $Cardinal;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .login-pages-sub-header {
+    span {
+      display: block;
+      letter-spacing: 1px;
+      text-align: center;
+      text-transform: uppercase;
+      color: $AuroMetalSaurus;
+      font-size: 1.063em;
+      margin-bottom: 28px;
+    }
+
+    p {
+      margin: 0 8px 16px 8px;
+      font: 0.938em $open-sans, sans-serif;
+      line-height: 24px;
+    }
+  }
 }
+
+@import "./credentials-inputs.component/credentials-inputs.scss";
+@import "./sign-up.page/sign-up.page.scss";

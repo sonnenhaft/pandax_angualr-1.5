@@ -1,55 +1,23 @@
 import angular from 'angular';
-import uiRouter from 'angular-ui-router';
-import Validation from '../../../common-services/validation.service';
 import User from '../../../common-services/user.service';
+import CredentialsInputsComponent from '../credentials-inputs.component/credentials-inputs.component';
 
 import template from './login.page.html';
 
 class controller {
-  constructor (Validation, User) {
+  constructor (User) {
     'ngInject';
 
-    Object.assign(this, { Validation, User });
+    Object.assign(this, { User });
   }
 
-  onSubmit (credentials) {
-    if (this.validate(credentials)) {
-      this.loginError = false;
-      return this.login(credentials);
-    } else {
-      return false;
-    }
-  }
-
-  validate (field) {
-    if (this.Validation.error(field).length) {
-      _.map(this.Validation.error(field), error => {
-        this[`${error.name}Error`] = error.text;
-      });
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  login (credentials) {
-    this.loginLoading = true;
-    this.User.login(credentials).then(
-      result => {
-        if (result && result.error) {
-          this.loginLoading = false;
-          this.loginError = result.error;
-        }
-        return true;
-      },
-      ignoredError => this.loginLoading = false
-    );
+  login ( ) {
+    return this.User.login(this.credentials);
   }
 }
 
 export default angular.module('loginPage', [
-  uiRouter,
-  Validation,
+  CredentialsInputsComponent,
   User
 ]).component('loginPage', {
   template,

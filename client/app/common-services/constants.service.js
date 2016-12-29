@@ -18,7 +18,6 @@ class Constants {
     const pathWS = config.WS_URL;
 
     return {
-      login: { method: 'POST', uri: `${path}/sessions` },
       signup: { method: 'POST', uri: user => `${path}/signup/${user}` }, // user is a type of user,
       password: {
         restore: { method: 'POST', uri: `${path}/sessions/password/reset` },

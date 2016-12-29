@@ -1,15 +1,15 @@
 import angular from 'angular';
-import uiRouter from 'angular-ui-router';
-import Validation from '../../../common-services/validation.service';
+
 import User from '../../../common-services/user.service';
+import CredentialsInputsComponent from '../credentials-inputs.component/credentials-inputs.component';
+
 import template from './sign-up.page.html';
 
 class controller {
-
-  constructor (Validation, User, $stateParams, $location) {
+  constructor (User, $stateParams, $location) {
     'ngInject';
 
-    Object.assign(this, { Validation, User, $location });
+    Object.assign(this, { User, $location });
 
     this.isCustomer = $stateParams.customer;
   }
@@ -20,40 +20,14 @@ class controller {
     this.$location.replace( );
   }
 
-  onSubmit (credentials) {
-    if (this.validate(credentials)) {
-      credentials = Object.assign(credentials, { type: this.isCustomer ? 'customer' : 'provider' });
-      this.registerError = false;
-      return this.register(credentials);
-    } else {
-      return false;
-    }
-  }
-
-  validate (field) {
-    if (this.Validation.error(field).length) {
-      _.map(this.Validation.error(field), error => {
-        this[`${error.name}Error`] = error.text;
-      });
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  register (credentials) {
-    this.registerLoading = true;
-    this.User.register(credentials).then(result => {
-      if (result && result.error) {
-        this.registerError = result.error;
-      }
-    }).finally(error => this.registerLoading = false);
+  signUp ( ) {
+    const type = this.isCustomer ? 'customer' : 'provider';
+    return this.User.register({ ...this.credentials, ...{ type } });
   }
 }
 
 export default angular.module('signUpPage', [
-  uiRouter,
-  Validation,
+  CredentialsInputsComponent,
   User
 ]).component('signUpPage', {
   template,

@@ -1,4 +1,4 @@
-.success {
+.restore-password-modal {
   background-color: rgba($black, .3);
 
   md-dialog {
@@ -12,23 +12,12 @@
       margin-bottom: 34px;
     }
 
-    button {
+    .md-button {
       width: 50%;
-      height: 54px;
       margin: 0 auto;
-      padding: 0;
-      color: white;
-      background: $Cardinal;
       font-size: 0.938em;
-
-      .md-ripple-container {
-        border-radius: 0;
-      }
-
-      &:not([disabled]):hover {
-        background: $Cardinal;
-      }
     }
-  }
 
+    @import "../login.md-button.scss";
+  }
 }

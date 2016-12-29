@@ -1,25 +1,17 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 
-class controller {
-  $onChanges (changes) {
-    this.display = changes.input.currentValue;
-  }
-}
-
 export default angular.module('spinner', [
   uiRouter
 ]).component('spinner', {
-  bindings: {
-    input: '<',
-    output: '&'
-  },
+  bindings: { input: '<' },
+  transclude: true,
   template: `
-<div id="spinner" ng-if="$ctrl.display">
+<span ng-hide="$ctrl.input" ng-transclude></span>
+<div id="spinner" ng-if="$ctrl.input">
   <div layout="row" layout-sm="column" layout-align="space-around" style="display: flex;align-items: center;">
     <md-progress-circular md-mode="indeterminate" md-diameter="30"></md-progress-circular>
   </div>
 </div>
-`,
-  controller
+`
 }).name;

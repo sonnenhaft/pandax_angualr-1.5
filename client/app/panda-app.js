@@ -135,9 +135,13 @@ angular.module('app', [
   $httpProvider.interceptors.push(($q, $injector) => {
     const responseHandler = response => {
       const defer = $q.defer( );
-
+      const Helper = $injector.get('Helper');
+      if (response.status === -1 && !response.statusText) {
+        response.statusText = 'Not able to connect to remote server';
+        response.data = response.data || { message: response.statusText };
+        Helper.showToast(response.statusText, 5000);
+      }
       if (response.status >= 400 && response.status != 403) { // for 403 status we have another handler only in userService.login()
-        const Helper = $injector.get('Helper');
         let messageText = response.statusText;
         if (response.data) {
           if (response.data.detail) {

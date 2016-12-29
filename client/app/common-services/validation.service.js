@@ -33,10 +33,10 @@ class Validation {
     }
   }
 
-  error (credentials) {
-    const messages = _.map(credentials, (field, key) => {
-      if (!this.check(key, credentials).valid) {
-        return this.check(key, credentials);
+  error (fields) {
+    const messages = _.map(fields, (field, key) => {
+      if (!this.check(key, fields).valid) {
+        return this.check(key, fields);
       }
     });
 
