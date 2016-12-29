@@ -47,7 +47,7 @@ class User {
   }
 
   restore (email) {
-    return this.Request.send(false, this.Constants.api.password.restore.method, this.Constants.api.password.restore.uri, email).then(result => {
+    return this.Request.send(false, 'POST', `${config.API_URL}/sessions/password/reset`, email).then(result => {
       if (result.data.detail) { return { error: result.data.detail }; }
       return result;
     });

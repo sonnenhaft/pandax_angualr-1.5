@@ -1,51 +1,28 @@
 import angular from 'angular';
 
 class Request {
-
   constructor ($http, $q) {
     'ngInject';
 
     Object.assign(this, { $http, $q });
-
-    this.headers = {
-      'Content-Type': 'application/json'
-    };
   }
 
   send (token, method, url, data) {
-    const params = {
-      method,
-      url,
-      headers: this.headers,
-      data: JSON.stringify(data)
-    };
+    const headers = { 'Content-Type': 'application/json' };
     if (token) {
-      params.headers = Object.assign(params.headers, { Authorization: `Bearer ${token}` });
+      headers.Authorization = `Bearer ${token}`;
     }
-    if (!data) {
-      _.unset(params, 'data');
+
+    if (data) {
+      if (data.type) {
+        headers['Content-Type'] = data.type;
+      } else {
+        data = JSON.stringify(data);
+      }
     }
-    if (data && data.type) {
-      params.data = data;
-      params.headers = {
-        'Content-Type': data.type,
-        Authorization: `Bearer ${token}`
-      };
-    }
-    return this
-      .$http(params)
-      .then(
-        result => result,
-        error => {
-          const defer = this.$q.defer( );
-          defer.reject(error);
-          return defer.promise;
-        }
-      );
+
+    return this.$http({ method, url, headers, data });
   }
 }
 
-export default angular
-  .module('Request', [])
-  .service('Request', Request)
-  .name;
+export default angular.module('Request', []).service('Request', Request).name;

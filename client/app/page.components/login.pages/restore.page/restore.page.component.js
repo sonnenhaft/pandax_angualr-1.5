@@ -11,7 +11,8 @@ class controller {
   }
 
   restorePassword (targetEvent) {
-    return this.User.restore(this.credentials.email).then(result => {
+    const email = this.credentials.email;
+    return this.User.restore({ email }).then(result => {
       if (!result.error) {
         this.$mdDialog.show({
           contentElement: '#restore-success',

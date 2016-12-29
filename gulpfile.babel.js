@@ -78,12 +78,16 @@ gulp.task('serve', () => {
 
   var compiler = webpack(config);
 
+  var proxyOptions = require('url').parse('https://dev3-panda-aws.isdev.info/api');
+  proxyOptions.route = '/api';
+
   serve({
     port: process.env.PORT || 3020,
     open: 'local',
     server: {baseDir: root},
     https: true,
     middleware: [
+      require('proxy-middleware')(proxyOptions),
       historyApiFallback(),
       webpackDevMiddelware(compiler, {
         stats: {

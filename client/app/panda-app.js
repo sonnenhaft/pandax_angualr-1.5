@@ -176,5 +176,5 @@ angular.module('app', [
 
 
   // Stripe integration
-  stripeProvider.setPublishableKey(config.STRIPE.PUBLIC_KEY);
+  stripeProvider.setPublishableKey(config.STRIPE_PUBLIC_KEY);
 }).component('app', { template });

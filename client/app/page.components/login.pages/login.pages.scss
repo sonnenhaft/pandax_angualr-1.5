@@ -57,7 +57,7 @@
 
     a {
       color: $Cardinal;
-      &:hover {
+      &:hover, &:focus {
         text-decoration: underline;
       }
     }
