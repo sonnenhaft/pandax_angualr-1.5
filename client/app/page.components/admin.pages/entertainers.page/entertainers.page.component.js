@@ -1,50 +1,40 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
+import config from 'config';
 
 import entertainerPhotosModal from '../../order.pages/manipulationEntertainers/entertainer-protos.modal/entertainer-protoes.modal';
-import EntertainersService from '../../../common-services/entertainersService.service';
+import { controller as CustomersPageComponent } from '../customers.page/customers.page.component';
 
 import template from './entertainers.page.html';
 
-class controller {
-  constructor (EntertainersService, Constants, $mdDialog, entertainerPhotosModal, $window) {
+class controller extends CustomersPageComponent {
+  statuses = {
+    accepted: 'accepted',
+    active: 'active',
+    approved: 'approved',
+    blocked: 'blocked',
+    offline: 'offline',
+    pending: 'pending',
+    rejected: 'rejected',
+    unblocked: 'unblocked',
+  }
+
+  constructor (Request, $mdDialog, $q, entertainerPhotosModal, $window) {
     'ngInject';
 
-    Object.assign(this, {
-      EntertainersService,
-      entertainerPhotosModal,
-      Constants,
-      // so we expect that in required 'admin' component there is #admin div, sorry for this
-      $scrollableElement: angular.element($window.document.getElementById('admin')),
-      $mdDialog,
-      isOnProgress: false,
-      isLastPage: false,
-      currentPage: 0,
-      statuses: Constants.admin.statuses.entertainer
-    });
+    super(Request, $mdDialog, $q);
+
+    // so we expect that in required 'admin' component there is #admin div, sorry for this
+    this.$scrollableElement = angular.element($window.document.getElementById('admin'));
+    this.entertainerPhotosModal = entertainerPhotosModal;
+    this.statusType = 'providers';
   }
 
-  $onInit ( ) {
-    this.fetchMoreItems( );
-  }
-
-  fetchMoreItems ( ) {
-    this.isOnProgress = true;
-
-    this.EntertainersService.fetchEntertainers(this.currentPage + 1).then(data => {
-      this.isOnProgress = false;
-      this.currentPage = data.meta.pagination.current_page;
-      this.isLastPage = this.checkIsLastPage(data.meta.pagination.total_pages);
-    });
-  }
-
-  checkIsLastPage (totalPages) {
-    return this.currentPage == totalPages;
+  _next (page) {
+    return this.Request.send(null, 'GET', `${config.API_URL}/api/provider?page=${page}`);
   }
 
   showPopup (ev, index) {
     this.entertainerPhotosModal({
-      photos: this.EntertainersService.list[index].photos,
+      photos: this.list[index].photos,
       photoIndexActive: 0
     }, ev);
   }
@@ -52,8 +42,6 @@ class controller {
 
 const name = 'entertainersPage';
 export default angular.module(name, [
-  uiRouter,
-  EntertainersService,
   entertainerPhotosModal
 ]).config($stateProvider => {
   'ngInject';
