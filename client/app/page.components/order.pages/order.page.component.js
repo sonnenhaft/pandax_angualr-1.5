@@ -1,5 +1,4 @@
 import config from 'config';
-import User from '../../common-services/user.service';
 import Helper from '../../common-services/helper.service';
 import Validation from '../../common-services/validation.service';
 import OrderService from '../../common-services/orderService.service';
@@ -21,10 +20,10 @@ class controller {
   date = new Date( )
   currentDate = new Date( )
 
-  constructor (User, Helper, Validation, OrderService, Request, $window, $state, $mdDialog, moment) {
+  constructor (Helper, Validation, OrderService, Request, $window, $state, $mdDialog, moment, StatefulUserData) {
     'ngInject';
 
-    Object.assign(this, { User, Helper, Validation, OrderService, Request, $state, $mdDialog });
+    Object.assign(this, { Helper, Validation, OrderService, Request, $state, $mdDialog, StatefulUserData });
     this.maxDateForCreating = moment( ).add(14, 'days').toDate( );
     this.mobile = $window.innerWidth <= 960;
 
@@ -42,12 +41,12 @@ class controller {
     this.time = this.Helper.getNearestTime('time');
     this.range = this.Helper.getNearestTime('range');
 
-    if (this.User.get('is_newcomer')) {
+    if (this.StatefulUserData.get('is_newcomer')) {
       this.entertainers = _.slice(this.entertainers, 1);
       this.entertainer = _.head(this.entertainers);
     }
 
-    if (!this.User.get('is_newcomer')) {
+    if (!this.StatefulUserData.get('is_newcomer')) {
       this.hours = _.slice(this.hours, 1);
       this.hour = _.head(this.hours);
     }
@@ -107,16 +106,16 @@ class controller {
       return false;
     }
 
-    if (this.User.get('is_newcomer')) {
+    if (this.StatefulUserData.get('is_newcomer')) {
       this.$state.go('main.accept-terms-and-conditions', { order: this.orderData(orderModel) });
       return false;
     }
 
     this.Request.post(`${config.API_URL}/api/order`, this.orderData(orderModel)).then(
-      result => {
+      ({ data }) => {
         this.orderLoading = false;
-        this.User.update(result.data.customer);
-        this.$state.go('main.manipulationEntertainers', { orderId: result.data.id, channelName: result.data.channel_name });
+        this.StatefulUserData.extend(data.customer);
+        this.$state.go('main.manipulationEntertainers', { orderId: data.id, channelName: data.channel_name });
       },
       error => {
         this.orderLoading = false;
@@ -142,7 +141,7 @@ class controller {
 }
 
 export default angular.module('order', [
-  User,
+
   Helper,
   Request,
   Validation,

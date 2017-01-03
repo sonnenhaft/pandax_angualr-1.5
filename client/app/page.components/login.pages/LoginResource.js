@@ -10,6 +10,7 @@ export default angular.module('LoginResource', [
     login: { url: `${config.API_URL}/api/sessions`, method: 'POST' }, // {email, password}
     signup: { url: `${config.API_URL}/api/signup/:userType`, method: 'POST' }, // {email, password}
     restorePassword: { url: `${config.API_URL}/api/sessions/password/reset`, method: 'POST' }, // {email}
-    resetPassword: { url: `${config.API_URL}/api/sessions/password/:token`, method: 'PUT' } // {token}, {password}
+    resetPassword: { url: `${config.API_URL}/api/sessions/password/:token`, method: 'PUT' }, // {token}, {password}
+    fetchProfile: { url: `${config.API_URL}/api/:role/profile`, method: 'GET' }
   }, { cancellable: true });
 }).name;

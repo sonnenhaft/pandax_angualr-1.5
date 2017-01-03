@@ -3,11 +3,11 @@ import messages from '../messages.component';
 import template from './card-info.html';
 
 class controller {
-  constructor (stripe, User) {
+  constructor (stripe, StatefulUserData) {
     'ngInject';
 
     this.stripe = stripe;
-    this.isCustomer = User.get('role') === 'customer';
+    this.isCustomer = StatefulUserData.isCustomer( );
   }
 
   checkCardNumber ( ) {

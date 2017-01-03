@@ -4,10 +4,10 @@ import pandaxTermsComponent from './pandax-terms.component/pandax-terms.componen
 import template from './accept-terms-and-conditions.page.html';
 
 class controller {
-  constructor (User, Request, $state) {
+  constructor (Request, $state, StatefulUserData) {
     'ngInject';
 
-    Object.assign(this, { User, Request, $state });
+    Object.assign(this, { Request, $state, StatefulUserData });
   }
 
   onAccept ( ) {
@@ -15,7 +15,7 @@ class controller {
     this.orderLoading = true;
     this.Request.post(`${config.API_URL}/api/order`, this.order).then(({ data, status }) => {
       if (status !== 200) { return; }
-      this.User.update(data.customer);
+      this.StatefulUserData.extend(data.customer);
       this.$state.go('main.manipulationEntertainers', { orderId: data.id, channelName: data.channel_name });
     }
     ).finally(( ) => { this.orderLoading = false; });

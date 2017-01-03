@@ -1,7 +1,9 @@
+import config from 'config';
 import Cards from '../../../common-services/card.service';
 import personalInformation from './personal-information.component/personal-information.component';
 import cardList from './card-list.component/card-list.component';
 import cardInfo from '../../../common/card-info.component/card-info.component';
+
 import template from './billing.page.html';
 
 class controller {
@@ -10,10 +12,10 @@ class controller {
   defaultCardId = 0
   hasPersonalInfo = false
 
-  constructor ($state, User, Cards, $stateParams, Resolve, $mdToast, $q, OrderService, $mdDialog) {
+  constructor ($state, Cards, $stateParams, Resolve, $mdToast, $q, OrderService, $mdDialog, StatefulUserData) {
     'ngInject';
 
-    Object.assign(this, { $state, User, $stateParams, Resolve, Cards, $mdToast, $q, OrderService, $mdDialog });
+    Object.assign(this, { $state, $stateParams, Resolve, Cards, $mdToast, $q, OrderService, $mdDialog, StatefulUserData });
 
     this.defaultCardId = this.getDefaultCardId( );
     this.hasPersonalInfo = this.billingInfo && this.billingInfo.first_name && this.billingInfo.last_name && this.billingInfo.phone;
@@ -25,7 +27,7 @@ class controller {
     this.saveLoading = true;
 
     if (!this.hasPersonalInfo) {
-      promises.push(this.User._updateProfileOnServer(this.billingInfo));  // should save personal information
+      return this.Request.put(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/profile`, this.billingInfo);
     }
 
     if (!this.billingInfo.cards || !this.billingInfo.cards.length) {      // should add card
@@ -117,10 +119,10 @@ export default angular.module('billing', [
 
         return OrderService.fetchOrderDetails(orderId);
       },
-      billingInfo (User, Cards) {
+      billingInfo (StatefulUserData, Cards) {
         'ngInject';
 
-        return Cards.getCards( ).then(data => Object.assign(User.get( ), data ? { cards: data } : {}));
+        return Cards.getCards( ).then(cards => Object.assign({}, StatefulUserData.getUser( ), { cards }));
       }
     }
   });

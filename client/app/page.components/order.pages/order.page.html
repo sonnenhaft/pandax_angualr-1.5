@@ -48,7 +48,7 @@
               {{entertainer}}
             </md-option>
           </md-select>
-          <div class="descr" ng-if="$ctrl.User.get('is_newcomer')">
+          <div class="descr" ng-if="$ctrl.StatefulUserData.get('is_newcomer')">
             <p>
               Minimum 2 entertainers for first time customers.
               <a href="" ng-click="$ctrl.showEntertainersCountInfo($event)">

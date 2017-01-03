@@ -1,8 +1,8 @@
 class Request {
-  constructor ($http, Storage) {
+  constructor ($http) {
     'ngInject';
 
-    Object.assign(this, { $http, Storage });
+    Object.assign(this, { $http });
   }
 
   post (url, data) { return this._ajaxCall('POST', url, data); }

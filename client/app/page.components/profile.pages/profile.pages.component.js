@@ -1,8 +1,7 @@
+import config from 'config';
 import ngFileUpload from 'ng-file-upload';
 
 import Validation from '../../common-services/validation.service';
-import Storage from '../../common-services/storage.service';
-import User from '../../common-services/user.service';
 
 import template from './profile.pages.html';
 import DobInputComponent from './date-of-birth.input.component/date-of-birth.input.component';
@@ -19,10 +18,11 @@ class controller {
     { type: 'dob' },
     { name: 'Email', model: 'email', type: 'email' }
   ]
-  constructor (User, Validation, Storage, $state, $q, Helper, Cards) {
+
+  constructor (Validation, $state, $q, Helper, Cards, StatefulUserData, Request) {
     'ngInject';
 
-    Object.assign(this, { User, Validation, Storage, $state, $q, Helper, Cards });
+    Object.assign(this, { Validation, $state, $q, Helper, Cards, StatefulUserData, Request });
 
     this.isCreate = this.$state.current.name === 'main.profile.create';
     this.isEdit = this.$state.current.name === 'main.profile.edit';
@@ -32,58 +32,57 @@ class controller {
     this.backupModel = {};
     this.photosBuffer = [];
     if (this.isCreate) {
-      this.email = this.User.get('email');
+      this.email = this.StatefulUserData.get('email');
       this.backupModel.email = this.email;
       this.newCard = {};
     } else {
       this._buildProfileModels( );
     }
 
-    const role = User.get('role');
-    if (role === 'customer') {
+    if (StatefulUserData.isCustomer( )) {
       this.fields = controller.CUSTOMER_FIELDS;
       this.images = [{ file: '' }];
-    } else if (role === 'provider') {
+    } else if (StatefulUserData.isProvider( )) {
       this.images = [{ file: '' }, { file: '' }, { file: '' }];
       this.isProvider = true;
       this.fields = controller.CUSTOMER_FIELDS.slice( );
       this.fields.unshift({ name: 'Display Name', model: 'displaying_name', type: 'text' });
     }
 
-    this.User.getUserProfile(Storage.getObject('MINX').user, role, false).then(data => {
-      const serverPhotos = data.photo ? [data.photo] : data.photos;
-      if (!serverPhotos.length || !serverPhotos[0]) {
-        serverPhotos[0] = {};
-      }
-      this.backupModel.images = [];
-      serverPhotos.forEach((photo, i) => {
-        if (!photo) { return; }
-        this.images[i] = { file: photo.preview };
-        this._backupPhoto(photo, i);
-      });
 
-      this._profilePhoto(serverPhotos[0].original);
+    const user = this.StatefulUserData.getUser( );
+    const serverPhotos = user.photo ? [user.photo] : (user.photos || []);
+    if (!serverPhotos.length || !serverPhotos[0]) {
+      serverPhotos[0] = {};
+    }
+    this.backupModel.images = [];
+    serverPhotos.forEach((photo, i) => {
+      if (!photo) { return; }
+      this.images[i] = { file: photo.preview };
+      this._backupPhoto(photo, i);
     });
+
+    this._profilePhoto(serverPhotos[0].original);
   }
 
   // add string to tell browser
   // to send request, instead of get image from cache
   _profilePhoto (photoSrc = '') {
     this.photo = {
-      background: `url(${photoSrc}?${this.Helper.getUniqueNumberByTime( )}) no-repeat fixed center`
+      background: `url(${photoSrc}?${Date.now( )}) no-repeat fixed center`
     };
 
     this.backupModel.photo = angular.copy(this.photo);
   }
 
-  _backupPhoto ({ photo: { file } }, i) {
+  _backupPhoto ({ file }, i) {
     this.backupModel.images[i] = {
-      file: `${file}?${this.Helper.getUniqueNumberByTime( )}`
+      file: `${file}?${Date.now( )}`
     };
   }
 
   _buildProfileModels ( ) {
-    const user = this.User.get( );
+    const user = this.StatefulUserData.getUser( );
     Object.assign(this, user);
     Object.assign(this.backupModel, angular.copy(user));
   }
@@ -128,7 +127,18 @@ class controller {
       return false;
     }
     this.saveLoading = true;
-    this.$q.all(this.photosBuffer.map(photo => this.User.UpdateUserPhoto(photo.image, photo.slot).then(uploadedPhoto => {
+
+    const UploadPhoto = (file, slot) => {
+      const url = `${config.API_URL}/api/${this.StatefulUserData.getRole( )}/profile/photo${this.StatefulUserData.isProvider( ) ? `/${slot}` : ''}`;
+      return this.Request.put(url, file).then(({ data: newUser }) => {
+        if (slot == 1) {
+          this.StatefulUserData.extend(newUser);
+        }
+        return newUser;
+      });
+    };
+
+    this.$q.all(this.photosBuffer.map(photo => UploadPhoto(photo.image, photo.slot).then(uploadedPhoto => {
       const photoResult = uploadedPhoto.photo ? uploadedPhoto.photo : uploadedPhoto.photos[photo.slot - 1];
 
       if (photoResult) {
@@ -139,15 +149,15 @@ class controller {
       }
 
       const updateKey = !this.isProvider ? 'photo' : 'photos';
-      return this.User.update({ [updateKey]: uploadedPhoto[updateKey] });
+      return this.StatefulUserData.extend({ [updateKey]: uploadedPhoto[updateKey] });
     }
     )))
       .then(( ) => {
-        profile[(!this.isProvider ? 'image' : 'images')] = this.User.get(!this.isProvider ? 'photo' : 'photos');
-        return this.User.UpdateUserProfile(profile);
+        profile[(!this.isProvider ? 'image' : 'images')] = this.StatefulUserData.get(!this.isProvider ? 'photo' : 'photos');
+        return this.Request.put(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/profile`, profile);
       })
-      .then(result => {
-        this.User.update(Object.assign(result, { auth: true }));
+      .then(({ data: user }) => {
+        this.StatefulUserData.extend(user);
         this.photosBuffer = [];
         this._buildProfileModels( );
         if (addCard) {
@@ -172,9 +182,7 @@ class controller {
 export default angular.module('profileFields', [
   DobInputComponent,
   ngFileUpload,
-  Validation,
-  Storage,
-  User
+  Validation
 ]).component('profileFields', {
   template,
   controller

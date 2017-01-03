@@ -17,6 +17,7 @@ import 'angular-filter/dist/angular-filter.min';
 import angularStripe from 'angular-stripe';
 import ngInfiniteScroll from 'ng-infinite-scroll';
 import ngSanitize from 'angular-sanitize';              // for material dialog to show text as html
+import StatefulUserData from './common-services/StatefulUserData';
 
 // common
 import NavbarComponent from './page.components/main.page.component/navbar.component/navbar.component';
@@ -64,6 +65,7 @@ angular.module('app', [
     Map
   ],
   ...[
+    StatefulUserData,
     ProfilePagesComponent,
     LoginPagesRoutes,
     HistoryMinxPage,
@@ -137,10 +139,11 @@ angular.module('app', [
   // Stripe integration
   stripeProvider.setPublishableKey(config.STRIPE_PUBLIC_KEY);
 })
-  .run(StatefulAuthTokenService => {
+  .run((StatefulAuthTokenService, StatefulUserData) => {
     'ngInject';
 
     StatefulAuthTokenService.restore( );
+    StatefulUserData.restore( );
   })
   .filter('hoursToTime', hoursToTime)
   .component('app', { template });

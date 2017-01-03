@@ -1,7 +1,7 @@
 <div class="logout">
   <span ng-click="$ctrl.showWarning($event)" class="name">
-    {{$ctrl.User.get('role') !== 'admin' ? 'Log out' : ''}}
-    <div ng-if="$ctrl.User.get('role') === 'admin'" class="icon">
+    {{$ctrl.StatefulUserData.isAdmin( ) ? '' : 'Log out'}}
+    <div ng-if="$ctrl.StatefulUserData.isAdmin()" class="icon">
       <div class="navbar_admin__icon-wrapper">
         <md-icon
           md-svg-icon="/assets/images/icons/svg/navbar-admin/icon_exit.svg"

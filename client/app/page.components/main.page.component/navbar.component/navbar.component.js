@@ -1,4 +1,3 @@
-import User from '../../../common-services/user.service';
 import activeMenuItem from '../../../common/active-menu-item.directive';
 
 import NAV_BAR_MENU_ITEMS from '../../../common/NAV_BAR_MENU_ITEMS';
@@ -7,18 +6,18 @@ import NAV_BAR_SUB_MENU from './NAV_BAR_SUB_MENU';
 import template from './navbar.html';
 
 class controller {
-  constructor (User, $state) {
+  constructor ($state, StatefulUserData) {
     'ngInject';
 
-    Object.assign(this, { User, $state });
-    this.isCustomer = User.get('role') === 'customer';
-    this.isProvider = User.get('role') === 'provider';
+    Object.assign(this, { $state, StatefulUserData });
+    this.isCustomer = StatefulUserData.isCustomer( );
+    this.isProvider = StatefulUserData.isProvider( );
     this.defaultLink = {
       customer: 'main.order',
       provider: 'main.profile.view'
-    }[User.get('role')];
-    this.navigation = NAV_BAR_MENU_ITEMS.filter(navItem => navItem.role.indexOf(User.get('role')) >= 0);
-    this.submenu = NAV_BAR_SUB_MENU.filter(navItem => navItem.role.indexOf(User.get('role')) >= 0);
+    }[StatefulUserData.getRole( )];
+    this.navigation = NAV_BAR_MENU_ITEMS.filter(({ role }) => role.indexOf(StatefulUserData.getRole( )) >= 0);
+    this.submenu = NAV_BAR_SUB_MENU.filter(({ role }) => role.indexOf(StatefulUserData.getRole( )) >= 0);
     this.mobile = false;
   }
 
@@ -30,7 +29,7 @@ class controller {
 }
 
 export default angular.module('navbar', [
-  User,
+
   activeMenuItem
 ]).component('navbar', {
   bindings: { userAvatarSrc: '=' },

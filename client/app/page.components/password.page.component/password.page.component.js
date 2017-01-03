@@ -1,12 +1,12 @@
-import User from '../../common-services/user.service';
+import config from 'config';
 import Validation from '../../common-services/validation.service';
 import template from './password.page.html';
 
 class controller {
-  constructor (User, Validation, Helper) {
+  constructor (Validation, Helper) {
     'ngInject';
 
-    Object.assign(this, { User, Validation, Helper });
+    Object.assign(this, { Validation, Helper, Request });
   }
 
   validate (field) {
@@ -28,9 +28,18 @@ class controller {
     return false;
   }
 
-  reset (passwordOld, passwordNew) {
+  reset (old_password, new_password) {  // eslint-disable-line camelcase
     this.resetLoading = true;
-    this.User.changeByOld(passwordOld, passwordNew).then(
+    this.Request.post(`${config.API_URL}/api/password/change`, {
+      old_password, // eslint-disable-line camelcase
+      new_password // eslint-disable-line camelcase
+    }).then(result => {
+      if (result.data.detail) {
+        return { error: result.data.detail };
+      } else {
+        return result;
+      }
+    }).then(
       result => {
         this.resetLoading = false;
         if (result && result.error) {
@@ -51,7 +60,6 @@ class controller {
 }
 
 export default angular.module('password', [
-  User,
   Validation
 ]).config($stateProvider => {
   'ngInject';

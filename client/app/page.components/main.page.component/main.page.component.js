@@ -20,11 +20,9 @@ export default angular.module('main', [
   });
 }).component('main', {
   template,
-  controller (User) {
+  controller (StatefulUserData) {
     'ngInject';
 
-    this.User = User;
-    this.userAvatarSrc = '';
-    this.User.fetchUserAvatarSrc( );
+    this.StatefulUserData = StatefulUserData;
   }
 }).name;

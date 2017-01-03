@@ -2,10 +2,10 @@ import template from './card-list.component.html';
 import './card-list.component.scss';
 
 class controller {
-  constructor (Cards, User) {
+  constructor (Cards, StatefulUserData) {
     'ngInject';
 
-    Object.assign(this, { Cards, User });
+    Object.assign(this, { Cards, StatefulUserData });
     this.saveLoading = false;
   }
 

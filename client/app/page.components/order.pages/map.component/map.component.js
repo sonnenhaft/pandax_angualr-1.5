@@ -45,7 +45,7 @@ class controller {
     this.blocked = false;
 
     navigator.geolocation.getCurrentPosition(
-      ({ position: { coords: { latitude, longitude } } }) => this.$timeout(( ) => {
+      ({ coords: { latitude, longitude } }) => this.$timeout(( ) => {
         this.progress = false;
         this.zoom = 19;
         this.position = { latitude, longitude };

@@ -1,4 +1,3 @@
-
 import Location from '../../../common-services/location.service';
 import Validation from '../../../common-services/validation.service';
 import template from './find-location.page.html';
@@ -11,7 +10,7 @@ class controller {
     Object.assign(this, { Location, Validation, $timeout });
   }
 
-  $onChanges ({ changes: { input: { currentValue } } }) {
+  $onChanges ({ input: { currentValue } }) {
     if (_.isBoolean(currentValue) || (currentValue && !currentValue.location)) {
       this.validate({ location: this.location });
     }

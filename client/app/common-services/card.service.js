@@ -1,13 +1,14 @@
 import config from 'config';
-import User from './user.service';
 import Request from './request.service';
 
 class Cards {
+  list = []
+  defaultCardId = 0
 
-  constructor (User, Request, stripe, $q, Helper) {
+  constructor (Request, stripe, $q, Helper, StatefulUserData) {
     'ngInject';
 
-    Object.assign(this, { User, Request, stripe, $q, Helper, list: [], defaultCardId: 0 });
+    Object.assign(this, { Request, stripe, $q, Helper, StatefulUserData });
   }
 
   add (card) {
@@ -21,14 +22,14 @@ class Cards {
 
           return this.$q.reject(error);
         })
-      .then(token => this.Request.post(`${config.API_URL}/api/${this.User.get('role')}/cards/add`, { token }))
+      .then(token => this.Request.post(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/cards/add`, { token }))
       .then(({ data: card }) => {
         card = card && card.detail ? card.detail : card;
         if (!card) {
           return { message: 'Something went wrong with server communication' };
         } else if (card.id) {
-          this.User.billingInfo = Object.assign(this.User.billingInfo, {
-            cards: _.chain(this.User.billingInfo.cards).map(card => {
+          this.billingInfo = Object.assign(this.billingInfo, {
+            cards: _.chain(this.billingInfo.cards).map(card => {
               card.is_default = false;
               return card;
             }).union([card]).value( )
@@ -51,7 +52,7 @@ class Cards {
   stripeCreateToken (card) { return this.stripe.card.createToken(card); }
 
   getCards ( ) {
-    return this.Request.get(`${config.API_URL}/api/${this.User.get('role')}/cards`).then(result => {
+    return this.Request.get(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/cards`).then(result => {
       this.list = result.data;
       this.setDefaultCardId( );
       return this.list;
@@ -59,14 +60,14 @@ class Cards {
   }
 
   deleteCard (cardId) {
-    return this.Request.delete(`${config.API_URL}/api/${this.User.get('role')}/cards/${cardId}`).then(result => {
+    return this.Request.delete(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/cards/${cardId}`).then(result => {
       this.deleteCardFromList(cardId);
       return result.data;
     });
   }
 
   setDefaultCard (cardId) {
-    return this.Request.put(`${config.API_URL}/api/${this.User.get('role')}/cards/${cardId}/default`).then(result => {
+    return this.Request.put(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/cards/${cardId}/default`).then(result => {
       this.updateCardInList(result.data);
       return result.data;
     });
@@ -103,6 +104,5 @@ class Cards {
 }
 
 export default angular.module('card', [
-  User,
   Request
 ]).service('Cards', Cards).name;

@@ -1,19 +1,18 @@
 import config from 'config';
-import User from './user.service';
 import OrderService from './orderService.service';
 import Request from './request.service';
 
 class Resolve {
-  constructor (User, OrderService, Request) {
+  constructor (OrderService, Request, StatefulUserData) {
     'ngInject';
 
-    Object.assign(this, { User, OrderService, Request });
+    Object.assign(this, { OrderService, Request, StatefulUserData });
   }
 
   providers ( ) {
-    return this.Request.get(`${config.API_URL}/api/${this.User.get('role')}/service-types`)
+    return this.Request.get(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/service-types`)
       .then(
-        ({ result: { data } }) => _.map(data, provider => Object.assign(provider, {
+        ({ data }) => _.map(data, provider => Object.assign(provider, {
           price: _.round(provider.price),
           img: require(`../../assets/images/services/${provider.name.toLowerCase().replace(/\s+/g, '_')}.png`) // eslint-disable-line
         })),
@@ -25,7 +24,6 @@ class Resolve {
 
 export default angular.module('Resolve', [
   OrderService,
-  Request,
-  User
+  Request
 ]).service('Resolve', Resolve).name;
 

@@ -1,3 +1,4 @@
+import config from 'config';
 import futureOrders from './future-orders.page.component/future-orders.page.component';
 import pastOrders from './past-orders.page.component/past-orders.page.component';
 import OrderService from '../../common-services/orderService.service';
@@ -6,20 +7,18 @@ import pastOrdersProvider from './past-orders-privider.page.component/past-order
 import template from './history.page.html';
 
 class controller {
-  constructor ($stateParams, User) {
+  constructor ($stateParams, StatefulUserData, Request) {
     'ngInject';
 
-    Object.assign(this, { $stateParams, User, role: User.get('role') });
+    Object.assign(this, { $stateParams, StatefulUserData, Request });
   }
 
   $onInit ( ) {
-    if (this.$stateParams.type) {
-      this.tab = this.switchActiveTab( );
-    }
+    this.tab = this.switchActiveTab( );
   }
 
   switchActiveTab ( ) {
-    return { past: 1, future: 0 }[this.$stateParams.type];
+    return { past: 1, future: 0 }[this.$stateParams.type || 0];
   }
 }
 
@@ -37,12 +36,17 @@ export default angular.module('history', [
     parent: 'main',
     component: 'history',
     resolve: {
-      isOnPending: (User, $q) => {
+      isOnPending: (StatefulUserData, Request, $q) => {
         'ngInject';
 
-        return User.get('role') === 'provider' // eslint-disable-line
-          ? User.getActualStatus( ).then(status => status === 'pending')
-          : $q.when(false);
+        if (StatefulUserData.isProvider( )) {
+          return Request.get(`${config.API_URL}/api/status`).then(({ data: user }) => {
+            StatefulUserData.extend(user);
+            return user && user.status === 'pending';
+          });
+        } else {
+          return $q.when(false);
+        }
       }
     }
   });

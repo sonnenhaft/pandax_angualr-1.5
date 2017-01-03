@@ -85,10 +85,6 @@ class Helper {
     return type ? object[type] : object;
   }
 
-  getUniqueNumberByTime ( ) {
-    return Date.parse(new Date( ));
-  }
-
   showToast (message, duration = 200000) {
     if (angular.isArray(message)) {
       message = message.join(', ');

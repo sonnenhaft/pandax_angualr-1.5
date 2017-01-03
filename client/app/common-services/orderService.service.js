@@ -23,10 +23,10 @@ class OrderService {
   listConfirmed = []
   listFutures = []
 
-  constructor (User, Request, Helper, moment, WebSocket, $mdDialog) {
+  constructor (Request, Helper, moment, WebSocket, $mdDialog, StatefulUserData) {
     'ngInject';
 
-    Object.assign(this, { User, Request, Helper, moment, WebSocket, $mdDialog });
+    Object.assign(this, { Request, Helper, moment, WebSocket, $mdDialog, StatefulUserData });
   }
 
   fetchEntertainers (orderId) {
@@ -45,7 +45,7 @@ class OrderService {
   }
 
   fetchFuturesOrders (page = 1) {
-    const url = `${config.API_URL}/api/${this.User.get('role')}/orders?page=${page}&status[]=accepted&status[]=in+progress&include=invites`;
+    const url = `${config.API_URL}/api/${this.StatefulUserData.getRole( )}/orders?page=${page}&status[]=accepted&status[]=in+progress&include=invites`;
     return this.Request.get(url).then(
       ({ data }) => {
         this.listFutures = data.items;
@@ -60,7 +60,7 @@ class OrderService {
   }
 
   fetchHistoryOrders (page = 1) {
-    return this.Request.get(this._apiUrl(this.User.get('role'), page)).then(result => {
+    return this.Request.get(this._apiUrl(this.StatefulUserData.getRole( ), page)).then(result => {
       this.history = result.data.items;
       return result.data;
     });
@@ -111,7 +111,7 @@ class OrderService {
   }
 
   fetchProviderPastOrders (page = 1) {
-    return this.Request.get(this._apiUrl(this.User.get('role'), page)).then(
+    return this.Request.get(this._apiUrl(this.StatefulUserData.getRole( ), page)).then(
       result => {
         this.historyProvider = result.data.items;
         return result.data;
@@ -186,11 +186,11 @@ class OrderService {
   }
 
   fetchLastNotAccomplishedOrder ( ) {
-    return this.Request.get(`${config.API_URL}/api/${this.User.get('role')}/orders/last-not-accomplished`).then(result => result.data);
+    return this.Request.get(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/orders/last-not-accomplished`).then(result => result.data);
   }
 
   payForOrder (orderId, cardId) {
-    return this.Request.post(`${config.API_URL}/api/${this.User.get('role')}/orders/${orderId}/pay`, { card_id: cardId });
+    return this.Request.post(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/orders/${orderId}/pay`, { card_id: cardId });
   }
 
   cancelOrder (ev, orderId, messageType = 0) {
@@ -203,7 +203,7 @@ class OrderService {
       .cancel('No');
 
     return this.$mdDialog.show(confirm)
-      .then(_data => this.Request.post(`${config.API_URL}/api/${this.User.get('role')}/orders/${orderId}/complete`))
+      .then(_data => this.Request.post(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/orders/${orderId}/complete`))
       .then(response => response.data);
   }
 

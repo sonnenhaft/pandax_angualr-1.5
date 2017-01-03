@@ -2,10 +2,10 @@ import StatefulAuthTokenService from '../login.page/StatefulAuthTokenService';
 import template from './logout.html';
 
 class controller {
-  constructor (StatefulAuthTokenService, $mdDialog) {
+  constructor (StatefulAuthTokenService, $mdDialog, StatefulUserData) {
     'ngInject';
 
-    Object.assign(this, { StatefulAuthTokenService, $mdDialog });
+    Object.assign(this, { StatefulAuthTokenService, $mdDialog, StatefulUserData });
   }
 
   logout ( ) {

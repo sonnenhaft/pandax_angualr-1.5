@@ -1,5 +1,4 @@
 import template from './payments.page.html';
-import User from '../../common-services/user.service';
 import Cards from '../../common-services/card.service';
 
 class controller {
@@ -51,7 +50,7 @@ class controller {
 }
 
 export default angular.module('payments', [
-  User,
+
   Cards
 ]).config($stateProvider => {
   'ngInject';

@@ -7,7 +7,7 @@ export default [
   {
     role: ['admin'],
     text: 'Dashboard',
-    url: 'admin.dashboard',
+    // url: 'admin.dashboard',
     icon: { path: '/assets/images/icons/svg/navbar-admin/icon_dashboard.svg', styles: { height: '14px', width: '17px' } },
     hint: 'Dashboard'
   },
