@@ -43,7 +43,7 @@ import hoursToTime from './common/hoursToTime.filter';
 
 import template from './panda-app.html';
 import './panda-app.scss';
-
+import PandaAppStubsConfig from './panda-app.stubs';
 
 angular.module('app', [
   uiRouter,
@@ -65,6 +65,7 @@ angular.module('app', [
     Map
   ],
   ...[
+    PandaAppStubsConfig,
     StatefulUserData,
     ProfilePagesComponent,
     LoginPagesRoutes,

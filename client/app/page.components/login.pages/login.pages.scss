@@ -1,4 +1,4 @@
-@import "restore.page/restore-modal";
+@import "restore.page/restore-modal.scss";
 
 .login-pages-layout {
   width: 100%;
@@ -54,7 +54,6 @@
     text-align: center;
     font: 0.938em $open-sans, sans-serif;
     line-height: 24px;
-
     a {
       color: $Cardinal;
       &:hover, &:focus {

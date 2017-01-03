@@ -6,6 +6,7 @@ import orderConfirm from './order-confirm.page.component/order-confirm.page.comp
 import manipulationEntertainers from './manipulationEntertainers/manipulation-entertainers.page';
 import Request from '../../common-services/request.service';
 import acceptTermsAndConditionsPage from './accept-terms-and-conditions.page.component/accept-terms-and-conditions.page.component';
+import RateEntertainersComponent from './rate-entertainers.component/rate-entertainers.component';
 
 import template from './order.page.html';
 
@@ -141,13 +142,13 @@ class controller {
 }
 
 export default angular.module('order', [
-
   Helper,
   Request,
   Validation,
   orderConfirm,
   OrderService,
   manipulationEntertainers,
+  RateEntertainersComponent,
   acceptTermsAndConditionsPage
 ]).config($stateProvider => {
   'ngInject';

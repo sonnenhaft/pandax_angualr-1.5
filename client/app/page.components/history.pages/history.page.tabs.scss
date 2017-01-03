@@ -65,7 +65,7 @@ md-tabs {
     color: white;
     margin-top: 30px;
 
-    @import "history.page.list";
+    @import "history.page.list.scss";
   }
 
   &.md-tabs_provider {

@@ -35,8 +35,8 @@
       position: relative;
     }
 
-    @import "profile.pages.form";
-    @import "view-profile.page";
+    @import "profile.pages.form.scss";
+    @import "view-profile.page.scss";
 
     @media (max-width: 960px) {
       padding: 50px 5%;
@@ -50,4 +50,4 @@
 
 }
 
-@import "../main.page.component/billing.page.component/billing.page";
+@import "../main.page.component/billing.page.component/billing.page.scss";
