@@ -1,0 +1,17 @@
+# Dockerfile (tag: v3)
+FROM node:7.2.1
+
+WORKDIR /tmp
+COPY package.json /tmp/
+
+RUN npm config set registry http://registry.npmjs.org/ && npm install
+
+WORKDIR /usr/src/panda
+COPY . /usr/src/panda/
+
+RUN cp -a /tmp/node_modules /usr/src/panda/
+
+RUN npm run-script serve
+
+CMD [ “/usr/local/bin/node”, “./index.js” ]
+EXPOSE 3020

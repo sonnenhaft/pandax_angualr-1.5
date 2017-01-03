@@ -1,5 +1,3 @@
-import angular from 'angular';
-
 export default angular.module('messages', []).component('messages', {
   template: `
 <p ng-message="required">This field is required</p>

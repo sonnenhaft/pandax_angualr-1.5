@@ -1,9 +1,4 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
-
-export default angular.module('spinner', [
-  uiRouter
-]).component('spinner', {
+export default angular.module('spinner', []).component('spinner', {
   bindings: { input: '<' },
   transclude: true,
   template: `

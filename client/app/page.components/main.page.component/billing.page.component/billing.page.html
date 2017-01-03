@@ -3,9 +3,7 @@
 	class="billing animated fadeIn"
 	layout="column">
 
-
   <span class="page-name">CREATE ORDER</span>
-
 
 	<h4 ng-show="!$ctrl.hasPersonalInfo" class="personal-information__title">PERSONAL INFORMATION</h4>
 	<form
@@ -17,9 +15,7 @@
 		<personal-information form-object="personalInformationForm" model="$ctrl.billingInfo"></personal-information>
 	</form>
 
-
 	<order-details order="$ctrl.orderDetails"></order-details>
-
 
 	<h4 ng-show="!$ctrl.billingInfo.cards || $ctrl.billingInfo.cards.length == 0" class="billing-information__title">BILLING INFORMATION</h4>
 	<form
@@ -31,9 +27,7 @@
 		<card-info form-object="billingInformationForm" model="$ctrl.newCard"></card-info>
 	</form>
 
-
   <card-list ng-if="$ctrl.billingInfo.cards.length > 0" cards="$ctrl.billingInfo.cards"></card-list>
-
 
 	<section
 		class="billing__buttons-group"

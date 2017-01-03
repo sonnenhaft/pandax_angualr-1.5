@@ -1,6 +1,6 @@
-var webpack = require('webpack');
-var path = require('path');
-var config = require('./webpack.config');
+const webpack = require('webpack');
+const path = require('path');
+const config = require('./webpack.config');
 
 module.exports = Object.assign(config, {
   devtool: 'eval',
@@ -9,6 +9,6 @@ module.exports = Object.assign(config, {
     publicPath: '/',
     path: path.resolve(__dirname, 'client')
   },
-  plugins: config.plugins.concat([new webpack.HotModuleReplacementPlugin()]),
+  plugins: config.plugins.concat([new webpack.HotModuleReplacementPlugin( )]),
   resolve: { alias: { config: path.join(__dirname, 'config/development') } }
-})
+});

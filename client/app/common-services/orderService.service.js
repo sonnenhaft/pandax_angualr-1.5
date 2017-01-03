@@ -1,41 +1,39 @@
-import angular from 'angular';
+import config from 'config';
 import Helper from './helper.service';
+import ORDER_STATUSES from '../common/ORDER_STATUSES';
 
 class OrderService {
-  constructor (User, Constants, Request, Helper, moment, WebSocket, $mdDialog) {
+  static cancelOrderMessages = [
+    { title: 'Cancel order', content: 'Are you sure want to cancel order?' },
+    { title: 'Cancel unconfirmed invites', content: 'Are you sure want to cancel unconfirmed invites and cancel order?' },
+    {
+      title: 'Cancel unconfirmed invites',
+      content: `
+              Are you sure want to cancel unconfirmed invites and complete this order?  <br/> 
+              Note: We will do a refund of the money that you paid for  unconfirmed entertainers`
+    }
+  ]
+
+  list = []
+  listInvited = []
+  providers = []
+  history = []
+  historyProvider = {}
+  orderDetails = {}
+  listConfirmed = []
+  listFutures = []
+
+  constructor (User, Request, Helper, moment, WebSocket, $mdDialog) {
     'ngInject';
 
-    Object.assign(this, {
-      User,
-      Constants,
-      Request,
-      WebSocket,
-      list: [],
-      listInvited: [],
-      providers: [],
-      history: [],
-      historyProvider: {},
-      Helper,
-      moment,
-      orderDetails: {},
-      $mdDialog,
-      listConfirmed: [],
-      listFutures: []
-    });
+    Object.assign(this, { User, Request, Helper, moment, WebSocket, $mdDialog });
   }
 
   fetchEntertainers (orderId) {
-    return this
-      .Request
-      .send(
-        null,
-        this.Constants.api.searchEntertainers.method,
-        this.Constants.api.searchEntertainers.uri(orderId)
-      )
-      .then(
-        result => this.list = result.data,
-        error => console.log(error)
-      );
+    return this.Request.get(`${config.API_URL}/api/orders/${orderId}/entertainers/search`).then(
+      result => this.list = result.data,
+      error => console.log(error)
+    );
   }
 
   getEntertainers ( ) {
@@ -47,64 +45,42 @@ class OrderService {
   }
 
   fetchFuturesOrders (page = 1) {
-    return this
-      .Request
-      .send(
-        null,
-        this.Constants.api.orderFutures.method,
-        this.Constants.api.orderFutures.uri(this.User.get('role'), page)
-      )
-      .then(
-        result => {
-          this.listFutures = result.data.items;
-          return result.data;
-        },
-        error => console.log(error)
-      );
+    const url = `${config.API_URL}/api/${this.User.get('role')}/orders?page=${page}&status[]=accepted&status[]=in+progress&include=invites`;
+    return this.Request.get(url).then(
+      ({ data }) => {
+        this.listFutures = data.items;
+        return data;
+      },
+      error => console.log(error)
+    );
+  }
+
+  _apiUrl (user, page) {
+    return `${config.API_URL}/api/${user}/orders/history?page=${page}&include=invites`;
   }
 
   fetchHistoryOrders (page = 1) {
-    return this
-      .Request
-      .send(
-        null,
-        this.Constants.api.orderHistory.method,
-        this.Constants.api.orderHistory.uri(this.User.get('role'), page)
-      )
-      .then(
-        result => {
-          this.history = result.data.items;
-          return result.data;
-        }
-      );
+    return this.Request.get(this._apiUrl(this.User.get('role'), page)).then(result => {
+      this.history = result.data.items;
+      return result.data;
+    });
   }
 
   getOrdersWithParam (orderId) {
-    return this.fetchOrderDetails(orderId, 'invites')
-      .then(data => data);
+    return this.fetchOrderDetails(orderId, 'invites').then(data => data);
   }
 
-  /*
-   Invited entertainers
-   */
+  /*   Invited entertainers   */
   fetchEntertainersInvited (orderId) {
-    return this
-      .Request
-      .send(
-        null,
-        this.Constants.api.invitedEntertainers.method,
-        this.Constants.api.invitedEntertainers.uri(orderId)
-      )
-      .then(
-        result => {
-          this.listInvited = result.data && result.data.items;
-          this.fillConfirmedList(this.listInvited);
-          return this.sortList( );
-        },
-        error => console.log(error)
-      );
+    return this.Request.get(`${config.API_URL}/api/customer/orders/${orderId}/invites`).then(
+      result => {
+        this.listInvited = result.data && result.data.items;
+        this.fillConfirmedList(this.listInvited);
+        return this.sortList( );
+      },
+      error => console.log(error)
+    );
   }
-
 
   buildOrder (form) {
     return {
@@ -127,56 +103,29 @@ class OrderService {
     };
   }
 
-
   fetchOrderDetails (orderId, include = '') {
-    return this
-      .Request
-      .send(
-        null,
-        this.Constants.api.orderDetails.method,
-        this.Constants.api.orderDetails.uri(orderId, include)
-      )
-      .then(
-        result => this.orderDetails = result.data,
-        error => console.log(error)
-      );
+    return this.Request.get(`${config.API_URL}/api/orders/${orderId}${include ? `?include=${include}` : ''}`).then(
+      result => this.orderDetails = result.data,
+      error => console.log(error)
+    );
   }
-
 
   fetchProviderPastOrders (page = 1) {
-    return this
-      .Request
-      .send(
-        null,
-        this.Constants.api.orderHistory.method,
-        this.Constants.api.orderHistory.uri(this.User.get('role'), page)
-      )
-      .then(
-        result => {
-          this.historyProvider = result.data.items;
-          return result.data;
-        },
-        error => console.log(error)
-      );
+    return this.Request.get(this._apiUrl(this.User.get('role'), page)).then(
+      result => {
+        this.historyProvider = result.data.items;
+        return result.data;
+      },
+      error => console.log(error)
+    );
   }
-
 
   inviteEntertainer (orderId, entertainerId) {
-    return this
-      .Request
-      .send(
-        null,
-        this.Constants.api.inviteEntertainer.method,
-        this.Constants.api.inviteEntertainer.uri(orderId, entertainerId)
-      )
-      .then(
-        result => {
-          this.addEntertainerToInvitedList({ id: result.data.invite_id, entertainerId });
-          return result.data;
-        }
-      );
+    return this.Request.post(`${config.API_URL}/api/orders/${orderId}/entertainers/${entertainerId}/invite`).then(({ data }) => {
+      this.addEntertainerToInvitedList({ id: data.invite_id, entertainerId });
+      return data;
+    });
   }
-
 
   addEntertainerToInvitedList (invite) {
     const entertainer = _.find(this.list, { id: invite.entertainerId });
@@ -204,107 +153,66 @@ class OrderService {
     list.sort((itemA, itemB) => this.moment(itemA.datetime) - this.moment(itemB.datetime));
   }
 
-  cancelOrderForEntertainer (ev, invite, cost) {
-    const confirm = this.$mdDialog.confirm( )
+  cancelOrderForEntertainer (ev, invite, penaltyAmount) {
+    return this.$mdDialog.show(this.$mdDialog.confirm( )
       .title('Cancel Minx')
-      .textContent(this.Constants.order.cancelEntertainerMessage(cost))
+      .textContent(penaltyAmount => penaltyAmount > 0 ? // eslint-disable-line no-confusing-arrow
+        `Canceling the order will cost $ ${penaltyAmount} penalty. Are you sure want to cancel order for the minx?` :
+        'Are you sure want to cancel order for the minx?')
       .ariaLabel('Canceling Entertainer')
       .targetEvent(ev)
       .ok('Yes')
-      .cancel('No');
-
-    return this.$mdDialog.show(confirm).then(data => this
-        .Request
-        .send(
-          null,
-          this.Constants.api.cancelEntertainerByCustomer.method,
-          this.Constants.api.cancelEntertainerByCustomer.uri(invite.id)
-        )
-        .then(
-          result => {
-            this.setEntertainerCanceled(invite);
-            return result;
-          }
-        ));
+      .cancel('No'))
+      .then(data => this.Request.put(`${config.API_URL}/api/invite/${invite.id}/cancel`))
+      .then(result => {
+        invite.status = ORDER_STATUSES.canceledbyCustomer;
+        return result;
+      });
   }
 
-  setEntertainerCanceled (invite) {
-    invite.status = this.Constants.order.statuses.canceledbyCustomer;
-  }
 
-  /*
-   Confirmed entertainers
+  /**
+   * @deprecated useless comment
+   * Confirmed entertainers
    */
   fetchEntertainersConfirmed (orderId) {
-    return this
-      .Request
-      .send(
-        null,
-        this.Constants.api.confirmedEntertainers.method,
-        this.Constants.api.confirmedEntertainers.uri(orderId)
-      )
-      .then(
-        result => {
-          this.listConfirmed = result.data && result.data.items;
-          return this.listConfirmed;
-        },
-        error => console.log(error)
-      );
+    return this.Request.get(`${config.API_URL}/api/customer/orders/${orderId}/invites?status[]=accepted&status[]=canceled`).then(
+      ({ data }) => {
+        this.listConfirmed = data && data.items;
+        return this.listConfirmed;
+      },
+      error => console.log(error)
+    );
   }
 
   fetchLastNotAccomplishedOrder ( ) {
-    return this
-      .Request
-      .send(
-        null,
-        this.Constants.api.lastNotAccomplishedOrder.method,
-        this.Constants.api.lastNotAccomplishedOrder.uri(this.User.get('role'))
-      )
-      .then(
-        result => result.data
-      );
+    return this.Request.get(`${config.API_URL}/api/${this.User.get('role')}/orders/last-not-accomplished`).then(result => result.data);
   }
 
   payForOrder (orderId, cardId) {
-    return this
-      .Request
-      .send(
-        null,
-        this.Constants.api.payForOrder.method,
-        this.Constants.api.payForOrder.uri(this.User.get('role'), orderId),
-        { card_id: cardId }
-      );
+    return this.Request.post(`${config.API_URL}/api/${this.User.get('role')}/orders/${orderId}/pay`, { card_id: cardId });
   }
 
   cancelOrder (ev, orderId, messageType = 0) {
     const confirm = this.$mdDialog.confirm( )
-      .title(this.Constants.order.cancelOrderMessages[messageType].title)
-      .htmlContent(this.Constants.order.cancelOrderMessages[messageType].content)
+      .title(OrderService.cancelOrderMessages[messageType].title)
+      .htmlContent(OrderService.cancelOrderMessages[messageType].content)
       .ariaLabel('Canceling Order')
       .targetEvent(ev)
       .ok('Yes')
       .cancel('No');
 
-    return this.$mdDialog.show(confirm).then(_data => this
-        .Request
-        .send(
-          null,
-          this.Constants.api.cancelOrder.method,
-          this.Constants.api.cancelOrder.uri(this.User.get('role'), orderId)
-        )
-        .then(response => response.data));
+    return this.$mdDialog.show(confirm)
+      .then(_data => this.Request.post(`${config.API_URL}/api/${this.User.get('role')}/orders/${orderId}/complete`))
+      .then(response => response.data);
   }
 
   fillConfirmedList (invites) {
-    invites.forEach((invite, _i, _arr) => {
-      if (invite.status == this.Constants.order.statuses.accepted) {
-        this.listConfirmed.push(invite);
-      }
-    });
+    invites
+      .filter(invite => invite.status === ORDER_STATUSES.accepted)
+      .forEach(invite => this.listConfirmed.push(invite));
   }
-
 }
-
 
 export default angular.module('OrderService', [
   Helper

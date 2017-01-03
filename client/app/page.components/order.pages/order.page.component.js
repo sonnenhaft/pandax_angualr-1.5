@@ -1,8 +1,5 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
-
+import config from 'config';
 import User from '../../common-services/user.service';
-import Constants from '../../common-services/constants.service';
 import Helper from '../../common-services/helper.service';
 import Validation from '../../common-services/validation.service';
 import OrderService from '../../common-services/orderService.service';
@@ -14,21 +11,21 @@ import acceptTermsAndConditionsPage from './accept-terms-and-conditions.page.com
 import template from './order.page.html';
 
 class controller {
+  hours = ['0.5 H', '1 H', '1.5 H', '2 H', '2.5 H', '3 H', '3.5 H', '4 H']
+  guests = ['1', '2-3', '4-5', '5-10', '10-15', '15+']
+  entertainers = [1, 2, 3, 4, 5, 6]
+  entertainer = 1
+  guest = 1
+  asap = true
+  hour = '0.5H'
+  date = new Date( )
+  currentDate = new Date( )
 
-  constructor (User, Constants, Helper, Validation, OrderService, Request, $window, $state, $mdDialog, moment) {
+  constructor (User, Helper, Validation, OrderService, Request, $window, $state, $mdDialog, moment) {
     'ngInject';
 
-    Object.assign(this, {
-      User,
-      Constants,
-      Helper,
-      Validation,
-      OrderService,
-      Request,
-      $state,
-      $mdDialog,
-      maxDateForCreating: moment( ).add(Constants.order.maxPeriodForCreating.value, Constants.order.maxPeriodForCreating.key).toDate( )
-    });
+    Object.assign(this, { User, Helper, Validation, OrderService, Request, $state, $mdDialog });
+    this.maxDateForCreating = moment( ).add(14, 'days').toDate( );
     this.mobile = $window.innerWidth <= 960;
 
     $window.addEventListener('resize', ( ) => {
@@ -40,10 +37,6 @@ class controller {
     this.providers = _.map(this.OrderService.getProviders( ), (provider, i) => {
       provider.active = i == 0;
       return provider;
-    });
-
-    _.mapValues(this.Constants.order.models, (model, key) => {
-      this[key] = model;
     });
 
     this.time = this.Helper.getNearestTime('time');
@@ -61,13 +54,12 @@ class controller {
   }
 
   showDescription (event, index) {
-    this.$mdDialog
-      .show({
-        contentElement: `#typeDescr-${index}`,
-        parent: document.body,
-        targetEvent: event,
-        clickOutsideToClose: true
-      });
+    this.$mdDialog.show({
+      contentElement: `#typeDescr-${index}`,
+      parent: document.body,
+      targetEvent: event,
+      clickOutsideToClose: true
+    });
   }
 
   onDateChange (date) {
@@ -95,6 +87,7 @@ class controller {
     return true;
   }
 
+  /** @deprecated mass */
   onSearch (orderModel, form) {
     if ((this.typeError = !this.Helper.getActiveObjectFromArray(this.providers).length) || form.$invalid) { // eslint-disable-line no-cond-assign
       return false;
@@ -119,56 +112,43 @@ class controller {
       return false;
     }
 
-    this.Request
-      .send(
-        this.User.token( ),
-        this.Constants.api.order.method,
-        this.Constants.api.order.uri,
-        this.orderData(orderModel)
-      )
-      .then(
-        result => {
-          this.orderLoading = false;
-          this.User.update(result.data.customer);
-          this.$state.go('main.manipulationEntertainers', { orderId: result.data.id, channelName: result.data.channel_name });
-        },
-        error => {
-          this.orderLoading = false;
-          console.log(error);
-        }
-      );
+    this.Request.post(`${config.API_URL}/api/order`, this.orderData(orderModel)).then(
+      result => {
+        this.orderLoading = false;
+        this.User.update(result.data.customer);
+        this.$state.go('main.manipulationEntertainers', { orderId: result.data.id, channelName: result.data.channel_name });
+      },
+      error => {
+        this.orderLoading = false;
+        console.log(error);
+      }
+    );
   }
 
   orderData (orderModel) {
-    return this
-      .OrderService
-      .buildOrder(
-        Object.assign(orderModel, {
-          geo: this.inputLocation,
-          price: this.getTotalPrice( )
-        })
-      );
+    return this.OrderService.buildOrder(Object.assign(orderModel, {
+      geo: this.inputLocation,
+      price: this.getTotalPrice( )
+    })
+    );
   }
 
   showEntertainersCountInfo (event) {
-    this.$mdDialog
-      .show({
-        contentElement: '#entertainers-count-info',
-        targetEvent: event
-      });
+    this.$mdDialog.show({
+      contentElement: '#entertainers-count-info',
+      targetEvent: event
+    });
   }
 }
 
 export default angular.module('order', [
-  uiRouter,
   User,
-  Constants,
   Helper,
-  Validation,
-  OrderService,
-  orderConfirm,
-  manipulationEntertainers,
   Request,
+  Validation,
+  orderConfirm,
+  OrderService,
+  manipulationEntertainers,
   acceptTermsAndConditionsPage
 ]).config($stateProvider => {
   'ngInject';
@@ -179,11 +159,12 @@ export default angular.module('order', [
     component: 'order',
     resolve: {
       notAccomplishedOrder (OrderService) {
-        return OrderService.fetchLastNotAccomplishedOrder( )
-          .then(data => data);
+        'ngInject';
+
+        return OrderService.fetchLastNotAccomplishedOrder( );
       }
     },
-    onEnter: ($transition$, notAccomplishedOrder, $state, Constants, $timeout) => {
+    onEnter: ($transition$, notAccomplishedOrder, $state, $timeout) => {
       if (notAccomplishedOrder) {
         $timeout(( ) => {
           $state.go('main.manipulationEntertainers', { orderId: notAccomplishedOrder.id });

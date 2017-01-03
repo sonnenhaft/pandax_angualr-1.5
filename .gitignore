@@ -12,3 +12,4 @@ coverage
 
 # non-free font sources
 *.otf
+/Dokerfile

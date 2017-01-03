@@ -50,9 +50,9 @@
           </md-select>
           <div class="descr" ng-if="$ctrl.User.get('is_newcomer')">
             <p>
-              Minimum 2 entertainers for first time customers. 
+              Minimum 2 entertainers for first time customers.
               <a href="" ng-click="$ctrl.showEntertainersCountInfo($event)">
-                Why? 
+                Why?
                 <i class="desc-icon"></i>
               </a>
             </p>
@@ -168,14 +168,13 @@
     <map input="$ctrl.inputLocation" output="$ctrl.location = location"></map>
   </div>
 
-
   <!-- Modal window -->
   <div style="visibility: hidden">
     <div class="md-dialog-container desc" id="entertainers-count-info">
       <md-dialog>
         <span class="close" ng-click="$ctrl.$mdDialog.hide()"></span>
         <div layout-gt-sm="row" layout-align="space-between center">
-          <div><p>{{$ctrl.Constants.order.entertainersCountInfo}}</p></div>
+          <div><p>Just trying to get to know you better for the safety of our Minx.</p></div>
         </div>
       </md-dialog>
     </div>

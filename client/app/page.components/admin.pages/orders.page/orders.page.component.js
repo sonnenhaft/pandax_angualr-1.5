@@ -1,7 +1,6 @@
 import OrdersService from './ordersService.service';
-import hoursToTime from '../../../common/hoursToTime.filter';
-
 import template from './orders.page.html';
+import ORDER_STATUSES from '../../../common/ORDER_STATUSES';
 
 class controller {
   isOnProgress = false
@@ -10,25 +9,12 @@ class controller {
   orderActiveIndex = -1
   typesOfService = []
   orderActive = null
-  statuses = {
-    accepted: 'accepted',
-    declined: 'declined',
-    invited: 'invited',
-    inProgress: 'in progress',
-    finished: 'finished`',
-    missed: 'missed',
-    new: 'new',
-    paid: 'paid',
-    canceled: 'canceled',
-    active: 'active',
-    canceledbyProvider: 'canceled_by_provider',
-    canceledbyCustomer: 'canceled_by_customer',
-  }
 
   constructor (OrdersService, Resolve) {
     'ngInject';
 
     Object.assign(this, { OrdersService, Resolve, });
+    this.ORDER_STATUSES = ORDER_STATUSES;
   }
 
   $onInit ( ) {
@@ -80,4 +66,4 @@ export default angular.module('orders', [
   template,
   controller
 }).filter('statusCorrection', ( ) => status => statusesViewCorrection[status] || status)
-  .filter('hoursToTime', hoursToTime).name;
+  .name;

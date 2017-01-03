@@ -1,5 +1,3 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
 import ngFileUpload from 'ng-file-upload';
 
 import Validation from '../../common-services/validation.service';
@@ -7,20 +5,20 @@ import Storage from '../../common-services/storage.service';
 import User from '../../common-services/user.service';
 
 import template from './profile.pages.html';
-
-const CUSTOMER_FIELDS = [
-  {
-    combined: [
-      { name: 'First Name', model: 'first_name', type: 'text' },
-      { name: 'Last Name', model: 'last_name', type: 'text', desc: 'We won\'t display your last name' }
-    ]
-  },
-  { name: 'Phone Number', model: 'phone', type: 'tel' },
-  { type: 'dob' },
-  { name: 'Email', model: 'email', type: 'email' }
-];
+import DobInputComponent from './date-of-birth.input.component/date-of-birth.input.component';
 
 class controller {
+  static CUSTOMER_FIELDS = [
+    {
+      combined: [
+        { name: 'First Name', model: 'first_name', type: 'text' },
+        { name: 'Last Name', model: 'last_name', type: 'text', desc: 'We won\'t display your last name' }
+      ]
+    },
+    { name: 'Phone Number', model: 'phone', type: 'tel' },
+    { type: 'dob' },
+    { name: 'Email', model: 'email', type: 'email' }
+  ]
   constructor (User, Validation, Storage, $state, $q, Helper, Cards) {
     'ngInject';
 
@@ -43,16 +41,16 @@ class controller {
 
     const role = User.get('role');
     if (role === 'customer') {
-      this.fields = CUSTOMER_FIELDS;
+      this.fields = controller.CUSTOMER_FIELDS;
       this.images = [{ file: '' }];
     } else if (role === 'provider') {
       this.images = [{ file: '' }, { file: '' }, { file: '' }];
       this.isProvider = true;
-      this.fields = CUSTOMER_FIELDS.slice( );
+      this.fields = controller.CUSTOMER_FIELDS.slice( );
       this.fields.unshift({ name: 'Display Name', model: 'displaying_name', type: 'text' });
     }
 
-    this.User.getUserProfile(Object.assign(Storage.getObject('MINX').user, { token: this.User.token( ) }), role, false).then(data => {
+    this.User.getUserProfile(Storage.getObject('MINX').user, role, false).then(data => {
       const serverPhotos = data.photo ? [data.photo] : data.photos;
       if (!serverPhotos.length || !serverPhotos[0]) {
         serverPhotos[0] = {};
@@ -78,9 +76,9 @@ class controller {
     this.backupModel.photo = angular.copy(this.photo);
   }
 
-  _backupPhoto (photo, i) {
+  _backupPhoto ({ photo: { file } }, i) {
     this.backupModel.images[i] = {
-      file: `${photo.file}?${this.Helper.getUniqueNumberByTime( )}`
+      file: `${file}?${this.Helper.getUniqueNumberByTime( )}`
     };
   }
 
@@ -172,7 +170,7 @@ class controller {
 }
 
 export default angular.module('profileFields', [
-  uiRouter,
+  DobInputComponent,
   ngFileUpload,
   Validation,
   Storage,

@@ -1,8 +1,4 @@
-import angular from 'angular';
-
-/**
- We don't use $timeout, because it runs the $digest cycle very often
- */
+/** We don't use $timeout, because it runs the $digest cycle very often */
 export default angular.module('showInTimeDirective', []).directive('showInTime', ($compile, moment) => {
   'ngInject';
 

@@ -1,37 +1,32 @@
-import angular from 'angular';
-
+/** @deprecated using timeouts */
 export default angular.module('activeMenuItemDirective', []).directive('activeMenuItem', ($state, $timeout, $rootScope) => {
   'ngInject';
 
-  const STYLES = {
-    CSS_CLASS_LINK_ACTIVE: 'active',
-    CSS_CLASS_OPENED_SUB_ITEMS: 'opened-subitems'
-  };
-
+  const cssClassNames = { active: 'active', opened: 'opened-subitems' };
 
   return {
     restrict: 'A',
-    link: (scope, element, attrs) => {
+    link: (scope, element) => {
       let menuItems = [];
 
       function clearAll ( ) {
-        menuItems.removeClass(STYLES.CSS_CLASS_OPENED_SUB_ITEMS);
+        menuItems.removeClass(cssClassNames.opened);
       }
 
       function checkActiveSubItem ( ) {
         _.each(menuItems, menuItem => {
-          if (menuItem.querySelector(`ul>li>a.${STYLES.CSS_CLASS_LINK_ACTIVE}`)) {
-            angular.element(menuItem).addClass(STYLES.CSS_CLASS_OPENED_SUB_ITEMS);
-            angular.element(menuItem).children('a').addClass(STYLES.CSS_CLASS_LINK_ACTIVE);
+          if (menuItem.querySelector(`ul>li>a.${cssClassNames.active}`)) {
+            angular.element(menuItem).addClass(cssClassNames.opened);
+            angular.element(menuItem).children('a').addClass(cssClassNames.active);
           }
         });
       }
 
       function toggleOpened (menuItem) {
-        if (!menuItem.hasClass(STYLES.CSS_CLASS_OPENED_SUB_ITEMS)) {
+        if (!menuItem.hasClass(cssClassNames.opened)) {
           clearAll( );
         }
-        angular.element(menuItem).toggleClass(STYLES.CSS_CLASS_OPENED_SUB_ITEMS);
+        angular.element(menuItem).toggleClass(cssClassNames.opened);
       }
 
       function init ( ) {
@@ -45,13 +40,11 @@ export default angular.module('activeMenuItemDirective', []).directive('activeMe
           });
         });
 
-
         $rootScope.$on('$stateChangeSuccess', (event, next, current) => {
           clearAll( );
           $timeout(checkActiveSubItem, 100);
         });
       }
-
 
       $timeout(init, 100);
     }

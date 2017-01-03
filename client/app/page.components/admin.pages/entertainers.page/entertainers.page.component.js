@@ -25,18 +25,18 @@ class controller extends CustomersPageComponent {
     // so we expect that in required 'admin' component there is #admin div, sorry for this
     this.$scrollableElement = angular.element($window.document.getElementById('admin'));
     this.entertainerPhotosModal = entertainerPhotosModal;
-    this.statusType = 'providers';
+    this.statusType = 'provider';
   }
 
   _next (page) {
-    return this.Request.send(null, 'GET', `${config.API_URL}/api/provider?page=${page}`);
+    return this.Request.get(`${config.API_URL}/api/provider?page=${page}`);
   }
 
-  showPopup (ev, index) {
+  showPopup (targetEvent, index) {
     this.entertainerPhotosModal({
       photos: this.list[index].photos,
       photoIndexActive: 0
-    }, ev);
+    }, targetEvent);
   }
 }
 

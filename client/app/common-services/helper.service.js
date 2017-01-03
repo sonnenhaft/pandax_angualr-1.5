@@ -1,5 +1,3 @@
-import angular from 'angular';
-
 class Helper {
 
   constructor (moment, $mdToast, $mdDialog) {

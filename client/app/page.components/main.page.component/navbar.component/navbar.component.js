@@ -1,22 +1,16 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
 import User from '../../../common-services/user.service';
-import Constants from '../../../common-services/constants.service';
 import activeMenuItem from '../../../common/active-menu-item.directive';
-import template from './navbar.html';
+
 import NAV_BAR_MENU_ITEMS from '../../../common/NAV_BAR_MENU_ITEMS';
 import NAV_BAR_SUB_MENU from './NAV_BAR_SUB_MENU';
 
+import template from './navbar.html';
+
 class controller {
-  constructor (User, Constants, $state) {
+  constructor (User, $state) {
     'ngInject';
 
-    Object.assign(this, {
-      User,
-      Constants,
-      $state
-    });
-
+    Object.assign(this, { User, $state });
     this.isCustomer = User.get('role') === 'customer';
     this.isProvider = User.get('role') === 'provider';
     this.defaultLink = {
@@ -35,16 +29,11 @@ class controller {
   }
 }
 
-
 export default angular.module('navbar', [
-  uiRouter,
   User,
-  Constants,
   activeMenuItem
 ]).component('navbar', {
-  bindings: {
-    userAvatarSrc: '='
-  },
+  bindings: { userAvatarSrc: '=' },
   template,
   controller
 }).name;

@@ -1,5 +1,3 @@
-import angular from 'angular';
-
 import TouchedInvalidDirective from './touched-invalid.directive';
 import template from './credentials-inputs.html';
 
@@ -46,8 +44,7 @@ export default angular.module('credentialsInputs', [
   template
 }).directive('repeatPasswordEqual', ( ) => ({
   require: ['^ngModel', '^form', TouchedInvalidDirective],
-  link: ($scope, $element, $attr, controllers) => {
-    const [ngModel, form] = controllers;
+  link: ($scope, $element, $attr, [ngModel, form]) => {
     const equalityNgModel = form[$attr.repeatPasswordEqual];
 
     const validate = val => {

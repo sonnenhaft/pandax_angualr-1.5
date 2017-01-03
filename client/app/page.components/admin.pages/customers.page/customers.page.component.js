@@ -4,7 +4,7 @@ import template from './customers.page.html';
 class controller {
   currentPage = 0
   list = []
-  statusType = 'customers'
+  statusType = 'customer'
   statuses = {
     active: 'active',
     blocked: 'blocked',
@@ -19,14 +19,13 @@ class controller {
   }
 
   _next (page) {
-    return this.Request.send(null, 'GET', `${config.API_URL}/api/admin/customers?page=${page}`);
+    return this.Request.get(`${config.API_URL}/api/admin/customers?page=${page}`);
   }
 
   fetchMoreItems ( ) {
     this.isOnProgress = true;
-    return this._next(this.currentPage + 1).then(({ data }) => {
-      this.list = this.list.concat(data.items);
-      const pagination = data.meta.pagination;
+    return this._next(this.currentPage + 1).then(({ data: { items, meta: { pagination } } }) => {
+      this.list = this.list.concat(items);
       this.currentPage = pagination.current_page;
       this.isLastPage = this.currentPage === pagination.total_pages;
     }).finally(( ) => {
@@ -35,21 +34,20 @@ class controller {
   }
 
   setStatus (targetEvent, entity, targetStatus, showPopup = true, status) {
-    const type = 'customer';
     if (!status) {
       status = targetStatus;
     }
 
     this.$q.when(showPopup && this.$mdDialog.show(this.$mdDialog.confirm({
-      title: `${controller.getSmallStatus(status, true)} ${type}`,
-      textContent: `Are you sure want to ${controller.getSmallStatus(status)} the ${type}?`,
+      title: `${controller.getSmallStatus(status, true)} ${this.statusType}`,
+      textContent: `Are you sure want to ${controller.getSmallStatus(status)} the ${this.statusType}?`,
       ariaLabel: 'Set status',
       ok: 'Yes',
       cancel: 'No',
       targetEvent
     })))
-      .then(( ) => this.Request.send(null, 'POST', `${config.API_URL}/api/admin/${this.statusType}/${entity.id}/status`, { set: targetStatus }))
-      .then(result => entity.status = result.data.status);
+      .then(( ) => this.Request.post(`${config.API_URL}/api/admin/${this.statusType}s/${entity.id}/status`, { set: targetStatus }))
+      .then(({ data: { status } }) => entity.status = status);
   }
 
   static getSmallStatus (text, toCapitalize) {

@@ -1,4 +1,3 @@
-import angular from 'angular';
 import messages from '../messages.component';
 
 import template from './card-info.html';
@@ -24,7 +23,6 @@ class controller {
     this.formObject.cvc.$setValidity('invalid_card_cvc', this.stripe.card.validateCVC(this.model.cvc));
   }
 }
-
 
 export default angular.module('cardInfo', [
   messages

@@ -1,16 +1,20 @@
-import angular from 'angular';
-
 class Request {
-  constructor ($http, $q, Storage) {
+  constructor ($http, Storage) {
     'ngInject';
 
-    Object.assign(this, { $http, $q, Storage });
+    Object.assign(this, { $http, Storage });
   }
 
-  send (token, method, url, data) {
+  post (url, data) { return this._ajaxCall('POST', url, data); }
+
+  put (url, data) { return this._ajaxCall('PUT', url, data); }
+
+  delete (url, data) { return this._ajaxCall('PUT', url, data); }
+
+  get (url) { return this._ajaxCall('GET', url); }
+
+  _ajaxCall (method, url, data) {
     const headers = { 'Content-Type': 'application/json' };
-    token = token || this.Storage.getObject('MINX').token;
-    headers.Authorization = `Bearer ${token}`;
 
     if (data) {
       if (data.type) {

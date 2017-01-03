@@ -1,5 +1,3 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
 import User from '../../common-services/user.service';
 import Validation from '../../common-services/validation.service';
 import template from './password.page.html';
@@ -32,31 +30,27 @@ class controller {
 
   reset (passwordOld, passwordNew) {
     this.resetLoading = true;
-    this.User
-      .changeByOld(passwordOld, passwordNew)
-      .then(result => {
+    this.User.changeByOld(passwordOld, passwordNew).then(
+      result => {
         this.resetLoading = false;
-
         if (result && result.error) {
           this.resetError = result.error;
           return false;
+        } else {
+          this.Helper.showToast('Your password was successfully changed', 4000);
+          return true;
         }
-
-        this.Helper.showToast('Your password was successfully changed', 4000);
-
-        return true;
       },
-        error => {
-          this.resetLoading = false;
-          console.log(error);
-        }
-      );
+      error => {
+        this.resetLoading = false;
+        console.log(error);
+      }
+    );
   }
 
 }
 
 export default angular.module('password', [
-  uiRouter,
   User,
   Validation
 ]).config($stateProvider => {

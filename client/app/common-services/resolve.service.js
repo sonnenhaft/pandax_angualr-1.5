@@ -1,56 +1,19 @@
-import angular from 'angular';
+import config from 'config';
 import User from './user.service';
 import OrderService from './orderService.service';
-import Constants from './constants.service';
 import Request from './request.service';
 
 class Resolve {
-  constructor (User, OrderService, Constants, Request, moment, $timeout) {
+  constructor (User, OrderService, Request) {
     'ngInject';
 
-    Object.assign(this, {
-      User,
-      OrderService,
-      Constants,
-      Request,
-      moment,
-      $timeout
-    });
+    Object.assign(this, { User, OrderService, Request });
   }
 
-  /*
-   billing () {
-   return this
-   .Request
-   .send(
-   this.User.token(),
-   this.Constants.api.cards.get.method,
-   this.Constants.api.cards.get.uri(this.User.get('role'))
-   )
-   .then(
-   cards => {
-   return {
-   first_name: this.User.get('first_name'),
-   last_name: this.User.get('last_name'),
-   mobile: this.User.get('phone'),
-   cards: cards.data
-   };
-   },
-   error => console.log(error)
-   )
-   .then(billingInfo => this.User.billingInfo = billingInfo);
-   }*/
-
   providers ( ) {
-    return this
-      .Request
-      .send(
-        this.User.token( ),
-        this.Constants.api.service.method,
-        this.Constants.api.service.uri(this.User.get('role'))
-      )
+    return this.Request.get(`${config.API_URL}/api/${this.User.get('role')}/service-types`)
       .then(
-        result => _.map(result.data, provider => Object.assign(provider, {
+        ({ result: { data } }) => _.map(data, provider => Object.assign(provider, {
           price: _.round(provider.price),
           img: require(`../../assets/images/services/${provider.name.toLowerCase().replace(/\s+/g, '_')}.png`) // eslint-disable-line
         })),
@@ -61,9 +24,8 @@ class Resolve {
 }
 
 export default angular.module('Resolve', [
-  User,
   OrderService,
-  Constants,
-  Request
+  Request,
+  User
 ]).service('Resolve', Resolve).name;
 

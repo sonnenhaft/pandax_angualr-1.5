@@ -1,5 +1,5 @@
 import template from './date-of-birth.input.html';
-import template3 from './date-of-birth.input.panel.html';
+import dobInputPanelTemplate from './date-of-birth.input.panel.html';
 import './date-of-birth.input.scss';
 
 class panelController {
@@ -101,7 +101,6 @@ class controller {
       }
     }
 
-
     this.days = [];
     for (let day = 1; day <= lastDay; day += 1) {
       this.days.push(day);
@@ -111,29 +110,30 @@ class controller {
     }
   }
 
-  showMenu (ev, key, values) {
-    const parent = ev.target;
+  showMenu (openFrom, key, values) {
+    const parent = openFrom.target;
     this.$mdPanel.open({
       attachTo: angular.element(document.body),
       controller: panelController,
       controllerAs: '$ctrl',
-      template: template3,
+      template: dobInputPanelTemplate,
       panelClass: 'demo-menu-example',
-      position: this.$mdPanel.newPanelPosition( )
-                .relativeTo(parent)
-                .addPanelPosition(this.$mdPanel.xPosition.ALIGN_START, this.$mdPanel.yPosition.BELOW),
+      position: this.$mdPanel.newPanelPosition( ).relativeTo(parent).addPanelPosition(
+        this.$mdPanel.xPosition.ALIGN_START,
+        this.$mdPanel.yPosition.BELOW
+      ),
       locals: {
         values,
-        selectedValue: this[key],
         key,
         parent,
+        selectedValue: this[key],
         callback: value => {
           this[key] = value;
           this.updateDays( );
           this.setDate( );
         }
       },
-      openFrom: ev,
+      openFrom,
       clickOutsideToClose: true,
       escapeToClose: true,
       focusOnOpen: false,

@@ -1,6 +1,3 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
-
 import LoginPageComponent from './login.page/login.page.component';
 import SignUpPageComponent from './sign-up.page/sign-up.page.component';
 
@@ -14,7 +11,6 @@ import template from './login.pages.layout.html';
 
 const LoginPagesLayout = 'home';
 export default angular.module(LoginPagesLayout, [
-  uiRouter,
   LoginResource,
   LoginPageComponent,
   SignUpPageComponent,

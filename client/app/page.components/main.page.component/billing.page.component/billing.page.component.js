@@ -1,5 +1,3 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
 import Cards from '../../../common-services/card.service';
 import personalInformation from './personal-information.component/personal-information.component';
 import cardList from './card-list.component/card-list.component';
@@ -7,25 +5,15 @@ import cardInfo from '../../../common/card-info.component/card-info.component';
 import template from './billing.page.html';
 
 class controller {
-  constructor ($state, User, Cards, $stateParams, Resolve, $mdToast, $q, OrderService, Constants, $mdDialog) {
+  newCard = {}   // temporary
+  saveLoading = false
+  defaultCardId = 0
+  hasPersonalInfo = false
+
+  constructor ($state, User, Cards, $stateParams, Resolve, $mdToast, $q, OrderService, $mdDialog) {
     'ngInject';
 
-    Object.assign(this, {
-      $state,
-      User,
-      $stateParams,
-      Resolve,
-      Cards,
-      $mdToast,
-      $q,
-      OrderService,
-      Constants,
-      $mdDialog,
-      newCard: {},   // temporary
-      saveLoading: false,
-      defaultCardId: 0,
-      hasPersonalInfo: false
-    });
+    Object.assign(this, { $state, User, $stateParams, Resolve, Cards, $mdToast, $q, OrderService, $mdDialog });
 
     this.defaultCardId = this.getDefaultCardId( );
     this.hasPersonalInfo = this.billingInfo && this.billingInfo.first_name && this.billingInfo.last_name && this.billingInfo.phone;
@@ -36,41 +24,24 @@ class controller {
 
     this.saveLoading = true;
 
-    if (!this.hasPersonalInfo) {                                          // should save personal information
-      const query = this.User
-        ._updateProfileOnServer(this.billingInfo);
-      promises.push(query);
+    if (!this.hasPersonalInfo) {
+      promises.push(this.User._updateProfileOnServer(this.billingInfo));  // should save personal information
     }
-
 
     if (!this.billingInfo.cards || !this.billingInfo.cards.length) {      // should add card
-      const query = this.Cards
-        .add(this.newCard)
-        .then(card => {
-          if (card.message) {
-            return card;
-          }
-        });
-      promises.push(query);
+      promises.push(this.Cards.add(this.newCard).then(card => {
+        if (card.message) {
+          return card;
+        }
+      }));
     } else if (this.defaultCardId != this.getDefaultCardId( )) {
-      /*
-       ToDo: send request to change default card
-       promises.push(query);
-       */
+      // ToDo: send request to change default card
     }
 
-    return this.$q.all(promises).then(data => {
-      this.payForOrder( )
-        .then(data => {
-          this.$state.go(this.$stateParams.from, { orderId: this.$stateParams.orderId });
-        })
-        .finally(( ) => {
-          this.saveLoading = false;
-        });
-    })
-      .finally(_data => {
-        this.saveLoading = false;
-      });
+    return this.$q.all(promises)
+      .then(( ) => this.payForOrder( ))
+      .then(( ) => this.$state.go(this.$stateParams.from, { orderId: this.$stateParams.orderId }))
+      .finally(( ) => this.saveLoading = false);
   }
 
   getDefaultCardId ( ) {
@@ -93,23 +64,22 @@ class controller {
   }
 
   payForOrder ( ) {
-    return this.OrderService.payForOrder(this.$stateParams.orderId, this.getDefaultCardId( ))
-      .then(
-        data => this.OrderService.inviteEntertainer(this.$stateParams.orderId, parseInt(this.$stateParams.entertainerId, 10)),
-        error => {
-          this.showMoneyReservationFailedPopUp( );
-          const defer = this.$q.defer( );
-          defer.reject(error);
-          return defer.promise;
-        });
+    return this.OrderService.payForOrder(this.$stateParams.orderId, this.getDefaultCardId( )).then(
+      data => this.OrderService.inviteEntertainer(this.$stateParams.orderId, parseInt(this.$stateParams.entertainerId, 10)),
+      error => {
+        this.showMoneyReservationFailedPopUp( );
+        const defer = this.$q.defer( );
+        defer.reject(error);
+        return defer.promise;
+      });
   }
 
   showMoneyReservationFailedPopUp ( ) {
     this.$mdDialog.show(
       this.$mdDialog.alert( )
         .clickOutsideToClose(true)
-        .title(this.Constants.order.moneyReservationFailedMessage.title)
-        .textContent(this.Constants.order.moneyReservationFailedMessage.content)
+        .title('Money reservation failed')
+        .textContent('Money capture failed. Please try another card.')
         .ariaLabel('Ban Dialog')
         .ok('Ok')
     );
@@ -121,10 +91,9 @@ class controller {
 }
 
 export default angular.module('billing', [
-  uiRouter,
   personalInformation,
-  cardList,
   cardInfo,
+  cardList,
   Cards
 ]).config($stateProvider => {
   'ngInject';
@@ -139,28 +108,24 @@ export default angular.module('billing', [
     },
     resolve: {
       orderId ($stateParams) {
+        'ngInject';
+
         return $stateParams.orderId || 0;
       },
-      billingInfo (User, Cards) {
-        let billingInfo = User.get( );
-        return Cards.getCards( )
-          .then(data => {
-            if (data) {
-              billingInfo = Object.assign(billingInfo, { cards: data });
-            }
-            return billingInfo;
-          });
-      },
       orderDetails (OrderService, orderId) {
-        return OrderService.fetchOrderDetails(orderId).then(data => data);
+        'ngInject';
+
+        return OrderService.fetchOrderDetails(orderId);
+      },
+      billingInfo (User, Cards) {
+        'ngInject';
+
+        return Cards.getCards( ).then(data => Object.assign(User.get( ), data ? { cards: data } : {}));
       }
     }
   });
 }).component('billing', {
-  bindings: {
-    billingInfo: '=',
-    orderDetails: '='
-  },
+  bindings: { billingInfo: '=', orderDetails: '=' },
   template,
   controller
 }).name;

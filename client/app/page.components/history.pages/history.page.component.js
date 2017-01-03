@@ -1,5 +1,3 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
 import futureOrders from './future-orders.page.component/future-orders.page.component';
 import pastOrders from './past-orders.page.component/past-orders.page.component';
 import OrderService from '../../common-services/orderService.service';
@@ -21,19 +19,11 @@ class controller {
   }
 
   switchActiveTab ( ) {
-    switch (this.$stateParams.type) { // eslint-disable-line default-case
-      case 'past':
-        return 1;
-
-      case 'future':
-        return 0;
-    }
+    return { past: 1, future: 0 }[this.$stateParams.type];
   }
 }
 
-
 export default angular.module('history', [
-  uiRouter,
   futureOrders,
   pastOrders,
   OrderService,
@@ -43,31 +33,21 @@ export default angular.module('history', [
 
   $stateProvider.state('main.history', {
     url: '/orders-history',
-    params: {
-      type: ''
-    },
+    params: { type: '' },
     parent: 'main',
     component: 'history',
     resolve: {
-      isOnPending: (User, Constants, $q) => {
-        let result;
-        if (User.get('role') == 'provider') {
-          result = User.getActualStatus( )
-            .then(status => status == Constants.admin.statuses.entertainer.pending);
-        } else {
-          const defer = $q.defer( );
-          defer.resolve(false);
-          result = defer.promise;
-        }
+      isOnPending: (User, $q) => {
+        'ngInject';
 
-        return result;
+        return User.get('role') === 'provider' // eslint-disable-line
+          ? User.getActualStatus( ).then(status => status === 'pending')
+          : $q.when(false);
       }
     }
   });
 }).component('history', {
-  bindings: {
-    isOnPending: '<'
-  },
+  bindings: { isOnPending: '<' },
   template,
   controller
 }).name;

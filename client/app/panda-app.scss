@@ -9,7 +9,6 @@
 @import "common-scss/angular-cosmetics";
 @import "common-scss/tables";
 
-
 * {
 	box-sizing: border-box;
 	margin: 0;
@@ -99,7 +98,7 @@ app {
 @import "common/spinner.component/spinner";
 @import "page.components/order.pages/find-location.page.component/find-location.page";
 @import "page.components/main.page.component/billing.page.component/order-details.component/order-details";
-@import "common/logout.modal.component/logout.modal";
+@import "page.components/login.pages/logout.component/logout";
 
 .app {
 	background-color: $primary;

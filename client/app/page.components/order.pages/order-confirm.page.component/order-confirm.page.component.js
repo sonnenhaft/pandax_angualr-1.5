@@ -1,22 +1,15 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
 import timer from '../../../common/timer.directive';
 import showInTime from '../../../common/show-in-time.directive';
 
 import template from './order-confirm.page.component.html';
 
 class controller {
-  constructor (Constants, moment, $state, OrderService, Helper) {
+  constructor (moment, $state, OrderService, Helper) {
     'ngInject';
 
-    Object.assign(this, {
-      Constants,
-      moment,
-      $state,
-      OrderService,
-      Helper,
-      timeToCleanCancel: Constants.order.timeToCleanCancel
-    });
+    Object.assign(this, { moment, $state, OrderService, Helper });
+
+    this.timeToCleanCancel = 5;
   }
 
   cancelOrder (ev, invite) {
@@ -30,7 +23,6 @@ class controller {
 }
 
 export default angular.module('orderConfirm', [
-  uiRouter,
   timer,
   showInTime
 ]).config($stateProvider => {
@@ -45,9 +37,13 @@ export default angular.module('orderConfirm', [
     },
     resolve: {
       orderId ($stateParams) {
+        'ngInject';
+
         return $stateParams.orderId || 0;
       },
       entertainersConfirmed (OrderService, orderId) {
+        'ngInject';
+
         return OrderService.fetchEntertainersConfirmed(orderId);
       }
     }

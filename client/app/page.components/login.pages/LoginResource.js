@@ -1,4 +1,3 @@
-import angular from 'angular';
 import config from 'config';
 import ngResource from 'angular-resource';
 

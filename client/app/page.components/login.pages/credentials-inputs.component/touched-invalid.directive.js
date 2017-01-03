@@ -1,10 +1,8 @@
 export default angular.module('touchedInvalid', []).directive('touchedInvalid', ( ) => ({
   require: ['^ngModel', '^form'],
   controller: angular.noop,
-  link: ($scope, $element, $attr, controllers) => {
-    const [ngModel, form] = controllers;
+  link: ($scope, $element, { touchedInvalid: errorClassName = 'error' }, [ngModel, form]) => {
     const $setSubmitted = form.$setSubmitted.bind(form);
-    const errorClassName = $attr.touchedInvalid || 'error';
     ngModel.setTouchedInvalid = ( ) => {
       ngModel.touchedInvalid = (form.$submitted || ngModel.$dirty) && ngModel.$invalid;
       if (ngModel.touchedInvalid) {

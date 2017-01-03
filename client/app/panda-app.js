@@ -1,3 +1,4 @@
+import config from 'config';
 import angular from 'angular';
 import angularMaterial from 'angular-material';
 import 'angular-material/angular-material.css';
@@ -18,30 +19,30 @@ import ngInfiniteScroll from 'ng-infinite-scroll';
 import ngSanitize from 'angular-sanitize';              // for material dialog to show text as html
 
 // common
-import Navbar from './page.components/main.page.component/navbar.component/navbar.component';
+import NavbarComponent from './page.components/main.page.component/navbar.component/navbar.component';
 import Map from './page.components/order.pages/map.component/map.component';
 import ProfilePagesComponent from './page.components/profile.pages/profile.pages.component';
-import Spinner from './common/spinner.component/spinner.component';
-import findLocation from './page.components/order.pages/find-location.page.component/find-location.page.component';
-import orderDetails from './page.components/main.page.component/billing.page.component/order-details.component/order-details.component';
-import Logout from './common/logout.modal.component/logout.modal.component';
+import SpinnerComponent from './common/spinner.component/spinner.component';
+import FindLocationComponent from './page.components/order.pages/find-location.page.component/find-location.page.component';
+import OrderDetailsComponent from './page.components/main.page.component/billing.page.component/order-details.component/order-details.component';
+import LogoutComponent from './page.components/login.pages/logout.component/logout.component';
 
 // pages
-import LoginPagesComponent from './page.components/login.pages/login.pages.routes';
-import Main from './page.components/main.page.component/main.page.component';
-import Order from './page.components/order.pages/order.page.component';
-import Payments from './page.components/payments.page.component/payments.page.component';
-import History from './page.components/history.pages/history.page.component';
-import HistoryMinx from './page.components/history-minx.page.component/history-minx.page.component';
-import Password from './page.components/password.page.component/password.page.component';
-import Contact from './page.components/contact-us.page.component/contact-us.page.component';
-import Admin from './page.components/admin.pages/admin.component';
+import MainPage from './page.components/main.page.component/main.page.component';
+import OrderPage from './page.components/order.pages/order.page.component';
+import HistoryPage from './page.components/history.pages/history.page.component';
+import PasswordPage from './page.components/password.page.component/password.page.component';
+import PaymentsPage from './page.components/payments.page.component/payments.page.component';
+import HistoryMinxPage from './page.components/history-minx.page.component/history-minx.page.component';
+import ContactUsPage from './page.components/contact-us.page.component/contact-us.page.component';
+import AdminComponent from './page.components/admin.pages/admin.component';
+import LoginPagesRoutes from './page.components/login.pages/login.pages.routes';
+
+import hoursToTime from './common/hoursToTime.filter';
 
 import template from './panda-app.html';
 import './panda-app.scss';
-import dateOfBirthInput from './common/date-of-birth.input.component/date-of-birth.input.component';
 
-const config = require('config');
 
 angular.module('app', [
   uiRouter,
@@ -49,36 +50,33 @@ angular.module('app', [
   'uiGmapgoogle-maps',
   'angularMoment',
   'angular.filter',
-  angularMaterial,
   angularMessages,
-  angularStripe,
+  angularMaterial,
   ngInfiniteScroll,
+  angularStripe,
   ngSanitize,
-].concat([
-  Navbar,
-  Map,
-  Spinner,
-  findLocation,
-  orderDetails,
-  dateOfBirthInput,
-  Logout
-]).concat([
-  ProfilePagesComponent,
-  LoginPagesComponent,
-  Main,
-  Order,
-  Payments,
-  History,
-  HistoryMinx,
-  Password,
-  Contact,
-  Admin
-])).config(($locationProvider, $urlRouterProvider, $mdThemingProvider,
-            uiGmapGoogleMapApiProvider, $mdDateLocaleProvider, moment,
-            $mdGestureProvider, $httpProvider, stripeProvider) => {
+  ...[
+    FindLocationComponent,
+    OrderDetailsComponent,
+    SpinnerComponent,
+    NavbarComponent,
+    LogoutComponent,
+    Map
+  ],
+  ...[
+    ProfilePagesComponent,
+    LoginPagesRoutes,
+    HistoryMinxPage,
+    PasswordPage,
+    PaymentsPage,
+    ContactUsPage,
+    HistoryPage,
+    AdminComponent,
+    OrderPage,
+    MainPage
+  ]
+]).config(($mdThemingProvider, $mdDateLocaleProvider, $mdGestureProvider, moment) => {
   'ngInject';
-
-  $locationProvider.html5Mode(false);
 
   $mdThemingProvider.definePalette('primaryMap', $mdThemingProvider.extendPalette('grey', { 900: 'FFFFFF' }));
   $mdThemingProvider.definePalette('accentMap', $mdThemingProvider.extendPalette('red', { A200: 'ba192f', }));
@@ -90,26 +88,15 @@ angular.module('app', [
 
   $mdDateLocaleProvider.formatDate = date => moment(date).format('MMMM DD, YYYY');
 
-  uiGmapGoogleMapApiProvider.configure({
-    key: 'AIzaSyCLBp2BxSpyfnqC_dhDKidNXDuHQTR-DYQ',
-    v: '3', // defaults to latest 3.X anyhow
-    libraries: 'weather,geometry,visualization'
-  });
-
   // without this line tap on 'md-button' with 'ng-file-upload' not working in iPhone https://github.com/danialfarid/ng-file-upload/issues/1049
   $mdGestureProvider.skipClickHijack( );
+}).config($httpProvider => {
+  'ngInject';
 
-
-  $urlRouterProvider.otherwise($injector => {
-    const $state = $injector.get('$state');
-    return $state.go('loginPage');
-  });
-
-  $httpProvider.interceptors.push(($q, $injector) => {
-    const responseHandler = response => {
-      const defer = $q.defer( );
+  $httpProvider.interceptors.push(($q, $injector) => ({
+    responseError: response => {
       const Helper = $injector.get('Helper');
-      const User = $injector.get('User');
+      const StatefulAuthTokenService = $injector.get('StatefulAuthTokenService');
       if (response.status === -1 && !response.statusText) {
         response.statusText = 'Not able to connect to remote server';
         response.data = response.data || { message: response.statusText };
@@ -121,34 +108,39 @@ angular.module('app', [
       if (response.status >= 400 && response.status != 403) { // for 403 status we have another handler only in userService.login()
         let messageText = response.statusText;
         if (response.data) {
-          if (response.data.detail) {
-            messageText = response.data.detail;
-          } else if (response.data.message) {
-            messageText = response.data.message;
-          }
+          messageText = response.data.detail || response.data.message;
         }
         Helper.showToast(messageText, 5000);
         if (response.status == 401) {
-          User.logout( );
+          StatefulAuthTokenService.logout( );
         }
       } else if (response.status == 403) {
         Helper.showBanPopUp(response.data && response.data.detail);
-        User.logout( );
+        StatefulAuthTokenService.logout( );
       }
 
-      defer.reject(response);
+      return $q.reject(response);
+    }
+  }));
+}).config(($locationProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider, stripeProvider) => {
+  'ngInject';
 
-      return defer.promise;
-    };
+  $locationProvider.html5Mode(false);
+  $urlRouterProvider.otherwise($injector => $injector.get('$state').go('loginPage'));
 
-    return {
-      responseError (rejection) {
-        return responseHandler(rejection);
-      }
-    };
+  uiGmapGoogleMapApiProvider.configure({
+    key: 'AIzaSyCLBp2BxSpyfnqC_dhDKidNXDuHQTR-DYQ',
+    v: '3', // defaults to latest 3.X anyhow
+    libraries: 'weather,geometry,visualization'
   });
-
 
   // Stripe integration
   stripeProvider.setPublishableKey(config.STRIPE_PUBLIC_KEY);
-}).component('app', { template });
+})
+  .run(StatefulAuthTokenService => {
+    'ngInject';
+
+    StatefulAuthTokenService.restore( );
+  })
+  .filter('hoursToTime', hoursToTime)
+  .component('app', { template });

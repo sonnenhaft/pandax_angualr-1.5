@@ -1,4 +1,3 @@
-import angular from 'angular';
 import messages from '../../../../common/messages.component';
 
 import template from './personal-information.html';

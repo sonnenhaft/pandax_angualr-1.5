@@ -1,63 +1,40 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
 import template from './future-orders.page.html';
-import hoursToTime from '../../../common/hoursToTime.filter';
 
 class controller {
 
-  constructor (OrderService, Constants) {
+  futures = []
+  isOnProgress = false
+  isLastPage = false
+  currentPage = 0
+  activeOrders = []
+  asapOrders = []
+
+  constructor (OrderService) {
     'ngInject';
 
-    Object.assign(this, {
-      OrderService,
-      Constants,
-      futures: [],
-      isOnProgress: false,
-      isLastPage: false,
-      currentPage: 1,
-      activeOrders: [],
-      asapOrders: []
-    });
-
-    OrderService.fetchFuturesOrders( )
-      .then(data => {
-        if (this.currentPage == data.meta.pagination.total_pages) {
-          this.isLastPage = true;
-        }
-        return this.futures = this.resortList(data.items);
-      });
+    this.OrderService = OrderService;
+    this.fetchMoreItems( );
   }
 
-
   findActiveOrders (param, list = this.futures) {
-    return _
-      .chain(list)
-      .filter(order => order[param])
-      .sortBy(order => order.datetime)
-      .value( );
+    return _.chain(list).filter(order => order[param]).sortBy(order => order.datetime).value( );
   }
 
   moveActiveOrdersToHead (list = this.futures) {
-    return _
-      .chain(list)
-      .remove(['active', true])
-      .union(this.activeOrders, this.asapOrders, list)
-      .value( );
+    return _.chain(list).remove(['active', true]).union(this.activeOrders, this.asapOrders, list).value( );
   }
 
   fetchMoreItems ( ) {
     this.isOnProgress = true;
+    this.OrderService.fetchFuturesOrders(this.currentPage + 1).then(({ items, meta: { pagination } }) => {
+      this.isOnProgress = false;
+      this.currentPage = pagination.current_page;
+      this.futures = this.futures.concat(this.resortList(items));
 
-    this.OrderService.fetchFuturesOrders(this.currentPage + 1)
-      .then(data => {
-        this.isOnProgress = false;
-        this.currentPage = data.meta.pagination.current_page;
-        this.futures = this.futures.concat(this.resortList(data.items));
-
-        if (this.currentPage == data.meta.pagination.total_pages) {
-          this.isLastPage = true;
-        }
-      });
+      if (this.currentPage == pagination.total_pages) {
+        this.isLastPage = true;
+      }
+    });
   }
 
   /**
@@ -77,9 +54,7 @@ class controller {
   }
 }
 
-export default angular.module('futureOrders', [
-  uiRouter,
-]).filter('hoursToTime', hoursToTime).component('futureOrders', {
+export default angular.module('futureOrders', []).component('futureOrders', {
   template,
   controller
 }).name;

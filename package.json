@@ -96,15 +96,9 @@
     "serve": "gulp serve",
     "test:watch": "karma start --autoWatch=true --singleRun=false",
     "create-component": "gulp create-component --gulpfile gulpfile.templates.js",
-    "lint": "eslint client",
-    "lint:fix": "npm run lint -- --fix"
+    "eslint:fix": "eslint client gulpfile.babel.js webpack.* --fix"
   },
-  "keywords": [
-    "angular",
-    "webpack",
-    "es6",
-    "panda"
-  ],
+  "keywords": ["angular", "webpack", "es6", "panda"],
   "repository": {
     "type": "git",
     "url": "https://gitlab.isdev.info/Pandax/Frontend.git"
