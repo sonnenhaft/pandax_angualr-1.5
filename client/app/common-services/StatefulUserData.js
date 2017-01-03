@@ -2,10 +2,10 @@ class StatefulUserData {
   STORAGE_KEY = 'MINX_USER'
   _avatar = null
 
-  constructor ($window) {
+  constructor ($window, $injector) {
     'ngInject';
 
-    Object.assign(this, { storage: $window.localStorage });
+    Object.assign(this, { storage: $window.localStorage, $injector });
   }
 
   getAvatar ( ) { return this._avatar; }
@@ -39,6 +39,11 @@ class StatefulUserData {
 
   _setUser (user) {
     this._user = Object.assign(this._user || {}, user || {});
+    if (this._user.token) {
+      // TODO(vlad): remove cycle dependency
+      this.$injector.get('StatefulAuthTokenService').remember(this._user.token);
+      delete this._user.token;
+    }
     const photo = (this._user.photos || [this._user.photo])[0];
     if (photo && photo.preview) {
       this._avatar = `${photo.preview}?${Date.now( )}`;
