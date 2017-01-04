@@ -83,3 +83,20 @@
 
 @import "./credentials-inputs.component/credentials-inputs.scss";
 @import "./sign-up.page/sign-up.page.scss";
+
+@media (max-height: 600px) {
+  html {
+    height: auto;
+    min-height: 100%;
+  }
+  .login-pages-layout {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: block;
+    .login-pages-layout-copyright {
+      position: relative;
+      margin: 20px 0;
+      bottom: auto;
+    }
+  }
+}
