@@ -1,23 +1,19 @@
 <div id="history" layout-gt-sm="row" class="animated fadeIn">
-
   <div class="history-container" flex="60">
-    <h1 class="page-name">{{ $ctrl.role != 'provider' ? 'Orders' : 'Order History' }}</h1>
-
-    <div id="history-tabs-wrapper" ng-class="{'hide-tabs': $ctrl.role === 'provider'}">
-      <md-tabs md-dynamic-height md-selected="$ctrl.tab" ng-if="$ctrl.role != 'provider' || !$ctrl.isOnPending">
-        <md-tab label="Future" ng-if="$ctrl.role == 'customer'">
+    <h1 class="page-name">{{ $ctrl.StatefulUserData.isProvider() ? 'Orders' : 'Order History' }}</h1>
+    <div id="history-tabs-wrapper" ng-class="{'hide-tabs': $ctrl.StatefulUserData.isProvider()}">
+      <md-tabs md-dynamic-height md-selected="$ctrl.tab" ng-if="!$ctrl.StatefulUserData.isProvider()|| !$ctrl.isOnPending">
+        <md-tab label="Future" ng-if="$ctrl.StatefulUserData.isCustomer()">
           <future-orders></future-orders>
         </md-tab>
         <md-tab label="History">
           <past-orders ng-if="$ctrl.role == 'customer'"></past-orders>
-          <past-orders-provider ng-if="$ctrl.role == 'provider'"></past-orders-provider>
+          <past-orders-provider ng-if="$ctrl.StatefulUserData.isCustomer()"></past-orders-provider>
         </md-tab>
       </md-tabs>
-      <div class="page-notify" ng-if="$ctrl.role == 'provider' && $ctrl.isOnPending">
+      <div class="page-notify" ng-if="$ctrl.StatefulUserData.isCustomer() && $ctrl.isOnPending">
         Your account is not approved
       </div>
     </div>
-
   </div>
-
 </div>

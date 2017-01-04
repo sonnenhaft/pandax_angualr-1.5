@@ -1,0 +1,18 @@
+<form name="restoreForm" class="animated fadeIn" novalidate>
+  <div class="login-pages-sub-header">
+    <span>Forgot Password?</span>
+    <p>Enter your e-mail address and we’ll send you a link to reset your password.</p>
+  </div>
+  <credentials-inputs credentials="$ctrl.credentials" submit-title="Send" on-submit="$ctrl.restorePassword()" email-only="true"></credentials-inputs>
+</form>
+<div style="visibility: hidden">
+  <div class="md-dialog-container restore-password-modal" id="restore-success">
+    <md-dialog>
+      <p>We've sent you an email with a link to reset your password.</p>
+      <md-button ng-click="$ctrl.$mdDialog.hide()" ui-sref="loginPage">OK</md-button>
+    </md-dialog>
+  </div>
+</div>
+<div class="login-pages-text-under-button">
+  Remember your password? <a ui-sref="loginPage">Log In</a>
+</div>

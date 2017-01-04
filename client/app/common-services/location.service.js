@@ -1,73 +1,30 @@
-import angular from 'angular';
-
 class Location {
-
   constructor (uiGmapGoogleMapApi) {
     'ngInject';
 
-    Object.assign(this, { uiGmapGoogleMapApi });
-
-    this.onInit( );
-  }
-
-  onInit ( ) {
-    this.uiGmapGoogleMapApi
-      .then(
-        maps => {
-          this.Maps = maps;
-          this.Geocoder = new this.Maps.Geocoder( );
-        },
-        err => console.log(err)
-      );
-  }
-
-  LatLng (lat, lng) {
-    return new this.Maps.LatLng(lat, lng);
-  }
-
-  getMarkerLocation (marker, callback) {
-    this.Geocoder
-      .geocode(
-      {
-        latLng: this.LatLng(
-            marker.position.lat( ),
-            marker.position.lng( )
-          )
+    uiGmapGoogleMapApi.then(
+      maps => {
+        this.Maps = maps;
+        this.Geocoder = new this.Maps.Geocoder( );
       },
-        (results, status) => {
-          callback({
-            coords: {
-              latitude: marker.position.lat( ),
-              longitude: marker.position.lng( )
-            },
-            location: _.head(results)
-          });
-        });
+      err => console.log(err)
+    );
   }
 
-  getLocationByString (str, callback) {
-    this.Geocoder
-      .geocode(
-        { address: str },
-        (results, status) => {
-          callback(results);
-        }
-      );
+  LatLng (lat, lng) { return new this.Maps.LatLng(lat, lng); }
+
+  getMarkerLocation (marker, cb) {
+    this.Geocoder.geocode(
+      { latLng: this.LatLng(marker.position.lat( ), marker.position.lng( )) },
+      results => cb({
+        coords: { latitude: marker.position.lat( ), longitude: marker.position.lng( ) },
+        location: _.head(results)
+      }));
   }
 
-  positionToFunc (position) {
-    return {
-      position: {
-        lat: ( ) => position.latitude,
-        lng: ( ) => position.longitude
-      }
-    };
-  }
+  getLocationByString (address, cb) { this.Geocoder.geocode({ address }, cb); }
 
+  positionToFunc ({ latitude: lat, longitude: lng }) { return { position: { lat: ( ) => lat, lng: ( ) => lng } }; }
 }
 
-
-export default angular
-  .module('Location', [])
-  .service('Location', Location)
-  .name;
+export default angular.module('Location', []).service('Location', Location).name;

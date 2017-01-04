@@ -1,14 +1,12 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
-import User from '../../common-services/user.service';
+import config from 'config';
 import Validation from '../../common-services/validation.service';
 import template from './password.page.html';
 
 class controller {
-  constructor (User, Validation, Helper) {
+  constructor (Validation, Helper) {
     'ngInject';
 
-    Object.assign(this, { User, Validation, Helper });
+    Object.assign(this, { Validation, Helper, Request });
   }
 
   validate (field) {
@@ -30,34 +28,38 @@ class controller {
     return false;
   }
 
-  reset (passwordOld, passwordNew) {
+  reset (old_password, new_password) {  // eslint-disable-line camelcase
     this.resetLoading = true;
-    this.User
-      .changeByOld(passwordOld, passwordNew)
-      .then(result => {
+    this.Request.post(`${config.API_URL}/api/password/change`, {
+      old_password, // eslint-disable-line camelcase
+      new_password // eslint-disable-line camelcase
+    }).then(result => {
+      if (result.data.detail) {
+        return { error: result.data.detail };
+      } else {
+        return result;
+      }
+    }).then(
+      result => {
         this.resetLoading = false;
-
         if (result && result.error) {
           this.resetError = result.error;
           return false;
+        } else {
+          this.Helper.showToast('Your password was successfully changed', 4000);
+          return true;
         }
-
-        this.Helper.showToast('Your password was successfully changed', 4000);
-
-        return true;
       },
-        error => {
-          this.resetLoading = false;
-          console.log(error);
-        }
-      );
+      error => {
+        this.resetLoading = false;
+        console.log(error);
+      }
+    );
   }
 
 }
 
 export default angular.module('password', [
-  uiRouter,
-  User,
   Validation
 ]).config($stateProvider => {
   'ngInject';

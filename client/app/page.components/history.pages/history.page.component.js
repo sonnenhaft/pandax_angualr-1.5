@@ -1,5 +1,4 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
+import config from 'config';
 import futureOrders from './future-orders.page.component/future-orders.page.component';
 import pastOrders from './past-orders.page.component/past-orders.page.component';
 import OrderService from '../../common-services/orderService.service';
@@ -8,32 +7,22 @@ import pastOrdersProvider from './past-orders-privider.page.component/past-order
 import template from './history.page.html';
 
 class controller {
-  constructor ($stateParams, User) {
+  constructor ($stateParams, StatefulUserData, Request) {
     'ngInject';
 
-    Object.assign(this, { $stateParams, User, role: User.get('role') });
+    Object.assign(this, { $stateParams, StatefulUserData, Request });
   }
 
   $onInit ( ) {
-    if (this.$stateParams.type) {
-      this.tab = this.switchActiveTab( );
-    }
+    this.tab = this.switchActiveTab( );
   }
 
   switchActiveTab ( ) {
-    switch (this.$stateParams.type) { // eslint-disable-line default-case
-      case 'past':
-        return 1;
-
-      case 'future':
-        return 0;
-    }
+    return { past: 1, future: 0 }[this.$stateParams.type || 0];
   }
 }
 
-
 export default angular.module('history', [
-  uiRouter,
   futureOrders,
   pastOrders,
   OrderService,
@@ -43,31 +32,26 @@ export default angular.module('history', [
 
   $stateProvider.state('main.history', {
     url: '/orders-history',
-    params: {
-      type: ''
-    },
+    params: { type: '' },
     parent: 'main',
     component: 'history',
     resolve: {
-      isOnPending: (User, Constants, $q) => {
-        let result;
-        if (User.get('role') == 'provider') {
-          result = User.getActualStatus( )
-            .then(status => status == Constants.admin.statuses.entertainer.pending);
-        } else {
-          const defer = $q.defer( );
-          defer.resolve(false);
-          result = defer.promise;
-        }
+      isOnPending: (StatefulUserData, Request, $q) => {
+        'ngInject';
 
-        return result;
+        if (StatefulUserData.isProvider( )) {
+          return Request.get(`${config.API_URL}/api/status`).then(({ data: user }) => {
+            StatefulUserData.extend(user);
+            return user && user.status === 'pending';
+          });
+        } else {
+          return $q.when(false);
+        }
       }
     }
   });
 }).component('history', {
-  bindings: {
-    isOnPending: '<'
-  },
+  bindings: { isOnPending: '<' },
   template,
   controller
 }).name;

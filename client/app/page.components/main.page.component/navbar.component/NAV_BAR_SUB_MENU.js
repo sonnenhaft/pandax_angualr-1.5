@@ -21,7 +21,7 @@ export default [
     role: ['customer'],
     parent: 'Settings',
     text: 'Edit profile',
-    url: "main.profile.view({mode: 'profile.edit'})"
+    url: 'main.profile.edit'
   },
   {
     role: ['provider'],

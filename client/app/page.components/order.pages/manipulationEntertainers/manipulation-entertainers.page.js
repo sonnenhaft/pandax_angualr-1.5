@@ -1,24 +1,19 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
 import OrderService from '../../../common-services/orderService.service';
 import searchEntertainers from './search-entertainers.page/search-entertainers.page.component';
 import confirmedEntertainers from './confirmed-entertainers.page.component/confirmed-entertainers.page.component';
+import ORDER_STATUSES from '../../../common/ORDER_STATUSES';
 
 import template from './manipulation-entertainers.page.html';
 
 class controller {
-  constructor ($state, $mdMedia, $stateParams, OrderService, Constants) {
+  showComponentOnly = ''
+  itemActiveIndex = 0
+  ORDER_STATUSES = ORDER_STATUSES
+
+  constructor ($state, $mdMedia, $stateParams, OrderService) {
     'ngInject';
 
-    Object.assign(this, {
-      $state,
-      $mdMedia,
-      $stateParams,
-      OrderService,
-      Constants,
-      showComponentOnly: '',
-      itemActiveIndex: 0
-    });
+    Object.assign(this, { $state, $mdMedia, $stateParams, OrderService });
   }
 
   cancelOrder (ev) {
@@ -30,19 +25,17 @@ class controller {
       messageType = 1;
     }
 
-    this.OrderService.cancelOrder(ev, this.$stateParams.orderId, messageType)
-      .then(data => {
-        if (data.status == this.Constants.order.statuses.accepted) {
-          this.$state.go('main.orderConfirm', { orderId: this.$stateParams.orderId });
-        } else {
-          this.$state.go('main.order');
-        }
-      });
+    this.OrderService.cancelOrder(ev, this.$stateParams.orderId, messageType).then(data => {
+      if (data.status == this.ORDER_STATUSES.accepted) {
+        this.$state.go('main.orderConfirm', { orderId: this.$stateParams.orderId });
+      } else {
+        this.$state.go('main.order');
+      }
+    });
   }
 }
 
 export default angular.module('manipulationEntertainers', [
-  uiRouter,
   OrderService,
   searchEntertainers,
   confirmedEntertainers
@@ -65,25 +58,39 @@ export default angular.module('manipulationEntertainers', [
     },
     resolve: {
       orderId ($stateParams) {
+        'ngInject';
+
         return $stateParams.orderId || 0;
       },
       entertainers (OrderService, orderId) {
+        'ngInject';
+
         return OrderService.fetchEntertainers(orderId);
       },
       orderDetails (OrderService, orderId) {
+        'ngInject';
+
         return OrderService.fetchOrderDetails(orderId);
       },
       channelName (orderDetails) {
+        'ngInject';
+
         return orderDetails.channel_name;
       },
       entertainersInvited (OrderService, channelName, orderId) {
+        'ngInject';
+
         OrderService.subcribeOnEntertainerInvite(channelName);
         return OrderService.fetchEntertainersInvited(orderId);
       },
       countOfRequiredEntertainers (orderDetails) {
+        'ngInject';
+
         return orderDetails.entertainers_number;
       },
       serviceTypePrice (orderDetails) {
+        'ngInject';
+
         return orderDetails.serviceType.price;
       }
     },

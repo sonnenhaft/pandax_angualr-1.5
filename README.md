@@ -18,7 +18,7 @@ Tools needed to run this app:
 
 ### For windows users
 Before npm install run
-`npm install --global --production windows-build-tool`
+`npm install -g windows-build-tool`
 
 May be you will need to run 
 `npm rebuild node-sass`

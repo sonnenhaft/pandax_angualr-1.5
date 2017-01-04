@@ -1,44 +1,43 @@
 <div id="provider-past-orders" class="list past-orders">
 
-  <ul 
-    ng-if="$ctrl.history.length" 
-    infinite-scroll="$ctrl.fetchMoreItems()" 
+  <ul
+    ng-if="$ctrl.history.length"
+    infinite-scroll="$ctrl.fetchMoreItems()"
     infinite-scroll-disabled='$ctrl.isOnProgress || $ctrl.isLastPage'>
     <li ng-repeat="item in $ctrl.history" class="order-information-wrapper">
       <div class="order-information">
-        
-        <div 
+
+        <div
           layout="row"
           layout-align="space-between start"
           class="order-information__header">
           <div class="order-information-customer-photo" ng-style="{'background-image': 'url(' + item.order.customer.photo.preview + ')'}"></div>
-          <div 
+          <div
             flex="90"
             layout="column"
             layout-align="start start"
             class="order-information-customer-info">
             <span class="order-information-customer-name">{{item.order.customer.first_name}}</span>
-            <div 
+            <div
               layout="row"
               layout-align="start start"
               class="order-information-customer-tel">
               <span class="order-information-customer-tel__value">{{item.order.customer.phone}}</span>
             </div>
           </div>
-          <div 
+          <div
             layout="row"
             layout-align="start center"
             class="order-information-customer-raiting">
             <span class="order-information-customer-raiting__value">{{item.order.customer.rating}}</span>
             <img
-              src="/assets/images/icons/raiting.png" 
+              src="/assets/images/icons/raiting.png"
               class="icon_small order-information-customer-raiting__icon"></img>
           </div>
         </div>
 
-
         <span class="date">
-          {{item.order.status == $ctrl.Constants.order.statuses.canceledbyProvider || item.order.status == $ctrl.Constants.order.statuses.canceledbyCustomer ? '-' : (item.order.startDt | amDateFormat:'h:mm A, MMM DD (dddd)')}}
+          {{item.order.status == $ctrl.ORDER_STATUSES.canceledbyProvider || item.order.status == $ctrl.ORDER_STATUSES.canceledbyCustomer ? '-' : (item.order.startDt | amDateFormat:'h:mm A, MMM DD (dddd)')}}
         </span>
         <span class="minx">{{item.order.service_type.name}}</span>
         <span class="address">{{item.order.location.location}}</span>
@@ -52,15 +51,15 @@
             <p class="initial-text">Earned</p>
           </div>
         </div>
-        <div 
-          ng-if="item.status == $ctrl.Constants.order.statuses.canceledbyProvider"
-          layout="row" 
+        <div
+          ng-if="item.status == $ctrl.ORDER_STATUSES.canceledbyProvider"
+          layout="row"
           class="order-information-canceled-message">
           Order canceled by entertainer. Cancelation fee will be deducted from the next payment
         </div>
-        <div 
-          ng-if="item.status == $ctrl.Constants.order.statuses.canceledbyCustomer"
-          layout="row" 
+        <div
+          ng-if="item.status == $ctrl.ORDER_STATUSES.canceledbyCustomer"
+          layout="row"
           class="order-information-canceled-message">
           Order canceled by customer
         </div>

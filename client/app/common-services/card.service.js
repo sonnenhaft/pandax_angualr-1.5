@@ -1,163 +1,80 @@
-import angular from 'angular';
-import User from './user.service';
-import Constants from './constants.service';
+import config from 'config';
 import Request from './request.service';
 
 class Cards {
+  list = []
+  defaultCardId = 0
 
-  constructor (User, Constants, Request, stripe, $q, Helper) {
+  constructor (Request, stripe, $q, Helper, StatefulUserData) {
     'ngInject';
 
-    Object.assign(this, {
-      User,
-      Constants,
-      Request,
-      stripe,
-      $q,
-      Helper,
-      list: [],
-      defaultCardId: 0
-    });
+    Object.assign(this, { Request, stripe, $q, Helper, StatefulUserData });
   }
 
   add (card) {
-    return this
-      .stripeCreateToken(this.makeCard(card))
-      .then(data => data.id)
-      .catch(error => {
-        this.Helper.showToast(error.message || error);    // All errors in response are displays in the http interceptors (look at 'app.js')
-                                                          // We need to display this one directly, 'cause this request sends to external resource (stripe.com)
-        const defer = this.$q.defer( );
-        defer.reject(error);
-        return defer.promise;
-      })
-      .then(token => this
-          .Request
-          .send(
-            this.User.token( ),
-            this.Constants.api.cards.add.method,
-            this.Constants.api.cards.add.uri(this.User.get('role')),
-            { token }
-          )
-          .then(
-            card => {
-              if (card.data && card.data.detail) {
-                return card.data.detail;
-              }
+    return this.stripeCreateToken(this.makeCard(card))
+      .then(
+        ({ id }) => id,
+        error => {
+          // All errors in response are displays in the http interceptors (look at 'app.js')
+          // We need to display this one directly, 'cause this request sends to external resource (stripe.com)
+          this.Helper.showToast(error.message || error);
 
-              return card.data;
-            }
-          ))
-      .then(card => {
+          return this.$q.reject(error);
+        })
+      .then(token => this.Request.post(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/cards/add`, { token }))
+      .then(({ data: card }) => {
+        card = card && card.detail ? card.detail : card;
         if (!card) {
           return { message: 'Something went wrong with server communication' };
-        }
+        } else if (card.id) {
+          this.billingInfo = Object.assign(this.billingInfo, {
+            cards: _.chain(this.billingInfo.cards).map(card => {
+              card.is_default = false;
+              return card;
+            }).union([card]).value( )
+          });
 
-        if (card.id) {
-          this.User.billingInfo = Object.assign(
-            this.User.billingInfo, {
-              cards: _
-                .chain(this.User.billingInfo.cards)
-                .map(c => {
-                  c.is_default = false;
-                  return c;
-                })
-                .union([card])
-                .value( )
-            }
-          );
-
-          // return this.User.billingInfo.cards;
           this.addCardToList(card);
           return this.list;
+        } else {
+          return { message: card };
         }
-
-        return { message: card };
-      })
-      .catch(error => {
-        const defer = this.$q.defer( );
-        defer.reject(error);
-        return defer.promise;
       });
   }
 
   makeCard (card) {
     let exp = card.expiry.replace(/\/+/g, '/').split('/');
-
-    if (exp.length < 2) {
-      exp = card.expiry.replace(/-+/g, '-').split('-');
-    }
-
-    return {
-      number: card.number,
-      cvc: card.cvc,
-      exp_month: exp[0],
-      exp_year: exp[1],
-      address_zip: card.zip,
-      currency: this.Constants.billing.defaultCurrency
-    };
+    if (exp.length < 2) { exp = card.expiry.replace(/-+/g, '-').split('-'); }
+    return { number: card.number, cvc: card.cvc, exp_month: exp[0], exp_year: exp[1], address_zip: card.zip, currency: 'usd' };
   }
 
-  /*
-   Stripe communication
-   */
-  stripeCreateToken (card) {
-    return this.stripe.card.createToken(card);
-  }
+  stripeCreateToken (card) { return this.stripe.card.createToken(card); }
 
   getCards ( ) {
-    return this
-      .Request
-      .send(
-        this.User.token( ),
-        this.Constants.api.cards.get.method,
-        this.Constants.api.cards.get.uri(this.User.get('role'))
-      )
-      .then(
-        result => {
-          this.list = result.data;
-          this.setDefaultCardId( );
-          return this.list;
-        }
-      );
+    return this.Request.get(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/cards`).then(result => {
+      this.list = result.data;
+      this.setDefaultCardId( );
+      return this.list;
+    });
   }
 
   deleteCard (cardId) {
-    return this
-      .Request
-      .send(
-        this.User.token( ),
-        this.Constants.api.cards.delete.method,
-        this.Constants.api.cards.delete.uri(this.User.get('role'), cardId)
-      )
-      .then(
-        result => {
-          this.deleteCardFromList(cardId);
-          return result.data;
-        }
-      );
+    return this.Request.delete(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/cards/${cardId}`).then(result => {
+      this.deleteCardFromList(cardId);
+      return result.data;
+    });
   }
 
   setDefaultCard (cardId) {
-    return this
-      .Request
-      .send(
-        this.User.token( ),
-        this.Constants.api.cards.setDefault.method,
-        this.Constants.api.cards.setDefault.uri(this.User.get('role'), cardId)
-      )
-      .then(
-        result => {
-          this.updateCardInList(result.data);
-          return result.data;
-        }
-      );
+    return this.Request.put(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/cards/${cardId}/default`).then(result => {
+      this.updateCardInList(result.data);
+      return result.data;
+    });
   }
 
   addCardToList (card) {
-    if (card && card.is_default == true) {
-      this.resetCardsDefault( );
-    }
+    if (card && card.is_default == true) { this.resetCardsDefault( ); }
     this.list.push(card);
     this.setDefaultCardId( );
     return this.list;
@@ -176,9 +93,7 @@ class Cards {
   }
 
   resetCardsDefault ( ) {
-    this.list.forEach(card => {
-      card.is_default = false;
-    });
+    this.list.forEach(card => { card.is_default = false; });
     this.defaultCardId = 0;
   }
 
@@ -188,9 +103,6 @@ class Cards {
   }
 }
 
-
 export default angular.module('card', [
-  User,
-  Constants,
   Request
 ]).service('Cards', Cards).name;

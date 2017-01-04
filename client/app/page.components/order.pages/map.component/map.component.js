@@ -1,34 +1,39 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
 import Location from '../../../common-services/location.service';
-import Constants from '../../../common-services/constants.service';
 import template from './map.html';
-import MAP_CONSTANTS from './MAP_CONSTANTS';
 
 class controller {
+  position = { latitude: 35.5375307, longitude: -100.0695645 }
+  options = { disableDefaultUI: false, streetViewControl: false, mapTypeControl: false }
+  styles = [
+    { stylers: [{ saturation: -100 }, { gamma: 1 }] },
+    { elementType: 'labels.text.stroke', stylers: [{ visibility: 'off' }] },
+    { featureType: 'poi.business', elementType: 'labels.text', stylers: [{ visibility: 'off' }] },
+    { featureType: 'poi.business', elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
+    { featureType: 'poi.place_of_worship', elementType: 'labels.text', stylers: [{ visibility: 'off' }] },
+    { featureType: 'poi.place_of_worship', elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
+    { featureType: 'road', elementType: 'geometry', stylers: [{ visibility: 'simplified' }] },
+    { featureType: 'water', stylers: [{ visibility: 'on' }, { saturation: -50 }, { gamma: 0 }, { hue: '#bdbdca' }] },
+    { featureType: 'administrative.neighborhood', elementType: 'labels.text.fill', stylers: [{ color: '#333333' }] },
+    { featureType: 'road.local', elementType: 'labels.text', stylers: [{ weight: 0.5 }, { color: '#a0a0ac' }] },
+    { featureType: 'transit.station', elementType: 'labels.icon', stylers: [{ gamma: 1 }, { saturation: 50 }] }
+  ]
+  zoom = 3
 
-  constructor ($timeout, Location, Constants, $window) {
+  constructor ($timeout, Location, $window) {
     'ngInject';
 
     Object.assign(this, { $timeout, Location, $window });
-
-    // default positions
-    this.styles = MAP_CONSTANTS.styles;
-    this.zoom = MAP_CONSTANTS.position.default.zoom;
-    this.position = MAP_CONSTANTS.position.default.location;
-    this.options = MAP_CONSTANTS.options;
     this.map = this.mapOptions( );
     this.marker = this.markerOptions( );
   }
 
-  $onChanges (changes) {
-    if (changes.input.currentValue) {
-      this.blocked = false;
-      this.$timeout(( ) => {
-        this.position = changes.input.currentValue.coords;
-        this.zoom = changes.input.currentValue.zoom;
-      });
-    }
+  $onChanges ({ input: { currentValue } }) {
+    if (!currentValue) { return; }
+    this.blocked = false;
+    this.$timeout(( ) => {
+      this.position = currentValue.coords;
+      this.zoom = currentValue.zoom;
+    });
   }
 
   $onInit ( ) {
@@ -39,98 +44,58 @@ class controller {
     this.progress = true;
     this.blocked = false;
 
-    navigator
-      .geolocation
-      .getCurrentPosition(
-        position => {
-          this.$timeout(( ) => {
-            this.progress = false;
-            this.zoom = 19;
-
-            this.position = {
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude
-            };
-
-            this.markerCallback(this.Location.positionToFunc(this.position));
-          });
-        },
-        err => {
-          this.$timeout(( ) => {
-            this.progress = false;
-            this.blocked = true;
-          });
-          console.log(err);
-        }
-      );
+    navigator.geolocation.getCurrentPosition(
+      ({ coords: { latitude, longitude } }) => this.$timeout(( ) => {
+        this.progress = false;
+        this.zoom = 19;
+        this.position = { latitude, longitude };
+        this.markerCallback(this.Location.positionToFunc(this.position));
+      }),
+      err => this.$timeout(( ) => {
+        this.progress = false;
+        this.blocked = true;
+        console.log(err);
+      })
+    );
   }
 
-  mapOptions ( ) {
-    return {
-      events: {
-        tilesloaded: map => {
-          this.$window.google.maps.event.trigger(map, 'resize');
-          map.setOptions({
-            zoomControlOptions: {
-              position: this
-                .$window
-                .google
-                .maps
-                .ControlPosition[
-                this.$window.innerWidth <= 960 ? 'RIGHT_TOP' : 'RIGHT_CENTER'
-                ]
-            }
-          });
-        },
-        click: (map, event, arg) => {
-          this.$timeout(( ) => {
-            this.position = {
-              latitude: _.head(arg).latLng.lat( ),
-              longitude: _.head(arg).latLng.lng( )
-            };
-
-            this.markerCallback(this.Location.positionToFunc(this.position));
-          });
-        }
-      }
-    };
-  }
-
-  markerOptions ( ) {
-    return {
-      options: {
-        draggable: true,
-        icon: {
-          url: require('../../../../assets/images/pin_map.png'), // eslint-disable-line global-require
-          anchor: {
-            x: 25,
-            y: 25
+  mapOptions = ( ) => ({
+    events: {
+      tilesloaded: map => {
+        this.$window.google.maps.event.trigger(map, 'resize');
+        map.setOptions({
+          zoomControlOptions: {
+            position: this.$window.google.maps.ControlPosition[
+              this.$window.innerWidth <= 960 ? 'RIGHT_TOP' : 'RIGHT_CENTER'
+              ]
           }
-        }
+        });
       },
-      events: {
-        dragend: marker => this.markerCallback(marker)
-      }
-    };
-  }
+      click: (map, event, arg) => this.$timeout(( ) => {
+        this.position = { latitude: _.head(arg).latLng.lat( ), longitude: _.head(arg).latLng.lng( ) };
+        this.markerCallback(this.Location.positionToFunc(this.position));
+      })
+    }
+  })
 
-  markerCallback (marker) {
-    this.Location
-      .getMarkerLocation(marker, location => {
-        this.output({ location });
-      });
-  }
+  markerOptions = ( ) => ({
+    options: {
+      draggable: true,
+      icon: {
+        url: require('../../../../assets/images/pin_map.png'), // eslint-disable-line global-require
+        anchor: { x: 25, y: 25 }
+      }
+    },
+    events: { dragend: marker => this.markerCallback(marker) }
+  })
+
+  markerCallback (marker) { this.Location.getMarkerLocation(marker, location => { this.output({ location }); }); }
 }
 
 export default angular.module('map', [
-  uiRouter,
-  Location,
-  Constants
+  Location
 ]).component('map', {
-  bindings: {
-    input: '<',
-    output: '&'
-  },
+  bindings: { input: '<', output: '&' },
   template,
   controller
 }).name;

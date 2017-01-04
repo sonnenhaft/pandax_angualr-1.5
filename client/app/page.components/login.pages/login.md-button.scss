@@ -1,0 +1,28 @@
+.md-button {
+  height: 52px;
+  padding: 0;
+  color: white;
+  border: 1px solid $Cardinal;
+  background: $Cardinal;
+  border-radius: 0;
+
+  .md-ripple-container {
+    border-radius: 0;
+  }
+
+  &:not([disabled]):not(.black) {
+    &:hover, &:focus {
+      border-color: $white;
+      background: $Cardinal;
+    }
+  }
+
+  &[disabled], &.black {
+    background: black;
+    border-color: $Davy-grey;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+  }
+}

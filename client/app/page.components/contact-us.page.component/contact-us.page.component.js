@@ -1,11 +1,7 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
 import template from './contact-us.page.html';
 
 const componentName = 'contactUsPage';
-export default angular.module(componentName, [
-  uiRouter
-]).config($stateProvider => {
+export default angular.module(componentName, []).config($stateProvider => {
   'ngInject';
 
   $stateProvider.state('main.contact-us', {

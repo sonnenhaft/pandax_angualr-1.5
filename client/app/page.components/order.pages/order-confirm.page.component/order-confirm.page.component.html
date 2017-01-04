@@ -41,7 +41,7 @@
 								<div
 									layout-align="column"
 									class="order-information__card-canceling"
-									ng-hide="invite.status == $ctrl.Constants.order.statuses.canceled">
+									ng-hide="invite.status == $ctrl.ORDER_STATUSES.canceled">
 									<span
 										class="order-information__card-timer-value"
 										timer="{{::$ctrl.moment(invite.datetime).add($ctrl.timeToCleanCancel, 'm').valueOf()}}">
@@ -70,20 +70,19 @@
 		        <md-button
 		        	class="md-raised md-accent order-information__submit order-information__submit_1"
 		        	type="button"
-		        	ng-hide="invite.status == $ctrl.Constants.order.statuses.canceled"
+		        	ng-hide="invite.status == $ctrl.ORDER_STATUSES.canceled"
 		        	ng-click="$ctrl.cancelOrder($event, invite)">
 		          Cancel Minx
 		        </md-button>
 
 			      <span
 			        class="order-information__card-canceling-message"
-			        ng-show="invite.status == $ctrl.Constants.order.statuses.canceled">
+			        ng-show="invite.status == $ctrl.ORDER_STATUSES.canceled">
 			        Canceled by you
 			      </span>
 					</div>
 
 	      </md-card>
-
 
 	      </div>
 	    </div>

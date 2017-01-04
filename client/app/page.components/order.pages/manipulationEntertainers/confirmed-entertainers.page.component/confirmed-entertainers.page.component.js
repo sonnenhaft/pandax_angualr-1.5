@@ -1,5 +1,3 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
 import OrderService from '../../../../common-services/orderService.service';
 import WebSocket from '../../../../common-services/WebSocket.service';
 import timer from '../../../../common/timer.directive';
@@ -8,33 +6,37 @@ import showInTime from '../../../../common/show-in-time.directive';
 import template from './confirmed-entertainers.page.html';
 
 class controller {
+  statuses = {
+    accepted: 'accepted',
+    declined: 'declined',
+    invited: 'invited',
+    inProgress: 'in progress',
+    finished: 'finished`',
+    missed: 'missed',
+    new: 'new',
+    paid: 'paid',
+    canceled: 'canceled',
+    active: 'active',
+    canceledbyProvider: 'canceled_by_provider',
+    canceledbyCustomer: 'canceled_by_customer'
+  }
+  timeToCleanCancel = 5
 
-  constructor (OrderService, Constants, Helper, moment, $scope, $state, $stateParams) {
+  constructor (OrderService, Helper, moment, $scope, $state, $stateParams) {
     'ngInject';
 
-    Object.assign(this, {
-      OrderService,
-      Helper,
-      moment,
-      $scope,
-      $state,
-      $stateParams,
-      statuses: Constants.order.statuses
-    });
+    Object.assign(this, { OrderService, Helper, moment, $scope, $state, $stateParams });
 
-    this.$scope.$watch(( ) => this.entertainers, (newValue, oldValue) => {
-      if (newValue.filter(
-          item => item.status &&
-          ([
-            this.statuses.accepted,
-            this.statuses.canceledbyCustomer,
-            this.statuses.canceledbyProvider
-          ].indexOf(item.status) >= 0)).length == this.countOfRequiredEntertainers) {
+    this.$scope.$watch(( ) => this.entertainers, newValue => {
+      if (newValue.filter(item => item.status && ([
+        this.statuses.accepted,
+        this.statuses.canceledbyCustomer,
+        this.statuses.canceledbyProvider
+      ].indexOf(item.status) >= 0)).length == this.countOfRequiredEntertainers) {
         this.$state.go('main.orderConfirm', { orderId: this.$stateParams.orderId });
       }
     }, true);
   }
-
 
   cancelOrder (ev, invite, dirtyCanceling = true) {
     this.OrderService.cancelOrderForEntertainer(ev, invite, dirtyCanceling == true ? this.serviceTypePrice : 0).then(_data => {
@@ -45,11 +47,10 @@ class controller {
 }
 
 export default angular.module('confirmedEntertainers', [
-  uiRouter,
   OrderService,
+  showInTime,
   WebSocket,
-  timer,
-  showInTime
+  timer
 ]).filter('byStatuses', byStatuses).component('confirmedEntertainers', {
   bindings: {
     entertainers: '=',

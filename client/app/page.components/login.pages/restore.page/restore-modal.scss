@@ -1,0 +1,23 @@
+.restore-password-modal {
+  background-color: rgba($black, .3);
+
+  md-dialog {
+    padding: 34px 50px;
+    border-radius: 0;
+    background: white;
+
+    p {
+      width: 100%;
+      clear: both;
+      margin-bottom: 34px;
+    }
+
+    .md-button {
+      width: 50%;
+      margin: 0 auto;
+      font-size: 0.938em;
+    }
+
+    @import "../login.md-button.scss";
+  }
+}

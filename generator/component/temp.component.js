@@ -1,5 +1,3 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
 import template from './<%= dashName %>.html';
 import './<%= dashName %>.scss';
 

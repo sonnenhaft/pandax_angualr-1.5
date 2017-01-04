@@ -1,24 +1,16 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
 import OrderService from '../../../../common-services/orderService.service';
-import billing from '../../../profile.pages/billing.page.component/billing.page.component';
+import billing from '../../../main.page.component/billing.page.component/billing.page.component';
 import entertainerPhotosModal from '../entertainer-protos.modal/entertainer-protoes.modal';
 
 import template from './search-entertainers.page.html';
 
 class controller {
-  constructor (OrderService, $state, $mdDialog, $stateParams, Constants, entertainerPhotosModal) {
+  photoActiveIndex = 0
+
+  constructor (OrderService, $state, $mdDialog, $stateParams, entertainerPhotosModal) {
     'ngInject';
 
-    Object.assign(this, {
-      OrderService,
-      entertainerPhotosModal,
-      $state,
-      $mdDialog,
-      $stateParams,
-      Constants,
-      photoActiveIndex: 0
-    });
+    Object.assign(this, { OrderService, entertainerPhotosModal, $state, $mdDialog, $stateParams });
   }
 
   goToEntertainerByIndex (direction) {
@@ -51,7 +43,6 @@ class controller {
 
 export default angular.module('searchEntertainers', [
   billing,
-  uiRouter,
   OrderService,
   entertainerPhotosModal
 ]).component('searchEntertainers', {

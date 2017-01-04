@@ -1,7 +1,4 @@
-import angular from 'angular';
-import uiRouter from 'angular-ui-router';
 import template from './payments.page.html';
-import User from '../../common-services/user.service';
 import Cards from '../../common-services/card.service';
 
 class controller {
@@ -23,28 +20,28 @@ class controller {
       this.saveLoading = false;
       return cards;
     },
-            error => {
-              this.saveLoading = false;
+      error => {
+        this.saveLoading = false;
 
-              const defer = this.$q.defer( );
-              defer.reject(error);
-              return defer.promise;
-            }).then(result => {
-              if (result.message) {
-                this.showError(result.message.message || result.message);
-              } else {
-                this.resetCardInfo( );
-              }
-            });
+        const defer = this.$q.defer( );
+        defer.reject(error);
+        return defer.promise;
+      }).then(({ message }) => {
+        if (message) {
+          this.showError(message.message || message);
+        } else {
+          this.resetCardInfo( );
+        }
+      });
   }
 
   showError (message) {
     this.$mdToast.show(this.$mdToast.simple( )
-            .content(message || message.type)
-            .position('top right')
-            .hideDelay(200000)
-            .action('OK')
-        );
+      .content(message || message.type)
+      .position('top right')
+      .hideDelay(200000)
+      .action('OK')
+    );
   }
 
   resetCardInfo ( ) {
@@ -53,8 +50,7 @@ class controller {
 }
 
 export default angular.module('payments', [
-  uiRouter,
-  User,
+
   Cards
 ]).config($stateProvider => {
   'ngInject';

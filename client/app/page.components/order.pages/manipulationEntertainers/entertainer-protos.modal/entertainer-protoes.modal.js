@@ -1,19 +1,13 @@
 import template from './entertainer-protos.modal.html';
 
 class controller {
+  imageStyles = {}
   constructor ($state, $mdDialog, $scope, $mdMedia) {
     'ngInject';
 
-    Object.assign(this, {
-      $state,
-      $mdDialog,
-      $scope,
-      $mdMedia,
-      len: 0,
-      imageStyles: {}
-    });
+    Object.assign(this, { $state, $mdDialog, $scope, $mdMedia });
 
-    this.len = this.photos.length;
+    this.len = this.photos ? this.photos.length : 0;
     this.setImageStyles( );
 
     /*
@@ -63,15 +57,14 @@ class controller {
   }
 }
 
-export default angular.module('entertainerPhotosModal', [
-]).factory('entertainerPhotosModal', $mdDialog => (locals, targetEvent) => $mdDialog.show({
+export default angular.module('entertainerPhotosModal', []).factory('entertainerPhotosModal', $mdDialog => (locals, targetEvent) => $mdDialog.show({
   targetEvent,
   controller,
   locals,
   template: `<div layout="row" layout-align="end" class="icon_modal-close">\
                     <div class="icon_modal-close__image" ng-click="$ctrl.$mdDialog.hide()"></div>\
                   </div>${
-  template}`,
+    template}`,
   controllerAs: '$ctrl',
   clickOutsideToClose: true,
   bindToController: true

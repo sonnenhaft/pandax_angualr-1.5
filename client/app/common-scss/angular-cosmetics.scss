@@ -48,7 +48,6 @@ md-radio-button ._md-off {
   width: 16px;
 }
 
-
 .md-progress-circular {
   &_absolute {
     position: absolute;
@@ -65,7 +64,6 @@ md-radio-button ._md-off {
   }
 }
 
-
 md-toast {
   background-color: none;
   position: fixed;
@@ -79,7 +77,6 @@ md-toast {
 md-icon {
   min-width: 10px;
 }
-
 
 /***  Remove riple effect for radio button ***/
 md-radio-group.md-default-theme.md-focused:not(:empty) .md-checked ._md-container:before,

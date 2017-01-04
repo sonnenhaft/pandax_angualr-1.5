@@ -1,0 +1,15 @@
+<form name="registerForm" class="animated fadeIn sign-up-page" novalidate>
+  <div class="choose-type">
+    <md-button class="customer-user" ng-class="{black: !$ctrl.isCustomer}" ng-click="$ctrl.setIsCustomer(true)" ng-disabled="true"
+               title="coming soon">
+      Customer
+    </md-button>
+    <md-button class="provider-user" ng-class="{black: $ctrl.isCustomer}" ng-click="$ctrl.setIsCustomer(false)">
+      Entertainer
+    </md-button>
+  </div>
+  <credentials-inputs credentials="$ctrl.credentials" submit-title="Sign up" on-submit="$ctrl.signUp()"></credentials-inputs>
+</form>
+<div class="login-pages-text-under-button">
+  Already have an account? <a ui-sref="loginPage($ctrl.credentials)">Log in</a>
+</div>

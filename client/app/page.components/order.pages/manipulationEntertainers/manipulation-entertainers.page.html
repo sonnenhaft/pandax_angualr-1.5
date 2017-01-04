@@ -44,7 +44,7 @@
           ng-class="{'manipulation-entertainers__head-link_active': $ctrl.showComponentOnly === 'confirmedEntertainers'}"
           ng-click="$ctrl.showComponentOnly = 'confirmedEntertainers'">
           <span>
-            CONFIRMATIONS {{($ctrl.entertainersInvited | filterBy: ['status']: $ctrl.Constants.order.statuses.accepted).length}}/{{$ctrl.countOfRequiredEntertainers}}
+            CONFIRMATIONS {{($ctrl.entertainersInvited | filterBy: ['status']: $ctrl.ORDER_STATUSES.accepted).length}}/{{$ctrl.countOfRequiredEntertainers}}
           </span>
         </a>
         <a
@@ -69,7 +69,6 @@
       </div>
     </div>
   </div>
-
 
   <div
     layout="row"

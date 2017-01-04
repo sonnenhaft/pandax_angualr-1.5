@@ -1,5 +1,3 @@
-import angular from 'angular';
-
 class Helper {
 
   constructor (moment, $mdToast, $mdDialog) {
@@ -85,10 +83,6 @@ class Helper {
     const object = { time, range, hours, halfhours, quarterHoursBeforeHalfHours, quarterHoursAfterHalfHours };
 
     return type ? object[type] : object;
-  }
-
-  getUniqueNumberByTime ( ) {
-    return Date.parse(new Date( ));
   }
 
   showToast (message, duration = 200000) {
