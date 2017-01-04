@@ -1,0 +1,50 @@
+#ratings {
+	$avatarMinSize: 54px;
+	$contentMinWidth: 360px;
+	$starIconHeight: 15px;
+	$starIconWidth: 24px;
+
+	color: white;
+	min-width: $contentMinWidth;
+
+	.ratings {
+		width: 100%;
+	}
+
+	.rating {
+		background: {
+			color: $MediumJungleGreen;
+		}
+		margin-top: 20px;
+		padding: 15px 14px 15px 16px;
+
+
+		&__avatar {
+			background: {
+				size: $avatarMinSize;
+				repeat: no-repeat;
+			}
+			min-height: $avatarMinSize;
+			min-width: $avatarMinSize;
+		}
+		&__info {
+			margin-left: 18px;
+		}
+		&__name {
+			@extend .font_name;
+			text-transform: uppercase;
+		}
+		&__icon {
+			height: $starIconHeight;
+			margin-left: 5px;
+			width: $starIconWidth;
+		}
+		&__comment {
+			@extend .font_comment;
+			border-top: 1px solid black;
+			margin-top: 13px;
+			padding-top: 10px;
+		}
+	}
+
+}

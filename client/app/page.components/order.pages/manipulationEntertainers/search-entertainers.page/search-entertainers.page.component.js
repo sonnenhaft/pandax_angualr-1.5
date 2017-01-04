@@ -39,6 +39,24 @@ class controller {
       this.OrderService.inviteEntertainer(this.$stateParams.orderId, this.entertainers[this.itemActiveIndex].id);
     }
   }
+
+  showRatings (targetEvent) {
+    this.$mdDialog.show({
+      controller: angular.noop,
+      controllerAs: '$ctrl',
+      clickOutsideToClose: true,
+      template: `<div layout="row" layout-align="end" class="icon_modal-close">
+                    <div class="icon_modal-close__image icon_modal-close__image_right" ng-click="vm.$mdDialog.hide()"></div>
+                  </div>
+  <ratings user-id="$ctrl.userId"></ratings>
+`,
+      targetEvent,
+      bindToController: true,
+      locals: {
+        userId: this.entertainers[this.itemActiveIndex].id
+      }
+    });
+  }
 }
 
 export default angular.module('searchEntertainers', [

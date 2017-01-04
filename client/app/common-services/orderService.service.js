@@ -212,6 +212,22 @@ class OrderService {
       .filter(invite => invite.status === ORDER_STATUSES.accepted)
       .forEach(invite => this.listConfirmed.push(invite));
   }
+
+  setEntertainerCanceled (invite) {
+    invite.status = 'canceled_by_customer';
+  }
+
+  fetchNotRatedEntertainers ( ) {
+    return this.Request.get(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/unratedinvites`).then(result => result.data);
+  }
+
+  rateEntertainers (orderId, invite) {
+    return this.Request.post(`${config.API_URL}/api/provider/${orderId}/ratings`, invite);
+  }
+
+  getRatingsOfEntertainers (entertainerId) {
+    return this.Request.get(`${config.API_URL}/api/provider/${entertainerId}/ratings`).then(response => response.data);
+  }
 }
 
 export default angular.module('OrderService', [

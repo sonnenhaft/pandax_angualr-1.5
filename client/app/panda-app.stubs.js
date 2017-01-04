@@ -7,6 +7,10 @@ export default angular.module('panda-stubs', []).config($provide => {
       const mocks = {
         '/api/sessions': { data: { role } },
         [`/api/${role}/profile`]: { data: { role } },
+        [`/api/${role}/orders/last-not-accomplished`]: [],
+        [`/api/orders/1/entertainers/search`]: [{}],
+        [`/api/customer/orders/1/invites`]: {items: []},
+        [`/api/orders/1`]: {serviceType: {}},
         [`/api/${role}/service-types`]: [],
         [`/api/${role}/unratedinvites`]: [
           { id: 204, order_id: 102, location: 'vulica Prytyckaha 2, Minsk, Belarus', location_notes: '111' },
@@ -16,6 +20,7 @@ export default angular.module('panda-stubs', []).config($provide => {
       };
 
       const $httpMock = function $httpMock (config) {
+        console.log(config.url)
         if (mocks[config.url]) {
           return $q.when({ data: mocks[config.url] });
         } else {

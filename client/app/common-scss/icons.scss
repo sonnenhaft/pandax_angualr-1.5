@@ -26,6 +26,12 @@
         margin-right: 32px;
         max-width: 100%;
       }
+      &_right {
+        margin-right: -14px;
+        @media (min-width: 960px) {
+          margin-right: -32px;
+        }
+      }
     }
   }
 }

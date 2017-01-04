@@ -18,23 +18,23 @@ class controller {
   guest = 1
   asap = true
   hour = '0.5H'
-  date = new Date( )
-  currentDate = new Date( )
+  date = new Date()
+  currentDate = new Date()
 
   constructor (Helper, Validation, OrderService, Request, $window, $state, $mdDialog, moment, StatefulUserData) {
     'ngInject';
 
     Object.assign(this, { Helper, Validation, OrderService, Request, $state, $mdDialog, StatefulUserData });
-    this.maxDateForCreating = moment( ).add(14, 'days').toDate( );
+    this.maxDateForCreating = moment().add(14, 'days').toDate();
     this.mobile = $window.innerWidth <= 960;
 
-    $window.addEventListener('resize', ( ) => {
+    $window.addEventListener('resize', () => {
       this.mobile = $window.innerWidth <= 960;
     });
   }
 
-  $onInit ( ) {
-    this.providers = _.map(this.OrderService.getProviders( ), (provider, i) => {
+  $onInit () {
+    this.providers = _.map(this.OrderService.getProviders(), (provider, i) => {
       provider.active = i == 0;
       return provider;
     });
@@ -69,12 +69,12 @@ class controller {
     }
   }
 
-  getTotalPrice ( ) {
+  getTotalPrice () {
     return _
         .chain(this.Helper.getActiveObjectFromArray(this.providers))
         .map('price')
-        .sum( )
-        .value( ) * parseFloat(this.hour) * Number(this.entertainer);
+        .sum()
+        .value() * parseFloat(this.hour) * Number(this.entertainer);
   }
 
   validate (field) {
@@ -127,9 +127,9 @@ class controller {
 
   orderData (orderModel) {
     return this.OrderService.buildOrder(Object.assign(orderModel, {
-      geo: this.inputLocation,
-      price: this.getTotalPrice( )
-    })
+        geo: this.inputLocation,
+        price: this.getTotalPrice()
+      })
     );
   }
 
@@ -157,21 +157,21 @@ export default angular.module('order', [
     url: '/order',
     parent: 'main',
     component: 'order',
-    resolve: {
-      notAccomplishedOrder (OrderService) {
-        'ngInject';
+    onEnter: ($state, OrderService, $q) => {
+      'ngInject';
 
-        return OrderService.fetchLastNotAccomplishedOrder( );
-      }
-    },
-    onEnter: ($transition$, notAccomplishedOrder, $state, $timeout) => {
-      if (notAccomplishedOrder) {
-        $timeout(( ) => {
+      return $q.all({
+        notAccomplishedOrder: OrderService.fetchLastNotAccomplishedOrder().then(({ data }) => data),
+        notRatedEntertainers: OrderService.fetchNotRatedEntertainers().then(({ data }) => data)
+      }).then(({ notAccomplishedOrder, notRatedEntertainers }) => {
+        if (notAccomplishedOrder) {
           $state.go('main.manipulationEntertainers', { orderId: notAccomplishedOrder.id });
-        }, 100);
-      }
+        } else if (notRatedEntertainers && notRatedEntertainers.length > 0) {
+          $state.go('main.order.rateEntertainers', { from: 'main.order.create' });
+        }
+        return { notAccomplishedOrder, notRatedEntertainers }
+      })
     }
-
   });
 }).component('order', {
   template,
