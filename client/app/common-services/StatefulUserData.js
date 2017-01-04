@@ -6,6 +6,13 @@ class StatefulUserData {
     'ngInject';
 
     Object.assign(this, { storage: $window.localStorage, $injector });
+    let user = this.storage.getItem(this.STORAGE_KEY) || '{}';
+    try {
+      user = JSON.parse(user);
+    } catch (e) {
+      user = {};
+    }
+    this._setUser(user);
   }
 
   getAvatar ( ) { return this._avatar; }
@@ -17,16 +24,6 @@ class StatefulUserData {
   isCustomer ( ) { return this.getRole( ) === 'customer'; }
 
   isAdmin ( ) { return this.getRole( ) === 'admin'; }
-
-  restore ( ) {
-    let user = this.storage.getItem(this.STORAGE_KEY) || '{}';
-    try {
-      user = JSON.parse(user);
-    } catch (e) {
-      user = {};
-    }
-    this._setUser(user);
-  }
 
   getUser ( ) { return this._user; }
 
@@ -62,5 +59,4 @@ class StatefulUserData {
   }
 }
 
-export default angular.module('StatefulUserData', [
-]).service('StatefulUserData', StatefulUserData).name;
+export default angular.module('StatefulUserData', []).service('StatefulUserData', StatefulUserData).name;

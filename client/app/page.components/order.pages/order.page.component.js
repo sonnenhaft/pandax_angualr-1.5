@@ -1,10 +1,8 @@
-import config from 'config';
 import Helper from '../../common-services/helper.service';
 import Validation from '../../common-services/validation.service';
 import OrderService from '../../common-services/orderService.service';
 import orderConfirm from './order-confirm.page.component/order-confirm.page.component';
 import manipulationEntertainers from './manipulationEntertainers/manipulation-entertainers.page';
-import Request from '../../common-services/request.service';
 import acceptTermsAndConditionsPage from './accept-terms-and-conditions.page.component/accept-terms-and-conditions.page.component';
 import RateEntertainersComponent from './rate-entertainers.component/rate-entertainers.component';
 
@@ -18,23 +16,23 @@ class controller {
   guest = 1
   asap = true
   hour = '0.5H'
-  date = new Date()
-  currentDate = new Date()
+  date = new Date( )
+  currentDate = new Date( )
 
-  constructor (Helper, Validation, OrderService, Request, $window, $state, $mdDialog, moment, StatefulUserData) {
+  constructor (Helper, Validation, OrderService, $http, $window, $state, $mdDialog, moment, StatefulUserData) {
     'ngInject';
 
-    Object.assign(this, { Helper, Validation, OrderService, Request, $state, $mdDialog, StatefulUserData });
-    this.maxDateForCreating = moment().add(14, 'days').toDate();
+    Object.assign(this, { Helper, Validation, OrderService, $http, $state, $mdDialog, StatefulUserData });
+    this.maxDateForCreating = moment( ).add(14, 'days').toDate( );
     this.mobile = $window.innerWidth <= 960;
 
-    $window.addEventListener('resize', () => {
+    $window.addEventListener('resize', ( ) => {
       this.mobile = $window.innerWidth <= 960;
     });
   }
 
-  $onInit () {
-    this.providers = _.map(this.OrderService.getProviders(), (provider, i) => {
+  $onInit ( ) {
+    this.providers = _.map(this.OrderService.getProviders( ), (provider, i) => {
       provider.active = i == 0;
       return provider;
     });
@@ -69,12 +67,12 @@ class controller {
     }
   }
 
-  getTotalPrice () {
+  getTotalPrice ( ) {
     return _
         .chain(this.Helper.getActiveObjectFromArray(this.providers))
         .map('price')
-        .sum()
-        .value() * parseFloat(this.hour) * Number(this.entertainer);
+        .sum( )
+        .value( ) * parseFloat(this.hour) * Number(this.entertainer);
   }
 
   validate (field) {
@@ -112,7 +110,7 @@ class controller {
       return false;
     }
 
-    this.Request.post(`${config.API_URL}/api/order`, this.orderData(orderModel)).then(
+    this.$http.post('{{config_api_url}}/api/order', this.orderData(orderModel)).then(
       ({ data }) => {
         this.orderLoading = false;
         this.StatefulUserData.extend(data.customer);
@@ -127,9 +125,9 @@ class controller {
 
   orderData (orderModel) {
     return this.OrderService.buildOrder(Object.assign(orderModel, {
-        geo: this.inputLocation,
-        price: this.getTotalPrice()
-      })
+      geo: this.inputLocation,
+      price: this.getTotalPrice( )
+    })
     );
   }
 
@@ -143,7 +141,6 @@ class controller {
 
 export default angular.module('order', [
   Helper,
-  Request,
   Validation,
   orderConfirm,
   OrderService,
@@ -161,16 +158,16 @@ export default angular.module('order', [
       'ngInject';
 
       return $q.all({
-        notAccomplishedOrder: OrderService.fetchLastNotAccomplishedOrder().then(({ data }) => data),
-        notRatedEntertainers: OrderService.fetchNotRatedEntertainers().then(({ data }) => data)
+        notAccomplishedOrder: OrderService.fetchLastNotAccomplishedOrder( ).then(({ data }) => data),
+        notRatedEntertainers: OrderService.fetchNotRatedEntertainers( ).then(({ data }) => data)
       }).then(({ notAccomplishedOrder, notRatedEntertainers }) => {
         if (notAccomplishedOrder) {
           $state.go('main.manipulationEntertainers', { orderId: notAccomplishedOrder.id });
         } else if (notRatedEntertainers && notRatedEntertainers.length > 0) {
           $state.go('main.order.rateEntertainers', { from: 'main.order.create' });
         }
-        return { notAccomplishedOrder, notRatedEntertainers }
-      })
+        return { notAccomplishedOrder, notRatedEntertainers };
+      });
     }
   });
 }).component('order', {

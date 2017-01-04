@@ -1,4 +1,3 @@
-import config from 'config';
 import template from './customers.page.html';
 
 class controller {
@@ -11,15 +10,15 @@ class controller {
     unblocked: 'unblocked',
   }
 
-  constructor (Request, $mdDialog, $q) {
+  constructor ($http, $mdDialog, $q) {
     'ngInject';
 
-    Object.assign(this, { Request, $mdDialog, $q });
+    Object.assign(this, { $http, $mdDialog, $q });
     this.fetchMoreItems( );
   }
 
   _next (page) {
-    return this.Request.get(`${config.API_URL}/api/admin/customers?page=${page}`);
+    return this.$http.get(`{{config_api_url}}/api/admin/customers?page=${page}`);
   }
 
   fetchMoreItems ( ) {
@@ -46,7 +45,7 @@ class controller {
       cancel: 'No',
       targetEvent
     })))
-      .then(( ) => this.Request.post(`${config.API_URL}/api/admin/${this.statusType}s/${entity.id}/status`, { set: targetStatus }))
+      .then(( ) => this.$http.post(`{{config_api_url}}/api/admin/${this.statusType}s/${entity.id}/status`, { set: targetStatus }))
       .then(({ data: { status } }) => entity.status = status);
   }
 

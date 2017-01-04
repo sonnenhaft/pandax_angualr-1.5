@@ -1,12 +1,11 @@
-import config from 'config';
 import Validation from '../../common-services/validation.service';
 import template from './password.page.html';
 
 class controller {
-  constructor (Validation, Helper) {
+  constructor (Validation, Helper, $http) {
     'ngInject';
 
-    Object.assign(this, { Validation, Helper, Request });
+    Object.assign(this, { Validation, Helper, $http });
   }
 
   validate (field) {
@@ -30,7 +29,7 @@ class controller {
 
   reset (old_password, new_password) {  // eslint-disable-line camelcase
     this.resetLoading = true;
-    this.Request.post(`${config.API_URL}/api/password/change`, {
+    this.$http.post('{{config_api_url}}/api/password/change', {
       old_password, // eslint-disable-line camelcase
       new_password // eslint-disable-line camelcase
     }).then(result => {

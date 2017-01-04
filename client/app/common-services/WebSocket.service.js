@@ -1,5 +1,4 @@
 import config from 'config';
-
 import 'angular-websocket';
 
 class WebSocket {

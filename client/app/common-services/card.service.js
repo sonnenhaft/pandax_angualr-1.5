@@ -1,14 +1,13 @@
 import config from 'config';
-import Request from './request.service';
 
 class Cards {
   list = []
   defaultCardId = 0
 
-  constructor (Request, stripe, $q, Helper, StatefulUserData) {
+  constructor ($http, stripe, $q, Helper, StatefulUserData) {
     'ngInject';
 
-    Object.assign(this, { Request, stripe, $q, Helper, StatefulUserData });
+    Object.assign(this, { $http, stripe, $q, Helper, StatefulUserData });
   }
 
   add (card) {
@@ -22,7 +21,7 @@ class Cards {
 
           return this.$q.reject(error);
         })
-      .then(token => this.Request.post(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/cards/add`, { token }))
+      .then(token => this.$http.post('{{config_api_url}}/api/{{current_user_role}}/cards/add', { token }))
       .then(({ data: card }) => {
         card = card && card.detail ? card.detail : card;
         if (!card) {
@@ -52,7 +51,7 @@ class Cards {
   stripeCreateToken (card) { return this.stripe.card.createToken(card); }
 
   getCards ( ) {
-    return this.Request.get(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/cards`).then(result => {
+    return this.$http.get('{{config_api_url}}/api/{{current_user_role}}/cards').then(result => {
       this.list = result.data;
       this.setDefaultCardId( );
       return this.list;
@@ -60,14 +59,14 @@ class Cards {
   }
 
   deleteCard (cardId) {
-    return this.Request.delete(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/cards/${cardId}`).then(result => {
+    return this.$http.delete(`{{config_api_url}}/api/{{current_user_role}}/cards/${cardId}`).then(result => {
       this.deleteCardFromList(cardId);
       return result.data;
     });
   }
 
   setDefaultCard (cardId) {
-    return this.Request.put(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/cards/${cardId}/default`).then(result => {
+    return this.$http.put(`{{config_api_url}}/api/{{current_user_role}}/cards/${cardId}/default`).then(result => {
       this.updateCardInList(result.data);
       return result.data;
     });
@@ -104,5 +103,4 @@ class Cards {
 }
 
 export default angular.module('card', [
-  Request
 ]).service('Cards', Cards).name;

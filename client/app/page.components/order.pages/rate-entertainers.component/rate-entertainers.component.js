@@ -1,15 +1,14 @@
-import config from 'config';
 import template from './rate-entertainers.html';
 
 class controller {
   rating = { range: [1, 2, 3, 4, 5, 6, 7], default: 7 }
 
-  constructor (OrderService, $state, $stateParams, $q, Request, StatefulUserData) {
+  constructor (OrderService, $state, $stateParams, $q, $http, StatefulUserData) {
     'ngInject';
 
-    Object.assign(this, { OrderService, $state, $stateParams, $q, Request, StatefulUserData });
+    Object.assign(this, { OrderService, $state, $stateParams, $q, $http, StatefulUserData });
 
-    this.Request.get(`${config.API_URL}/api/${StatefulUserData.getRole( )}/unratedinvites`).then(data => {
+    this.$http.get('{{config_api_url}}/api/{{current_user_role}}/unratedinvites').then(data => {
       this.notRatedEntertainers = data.data;
     });
   }

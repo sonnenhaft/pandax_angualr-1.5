@@ -1,5 +1,3 @@
-import config from 'config';
-
 import entertainerPhotosModal from '../../order.pages/manipulationEntertainers/entertainer-protos.modal/entertainer-protoes.modal';
 import { controller as CustomersPageComponent } from '../customers.page/customers.page.component';
 
@@ -17,10 +15,10 @@ class controller extends CustomersPageComponent {
     unblocked: 'unblocked',
   }
 
-  constructor (Request, $mdDialog, $q, entertainerPhotosModal, $window) {
+  constructor ($http, $mdDialog, $q, entertainerPhotosModal, $window) {
     'ngInject';
 
-    super(Request, $mdDialog, $q);
+    super($http, $mdDialog, $q);
 
     // so we expect that in required 'admin' component there is #admin div, sorry for this
     this.$scrollableElement = angular.element($window.document.getElementById('admin'));
@@ -29,7 +27,7 @@ class controller extends CustomersPageComponent {
   }
 
   _next (page) {
-    return this.Request.get(`${config.API_URL}/api/provider?page=${page}`);
+    return this.$http.get(`{{config_api_url}}/api/provider?page=${page}`);
   }
 
   showPopup (targetEvent, index) {

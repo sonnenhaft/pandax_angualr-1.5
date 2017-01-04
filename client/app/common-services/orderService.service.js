@@ -1,4 +1,3 @@
-import config from 'config';
 import Helper from './helper.service';
 import ORDER_STATUSES from '../common/ORDER_STATUSES';
 
@@ -23,14 +22,14 @@ class OrderService {
   listConfirmed = []
   listFutures = []
 
-  constructor (Request, Helper, moment, WebSocket, $mdDialog, StatefulUserData) {
+  constructor ($http, Helper, moment, WebSocket, $mdDialog, StatefulUserData) {
     'ngInject';
 
-    Object.assign(this, { Request, Helper, moment, WebSocket, $mdDialog, StatefulUserData });
+    Object.assign(this, { $http, Helper, moment, WebSocket, $mdDialog, StatefulUserData });
   }
 
   fetchEntertainers (orderId) {
-    return this.Request.get(`${config.API_URL}/api/orders/${orderId}/entertainers/search`).then(
+    return this.$http.get(`{{config_api_url}}/api/orders/${orderId}/entertainers/search`).then(
       result => this.list = result.data,
       error => console.log(error)
     );
@@ -45,8 +44,8 @@ class OrderService {
   }
 
   fetchFuturesOrders (page = 1) {
-    const url = `${config.API_URL}/api/${this.StatefulUserData.getRole( )}/orders?page=${page}&status[]=accepted&status[]=in+progress&include=invites`;
-    return this.Request.get(url).then(
+    const url = `{{config_api_url}}/api/{{current_user_role}}/orders?page=${page}&status[]=accepted&status[]=in+progress&include=invites`;
+    return this.$http.get(url).then(
       ({ data }) => {
         this.listFutures = data.items;
         return data;
@@ -55,12 +54,12 @@ class OrderService {
     );
   }
 
-  _apiUrl (user, page) {
-    return `${config.API_URL}/api/${user}/orders/history?page=${page}&include=invites`;
+  _apiUrl (page) {
+    return `{{config_api_url}}/api/{{current_user_role}}/orders/history?page=${page}&include=invites`;
   }
 
   fetchHistoryOrders (page = 1) {
-    return this.Request.get(this._apiUrl(this.StatefulUserData.getRole( ), page)).then(result => {
+    return this.$http.get(this._apiUrl(page)).then(result => {
       this.history = result.data.items;
       return result.data;
     });
@@ -72,7 +71,7 @@ class OrderService {
 
   /*   Invited entertainers   */
   fetchEntertainersInvited (orderId) {
-    return this.Request.get(`${config.API_URL}/api/customer/orders/${orderId}/invites`).then(
+    return this.$http.get(`{{config_api_url}}/api/customer/orders/${orderId}/invites`).then(
       result => {
         this.listInvited = result.data && result.data.items;
         this.fillConfirmedList(this.listInvited);
@@ -104,14 +103,14 @@ class OrderService {
   }
 
   fetchOrderDetails (orderId, include = '') {
-    return this.Request.get(`${config.API_URL}/api/orders/${orderId}${include ? `?include=${include}` : ''}`).then(
+    return this.$http.get(`{{config_api_url}}/api/orders/${orderId}${include ? `?include=${include}` : ''}`).then(
       result => this.orderDetails = result.data,
       error => console.log(error)
     );
   }
 
   fetchProviderPastOrders (page = 1) {
-    return this.Request.get(this._apiUrl(this.StatefulUserData.getRole( ), page)).then(
+    return this.$http.get(this._apiUrl(page)).then(
       result => {
         this.historyProvider = result.data.items;
         return result.data;
@@ -121,7 +120,7 @@ class OrderService {
   }
 
   inviteEntertainer (orderId, entertainerId) {
-    return this.Request.post(`${config.API_URL}/api/orders/${orderId}/entertainers/${entertainerId}/invite`).then(({ data }) => {
+    return this.$http.post(`{{config_api_url}}/api/orders/${orderId}/entertainers/${entertainerId}/invite`).then(({ data }) => {
       this.addEntertainerToInvitedList({ id: data.invite_id, entertainerId });
       return data;
     });
@@ -163,7 +162,7 @@ class OrderService {
       .targetEvent(ev)
       .ok('Yes')
       .cancel('No'))
-      .then(data => this.Request.put(`${config.API_URL}/api/invite/${invite.id}/cancel`))
+      .then(data => this.$http.put(`{{config_api_url}}/api/invite/${invite.id}/cancel`))
       .then(result => {
         invite.status = ORDER_STATUSES.canceledbyCustomer;
         return result;
@@ -176,7 +175,7 @@ class OrderService {
    * Confirmed entertainers
    */
   fetchEntertainersConfirmed (orderId) {
-    return this.Request.get(`${config.API_URL}/api/customer/orders/${orderId}/invites?status[]=accepted&status[]=canceled`).then(
+    return this.$http.get(`{{config_api_url}}/api/customer/orders/${orderId}/invites?status[]=accepted&status[]=canceled`).then(
       ({ data }) => {
         this.listConfirmed = data && data.items;
         return this.listConfirmed;
@@ -186,11 +185,11 @@ class OrderService {
   }
 
   fetchLastNotAccomplishedOrder ( ) {
-    return this.Request.get(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/orders/last-not-accomplished`).then(result => result.data);
+    return this.$http.get('{{config_api_url}}/api/{{current_user_role}}/orders/last-not-accomplished').then(result => result.data);
   }
 
   payForOrder (orderId, cardId) {
-    return this.Request.post(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/orders/${orderId}/pay`, { card_id: cardId });
+    return this.$http.post(`{{config_api_url}}/api/{{current_user_role}}/orders/${orderId}/pay`, { card_id: cardId });
   }
 
   cancelOrder (ev, orderId, messageType = 0) {
@@ -203,7 +202,7 @@ class OrderService {
       .cancel('No');
 
     return this.$mdDialog.show(confirm)
-      .then(_data => this.Request.post(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/orders/${orderId}/complete`))
+      .then(_data => this.$http.post(`{{config_api_url}}/api/{{current_user_role}}/orders/${orderId}/complete`))
       .then(response => response.data);
   }
 
@@ -218,15 +217,15 @@ class OrderService {
   }
 
   fetchNotRatedEntertainers ( ) {
-    return this.Request.get(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/unratedinvites`).then(result => result.data);
+    return this.$http.get('{{config_api_url}}/api/{{current_user_role}}/unratedinvites').then(result => result.data);
   }
 
   rateEntertainers (orderId, invite) {
-    return this.Request.post(`${config.API_URL}/api/provider/${orderId}/ratings`, invite);
+    return this.$http.post(`{{config_api_url}}/api/provider/${orderId}/ratings`, invite);
   }
 
   getRatingsOfEntertainers (entertainerId) {
-    return this.Request.get(`${config.API_URL}/api/provider/${entertainerId}/ratings`).then(response => response.data);
+    return this.$http.get(`{{config_api_url}}/api/provider/${entertainerId}/ratings`).then(response => response.data);
   }
 }
 

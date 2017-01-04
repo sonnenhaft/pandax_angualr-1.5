@@ -18,6 +18,7 @@ import angularStripe from 'angular-stripe';
 import ngInfiniteScroll from 'ng-infinite-scroll';
 import ngSanitize from 'angular-sanitize';              // for material dialog to show text as html
 import StatefulUserData from './common-services/StatefulUserData';
+import PandaHttpInterceptor from './panda-app.http-interceptor';
 
 // common
 import NavbarComponent from './page.components/main.page.component/navbar.component/navbar.component';
@@ -37,7 +38,7 @@ import PaymentsPage from './page.components/payments.page.component/payments.pag
 import HistoryMinxPage from './page.components/history-minx.page.component/history-minx.page.component';
 import ContactUsPage from './page.components/contact-us.page.component/contact-us.page.component';
 import AdminComponent from './page.components/admin.pages/admin.component';
-import LoginPagesRoutes from './page.components/login.pages/login.pages.routes';
+import LoginPagesRoutes, { LoginPageComponent as loginPageStateName } from './page.components/login.pages/login.pages.routes';
 
 import hoursToTime from './common/hoursToTime.filter';
 
@@ -66,6 +67,7 @@ angular.module('app', [
   ],
   ...[
     PandaAppStubsConfig,
+    PandaHttpInterceptor,
     StatefulUserData,
     ProfilePagesComponent,
     LoginPagesRoutes,
@@ -93,43 +95,13 @@ angular.module('app', [
 
   // without this line tap on 'md-button' with 'ng-file-upload' not working in iPhone https://github.com/danialfarid/ng-file-upload/issues/1049
   $mdGestureProvider.skipClickHijack( );
-}).config($httpProvider => {
+}).config(($locationProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider, stripeProvider, $httpProvider) => {
   'ngInject';
 
-  $httpProvider.interceptors.push(($q, $injector) => ({
-    responseError: response => {
-      const Helper = $injector.get('Helper');
-      const StatefulAuthTokenService = $injector.get('StatefulAuthTokenService');
-      if (response.status === -1 && !response.statusText) {
-        response.statusText = 'Not able to connect to remote server';
-        response.data = response.data || { message: response.statusText };
-        Helper.showToast(response.statusText, 5000);
-      }
-      if (response.detail) {
-        response.statusText = response.detail;
-      }
-      if (response.status >= 400 && response.status != 403) { // for 403 status we have another handler only in userService.login()
-        let messageText = response.statusText;
-        if (response.data) {
-          messageText = response.data.detail || response.data.message;
-        }
-        Helper.showToast(messageText, 5000);
-        if (response.status == 401) {
-          StatefulAuthTokenService.logout( );
-        }
-      } else if (response.status == 403) {
-        Helper.showBanPopUp(response.data && response.data.detail);
-        StatefulAuthTokenService.logout( );
-      }
-
-      return $q.reject(response);
-    }
-  }));
-}).config(($locationProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider, stripeProvider) => {
-  'ngInject';
+  $httpProvider.interceptors.push(PandaHttpInterceptor);
 
   $locationProvider.html5Mode(false);
-  $urlRouterProvider.otherwise($injector => $injector.get('$state').go('loginPage'));
+  $urlRouterProvider.otherwise($injector => $injector.get('$state').go(loginPageStateName));
 
   uiGmapGoogleMapApiProvider.configure({
     key: 'AIzaSyCLBp2BxSpyfnqC_dhDKidNXDuHQTR-DYQ',
@@ -140,11 +112,5 @@ angular.module('app', [
   // Stripe integration
   stripeProvider.setPublishableKey(config.STRIPE_PUBLIC_KEY);
 })
-  .run((StatefulAuthTokenService, StatefulUserData) => {
-    'ngInject';
-
-    StatefulAuthTokenService.restore( );
-    StatefulUserData.restore( );
-  })
   .filter('hoursToTime', hoursToTime)
   .component('app', { template });

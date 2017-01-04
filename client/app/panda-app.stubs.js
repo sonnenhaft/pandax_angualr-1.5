@@ -1,16 +1,21 @@
-export default angular.module('panda-stubs', []).config($provide => {
+import PandaHttpInterceptor from './panda-app.http-interceptor';
+
+export default angular.module('panda-stubs', [
+  PandaHttpInterceptor
+]).config($provide => {
   'ngInject';
 
-  $provide.decorator('$http', ['$delegate', '$q', ($http, $q) => {
+  $provide.decorator('$http', ($delegate, $q, $window, PandaHttpInterceptor) => {
+    const $http = $delegate;
     const role = 'customer';
-    if (window.localStorage.stub) {
+    if ($window.localStorage.stub) {
       const mocks = {
-        '/api/sessions': { data: { role } },
+        '/api/sessions': { data: { role }, token: 1 },
         [`/api/${role}/profile`]: { data: { role } },
         [`/api/${role}/orders/last-not-accomplished`]: [],
-        [`/api/orders/1/entertainers/search`]: [{}],
-        [`/api/customer/orders/1/invites`]: {items: []},
-        [`/api/orders/1`]: {serviceType: {}},
+        '/api/orders/1/entertainers/search': [{}],
+        '/api/customer/orders/1/invites': { items: [] },
+        '/api/orders/1': { serviceType: {} },
         [`/api/${role}/service-types`]: [],
         [`/api/${role}/unratedinvites`]: [
           { id: 204, order_id: 102, location: 'vulica Prytyckaha 2, Minsk, Belarus', location_notes: '111' },
@@ -19,17 +24,27 @@ export default angular.module('panda-stubs', []).config($provide => {
         ]
       };
 
-      const $httpMock = function $httpMock (config) {
-        console.log(config.url)
-        if (mocks[config.url]) {
-          return $q.when({ data: mocks[config.url] });
+      const mock = (config, fn, args) => {
+        const url = PandaHttpInterceptor.request(config).url;
+        if (mocks[url]) {
+          return $q.when({ data: mocks[url] });
         } else {
-          return $http.apply($http, arguments); // eslint-disable-line prefer-rest-params
+          return fn.apply($http, args); // eslint-disable-line prefer-rest-params
         }
       };
-      return Object.assign($httpMock, $http);
+
+      const $httpMock = function $httpMock (config) {
+        return mock(config, $http, arguments); // eslint-disable-line prefer-rest-params
+      };
+      Object.assign($httpMock, $http);
+      ['get', 'put', 'update', 'delete'].forEach(key => {
+        $httpMock[key] = function $httpMethodMock (url) {
+          return mock({ url }, $http[key], arguments); // eslint-disable-line prefer-rest-params
+        };
+      });
+      return $httpMock;
     } else {
       return $http;
     }
-  }]);
+  });
 }).name;

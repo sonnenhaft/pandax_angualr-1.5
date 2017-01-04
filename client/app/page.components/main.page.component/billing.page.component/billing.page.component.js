@@ -1,4 +1,3 @@
-import config from 'config';
 import Cards from '../../../common-services/card.service';
 import personalInformation from './personal-information.component/personal-information.component';
 import cardList from './card-list.component/card-list.component';
@@ -27,7 +26,7 @@ class controller {
     this.saveLoading = true;
 
     if (!this.hasPersonalInfo) {
-      return this.Request.put(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/profile`, this.billingInfo);
+      return this.$http.put('{{config_api_url}}/api/{{current_user_role}}/profile', this.billingInfo);
     }
 
     if (!this.billingInfo.cards || !this.billingInfo.cards.length) {      // should add card

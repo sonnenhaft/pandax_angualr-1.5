@@ -1,16 +1,14 @@
-import config from 'config';
-
 class OrdersService {
   list = []
 
-  constructor (Request, StatefulUserData) {
+  constructor ($http, StatefulUserData) {
     'ngInject';
 
-    Object.assign(this, { Request, StatefulUserData });
+    Object.assign(this, { $http, StatefulUserData });
   }
 
   fetchOrders (page = 1) {
-    return this.Request.get(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/orders?page=${page}`).then(result => {
+    return this.$http.get(`{{config_api_url}}/api/{{current_user_role}}/orders?page=${page}`).then(result => {
       this.list = this.list.concat(result.data.items);
       return result.data;
     });
@@ -19,7 +17,7 @@ class OrdersService {
   getOrders ( ) { return this.list; }
 
   getOrderDetails (orderId) {
-    return this.Request.get(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/orders/${orderId}?include=invites`)
+    return this.$http.get(`{{config_api_url}}/api/{{current_user_role}}/orders/${orderId}?include=invites`)
       .then(result => result.data);
   }
 }
