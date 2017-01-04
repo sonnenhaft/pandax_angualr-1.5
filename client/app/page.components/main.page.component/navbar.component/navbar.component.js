@@ -13,7 +13,7 @@ class controller {
     this.isCustomer = StatefulUserData.isCustomer( );
     this.isProvider = StatefulUserData.isProvider( );
     this.defaultLink = {
-      customer: 'main.order',
+      customer: 'main.create-order',
       provider: 'main.profile.view'
     }[StatefulUserData.getRole( )];
     this.navigation = NAV_BAR_MENU_ITEMS.filter(({ role }) => role.indexOf(StatefulUserData.getRole( )) >= 0);

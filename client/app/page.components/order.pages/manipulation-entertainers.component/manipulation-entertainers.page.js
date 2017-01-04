@@ -29,7 +29,7 @@ class controller {
       if (data.status == this.ORDER_STATUSES.accepted) {
         this.$state.go('main.orderConfirm', { orderId: this.$stateParams.orderId });
       } else {
-        this.$state.go('main.order');
+        this.$state.go('main.create-order');
       }
     });
   }

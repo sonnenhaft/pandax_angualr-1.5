@@ -23,7 +23,7 @@ export default angular.module('loginPage', [
       if ($stateParams.redirectUrl) {
         $location.search({}).replace( ).path($stateParams.redirectUrl);
       } else if (StatefulUserData.isCustomer( )) {
-        $state.go('main.order');
+        $state.go('main.create-order');
       } else if (StatefulUserData.isAdmin( )) {
         $state.go('admin.entertainers');
       } else if (!user.first_name || user.last_name) {

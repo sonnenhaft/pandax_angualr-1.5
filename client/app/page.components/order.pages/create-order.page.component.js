@@ -2,11 +2,11 @@ import Helper from '../../common-services/helper.service';
 import Validation from '../../common-services/validation.service';
 import OrderService from '../../common-services/orderService.service';
 import orderConfirm from './order-confirm.page.component/order-confirm.page.component';
-import manipulationEntertainers from './manipulationEntertainers/manipulation-entertainers.page';
+import manipulationEntertainers from './manipulation-entertainers.component/manipulation-entertainers.page';
 import acceptTermsAndConditionsPage from './accept-terms-and-conditions.page.component/accept-terms-and-conditions.page.component';
 import RateEntertainersComponent from './rate-entertainers.component/rate-entertainers.component';
 
-import template from './order.page.html';
+import template from './create-order.page.html';
 
 class controller {
   hours = ['0.5 H', '1 H', '1.5 H', '2 H', '2.5 H', '3 H', '3.5 H', '4 H']
@@ -16,23 +16,37 @@ class controller {
   guest = 1
   asap = true
   hour = '0.5H'
-  date = new Date( )
-  currentDate = new Date( )
+  date = new Date()
+  currentDate = new Date()
 
-  constructor (Helper, Validation, OrderService, $http, $window, $state, $mdDialog, moment, StatefulUserData) {
+  constructor (Helper, Validation, OrderService, $http, $window, $state, $mdDialog, moment, StatefulUserData, $q, $stateParams ) {
     'ngInject';
 
+    this.resolved = false;
+    $q.all({
+      notAccomplishedOrder: OrderService.fetchLastNotAccomplishedOrder().then(({ data }) => data),
+      notRatedEntertainers: OrderService.fetchNotRatedEntertainers($stateParams.notRatedEntertainers)
+    }).then(({ notAccomplishedOrder, notRatedEntertainers }) => {
+      if (notAccomplishedOrder) {
+        $state.go('main.manipulationEntertainers', { orderId: notAccomplishedOrder.id });
+      } else if (notRatedEntertainers && notRatedEntertainers.length) {
+        $state.go('main.rate-entertainers', {notRatedEntertainers});
+      }
+    }).finally(()=>{
+      this.resolved = true;
+    })
+
     Object.assign(this, { Helper, Validation, OrderService, $http, $state, $mdDialog, StatefulUserData });
-    this.maxDateForCreating = moment( ).add(14, 'days').toDate( );
+    this.maxDateForCreating = moment().add(14, 'days').toDate();
     this.mobile = $window.innerWidth <= 960;
 
-    $window.addEventListener('resize', ( ) => {
+    $window.addEventListener('resize', () => {
       this.mobile = $window.innerWidth <= 960;
     });
   }
 
-  $onInit ( ) {
-    this.providers = _.map(this.OrderService.getProviders( ), (provider, i) => {
+  $onInit () {
+    this.providers = _.map(this.OrderService.getProviders(), (provider, i) => {
       provider.active = i == 0;
       return provider;
     });
@@ -67,12 +81,12 @@ class controller {
     }
   }
 
-  getTotalPrice ( ) {
+  getTotalPrice () {
     return _
         .chain(this.Helper.getActiveObjectFromArray(this.providers))
         .map('price')
-        .sum( )
-        .value( ) * parseFloat(this.hour) * Number(this.entertainer);
+        .sum()
+        .value() * parseFloat(this.hour) * Number(this.entertainer);
   }
 
   validate (field) {
@@ -125,9 +139,9 @@ class controller {
 
   orderData (orderModel) {
     return this.OrderService.buildOrder(Object.assign(orderModel, {
-      geo: this.inputLocation,
-      price: this.getTotalPrice( )
-    })
+        geo: this.inputLocation,
+        price: this.getTotalPrice()
+      })
     );
   }
 
@@ -150,27 +164,13 @@ export default angular.module('order', [
 ]).config($stateProvider => {
   'ngInject';
 
-  $stateProvider.state('main.order', {
-    url: '/order',
+  $stateProvider.state('main.create-order', {
+    url: '/create-order',
     parent: 'main',
-    component: 'order',
-    onEnter: ($state, OrderService, $q) => {
-      'ngInject';
-
-      return $q.all({
-        notAccomplishedOrder: OrderService.fetchLastNotAccomplishedOrder( ).then(({ data }) => data),
-        notRatedEntertainers: OrderService.fetchNotRatedEntertainers( ).then(({ data }) => data)
-      }).then(({ notAccomplishedOrder, notRatedEntertainers }) => {
-        if (notAccomplishedOrder) {
-          $state.go('main.manipulationEntertainers', { orderId: notAccomplishedOrder.id });
-        } else if (notRatedEntertainers && notRatedEntertainers.length > 0) {
-          $state.go('main.order.rateEntertainers', { from: 'main.order.create' });
-        }
-        return { notAccomplishedOrder, notRatedEntertainers };
-      });
-    }
+    component: 'createOrderPage',
+    params: { notRatedEntertainers: null }
   });
-}).component('order', {
+}).component('createOrderPage', {
   template,
   controller
 }).name;
