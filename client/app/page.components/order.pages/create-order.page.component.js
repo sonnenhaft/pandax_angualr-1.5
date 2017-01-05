@@ -56,14 +56,13 @@ class controller {
     this.time = this.Helper.getNearestTime('time');
     this.range = this.Helper.getNearestTime('range');
 
-    if (this.StatefulUserData.get('is_newcomer')) {
-      this.entertainers = _.slice(this.entertainers, 1);
-      this.entertainer = _.head(this.entertainers);
-    }
-
     if (!this.StatefulUserData.get('is_newcomer')) {
-      this.hours = _.slice(this.hours, 1);
-      this.hour = _.head(this.hours);
+      this.isNewcomer = true;
+      this.entertainers = this.entertainers.slice(1);
+      this.entertainer = this.entertainers[0];
+    } else {
+      this.hours = this.hours.slice(1);
+      this.hour = this.hours[0];
     }
   }
 
@@ -126,17 +125,14 @@ class controller {
       return false;
     }
 
-    this.$http.post('{{config_api_url}}/api/order', this.orderData(orderModel)).then(
-      ({ data }) => {
-        this.orderLoading = false;
-        this.StatefulUserData.extend(data.customer);
-        this.$state.go('main.manipulationEntertainers', { orderId: data.id, channelName: data.channel_name });
-      },
-      error => {
-        this.orderLoading = false;
-        console.log(error);
-      }
-    );
+    this.$http.post('{{config_api_url}}/api/order', this.orderData(orderModel)).then(({ data: { customer, id: orderId, channel_name: channelName } }) => {
+      this.orderLoading = false;
+      console.log(customer);
+      this.StatefulUserData.extend(customer);
+      this.$state.go('main.manipulationEntertainers', { orderId, channelName });
+    }).finally(( ) => {
+      this.orderLoading = false;
+    });
   }
 
   orderData (orderModel) {

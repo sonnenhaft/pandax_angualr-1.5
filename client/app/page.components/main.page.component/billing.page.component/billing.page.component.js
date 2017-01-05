@@ -16,8 +16,14 @@ class controller {
 
     Object.assign(this, { $state, $stateParams, Resolve, Cards, $mdToast, $q, OrderService, $mdDialog, StatefulUserData });
 
-    this.defaultCardId = this.getDefaultCardId( );
-    this.hasPersonalInfo = this.billingInfo && this.billingInfo.first_name && this.billingInfo.last_name && this.billingInfo.phone;
+    $q.all({
+      orderDetails: OrderService.fetchOrderDetails($stateParams.orderId),
+      billingInfo: this.Cards.getCards( ).then(cards => Object.assign({}, StatefulUserData.getUser( ), { cards }))
+    }).then(({ billingInfo, orderDetails }) => {
+      Object.assign(this, { billingInfo, orderDetails });
+      this.defaultCardId = this.getDefaultCardId( );
+      this.hasPersonalInfo = billingInfo && billingInfo.first_name && billingInfo.last_name && billingInfo.phone;
+    });
   }
 
   saveInfo ( ) {
@@ -26,7 +32,7 @@ class controller {
     this.saveLoading = true;
 
     if (!this.hasPersonalInfo) {
-      return this.$http.put('{{config_api_url}}/api/{{current_user_role}}/profile', this.billingInfo);
+      promises.push(this.$http.put('{{config_api_url}}/api/{{current_user_role}}/profile', this.billingInfo));
     }
 
     if (!this.billingInfo.cards || !this.billingInfo.cards.length) {      // should add card
@@ -35,13 +41,16 @@ class controller {
           return card;
         }
       }));
-    } else if (this.defaultCardId != this.getDefaultCardId( )) {
+    } else if (this.defaultCardId !== this.getDefaultCardId( )) {
       // ToDo: send request to change default card
     }
 
     return this.$q.all(promises)
       .then(( ) => this.payForOrder( ))
-      .then(( ) => this.$state.go(this.$stateParams.from, { orderId: this.$stateParams.orderId }))
+      .then(( ) => {
+        this.StatefulUserData.extend({ is_newcomer: false });
+        this.$state.go(this.$stateParams.from, { orderId: this.$stateParams.orderId });
+      })
       .finally(( ) => this.saveLoading = false);
   }
 
@@ -55,13 +64,11 @@ class controller {
   }
 
   showError (message) {
-    this.$mdToast.show(
-      this.$mdToast.simple( )
-        .content(message || message.type)
-        .position('top right')
-        .hideDelay(200000)
-        .action('OK')
-    );
+    this.$mdToast.show(this.$mdToast.simple( )
+      .content(message || message.type)
+      .position('top right')
+      .hideDelay(200000)
+      .action('OK'));
   }
 
   payForOrder ( ) {
@@ -102,31 +109,9 @@ export default angular.module('billing', [
   $stateProvider.state('main.billing', {
     url: '/billing/:orderId/:entertainerId?from',
     parent: 'main',
-    template: '<billing billing-info="billingInfo"  order-details="orderDetails" </billing>',
-    controller ($scope, billingInfo, orderDetails) {
-      $scope.billingInfo = billingInfo;
-      $scope.orderDetails = orderDetails;
-    },
-    resolve: {
-      orderId ($stateParams) {
-        'ngInject';
-
-        return $stateParams.orderId || 0;
-      },
-      orderDetails (OrderService, orderId) {
-        'ngInject';
-
-        return OrderService.fetchOrderDetails(orderId);
-      },
-      billingInfo (StatefulUserData, Cards) {
-        'ngInject';
-
-        return Cards.getCards( ).then(cards => Object.assign({}, StatefulUserData.getUser( ), { cards }));
-      }
-    }
+    template: '<billing></billing>'
   });
 }).component('billing', {
-  bindings: { billingInfo: '=', orderDetails: '=' },
   template,
   controller
 }).name;
