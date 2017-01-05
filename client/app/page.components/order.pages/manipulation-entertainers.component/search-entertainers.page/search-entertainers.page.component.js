@@ -2,6 +2,8 @@ import OrderService from '../../../../common-services/orderService.service';
 import billing from '../../../main.page.component/billing.page.component/billing.page.component';
 import entertainerPhotosModal from '../entertainer-protos.modal/entertainer-protoes.modal';
 
+import ratingsModalComponent from './ratings-modal.component/ratings-modal.component';
+
 import template from './search-entertainers.page.html';
 
 class controller {
@@ -45,10 +47,8 @@ class controller {
       controller: angular.noop,
       controllerAs: '$ctrl',
       clickOutsideToClose: true,
-      template: `<div layout="row" layout-align="end" class="icon_modal-close">
-                    <div class="icon_modal-close__image icon_modal-close__image_right" ng-click="vm.$mdDialog.hide()"></div>
-                  </div>
-  <ratings user-id="$ctrl.userId"></ratings>
+      template: `
+<ratings-modal-component user-id="$ctrl.userId"></ratings-modal-component>
 `,
       targetEvent,
       bindToController: true,
@@ -62,7 +62,8 @@ class controller {
 export default angular.module('searchEntertainers', [
   billing,
   OrderService,
-  entertainerPhotosModal
+  entertainerPhotosModal,
+  ratingsModalComponent
 ]).component('searchEntertainers', {
   bindings: {
     entertainers: '=',

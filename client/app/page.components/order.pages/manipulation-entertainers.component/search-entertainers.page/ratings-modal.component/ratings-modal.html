@@ -1,3 +1,6 @@
+<div layout="row" layout-align="end" class="icon_modal-close">
+  <div class="icon_modal-close__image icon_modal-close__image_right" ng-click="$ctrl.$mdDialog.hide()"></div>
+</div>
 <div id="ratings">
 
   <div class="ratings-wrapper" infinite-scroll="$ctrl.fetchMoreItems()" infinite-scroll-disabled='$ctrl.isOnProgress || $ctrl.isLastPage'>
@@ -18,9 +21,7 @@
 
     </div>
 
-    <div ng-if="$ctrl.list.length == 0 && !$ctrl.isOnProgress">
-      Provider don't have any ratings.
-    </div>
+    <div ng-show="$ctrl.isEmpty">No ratings yet</div>
   </div>
 
 </div>
