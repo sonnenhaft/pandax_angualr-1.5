@@ -5,6 +5,8 @@ import Validation from '../../common-services/validation.service';
 import template from './profile.pages.html';
 import DobInputComponent from './date-of-birth.input.component/date-of-birth.input.component';
 
+import UserProfileResource from './user-profile.resource';
+
 class controller {
   static CUSTOMER_FIELDS = [
     {
@@ -18,10 +20,10 @@ class controller {
     { name: 'Email', model: 'email', type: 'email' }
   ]
 
-  constructor (Validation, $state, $q, Helper, Cards, StatefulUserData, $http) {
+  constructor (Validation, $state, $q, Helper, Cards, StatefulUserData, UserProfileResource) {
     'ngInject';
 
-    Object.assign(this, { Validation, $state, $q, Helper, Cards, StatefulUserData, $http });
+    Object.assign(this, { Validation, $state, $q, Helper, Cards, StatefulUserData, UserProfileResource });
 
     this.isCreate = this.$state.current.name === 'main.profile.create';
     this.isEdit = this.$state.current.name === 'main.profile.edit';
@@ -127,14 +129,17 @@ class controller {
     }
     this.saveLoading = true;
 
-    const UploadPhoto = (file, slot) => {
-      const url = `{{config_api_url}}/api/{{current_user_role}}/profile/photo${this.StatefulUserData.isProvider( ) ? `/${slot}` : ''}`;
-      return this.$http.put(url, file).then(({ data: newUser }) => {
-        if (slot == 1) {
-          this.StatefulUserData.extend(newUser);
-        }
-        return newUser;
-      });
+    const UploadPhoto = (file, slot_id) => { // eslint-disable-line camelcase
+      if (this.StatefulUserData.isProvider( )) {
+        return this.UserProfileResource.uploadPhoto({ slot_id }, file).$promise.then(newUser => { // eslint-disable-line camelcase
+          if (slot_id === 1) { // eslint-disable-line camelcase
+            this.StatefulUserData.extend(newUser);
+          }
+          return newUser;
+        });
+      } else {
+        return this.UserProfileResource.uploadSinglePhoto(file).$promise;
+      }
     };
 
     this.$q.all(this.photosBuffer.map(photo => UploadPhoto(photo.image, photo.slot).then(uploadedPhoto => {
@@ -142,18 +147,18 @@ class controller {
 
       if (photoResult) {
         this._backupPhoto({ file: photoResult.preview }, photo.slot - 1);
-        if (photo.slot == 1) {
+        if (photo.slot === 1) {
           this._profilePhoto(photoResult.original);
         }
       }
 
-      const updateKey = !this.isProvider ? 'photo' : 'photos';
+      const updateKey = this.isProvider ? 'photos' : 'photo';
       return this.StatefulUserData.extend({ [updateKey]: uploadedPhoto[updateKey] });
     }
     )))
       .then(( ) => {
-        profile[(!this.isProvider ? 'image' : 'images')] = this.StatefulUserData.get(!this.isProvider ? 'photo' : 'photos');
-        return this.$http.put('{{config_api_url}}/api/{{current_user_role}}/profile', profile);
+        profile[(!this.isProvider ? 'image' : 'images')] = this.StatefulUserData.get(this.isProvider ? 'photos' : 'photo');
+        return this.UserProfileResource.update({}, profile);
       })
       .then(({ data: user }) => {
         this.StatefulUserData.extend(user);
@@ -168,6 +173,7 @@ class controller {
   }
 
   onImageChange (image, slot) {
+    console.log('x');
     if (!image) { return; }
     const item = this.photosBuffer.find(item => item.slot === slot);
     if (item) {
@@ -180,6 +186,7 @@ class controller {
 
 export default angular.module('profileFields', [
   DobInputComponent,
+  UserProfileResource,
   ngFileUpload,
   Validation
 ]).component('profileFields', {

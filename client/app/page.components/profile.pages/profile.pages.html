@@ -9,11 +9,14 @@
             <label ng-if="$ctrl.isCreate">Add photo</label>
             <div layout="row">
               <div class="file-container" flex ng-repeat="image in $ctrl.images" ng-class="{first: $index === 0, last: $index === 2}">
-                <md-button class="file" aria-label="file" ngf-select ng-disabled="$ctrl.isEditable" ng-model="image.file"
+                <md-button class="file" aria-label="file" ngf-select ng-disabled="!$ctrl.isEditable" ng-model="image.file"
                            name="file" ngf-capture="'camera'" ngf-max-size="10MB" ngf-model-invalid="$ctrl.invalidFiles"
                            ng-change="$ctrl.onImageChange(image.file, $index + 1)"
                            ng-click="$ctrl.imagesError = false">
-                  <img ngf-src="image.file" alt=""/>
+                  <a ui-sref="main.profile.edit" ng-hide="$ctrl.isEditable">
+                    <img ngf-src="image.file" alt="profile image" title="click to edit profile"/>
+                  </a>
+                  <img ngf-src="image.file" alt="profile image" ng-show="!$ctrl.isEditable" title="click to choose image"/>
                 </md-button>
               </div>
             </div>
@@ -64,8 +67,8 @@
                          ng-change="$ctrl[combine.model + 'Error'] = false"
                          ng-blur="$ctrl.validate({[combine.model]: $ctrl[combine.model]})">
                   <span class="error" ng-if="$ctrl[combine.model + 'Error'] && $ctrl.isEditable">
-{{$ctrl[combine.model + 'Error']}}
- </span>
+                    {{$ctrl[combine.model + 'Error']}}
+                 </span>
                   <div class="sub-desc">{{combine.desc}}</div>
                 </div>
               </div>

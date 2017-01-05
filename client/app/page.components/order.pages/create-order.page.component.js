@@ -5,6 +5,7 @@ import orderConfirm from './order-confirm.page.component/order-confirm.page.comp
 import manipulationEntertainers from './manipulation-entertainers.component/manipulation-entertainers.page';
 import acceptTermsAndConditionsPage from './accept-terms-and-conditions.page.component/accept-terms-and-conditions.page.component';
 import RateEntertainersComponent from './rate-entertainers.component/rate-entertainers.component';
+import OrderResource from './order.resource';
 
 import template from './create-order.page.html';
 
@@ -19,13 +20,13 @@ class controller {
   date = new Date( )
   currentDate = new Date( )
 
-  constructor (Helper, Validation, OrderService, $http, $window, $state, $mdDialog, moment, StatefulUserData, $q, $stateParams) {
+  constructor (Helper, Validation, OrderService, $http, $window, $state, $mdDialog, moment, StatefulUserData, $q, $stateParams, OrderResource) {
     'ngInject';
 
     this.resolved = false;
     $q.all({
       notAccomplishedOrder: OrderService.fetchLastNotAccomplishedOrder( ).then(({ data }) => data),
-      notRatedEntertainers: OrderService.fetchNotRatedEntertainers($stateParams.notRatedEntertainers).catch(( ) => [])
+      notRatedEntertainers: OrderResource.fetchNotRatedEntertainers($stateParams.notRatedEntertainers).$promise
     }).then(({ notAccomplishedOrder, notRatedEntertainers }) => {
       if (notAccomplishedOrder) {
         $state.go('main.manipulationEntertainers', { orderId: notAccomplishedOrder.id });
@@ -158,6 +159,7 @@ export default angular.module('order', [
   Validation,
   orderConfirm,
   OrderService,
+  OrderResource,
   manipulationEntertainers,
   RateEntertainersComponent,
   acceptTermsAndConditionsPage
