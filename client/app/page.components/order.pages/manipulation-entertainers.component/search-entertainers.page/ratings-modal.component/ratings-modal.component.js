@@ -8,11 +8,11 @@ class AbstractScrollableController {
   isEmpty = false
   isLastPage = false
 
-  fetchMoreItems () {
+  fetchMoreItems ( ) {
     if (this.isLastPage) { return; }
     this.isOnProgress = true;
     this.currentPage += 1;
-    return this._next().$promise.then(({ items: list, meta: pagination }) => {
+    return this._next( ).$promise.then(({ items: list, meta: pagination }) => {
       this.list = this.list.concat(list);
       this.currentPage = pagination.current_page;
       this.isLastPage = this.currentPage === pagination.total_pages;
@@ -26,15 +26,15 @@ class controller extends AbstractScrollableController {
   constructor ($mdDialog, ProviderRatingResource) {
     'ngInject';
 
-    super();
+    super( );
     Object.assign(this, { $mdDialog, ProviderRatingResource });
   }
 
-  $onInit () {
-    this.fetchMoreItems();
+  $onInit ( ) {
+    this.fetchMoreItems( );
   }
 
-  _next () {
+  _next ( ) {
     const page = this.currentPage;
     const provider_id = this.userId; // eslint-disable-line camelcase
     return this.ProviderRatingResource.fetchRatings({ provider_id });

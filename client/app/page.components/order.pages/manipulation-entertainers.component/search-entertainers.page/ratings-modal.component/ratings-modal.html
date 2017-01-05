@@ -1,56 +1,19 @@
 <div layout="row" layout-align="end" class="icon_modal-close">
   <div class="icon_modal-close__image icon_modal-close__image_right" ng-click="$ctrl.$mdDialog.hide()"></div>
 </div>
-<div id="ratings" ng-repeat="i in [1,2,3,4,5,6]">
-
-  <div class="ratings-wrapper" infinite-scroll="$ctrl.fetchMoreItems()" infinite-scroll-disabled='$ctrl.isOnProgress || $ctrl.isLastPage'>
-    <div class="rating" ng-repeat="item in $ctrl.list">
-
-      <div layout="row" layout-align="space-between start" class="rating__header">
-        <div class="rating__avatar" ng-style="{'background-image': 'url(' + item.customer.photo.preview + ')'}"></div>
-        <div flex="90" class="rating__info">
-          <span class="rating__name">{{item.customer.first_name}}</span>
-        </div>
-        <div layout="row" layout-align="start center" class="rating__rating">
-          <span class="rating__value">{{item.rating}}</span>
-          <img src="/assets/images/icons/raiting.png" class="icon_small rating__icon"/>
-        </div>
+<div class="ratings-modal-component" infinite-scroll="$ctrl.fetchMoreItems()" infinite-scroll-disabled='$ctrl.isOnProgress || $ctrl.isLastPage'>
+  <div class="rating" ng-repeat="item in $ctrl.list">
+    <div layout="row" layout-align="space-between start" class="rating__header">
+      <div class="rating__avatar" ng-style="{'background-image': 'url(' + item.customer.photo.preview + ')'}"></div>
+      <div flex="90" class="rating__info">
+        <span class="rating__name">{{item.customer.first_name}}</span>
       </div>
-
-      <p class="rating__comment">
-        {{item.comment}}
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-        1 2 3 4 5 6 7
-      </p>
-
+      <div layout="row" layout-align="start center" class="rating__rating">
+        <span class="rating__value">{{item.rating}}</span>
+        <img src="/assets/images/icons/raiting.png" class="icon_small rating__icon"/>
+      </div>
     </div>
-
-    <div ng-show="$ctrl.isEmpty" class="rating">No ratings yet</div>
+    <p class="rating__comment">{{item.comment}}</p>
   </div>
-
+  <div ng-show="$ctrl.isEmpty" class="rating">No ratings yet</div>
 </div>
