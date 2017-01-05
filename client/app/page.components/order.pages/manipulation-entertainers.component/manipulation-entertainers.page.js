@@ -43,7 +43,8 @@ export default angular.module('manipulationEntertainers', [
   'ngInject';
 
   $stateProvider.state('main.manipulationEntertainers', {
-    url: '/:orderId/manipulation-entertainers',
+    url: '/:orderId/manipulation-entertainers?modal',
+    reloadOnSearch: false,
     parent: 'main',
     template: `<manipulation-entertainers 
                     entertainers="OrderService.list" 

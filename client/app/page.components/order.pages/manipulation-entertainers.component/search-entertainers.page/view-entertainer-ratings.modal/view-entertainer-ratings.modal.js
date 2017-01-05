@@ -1,5 +1,5 @@
-import ProviderRatingResource from './rating.resource';
-import template from './ratings-modal.html';
+import EntertainerRatingResource from './entertainer-rating.resource';
+import template from './view-entertainer-ratings.modal.html';
 
 class AbstractScrollableController {
   currentPage = 0
@@ -23,11 +23,11 @@ class AbstractScrollableController {
 }
 
 class controller extends AbstractScrollableController {
-  constructor ($mdDialog, ProviderRatingResource) {
+  constructor ($mdDialog, EntertainerRatingResource) {
     'ngInject';
 
     super( );
-    Object.assign(this, { $mdDialog, ProviderRatingResource });
+    Object.assign(this, { $mdDialog, EntertainerRatingResource });
   }
 
   $onInit ( ) {
@@ -37,13 +37,13 @@ class controller extends AbstractScrollableController {
   _next ( ) {
     const page = this.currentPage;
     const provider_id = this.userId; // eslint-disable-line camelcase
-    return this.ProviderRatingResource.fetchRatings({ provider_id });
+    return this.EntertainerRatingResource.fetchRatings({ provider_id });
   }
 }
 
 
 export default angular.module('ratingsModalComponent', [
-  ProviderRatingResource
+  EntertainerRatingResource
 ]).component('ratingsModalComponent', {
   bindings: { userId: '<' },
   template,

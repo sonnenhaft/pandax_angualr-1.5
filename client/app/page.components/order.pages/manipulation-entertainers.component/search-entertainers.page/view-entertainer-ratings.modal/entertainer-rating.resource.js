@@ -1,8 +1,8 @@
 import ngResource from 'angular-resource';
 
-export default angular.module('ProviderRatingResource', [
+export default angular.module('EntertainerRatingResource', [
   ngResource
-]).factory('ProviderRatingResource', $resource => {
+]).factory('EntertainerRatingResource', $resource => {
   'ngInject';
 
   return $resource('', {}, {
