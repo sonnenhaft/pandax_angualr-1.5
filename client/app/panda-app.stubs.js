@@ -26,7 +26,7 @@ export default angular.module('panda-stubs', [
 
       const mock = (config, fn, args) => {
         const url = PandaHttpInterceptor.request(config).url;
-        console.log(url)
+        console.log(url);
         if (mocks[url]) {
           return $q.when({ data: mocks[url] });
         } else {

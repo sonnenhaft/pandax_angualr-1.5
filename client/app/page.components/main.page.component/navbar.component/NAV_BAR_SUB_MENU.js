@@ -9,7 +9,7 @@ export default [
     role: ['customer', 'provider'],
     parent: 'Settings',
     text: 'Terms',
-    url: 'main.acceptTermsAndConditionsPage'
+    url: 'acceptTermsAndConditionsPage'
   },
   {
     role: ['customer', 'provider'],

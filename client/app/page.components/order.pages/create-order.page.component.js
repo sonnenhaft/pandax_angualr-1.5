@@ -16,37 +16,37 @@ class controller {
   guest = 1
   asap = true
   hour = '0.5H'
-  date = new Date()
-  currentDate = new Date()
+  date = new Date( )
+  currentDate = new Date( )
 
-  constructor (Helper, Validation, OrderService, $http, $window, $state, $mdDialog, moment, StatefulUserData, $q, $stateParams ) {
+  constructor (Helper, Validation, OrderService, $http, $window, $state, $mdDialog, moment, StatefulUserData, $q, $stateParams) {
     'ngInject';
 
     this.resolved = false;
     $q.all({
-      notAccomplishedOrder: OrderService.fetchLastNotAccomplishedOrder().then(({ data }) => data),
-      notRatedEntertainers: OrderService.fetchNotRatedEntertainers($stateParams.notRatedEntertainers)
+      notAccomplishedOrder: OrderService.fetchLastNotAccomplishedOrder( ).then(({ data }) => data),
+      notRatedEntertainers: OrderService.fetchNotRatedEntertainers($stateParams.notRatedEntertainers).catch(( ) => [])
     }).then(({ notAccomplishedOrder, notRatedEntertainers }) => {
       if (notAccomplishedOrder) {
         $state.go('main.manipulationEntertainers', { orderId: notAccomplishedOrder.id });
       } else if (notRatedEntertainers && notRatedEntertainers.length) {
-        $state.go('main.rate-entertainers', {notRatedEntertainers});
+        $state.go('main.rate-entertainers', { notRatedEntertainers });
       }
-    }).finally(()=>{
+    }).finally(( ) => {
       this.resolved = true;
-    })
+    });
 
     Object.assign(this, { Helper, Validation, OrderService, $http, $state, $mdDialog, StatefulUserData });
-    this.maxDateForCreating = moment().add(14, 'days').toDate();
+    this.maxDateForCreating = moment( ).add(14, 'days').toDate( );
     this.mobile = $window.innerWidth <= 960;
 
-    $window.addEventListener('resize', () => {
+    $window.addEventListener('resize', ( ) => {
       this.mobile = $window.innerWidth <= 960;
     });
   }
 
-  $onInit () {
-    this.providers = _.map(this.OrderService.getProviders(), (provider, i) => {
+  $onInit ( ) {
+    this.providers = _.map(this.OrderService.getProviders( ), (provider, i) => {
       provider.active = i == 0;
       return provider;
     });
@@ -81,12 +81,12 @@ class controller {
     }
   }
 
-  getTotalPrice () {
+  getTotalPrice ( ) {
     return _
         .chain(this.Helper.getActiveObjectFromArray(this.providers))
         .map('price')
-        .sum()
-        .value() * parseFloat(this.hour) * Number(this.entertainer);
+        .sum( )
+        .value( ) * parseFloat(this.hour) * Number(this.entertainer);
   }
 
   validate (field) {
@@ -120,7 +120,7 @@ class controller {
     }
 
     if (this.StatefulUserData.get('is_newcomer')) {
-      this.$state.go('main.accept-terms-and-conditions', { order: this.orderData(orderModel) });
+      this.$state.go(acceptTermsAndConditionsPage, { order: this.orderData(orderModel) });
       return false;
     }
 
@@ -139,9 +139,9 @@ class controller {
 
   orderData (orderModel) {
     return this.OrderService.buildOrder(Object.assign(orderModel, {
-        geo: this.inputLocation,
-        price: this.getTotalPrice()
-      })
+      geo: this.inputLocation,
+      price: this.getTotalPrice( )
+    })
     );
   }
 
