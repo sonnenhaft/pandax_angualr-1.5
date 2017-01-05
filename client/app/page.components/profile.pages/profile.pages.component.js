@@ -1,4 +1,3 @@
-import config from 'config';
 import ngFileUpload from 'ng-file-upload';
 
 import Validation from '../../common-services/validation.service';
@@ -19,10 +18,10 @@ class controller {
     { name: 'Email', model: 'email', type: 'email' }
   ]
 
-  constructor (Validation, $state, $q, Helper, Cards, StatefulUserData, Request) {
+  constructor (Validation, $state, $q, Helper, Cards, StatefulUserData, $http) {
     'ngInject';
 
-    Object.assign(this, { Validation, $state, $q, Helper, Cards, StatefulUserData, Request });
+    Object.assign(this, { Validation, $state, $q, Helper, Cards, StatefulUserData, $http });
 
     this.isCreate = this.$state.current.name === 'main.profile.create';
     this.isEdit = this.$state.current.name === 'main.profile.edit';
@@ -129,8 +128,8 @@ class controller {
     this.saveLoading = true;
 
     const UploadPhoto = (file, slot) => {
-      const url = `${config.API_URL}/api/${this.StatefulUserData.getRole( )}/profile/photo${this.StatefulUserData.isProvider( ) ? `/${slot}` : ''}`;
-      return this.Request.put(url, file).then(({ data: newUser }) => {
+      const url = `{{config_api_url}}/api/{{current_user_role}}/profile/photo${this.StatefulUserData.isProvider( ) ? `/${slot}` : ''}`;
+      return this.$http.put(url, file).then(({ data: newUser }) => {
         if (slot == 1) {
           this.StatefulUserData.extend(newUser);
         }
@@ -154,7 +153,7 @@ class controller {
     )))
       .then(( ) => {
         profile[(!this.isProvider ? 'image' : 'images')] = this.StatefulUserData.get(!this.isProvider ? 'photo' : 'photos');
-        return this.Request.put(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/profile`, profile);
+        return this.$http.put('{{config_api_url}}/api/{{current_user_role}}/profile', profile);
       })
       .then(({ data: user }) => {
         this.StatefulUserData.extend(user);

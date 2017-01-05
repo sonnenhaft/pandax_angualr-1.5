@@ -3,31 +3,23 @@ import StatefulUserData from '../../../common-services/StatefulUserData';
 class StatefulAuthTokenService {
   STORAGE_KEY = 'MINX_TOKEN'
 
-  constructor ($window, $http, $timeout, StatefulUserData, $state) {
+  constructor ($window, $timeout, StatefulUserData, $state) {
     'ngInject';
 
-    Object.assign(this, { storage: $window.localStorage, $http, $timeout, StatefulUserData, $state });
+    Object.assign(this, { storage: $window.localStorage, $timeout, StatefulUserData, $state });
+    this._token = this.storage.getItem(this.STORAGE_KEY);
   }
 
-  restore ( ) {
-    const token = this.storage.getItem(this.STORAGE_KEY);
-    if (token) {
-      this._setAuthTokenToHttpCommonHeaders(token);
-    }
-  }
-
-  _setAuthTokenToHttpCommonHeaders (token) {
-    this.$http.defaults.headers.common.Authorization = `Bearer ${token}`;
+  getToken ( ) {
+    return this._token;
   }
 
   remember (token) {
     this.storage.setItem(this.STORAGE_KEY, token);
-    this._setAuthTokenToHttpCommonHeaders(token);
   }
 
   forget ( ) {
     this.storage.removeItem(this.STORAGE_KEY);
-    delete this.$http.defaults.headers.common.Authorization;
   }
 
   /** alias for forget */

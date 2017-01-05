@@ -1,69 +1,48 @@
-<div
-  id="search-entertainers"
-  layout="row"
-  layout-align="space-between"
-  layout-wrap>
-
+<div id="search-entertainers" layout="row" layout-align="space-between" layout-wrap>
   <div flex="100" class="search-entertainers__main">
     <div layout="row" layout-align="center stretch" class="search-entertainers__manip_head">
       <div flex="15" layout="row" layout-align="end">
-        <md-icon
-          md-svg-icon="/assets/images/icons/svg/arrow_left.svg"
-          class="pointer search-entertainers__manip-arrow search-entertainers__manip-arrow_left"
-          ng-class="{'disabled': $ctrl.itemActiveIndex == 0}"
-          ng-click="$ctrl.goToEntertainerByIndex(-1)"></md-icon>
+        <md-icon md-svg-icon="/assets/images/icons/svg/arrow_left.svg"
+                 class="pointer search-entertainers__manip-arrow search-entertainers__manip-arrow_left"
+                 ng-class="{'disabled': $ctrl.itemActiveIndex == 0}"
+                 ng-click="$ctrl.goToEntertainerByIndex(-1)"></md-icon>
       </div>
       <div flex="75" layout="row" layout-align="space-between center" class="search-entertainers__manip-info">
         <span class="search-entertainers__manip-name">{{$ctrl.entertainers[$ctrl.itemActiveIndex].displaying_name}}</span>
         <span flex="25" class="search-entertainers__manip-counter">{{$ctrl.itemActiveIndex + 1}} / {{$ctrl.entertainers.length}}</span>
       </div>
       <div flex="15" layout="row" layout-align="end">
-        <md-icon
-          md-svg-icon="/assets/images/icons/svg/arrow_right.svg"
-          class="pointer search-entertainers__manip-arrow search-entertainers__manip-arrow_right"
-          ng-class="{'disabled': ($ctrl.itemActiveIndex + 1) == $ctrl.entertainers.length}"
-          ng-click="$ctrl.goToEntertainerByIndex(+1)"></md-icon>
+        <md-icon md-svg-icon="/assets/images/icons/svg/arrow_right.svg"
+                 class="pointer search-entertainers__manip-arrow search-entertainers__manip-arrow_right"
+                 ng-class="{'disabled': ($ctrl.itemActiveIndex + 1) == $ctrl.entertainers.length}"
+                 ng-click="$ctrl.goToEntertainerByIndex(+1)"></md-icon>
       </div>
     </div>
 
     <div class="search-entertainers__info">
-      <span class="search-entertainers__info-raiting">
-        {{$ctrl.entertainers[$ctrl.itemActiveIndex].rating}}
-        <img
-          src="/assets/images/icons/raiting.png"
-          class="icon_small"></img>
+      <span class="search-entertainers__info-rating" ng-click="$ctrl.showRatings($event)">
+        {{$ctrl.entertainers[$ctrl.itemActiveIndex].rating > 0 ? $ctrl.entertainers[$ctrl.itemActiveIndex].rating : 'N/A'}}
+        <img src="/assets/images/icons/raiting.png" class="icon_small"/>
       </span>
       <span class="search-entertainers__info-distance">{{$ctrl.entertainers[$ctrl.itemActiveIndex].distance.toFixed(2)}}M AWAY</span>
     </div>
 
-    <div
-      class="search-entertainers__preview search-entertainers__preview_medium pointer"
-      ng-style="{'background-image': 'url(' + $ctrl.entertainers[$ctrl.itemActiveIndex].photos[$ctrl.photoActiveIndex].original + ')'}"
-      ng-click="$ctrl.showPopup($event)">
+    <div class="search-entertainers__preview search-entertainers__preview_medium pointer"
+         ng-style="{'background-image': 'url(' + $ctrl.entertainers[$ctrl.itemActiveIndex].photos[$ctrl.photoActiveIndex].original + ')'}"
+         ng-click="$ctrl.showPopup($event)">
     </div>
 
-    <div
-      flex="75"
-      layout="row"
-      layout-align="space-between stretch"
-      class="search-entertainers__switch-foto">
-      <div
-        flex="33"
-        class="search-entertainers__preview search-entertainers__preview_small"
-        ng-repeat="photo in $ctrl.entertainers[$ctrl.itemActiveIndex].photos track by $index"
-        ng-class="{'photo_active': $ctrl.photoActiveIndex === $index}"
-        ng-style="{'background-image': 'url(' + photo.preview + ')'}"
-        ng-click="$ctrl.photoActiveIndex = $index">
-      </div>
+    <div flex="75" layout="row" layout-align="space-between stretch" class="search-entertainers__switch-foto">
+      <div flex="33" class="search-entertainers__preview search-entertainers__preview_small"
+           ng-repeat="photo in $ctrl.entertainers[$ctrl.itemActiveIndex].photos track by $index"
+           ng-class="{'photo_active': $ctrl.photoActiveIndex === $index}"
+           ng-style="{'background-image': 'url(' + photo.preview + ')'}" ng-click="$ctrl.photoActiveIndex = $index"></div>
     </div>
 
-    <md-button
-      class="md-raised md-accent search-entertainers__invite"
-      ng-class="{'button_gradient': ($ctrl.entertainersInvited | filterBy: ['provider.id']: $ctrl.entertainers[$ctrl.itemActiveIndex].id).length > 0}"
-      ng-click="$ctrl.goToNextStep()"
-      ng-disabled="($ctrl.entertainersInvited | filterBy: ['provider.id']: $ctrl.entertainers[$ctrl.itemActiveIndex].id).length > 0">
+    <md-button class="md-raised md-accent search-entertainers__invite" ng-click="$ctrl.goToNextStep()"
+               ng-class="{'button_gradient': ($ctrl.entertainersInvited | filterBy: ['provider.id']: $ctrl.entertainers[$ctrl.itemActiveIndex].id).length > 0}"
+               ng-disabled="($ctrl.entertainersInvited | filterBy: ['provider.id']: $ctrl.entertainers[$ctrl.itemActiveIndex].id).length > 0">
       {{($ctrl.entertainersInvited | filterBy: ['provider.id']: $ctrl.entertainers[$ctrl.itemActiveIndex].id).length > 0 ? 'INVITED' : 'INVITE'}}
     </md-button>
   </div>
-
 </div>

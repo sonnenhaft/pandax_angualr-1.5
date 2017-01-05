@@ -1,4 +1,3 @@
-import config from 'config';
 import ngResource from 'angular-resource';
 
 export default angular.module('LoginResource', [
@@ -7,10 +6,10 @@ export default angular.module('LoginResource', [
   'ngInject';
 
   return $resource('', {}, {
-    login: { url: `${config.API_URL}/api/sessions`, method: 'POST' }, // {email, password}
-    signup: { url: `${config.API_URL}/api/signup/:userType`, method: 'POST' }, // {email, password}
-    restorePassword: { url: `${config.API_URL}/api/sessions/password/reset`, method: 'POST' }, // {email}
-    resetPassword: { url: `${config.API_URL}/api/sessions/password/:token`, method: 'PUT' }, // {token}, {password}
-    fetchProfile: { url: `${config.API_URL}/api/:role/profile`, method: 'GET' }
+    login: { url: '{{config_api_url}}/api/sessions', method: 'POST' }, // {email, password}
+    signup: { url: '{{config_api_url}}/api/signup/:userType', method: 'POST' }, // {email, password}
+    restorePassword: { url: '{{config_api_url}}/api/sessions/password/reset', method: 'POST' }, // {email}
+    resetPassword: { url: '{{config_api_url}}/api/sessions/password/:token', method: 'PUT' }, // {token}, {password}
+    fetchProfile: { url: '{{config_api_url}}/api/:role/profile', method: 'GET' }
   }, { cancellable: true });
 }).name;

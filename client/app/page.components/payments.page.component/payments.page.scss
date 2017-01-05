@@ -16,9 +16,9 @@
       margin-bottom: 50px;
     }
 
-    @import "payments.page.control";
-    @import "payments.page.cards";
-    @import "payments.page.addCards";
+    @import "payments.page.control.scss";
+    @import "payments.page.cards.scss";
+    @import "payments.page.addCards.scss";
 
     @media (max-width: 960px) {
       max-width: 100%;

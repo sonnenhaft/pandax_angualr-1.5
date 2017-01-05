@@ -9,6 +9,8 @@ import CredentialsInputsComponent from './credentials-inputs.component/credentia
 
 import template from './login.pages.layout.html';
 
+export { LoginPageComponent };
+
 const LoginPagesLayout = 'home';
 export default angular.module(LoginPagesLayout, [
   LoginResource,

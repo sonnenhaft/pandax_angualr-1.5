@@ -1,16 +1,14 @@
-import config from 'config';
 import OrderService from './orderService.service';
-import Request from './request.service';
 
 class Resolve {
-  constructor (OrderService, Request, StatefulUserData) {
+  constructor (OrderService, $http, StatefulUserData) {
     'ngInject';
 
-    Object.assign(this, { OrderService, Request, StatefulUserData });
+    Object.assign(this, { OrderService, $http, StatefulUserData });
   }
 
   providers ( ) {
-    return this.Request.get(`${config.API_URL}/api/${this.StatefulUserData.getRole( )}/service-types`)
+    return this.$http.get('{{config_api_url}}/api/{{current_user_role}}/service-types')
       .then(
         ({ data }) => _.map(data, provider => Object.assign(provider, {
           price: _.round(provider.price),
@@ -23,7 +21,6 @@ class Resolve {
 }
 
 export default angular.module('Resolve', [
-  OrderService,
-  Request
+  OrderService
 ]).service('Resolve', Resolve).name;
 

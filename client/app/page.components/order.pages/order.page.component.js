@@ -1,11 +1,10 @@
-import config from 'config';
 import Helper from '../../common-services/helper.service';
 import Validation from '../../common-services/validation.service';
 import OrderService from '../../common-services/orderService.service';
 import orderConfirm from './order-confirm.page.component/order-confirm.page.component';
 import manipulationEntertainers from './manipulationEntertainers/manipulation-entertainers.page';
-import Request from '../../common-services/request.service';
 import acceptTermsAndConditionsPage from './accept-terms-and-conditions.page.component/accept-terms-and-conditions.page.component';
+import RateEntertainersComponent from './rate-entertainers.component/rate-entertainers.component';
 
 import template from './order.page.html';
 
@@ -20,10 +19,10 @@ class controller {
   date = new Date( )
   currentDate = new Date( )
 
-  constructor (Helper, Validation, OrderService, Request, $window, $state, $mdDialog, moment, StatefulUserData) {
+  constructor (Helper, Validation, OrderService, $http, $window, $state, $mdDialog, moment, StatefulUserData) {
     'ngInject';
 
-    Object.assign(this, { Helper, Validation, OrderService, Request, $state, $mdDialog, StatefulUserData });
+    Object.assign(this, { Helper, Validation, OrderService, $http, $state, $mdDialog, StatefulUserData });
     this.maxDateForCreating = moment( ).add(14, 'days').toDate( );
     this.mobile = $window.innerWidth <= 960;
 
@@ -111,7 +110,7 @@ class controller {
       return false;
     }
 
-    this.Request.post(`${config.API_URL}/api/order`, this.orderData(orderModel)).then(
+    this.$http.post('{{config_api_url}}/api/order', this.orderData(orderModel)).then(
       ({ data }) => {
         this.orderLoading = false;
         this.StatefulUserData.extend(data.customer);
@@ -141,13 +140,12 @@ class controller {
 }
 
 export default angular.module('order', [
-
   Helper,
-  Request,
   Validation,
   orderConfirm,
   OrderService,
   manipulationEntertainers,
+  RateEntertainersComponent,
   acceptTermsAndConditionsPage
 ]).config($stateProvider => {
   'ngInject';
@@ -156,21 +154,21 @@ export default angular.module('order', [
     url: '/order',
     parent: 'main',
     component: 'order',
-    resolve: {
-      notAccomplishedOrder (OrderService) {
-        'ngInject';
+    onEnter: ($state, OrderService, $q) => {
+      'ngInject';
 
-        return OrderService.fetchLastNotAccomplishedOrder( );
-      }
-    },
-    onEnter: ($transition$, notAccomplishedOrder, $state, $timeout) => {
-      if (notAccomplishedOrder) {
-        $timeout(( ) => {
+      return $q.all({
+        notAccomplishedOrder: OrderService.fetchLastNotAccomplishedOrder( ).then(({ data }) => data),
+        notRatedEntertainers: OrderService.fetchNotRatedEntertainers( ).then(({ data }) => data)
+      }).then(({ notAccomplishedOrder, notRatedEntertainers }) => {
+        if (notAccomplishedOrder) {
           $state.go('main.manipulationEntertainers', { orderId: notAccomplishedOrder.id });
-        }, 100);
-      }
+        } else if (notRatedEntertainers && notRatedEntertainers.length > 0) {
+          $state.go('main.order.rateEntertainers', { from: 'main.order.create' });
+        }
+        return { notAccomplishedOrder, notRatedEntertainers };
+      });
     }
-
   });
 }).component('order', {
   template,

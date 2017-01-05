@@ -1,0 +1,38 @@
+<div class="rate-entertainers-component" layout-gt-sm="row">
+  <div class="order-form animated fadeIn" flex="100" flex-gt-md="50">
+    <h1 class="page-name">Rate Entertainers</h1>
+    <div class="rate-entertainers" layout="column" layout-align="start stretch">
+      <div class="rate-entertainers__cards-container">
+        <div layout="column" layout="start stretch" class="rate-entertainers__card" ng-repeat="invite in $ctrl.notRatedEntertainers track by $index">
+          <div layout="row" class="rate-entertainers__card-info">
+            <img class="rate-entertainers__card-avatar-img" ng-src="{{invite.provider.photos[0].preview}}"></img>
+            <div layout="column" class="rate-entertainers__card-personal-info">
+              <span class="rate-entertainers__card-field rate-entertainers__card-name">{{invite.provider.displaying_name}}</span>
+              <span class="rate-entertainers__card-field rate-entertainers__card-date">{{invite.datetime | amDateFormat:'h:mm A, MMM DD (dddd)'}}</span>
+              <span class="rate-entertainers__card-field rate-entertainers__card-location">{{invite.location}}</span>
+            </div>
+          </div>
+          <div layout="row" layout-align="space-between" class="rate-entertainers__card-manip-rating-wrapper">
+            <div>
+              <md-icon
+                md-svg-src="/assets/images/icons/svg/ic_star.svg"
+                alt="Rating"
+                class="rate-entertainers__card-manip-rating-icon"
+                ng-class="{'rate-entertainers__card-manip-rating-icon_filled': rate <= (invite.rating || $ctrl.rating.default)}"
+                ng-repeat="(key, rate) in $ctrl.rating.range track by $index"
+                ng-click="invite.rating = rate"/>
+              </md-icon>
+            </div>
+            <span class="rate-entertainers-card-manip-rating-value">{{(invite.rating || $ctrl.rating.default)}}</span>
+          </div>
+          <textarea name="comment" class="rate-entertainers__card-manip-comment" ng-model="invite.comment" placeholder="Write a comment"></textarea>
+        </div>
+      </div>
+      <div class="rate-entertainers__submit-wrapper">
+        <md-button class="md-raised md-accent rate-entertainers__submit" ng-click="$ctrl.rateEntertainers()">
+          SUBMIT
+        </md-button>
+      </div>
+    </div>
+  </div>
+</div>

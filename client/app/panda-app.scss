@@ -1,13 +1,13 @@
 // base styles
 @import url(https://fonts.googleapis.com/css?family=Oswald:400,300,700);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
-@import "common-scss/colors";
-@import "common-scss/fonts";
-@import "common-scss/form";
-@import "common-scss/typography";
-@import "common-scss/icons";
-@import "common-scss/angular-cosmetics";
-@import "common-scss/tables";
+@import "common-scss/colors.scss";
+@import "common-scss/fonts.scss";
+@import "common-scss/form.scss";
+@import "common-scss/typography.scss";
+@import "common-scss/icons.scss";
+@import "common-scss/angular-cosmetics.scss";
+@import "common-scss/tables.scss";
 
 * {
 	box-sizing: border-box;
@@ -93,12 +93,12 @@ app {
 }
 
 // components
-@import "page.components/main.page.component/navbar.component/navbar";
-@import "page.components/order.pages/map.component/map";
-@import "common/spinner.component/spinner";
-@import "page.components/order.pages/find-location.page.component/find-location.page";
-@import "page.components/main.page.component/billing.page.component/order-details.component/order-details";
-@import "page.components/login.pages/logout.component/logout";
+@import "page.components/main.page.component/navbar.component/navbar.scss";
+@import "page.components/order.pages/map.component/map.scss";
+@import "common/spinner.component/spinner.scss";
+@import "page.components/order.pages/find-location.page.component/find-location.page.scss";
+@import "page.components/main.page.component/billing.page.component/order-details.component/order-details.scss";
+@import "page.components/login.pages/logout.component/logout.scss";
 
 .app {
 	background-color: $primary;
@@ -108,13 +108,15 @@ app {
 }
 
 // pages
-@import "page.components/login.pages/login.pages";
-@import "page.components/profile.pages/profile.pages";
-@import "page.components/main.page.component/main.page";
-@import "page.components/order.pages/order.page";
-@import "page.components/payments.page.component/payments.page";
-@import "page.components/history.pages/history.page";
-@import "page.components/history-minx.page.component/history-minx.page";
-@import "page.components/password.page.component/password.page";
-@import "page.components/contact-us.page.component/contact-us.page";
-@import "page.components/admin.pages/admin";
+@import "page.components/login.pages/login.pages.scss";
+@import "page.components/profile.pages/profile.pages.scss";
+@import "page.components/main.page.component/main.page.scss";
+@import "page.components/order.pages/order.page.scss";
+@import "page.components/payments.page.component/payments.page.scss";
+@import "page.components/history.pages/history.page.scss";
+@import "page.components/history-minx.page.component/history-minx.page.scss";
+@import "page.components/password.page.component/password.page.scss";
+@import "page.components/contact-us.page.component/contact-us.page.scss";
+@import "page.components/admin.pages/admin.scss";
+
+@import "page.components/order.pages/rate-entertainers.component/rate-entertainers.scss";

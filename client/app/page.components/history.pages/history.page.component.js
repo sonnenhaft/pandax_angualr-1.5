@@ -1,4 +1,3 @@
-import config from 'config';
 import futureOrders from './future-orders.page.component/future-orders.page.component';
 import pastOrders from './past-orders.page.component/past-orders.page.component';
 import OrderService from '../../common-services/orderService.service';
@@ -7,10 +6,10 @@ import pastOrdersProvider from './past-orders-privider.page.component/past-order
 import template from './history.page.html';
 
 class controller {
-  constructor ($stateParams, StatefulUserData, Request) {
+  constructor ($stateParams, StatefulUserData, $http) {
     'ngInject';
 
-    Object.assign(this, { $stateParams, StatefulUserData, Request });
+    Object.assign(this, { $stateParams, StatefulUserData, $http });
   }
 
   $onInit ( ) {
@@ -36,11 +35,11 @@ export default angular.module('history', [
     parent: 'main',
     component: 'history',
     resolve: {
-      isOnPending: (StatefulUserData, Request, $q) => {
+      isOnPending: (StatefulUserData, $http, $q) => {
         'ngInject';
 
         if (StatefulUserData.isProvider( )) {
-          return Request.get(`${config.API_URL}/api/status`).then(({ data: user }) => {
+          return $http.get('{{config_api_url}}/api/status').then(({ data: user }) => {
             StatefulUserData.extend(user);
             return user && user.status === 'pending';
           });

@@ -1,19 +1,18 @@
-import config from 'config';
 import pandaxTermsComponent from './pandax-terms.component/pandax-terms.component';
 
 import template from './accept-terms-and-conditions.page.html';
 
 class controller {
-  constructor (Request, $state, StatefulUserData) {
+  constructor ($http, $state, StatefulUserData) {
     'ngInject';
 
-    Object.assign(this, { Request, $state, StatefulUserData });
+    Object.assign(this, { $http, $state, StatefulUserData });
   }
 
   onAccept ( ) {
     if (!this.accepted) { return; }
     this.orderLoading = true;
-    this.Request.post(`${config.API_URL}/api/order`, this.order).then(({ data, status }) => {
+    this.$http.post('{{config_api_url}}/api/order', this.order).then(({ data, status }) => {
       if (status !== 200) { return; }
       this.StatefulUserData.extend(data.customer);
       this.$state.go('main.manipulationEntertainers', { orderId: data.id, channelName: data.channel_name });

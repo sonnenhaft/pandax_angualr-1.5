@@ -43,7 +43,7 @@ export default angular.module('manipulationEntertainers', [
   'ngInject';
 
   $stateProvider.state('main.manipulationEntertainers', {
-    url: '/:orderId/manipulationEntertainers',
+    url: '/:orderId/manipulation-entertainers',
     parent: 'main',
     template: `<manipulation-entertainers 
                     entertainers="OrderService.list" 
@@ -95,6 +95,8 @@ export default angular.module('manipulationEntertainers', [
       }
     },
     onExit (OrderService) {
+      'ngInject';
+
       OrderService.unsubcribeOnEntertainerInvite( );
     }
   });
