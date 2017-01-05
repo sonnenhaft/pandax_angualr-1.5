@@ -55,7 +55,7 @@ class controller {
       controller: angular.noop,
       controllerAs: '$ctrl',
       clickOutsideToClose: true,
-      template: `<ratings-modal-component user-id="$ctrl.userId"></ratings-modal-component>`,
+      template: '<ratings-modal-component user-id="$ctrl.userId"></ratings-modal-component>',
       targetEvent,
       bindToController: true,
       locals: {

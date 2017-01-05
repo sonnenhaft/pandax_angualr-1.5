@@ -2,7 +2,6 @@
   <div class="profile-pages">
     <div id="{{::$ctrl.isCreate ? 'profile-create' : 'profile-view'}}" class="animated fadeIn">
       <span class="page-name">{{::$ctrl.isCreate ? 'Create profile' : 'Profile'}}</span>
-
       <form name="profileForm" id="profile-form" ng-class="{ 'view-mode': !$ctrl.isEditable, 'edit-mode': $ctrl.isEdit}" novalidate>
         <div class="basic-data">
           <div class="input image">
@@ -26,7 +25,7 @@
              </span>
           </div>
           <div class="input-container" ng-repeat="field in $ctrl.fields">
-            <div ng-if="field.type === 'dob'" class="input">
+            <div ng-if="field.type === 'dob'" class="input" ng-show="$ctrl.dob.year || $ctrl.isEditable">
               <label>Date of birth</label>
               <div ng-if="$ctrl.isEditable">
                 <date-of-birth-input ng-model="$ctrl.dob" min-age="18" required name="dob" as-object="true"></date-of-birth-input>

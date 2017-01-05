@@ -7,6 +7,7 @@ import acceptTermsAndConditionsPage from './accept-terms-and-conditions.page.com
 import RateEntertainersComponent from './rate-entertainers.component/rate-entertainers.component';
 import OrderResource from './order.resource';
 
+import TipModalComponent from '../../common/tip-modal.component/tip-modal.component';
 import template from './create-order.page.html';
 
 class controller {
@@ -145,13 +146,6 @@ class controller {
     })
     );
   }
-
-  showEntertainersCountInfo (event) {
-    this.$mdDialog.show({
-      contentElement: '#entertainers-count-info',
-      targetEvent: event
-    });
-  }
 }
 
 export default angular.module('order', [
@@ -160,6 +154,7 @@ export default angular.module('order', [
   orderConfirm,
   OrderService,
   OrderResource,
+  TipModalComponent,
   manipulationEntertainers,
   RateEntertainersComponent,
   acceptTermsAndConditionsPage

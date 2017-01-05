@@ -1,0 +1,19 @@
+tip-modal {
+  cursor: pointer;
+  > span {
+    color: #747984;
+    white-space: nowrap;
+    font: 0.813em "Open Sans", sans-serif;
+  }
+
+  .desc-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: url('../assets/images/provider_desc.png') no-repeat center;
+    position: relative;
+    top: 3px;
+    left: 3px;
+  }
+}

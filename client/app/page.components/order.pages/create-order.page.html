@@ -51,10 +51,19 @@
           <div class="descr" ng-if="$ctrl.StatefulUserData.get('is_newcomer')">
             <p>
               Minimum 2 entertainers for first time customers.
-              <a href="" ng-click="$ctrl.showEntertainersCountInfo($event)">
-                Why?
-                <i class="desc-icon"></i>
-              </a>
+              <tip-modal modal-selector=".entertainers-count-info">
+                Why? <i class="desc-icon"></i>
+                <div style="display: none">
+                  <div class="md-dialog-container desc entertainers-count-info">
+                    <md-dialog>
+                      <span class="close" ng-click="$ctrl.$mdDialog.hide()"></span>
+                      <div layout-gt-sm="row" layout-align="space-between center">
+                        <div><p>Just trying to get to know you better for the safety of our Minx.</p></div>
+                    </div>
+                    </md-dialog>
+                  </div>
+                </div>
+              </tip-modal>
             </p>
           </div>
         </div>
@@ -167,17 +176,4 @@
   <div class="order-map animated fadeInRight" flex ng-if="!$ctrl.mobile">
     <map input="$ctrl.inputLocation" output="$ctrl.location = location"></map>
   </div>
-
-  <!-- Modal window -->
-  <div style="visibility: hidden">
-    <div class="md-dialog-container desc" id="entertainers-count-info">
-      <md-dialog>
-        <span class="close" ng-click="$ctrl.$mdDialog.hide()"></span>
-        <div layout-gt-sm="row" layout-align="space-between center">
-          <div><p>Just trying to get to know you better for the safety of our Minx.</p></div>
-        </div>
-      </md-dialog>
-    </div>
-  </div>
-
 </div>
