@@ -1,7 +1,7 @@
 <div layout="row" layout-align="end" class="icon_modal-close">
   <div class="icon_modal-close__image icon_modal-close__image_right" ng-click="$ctrl.$mdDialog.hide()"></div>
 </div>
-<div id="ratings">
+<div id="ratings" ng-repeat="i in [1,2,3,4,5,6]">
 
   <div class="ratings-wrapper" infinite-scroll="$ctrl.fetchMoreItems()" infinite-scroll-disabled='$ctrl.isOnProgress || $ctrl.isLastPage'>
     <div class="rating" ng-repeat="item in $ctrl.list">
@@ -17,11 +17,40 @@
         </div>
       </div>
 
-      <p class="rating__comment">{{item.comment}}</p>
+      <p class="rating__comment">
+        {{item.comment}}
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+        1 2 3 4 5 6 7
+      </p>
 
     </div>
 
-    <div ng-show="$ctrl.isEmpty">No ratings yet</div>
+    <div ng-show="$ctrl.isEmpty" class="rating">No ratings yet</div>
   </div>
 
 </div>

@@ -15,7 +15,7 @@ export default angular.module('panda-stubs', [
         [`/api/${role}/profile`]: { data: { role } },
         [`/api/${role}/orders/last-not-accomplished`]: [],
         '/api/orders/1/entertainers/search': [{}],
-        [`/api/customer/orders/1/invites`]: { items: [] },
+        '/api/customer/orders/1/invites': { items: [] },
         [`/api/orders/${orderId}`]: { serviceType: {} },
         [`/api/orders/${orderId}/entertainers/search`]: {},
         [`/api/${role}/orders/${orderId}/invites`]: { items: [] },
