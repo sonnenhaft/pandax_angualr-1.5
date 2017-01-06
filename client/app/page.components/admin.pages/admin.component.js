@@ -1,6 +1,6 @@
 import navbarAdmin from './navbar-admin.component/navbar-admin.component';
-import entertainers from './entertainers.page/entertainers.page.component';
-import customers from './customers.page/customers.page.component';
+import entertainers from './entertainers-admin.page/entertainers-admin.page';
+import customers from './customers-admin.page/customers-admin.page';
 import orders from './orders.page/orders.page.component';
 
 import template from './admin.html';

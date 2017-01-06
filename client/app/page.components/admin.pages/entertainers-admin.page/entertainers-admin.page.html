@@ -5,11 +5,17 @@
   <div class="admin__manip-row">
     <div layout="row" layout-align="start center" class="manip-row__block manip-row__block_left">
       <span class="admin__filter-name">Status</span>
-      <md-select ng-model="weapon" placeholder="Status" class="select-container_admin">
+      <md-select
+        ng-model="$ctrl.selectedStatus"
+        placeholder="Status"
+        class="select-container_admin"
+        ng-change="$ctrl.filterByStatus($ctrl.selectedStatus)">
+        <md-option ng-value="undefined" ng-show="$ctrl.selectedStatus"></md-option>
         <md-option ng-repeat="(key, val) in $ctrl.statuses" value="{{val}}">{{key}}</md-option>
       </md-select>
     </div>
   </div>
+  <md-progress-linear ng-show="$ctrl.isOnProgress" class="animated fadeIn"></md-progress-linear>
   <table class="admin__table table_admin"
          infinite-scroll="$ctrl.fetchMoreItems()"
          infinite-scroll-container="$ctrl.$scrollableElement"
