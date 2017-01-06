@@ -3,23 +3,22 @@ import pandaxTermsComponent from './pandax-terms.component/pandax-terms.componen
 import template from './accept-terms-and-conditions.page.html';
 
 class controller {
-  constructor ($http, $state, StatefulUserData) {
+  constructor ($http, $state, StatefulUserData, $stateParams) {
     'ngInject';
 
-    Object.assign(this, { $http, $state, StatefulUserData });
+    Object.assign(this, { $http, $state, StatefulUserData, $stateParams });
   }
 
-  onAccept ( ) {
-    if (!this.accepted) { return; }
-    this.orderLoading = true;
-    this.$http.post('{{config_api_url}}/api/order', this.order).then(({ data, status }) => {
-      if (status !== 200) { return; }
-      this.StatefulUserData.extend(data.customer);
-      this.$state.go('main.manipulationEntertainers', { orderId: data.id, channelName: data.channel_name });
-    }
-    ).finally(( ) => { this.orderLoading = false; });
+  createOrderAndRedirectToManipulation ( ) {
+    this.isLoading = true;
+    this.$http.post('{{config_api_url}}/api/order', this.$stateParams.order).then(
+      ({ data: { customer: currentUser, id: orderId, channel_name: channelName } }) => {
+        this.StatefulUserData.extend(currentUser);
+        this.$state.go('main.manipulationEntertainers', { orderId, channelName });
+      },
+      ( ) => { this.isLoading = false; }
+    );
   }
-
 }
 
 const name = 'acceptTermsAndConditionsPage';
@@ -28,25 +27,16 @@ export default angular.module(name, [
 ]).config($stateProvider => {
   'ngInject';
 
-  $stateProvider.state(`main.${name}`, {
+  $stateProvider.state(name, {
     url: '/accept-terms-and-conditions',
     params: { order: {} },
     parent: 'main',
-    controller: (order, $scope) => { $scope.order = order; },
-    template: '<accept-terms-and-conditions-page order="order"></accept-terms-and-conditions-page>',
-    resolve: {
-      order: $stateParams => {
-        'ngInject';
-
-        return $stateParams.order;
-      }
-    }
+    component: name,
   }).state('pandaxTermsPageComponent', {
     url: '/terms-and-conditions',
     template: '<div style="padding: 16px"><pandax-terms-page-component></pandax-terms-page-component></div>'
   });
 }).component(name, {
-  bindings: { order: '<' },
   template,
   controller
 }).name;

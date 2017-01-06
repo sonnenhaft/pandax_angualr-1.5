@@ -35,11 +35,11 @@ class OrderService {
     );
   }
 
-  getEntertainers () {
+  getEntertainers ( ) {
     return this.list;
   }
 
-  getProviders () {
+  getProviders ( ) {
     return this.providers;
   }
 
@@ -75,7 +75,7 @@ class OrderService {
       result => {
         this.listInvited = result.data && result.data.items;
         this.fillConfirmedList(this.listInvited);
-        return this.sortList();
+        return this.sortList( );
       },
       error => console.log(error)
     );
@@ -83,22 +83,22 @@ class OrderService {
 
   buildOrder (form) {
     return {
-      service_type: Number(_.head(this.Helper.getActiveObjectFromArray(this.getProviders())).type),
-      length: parseFloat(form.hour).toString(),
+      service_type: Number(_.head(this.Helper.getActiveObjectFromArray(this.getProviders( ))).type),
+      length: parseFloat(form.hour).toString( ),
       location: form.geo.location.formatted_address,
       coordinates: {
-        lat: form.geo.coords.latitude.toString(),
-        long: form.geo.coords.longitude.toString()
+        lat: form.geo.coords.latitude.toString( ),
+        long: form.geo.coords.longitude.toString( )
       },
       location_notes: form.notes ? form.notes : '',
       apartment: form.apt,
       asap: form.asap,
       datetime: form.asap ?
-        this.moment() :
+        this.moment( ) :
         this.moment(new Date(`${this.moment(form.date).format('YYYY/MM/DD')} ${form.time}`)),
       entertainers_number: Number(form.entertainer),
-      guests_number: form.guest.toString(),
-      cost: form.price.toString()
+      guests_number: form.guest.toString( ),
+      cost: form.price.toString( )
     };
   }
 
@@ -136,15 +136,15 @@ class OrderService {
     this.WebSocket.invites(channelName, this.setEntertainerStatus.bind(this));
   }
 
-  unsubcribeOnEntertainerInvite () {
-    this.WebSocket.close();
+  unsubcribeOnEntertainerInvite ( ) {
+    this.WebSocket.close( );
   }
 
   setEntertainerStatus (data) {
     const entertainer = _.find(this.listInvited, item => item.provider.id == data.provider_id);
     entertainer.status = data.action;
     entertainer.datetime = data.datetime;
-    this.sortList();
+    this.sortList( );
     this.fillConfirmedList([entertainer]);
   }
 
@@ -153,7 +153,7 @@ class OrderService {
   }
 
   cancelOrderForEntertainer (ev, invite, penaltyAmount) {
-    return this.$mdDialog.show(this.$mdDialog.confirm()
+    return this.$mdDialog.show(this.$mdDialog.confirm( )
       .title('Cancel Minx')
       .textContent(penaltyAmount => penaltyAmount > 0 ? // eslint-disable-line no-confusing-arrow
         `Canceling the order will cost $ ${penaltyAmount} penalty. Are you sure want to cancel order for the minx?` :
@@ -184,7 +184,7 @@ class OrderService {
     );
   }
 
-  fetchLastNotAccomplishedOrder () {
+  fetchLastNotAccomplishedOrder ( ) {
     return this.$http.get('{{config_api_url}}/api/{{current_user_role}}/orders/last-not-accomplished').then(result => result.data);
   }
 
@@ -193,7 +193,7 @@ class OrderService {
   }
 
   cancelOrder (ev, orderId, messageType = 0) {
-    const confirm = this.$mdDialog.confirm()
+    const confirm = this.$mdDialog.confirm( )
       .title(OrderService.cancelOrderMessages[messageType].title)
       .htmlContent(OrderService.cancelOrderMessages[messageType].content)
       .ariaLabel('Canceling Order')
@@ -218,7 +218,7 @@ class OrderService {
 
   fetchNotRatedEntertainers (data) {
     if (data) {
-      return this.$q.when(data)
+      return this.$q.when(data);
     } else {
       return this.$http.get('{{config_api_url}}/api/{{current_user_role}}/unratedinvites').then(result => result.data);
     }

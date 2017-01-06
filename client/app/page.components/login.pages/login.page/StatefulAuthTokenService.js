@@ -15,7 +15,7 @@ class StatefulAuthTokenService {
   }
 
   remember (token) {
-    this._token = token
+    this._token = token;
     this.storage.setItem(this.STORAGE_KEY, token);
   }
 

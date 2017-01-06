@@ -94,7 +94,14 @@
           border-radius: 0;
         }
 
-        &.disabled {
+        &:not([disabled]):not(.black) {
+          &:hover, &:focus {
+            border-color: $white;
+            background: $Cardinal;
+          }
+        }
+
+        &[disabled], &.black {
           background: black;
           border-color: $Davy-grey;
         }
