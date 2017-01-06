@@ -50,7 +50,6 @@ class controller {
       this.fields.unshift({ name: 'Display Name', model: 'displaying_name', type: 'text' });
     }
 
-
     const user = this.StatefulUserData.getUser( );
     const serverPhotos = user.photo ? [user.photo] : (user.photos || []);
     if (!serverPhotos.length || !serverPhotos[0]) {

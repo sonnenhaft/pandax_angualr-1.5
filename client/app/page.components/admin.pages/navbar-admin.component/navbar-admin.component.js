@@ -19,9 +19,7 @@ class controller {
 
 export default angular.module('navbarAdmin', [
   activeMenuItem
-]).filter('navByPosition', ( ) => (navs, field, val) => {
-  return navs.filter(item => item[field] == val)
-}).component('navbarAdmin', {
+]).filter('navByPosition', ( ) => (navs, field, val) => navs.filter(item => item[field] == val)).component('navbarAdmin', {
   template,
   controller,
 }).name;

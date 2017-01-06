@@ -29,7 +29,7 @@
               <label>Date of birth</label>
               <div ng-if="$ctrl.isEditable">
                 <date-of-birth-input ng-model="$ctrl.dob" min-age="18" required name="dob" as-object="true"></date-of-birth-input>
-                <span class="error" ng-messages="profileForm.dob.$error" ng-show="profileForm.dob.$touched">
+                <span class="error" ng-messages="profileForm.dob.$error" ng-show="profileForm.dob.$touched || profileForm.$submitted">
                         <div ng-message="required">Date of birth is required</div>
                         <div ng-message="minAge">Minimum allowed age is 18 years</div>
                     </span>

@@ -13,7 +13,7 @@ class controller extends AbstractScrollableController {
     'ngInject';
 
     super( );
-    this.dateCreatedFrom = new Date()
+    this.dateCreatedFrom = new Date( );
 
     Object.assign(this, { AdminDataResource, $location });
     Resolve.providers( ).then(typesOfService => this.typesOfService = typesOfService);
