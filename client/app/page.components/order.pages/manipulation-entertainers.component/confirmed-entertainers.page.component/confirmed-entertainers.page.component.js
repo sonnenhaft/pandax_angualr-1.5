@@ -33,7 +33,7 @@ class controller {
         this.statuses.canceledbyCustomer,
         this.statuses.canceledbyProvider
       ].indexOf(item.status) >= 0)).length == this.countOfRequiredEntertainers) {
-        this.$state.go('main.orderConfirm', { orderId: this.$stateParams.orderId });
+        this.$state.go('orderConfirm', { orderId: this.$stateParams.orderId });
       }
     }, true);
   }

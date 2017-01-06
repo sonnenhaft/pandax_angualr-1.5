@@ -27,11 +27,12 @@ export default angular.module(name, [
 ]).config($stateProvider => {
   'ngInject';
 
-  $stateProvider.state(name, {
+  $stateProvider.state({
     url: '/accept-terms-and-conditions',
-    params: { order: {} },
     parent: 'main',
+    name,
     component: name,
+    params: { order: {} },
   }).state('pandaxTermsPageComponent', {
     url: '/terms-and-conditions',
     template: '<div style="padding: 16px"><pandax-terms-page-component></pandax-terms-page-component></div>'
