@@ -29,7 +29,7 @@ export default [
   {
     role: ['admin'],
     text: 'Orders',
-    url: 'admin.orders',
+    url: 'adminOrdersPage',
     icon: { path: '/assets/images/icons/svg/navbar-admin/icon_orders.svg', styles: { height: '15px', width: '12px' } },
     hint: 'Orders'
   },

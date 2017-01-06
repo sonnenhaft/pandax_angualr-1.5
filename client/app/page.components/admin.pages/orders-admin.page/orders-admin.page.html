@@ -5,19 +5,25 @@
   <div class="admin__manip-row" layout="row">
     <div class="admin__manip-section" flex="40" layout="column">
       <label for="search" class="admin__manip-label">Search</label>
-      <input type="text" name="search" class="admin__manip-field admin__manip-text" placeholder="Enter name, email or location" ng-model="$ctrl.manip.search">
+      <input type="text" name="search" class="admin__manip-field admin__manip-text" placeholder="Enter name, email or location" ng-model="$ctrl.searchParams.search"
+             ng-model-options="{ debounce: 500 }" ng-change="$ctrl.filterData()">
     </div>
     <div class="admin__manip-section" flex="40" layout="column">
       <label for="typeOfService" class="admin__manip-label">Type of service</label>
-      <md-select ng-model="$ctrl.manip.typeOfServiceSelected" placeholder="All" class="admin__manip-field select-container_admin" name="typeOfService">
+      <md-select ng-model="$ctrl.searchParams.serviceType" placeholder="All" class="admin__manip-field select-container_admin" name="typeOfService" ng-change="$ctrl.filterData()">
+        <md-option ng-value="undefined" ng-show="$ctrl.searchParams.serviceType"></md-option>
         <md-option ng-repeat="type in $ctrl.typesOfService track by $index" value="{{type.type}}">{{type.name}}</md-option>
       </md-select>
     </div>
     <div class="admin__manip-section" flex="40" layout="column">
       <label for="dateCreationFrom" class="admin__manip-label">Creation dates</label>
       <div layout="row" class="admin__manip-field">
-        <md-datepicker class="admin__datepicker" ng-model="$ctrl.manip.dateCreationFr" aria-readonly="true" name="dateCreationFrom"></md-datepicker>
-        <md-datepicker class="admin__datepicker" ng-model="$ctrl.manip.dateCreationTo" aria-readonly="true" name="dateCreationTo"></md-datepicker>
+        <md-datepicker class="admin__datepicker" aria-readonly="true" name="dateCreationFrom"
+                       ng-model="$ctrl.searchParams.dateCreatedFrom"
+                       ng-change="$ctrl.filterData()"></md-datepicker>
+        <md-datepicker class="admin__datepicker" aria-readonly="true" name="dateCreationTo"
+                       ng-model="$ctrl.searchParams.dateCreatedTo"
+                       ng-change="$ctrl.filterData()"></md-datepicker>
       </div>
     </div>
   </div>
@@ -25,33 +31,42 @@
     <div class="admin__manip-section admin__manip-section_cost" flex="40" layout="column">
       <label for="costFrom" class="admin__manip-label">Cost</label>
       <div layout="row" class="admin__manip-field">
-        <input type="text" name="costFrom" class="admin__manip-text admin__manip-text_half" placeholder="From" ng-model="$ctrl.manip.costFr">
-        <input type="text" name="costTo" class="admin__manip-text admin__manip-text_half" placeholder="To" ng-model="$ctrl.manip.costTo">
+        <input type="text" name="costFrom" class="admin__manip-text admin__manip-text_half" placeholder="From" ng-model="$ctrl.searchParams.minCost"
+               ng-model-options="{ debounce: 500 }" ng-change="$ctrl.filterData()">
+        <input type="text" name="costTo" class="admin__manip-text admin__manip-text_half" placeholder="To" ng-model="$ctrl.searchParams.maxCost"
+               ng-model-options="{ debounce: 500 }" ng-change="$ctrl.filterData()">
       </div>
     </div>
     <div class="admin__manip-section" flex="40" layout="column">
       <label for="status" class="admin__manip-label">Status</label>
-      <md-select ng-model="$ctrl.manip.statusSelected" placeholder="All" class="admin__manip-field select-container_admin" name="status">
+      <md-select ng-model="$ctrl.searchParams.status" placeholder="All" class="admin__manip-field select-container_admin" name="status"
+                 ng-change="$ctrl.filterData()">
+        <md-option ng-value="undefined" ng-show="$ctrl.searchParams.status"></md-option>
         <md-option ng-repeat="(key, val) in $ctrl.ORDER_STATUSES" value="{{val}}">{{key}}</md-option>
       </md-select>
     </div>
     <div class="admin__manip-section" flex="40" layout="column">
       <label for="dateStartFr" class="admin__manip-label">Order start date</label>
       <div layout="row" class="admin__manip-field">
-        <md-datepicker class="admin__datepicker" ng-model="$ctrl.manip.dateStartFr" aria-readonly="true" name="dateStartFrom"></md-datepicker>
-        <md-datepicker class="admin__datepicker" ng-model="$ctrl.manip.dateStartTo" aria-readonly="true" name="dateStartTo"></md-datepicker>
+        <md-datepicker class="admin__datepicker" aria-readonly="true" name="dateStartFrom"
+                       ng-model="$ctrl.searchParams.dateStartedFrom"
+                       ng-change="$ctrl.filterData()"></md-datepicker>
+        <md-datepicker class="admin__datepicker" aria-readonly="true" name="dateStartTo"
+                       ng-model="$ctrl.searchParams.dateStartedTo"
+                       ng-change="$ctrl.filterData()"></md-datepicker>
       </div>
     </div>
   </div>
 
-  <div class="orders-content" layout="row">
+  <br>
+  <md-progress-linear ng-show="$ctrl.isOnProgress"></md-progress-linear>
+  <div class="orders-content" layout="row" ng-hide="$ctrl.isOnProgress && !$ctrl.list.length">
     <div class="orders-list">
       <div class="infinite-scroll-wrapper" infinite-scroll="$ctrl.fetchMoreItems()"
            infinite-scroll-disabled='$ctrl.isOnProgress || $ctrl.isLastPage'
            infinite-scroll-container="'.orders-list'">
-        <div class="order" ng-class="{'order_active': $ctrl.orderActiveIndex == $index}" layout="column"
-             ng-repeat="order in $ctrl.OrdersService.list"
-             ng-click="$ctrl.getOrderDetails($index)">
+        <div class="order" ng-class="{order_active: $ctrl.activeOrderDetails.id === order.id}" layout="column"
+             ng-repeat="order in $ctrl.list" ng-click="$ctrl.getOrderDetails(order.id)">
           <div class="order__content">
             <span class="order-param order-param_date">{{order.createdDt | amDateFormat:'h:mm A, MMM DD (dddd)'}}</span>
             <span class="order-param order-param_name">{{order.customer.first_name}} {{order.customer.last_name}}</span>
@@ -59,9 +74,8 @@
         </div>
       </div>
     </div>
-
     <div flex="80">
-      <table class="admin__table admin__table_orders table_admin" ng-if="$ctrl.orderActive">
+      <table class="admin__table admin__table_orders table_admin" ng-if="$ctrl.activeOrderDetails">
         <tr class="table_admin__row table_admin__row_start">
           <th class=" table_admin__cell table_admin__cell_header" colspan="4">General Information</th>
         </tr>
@@ -72,10 +86,10 @@
           <td class="table_admin__cell table_admin__cell_label">Event details and location notes</td>
         </tr>
         <tr class="table_admin__row">
-          <td class="table_admin__cell">{{$ctrl.orderActive.createdDt | amDateFormat:'h:mm A, MMM DD'}}</td>
-          <td class="table_admin__cell">{{$ctrl.orderActive.location}}</td>
-          <td class="table_admin__cell">{{$ctrl.orderActive.apartment}}</td>
-          <td class="table_admin__cell">{{$ctrl.orderActive.locationNotes}}</td>
+          <td class="table_admin__cell">{{$ctrl.activeOrderDetails.createdDt | amDateFormat:'h:mm A, MMM DD'}}</td>
+          <td class="table_admin__cell">{{$ctrl.activeOrderDetails.location}}</td>
+          <td class="table_admin__cell">{{$ctrl.activeOrderDetails.apartment}}</td>
+          <td class="table_admin__cell">{{$ctrl.activeOrderDetails.locationNotes}}</td>
         </tr>
         <tr class="table_admin__row">
           <td class="table_admin__cell table_admin__cell_label">Customer name</td>
@@ -84,10 +98,10 @@
           <td class="table_admin__cell table_admin__cell_label">Service type</td>
         </tr>
         <tr class="table_admin__row">
-          <td class="table_admin__cell">{{$ctrl.orderActive.customer.first_name}} {{$ctrl.orderActive.customer.last_name}}</td>
-          <td class="table_admin__cell">{{$ctrl.orderActive.customer.email}}</td>
-          <td class="table_admin__cell">{{$ctrl.orderActive.asapFlag ? 'ASAP' : ($ctrl.orderActive.datetime | amDateFormat:'h:mm A, MMM DD')}}</td>
-          <td class="table_admin__cell">{{$ctrl.orderActive.serviceType.name}}</td>
+          <td class="table_admin__cell">{{$ctrl.activeOrderDetails.customer.first_name}} {{$ctrl.activeOrderDetails.customer.last_name}}</td>
+          <td class="table_admin__cell">{{$ctrl.activeOrderDetails.customer.email}}</td>
+          <td class="table_admin__cell">{{$ctrl.activeOrderDetails.asapFlag ? 'ASAP' : ($ctrl.activeOrderDetails.datetime | amDateFormat:'h:mm A, MMM DD')}}</td>
+          <td class="table_admin__cell">{{$ctrl.activeOrderDetails.serviceType.name}}</td>
         </tr>
         <tr class="table_admin__row">
           <td class="table_admin__cell table_admin__cell_label">Length of booking</td>
@@ -96,10 +110,10 @@
           <td class="table_admin__cell table_admin__cell_label">Guests</td>
         </tr>
         <tr class="table_admin__row">
-          <td class="table_admin__cell">{{$ctrl.orderActive.length | hoursToTime}}</td>
-          <td class="table_admin__cell">{{$ctrl.orderActive.totalInvites}}</td>
-          <td class="table_admin__cell">{{$ctrl.orderActive.entertainers_number}}</td>
-          <td class="table_admin__cell">{{$ctrl.orderActive.guestNumber}}</td>
+          <td class="table_admin__cell">{{$ctrl.activeOrderDetails.length | hoursToTime}}</td>
+          <td class="table_admin__cell">{{$ctrl.activeOrderDetails.totalInvites}}</td>
+          <td class="table_admin__cell">{{$ctrl.activeOrderDetails.entertainers_number}}</td>
+          <td class="table_admin__cell">{{$ctrl.activeOrderDetails.guestNumber}}</td>
         </tr>
         <tr class="table_admin__row">
           <td class="table_admin__cell table_admin__cell_label">Pre-paid</td>
@@ -108,17 +122,17 @@
           <td class="table_admin__cell table_admin__cell_label">Stripe</td>
         </tr>
         <tr class="table_admin__row">
-          <td class="table_admin__cell table_admin__cell_money">{{$ctrl.orderActive.cost}}</td>
-          <td class="table_admin__cell table_admin__cell_money">{{$ctrl.orderActive.finalCost}}</td>
-          <td class="table_admin__cell table_admin__cell_money">{{$ctrl.orderActive.comission}}</td>
-          <td class="table_admin__cell table_admin__cell_money">{{$ctrl.orderActive.stripeComission}}</td>
+          <td class="table_admin__cell table_admin__cell_money">{{$ctrl.activeOrderDetails.cost}}</td>
+          <td class="table_admin__cell table_admin__cell_money">{{$ctrl.activeOrderDetails.finalCost}}</td>
+          <td class="table_admin__cell table_admin__cell_money">{{$ctrl.activeOrderDetails.comission}}</td>
+          <td class="table_admin__cell table_admin__cell_money">{{$ctrl.activeOrderDetails.stripeComission}}</td>
         </tr>
 
         <tr class="table_admin__row table_admin__row_start">
           <th class="table_admin__cell table_admin__cell_header" colspan="4">Invites</th>
         </tr>
         <tr
-          class="table_admin__row" ng-repeat-start="invite in $ctrl.orderActive.invites">
+          class="table_admin__row" ng-repeat-start="invite in $ctrl.activeOrderDetails.invites">
           <td class="table_admin__cell table_admin__cell_label">Entertainer name</td>
           <td class="table_admin__cell table_admin__cell_label">Entertainer email</td>
           <td class="table_admin__cell table_admin__cell_label">Creation date</td>
@@ -144,6 +158,7 @@
           <td class="table_admin__cell table_admin__cell_money" colspan="2">{{invite.stripeComission}}</td>
         </tr>
       </table>
+      <md-progress-linear ng-show="$ctrl.isLoadingDetails"></md-progress-linear>
     </div>
   </div>
 </div>

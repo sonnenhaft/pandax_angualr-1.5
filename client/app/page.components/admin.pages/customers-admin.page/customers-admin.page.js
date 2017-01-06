@@ -25,7 +25,7 @@ class controller extends AbstractScrollableController {
     return this._getList({ page, status });
   }
 
-  _getList (params) { return this.AdminDataResource.customersList(params); }
+  _getList (params) { return this.AdminDataResource.fetchCustomers(params); }
 
   filterByStatus ( ) {
     this.resetItems( );

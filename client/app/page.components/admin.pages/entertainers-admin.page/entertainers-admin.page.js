@@ -27,7 +27,7 @@ class controller extends CustomersPageController {
     this.statusType = 'provider';
   }
 
-  _getList (params) { return this.AdminDataResource.entertainersList(params); }
+  _getList (params) { return this.AdminDataResource.fetchEntertainers(params); }
 
   showPopup (targetEvent, index) {
     this.entertainerPhotosModal({
