@@ -8,6 +8,7 @@ export default angular.module('loginPage', [
   controller (LoginResource, $stateParams, $location, $state, StatefulAuthTokenService, StatefulUserData) {
     'ngInject';
 
+    this.skipFinallyTheButton = true;
     this.login = ( ) => LoginResource.login({}, this.credentials).$promise.then(({ data: user, token }) => {
       StatefulAuthTokenService.remember(token);
       return user;

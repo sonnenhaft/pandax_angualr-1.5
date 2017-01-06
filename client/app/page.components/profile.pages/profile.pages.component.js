@@ -8,7 +8,8 @@ import DobInputComponent from './date-of-birth.input.component/date-of-birth.inp
 import UserProfileResource from './user-profile.resource';
 
 class controller {
-  static CUSTOMER_FIELDS = [
+  static PROVIDER_FIELDS = [
+    { name: 'Display Name', model: 'displaying_name', type: 'text' },
     {
       combined: [
         { name: 'First Name', model: 'first_name', type: 'text' },
@@ -17,6 +18,17 @@ class controller {
     },
     { name: 'Phone Number', model: 'phone', type: 'tel' },
     { type: 'dob' },
+    { name: 'Email', model: 'email', type: 'email' }
+  ]
+
+  static CUSTOMER_FIELDS = [
+    {
+      combined: [
+        { name: 'First Name', model: 'first_name', type: 'text' },
+        { name: 'Last Name', model: 'last_name', type: 'text', desc: 'We won\'t display your last name' }
+      ]
+    },
+    { name: 'Phone Number', model: 'phone', type: 'tel' },
     { name: 'Email', model: 'email', type: 'email' }
   ]
 
@@ -46,8 +58,7 @@ class controller {
     } else if (StatefulUserData.isProvider( )) {
       this.images = [{ file: '' }, { file: '' }, { file: '' }];
       this.isProvider = true;
-      this.fields = controller.CUSTOMER_FIELDS.slice( );
-      this.fields.unshift({ name: 'Display Name', model: 'displaying_name', type: 'text' });
+      this.fields = controller.PROVIDER_FIELDS;
     }
 
     const user = this.StatefulUserData.getUser( );
