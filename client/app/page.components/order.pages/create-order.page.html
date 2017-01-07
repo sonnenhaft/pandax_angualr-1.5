@@ -86,6 +86,12 @@
           </span>
         </div>
       </div>
+      <div>
+        <span class="error" ng-show="$ctrl.location && $ctrl.location.formatted_address.indexOf('NY') === -1"
+        style="color: #ba192f">
+            Only NYC area is available for placing the order
+        </span>
+      </div>
       <div class="input">
         <label>Event details and location notes</label>
         <textarea name="notes" ng-model="$ctrl.notes"></textarea>

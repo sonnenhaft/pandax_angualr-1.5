@@ -1,5 +1,9 @@
 .order-form {
 
+  &.error {
+    color: $Cardinal;
+  }
+
   width: 100%;
   max-width: 420px;
   height: 100%;
@@ -161,12 +165,6 @@
             cursor: pointer;
             opacity: 0;
           }
-        }
-      }
-
-      span {
-        &.error {
-          color: $Cardinal;
         }
       }
     }

@@ -28,6 +28,7 @@ class controller {
     this.loading = true;
     this.locations = this.locationError = false;
     this.Location.getLocationByString(location, locations => this.$timeout(( ) => {
+      console.log(locations)
       this.loading = false;
       this.locations = locations && locations.length ? locations : false;
     }));
@@ -53,7 +54,7 @@ class controller {
   /** @deprecated messy bool logic */
   checkLocation ( ) {
     if (this.locations && this.locations.length) {
-      this.setLocation(_.head(this.locations));
+      this.setLocation(this.locations[0]);
       return false;
     } else {
       this.output({ location: this.location });
