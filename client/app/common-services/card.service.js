@@ -11,8 +11,7 @@ class Cards {
   }
 
   add (card) {
-    return this.stripeCreateToken(this.makeCard(card))
-      .then(
+    return this.stripeCreateToken(this.makeCard(card)).then(
         ({ id }) => id,
         error => {
           // All errors in response are displays in the http interceptors (look at 'app.js')

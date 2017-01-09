@@ -42,7 +42,7 @@ class controller {
           this.year = date.getFullYear( );
         }
       }
-      this.ngModel.$setValidity('required', !!date);
+      this.setDate( );
     };
 
     this.minAge = this.minAge || 0;
