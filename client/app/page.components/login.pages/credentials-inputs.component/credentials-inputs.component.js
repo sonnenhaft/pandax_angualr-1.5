@@ -31,7 +31,12 @@ class controller {
     this.loading = true;
     this.onSubmit($event).catch(e => {
       this.ajaxError = e.statusText;
-    }).finally(( ) => this.loading = false);
+      this.loading = false;
+    }).finally(( ) => {
+      if (!this.skipFinallyButton) {
+        this.loading = false;
+      }
+    });
   }
 }
 
@@ -39,7 +44,7 @@ export default angular.module('credentialsInputs', [
   TouchedInvalidDirective
 ]).component('credentialsInputs', {
   require: { form: '^form' },
-  bindings: { credentials: '=', submitTitle: '@', onSubmit: '&', emailOnly: '<', passwordOnly: '<', forgotPasswordLink: '<' },
+  bindings: { credentials: '=', submitTitle: '@', onSubmit: '&', emailOnly: '<', passwordOnly: '<', forgotPasswordLink: '<', skipFinallyButton: '<' },
   controller,
   template
 }).directive('repeatPasswordEqual', ( ) => ({
