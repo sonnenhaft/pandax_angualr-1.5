@@ -27,7 +27,7 @@ class controller {
 
     this.OrderService.cancelOrder(ev, this.$stateParams.orderId, messageType).then(data => {
       if (data.status == this.ORDER_STATUSES.accepted) {
-        this.$state.go('main.orderConfirm', { orderId: this.$stateParams.orderId });
+        this.$state.go('orderConfirm', { orderId: this.$stateParams.orderId });
       } else {
         this.$state.go('main.create-order');
       }
@@ -43,7 +43,8 @@ export default angular.module('manipulationEntertainers', [
   'ngInject';
 
   $stateProvider.state('main.manipulationEntertainers', {
-    url: '/:orderId/manipulation-entertainers',
+    url: '/:orderId/manipulation-entertainers?modal',
+    reloadOnSearch: false,
     parent: 'main',
     template: `<manipulation-entertainers 
                     entertainers="OrderService.list" 

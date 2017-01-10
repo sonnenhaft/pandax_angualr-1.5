@@ -26,6 +26,7 @@
 	.order {
 		padding: 11px 17px 0 17px;
 		width: 100%;
+    cursor: pointer;
 
 		&-param {
 			@extend .font_admin-manip__label;

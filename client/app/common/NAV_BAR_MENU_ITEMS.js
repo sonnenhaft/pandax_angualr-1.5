@@ -15,21 +15,21 @@ export default [
   {
     role: ['admin'],
     text: 'Entertainers',
-    url: 'admin.entertainers',
+    url: 'entertainersAdminPage',
     icon: { path: '/assets/images/icons/svg/navbar-admin/icon_providers.svg', styles: { height: '17px', width: '12px' } },
     hint: 'Entertainers'
   },
   {
     role: ['admin'],
     text: 'Customers',
-    url: 'admin.customers',
+    url: 'customersAdminPage',
     icon: { path: '/assets/images/icons/svg/navbar-admin/icon_customers.svg', styles: { height: '17px', width: '10px' } },
     hint: 'Customers'
   },
   {
     role: ['admin'],
     text: 'Orders',
-    url: 'admin.orders',
+    url: 'adminOrdersPage',
     icon: { path: '/assets/images/icons/svg/navbar-admin/icon_orders.svg', styles: { height: '15px', width: '12px' } },
     hint: 'Orders'
   },

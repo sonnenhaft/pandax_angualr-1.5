@@ -223,14 +223,6 @@ class OrderService {
       return this.$http.get('{{config_api_url}}/api/{{current_user_role}}/unratedinvites').then(result => result.data);
     }
   }
-
-  rateEntertainers (orderId, invite) {
-    return this.$http.post(`{{config_api_url}}/api/provider/${orderId}/ratings`, invite);
-  }
-
-  getRatingsOfEntertainers (entertainerId) {
-    return this.$http.get(`{{config_api_url}}/api/provider/${entertainerId}/ratings`).then(response => response.data);
-  }
 }
 
 export default angular.module('OrderService', [

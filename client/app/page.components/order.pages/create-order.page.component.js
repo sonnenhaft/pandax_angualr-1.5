@@ -5,7 +5,9 @@ import orderConfirm from './order-confirm.page.component/order-confirm.page.comp
 import manipulationEntertainers from './manipulation-entertainers.component/manipulation-entertainers.page';
 import acceptTermsAndConditionsPage from './accept-terms-and-conditions.page.component/accept-terms-and-conditions.page.component';
 import RateEntertainersComponent from './rate-entertainers.component/rate-entertainers.component';
+import OrderResource from './order.resource';
 
+import TipModalComponent from '../../common/tip-modal.component/tip-modal.component';
 import template from './create-order.page.html';
 
 class controller {
@@ -19,13 +21,13 @@ class controller {
   date = new Date( )
   currentDate = new Date( )
 
-  constructor (Helper, Validation, OrderService, $http, $window, $state, $mdDialog, moment, StatefulUserData, $q, $stateParams) {
+  constructor (Helper, Validation, OrderService, $http, $window, $state, $mdDialog, moment, StatefulUserData, $q, $stateParams, OrderResource) {
     'ngInject';
 
     this.resolved = false;
     $q.all({
       notAccomplishedOrder: OrderService.fetchLastNotAccomplishedOrder( ).then(({ data }) => data),
-      notRatedEntertainers: OrderService.fetchNotRatedEntertainers($stateParams.notRatedEntertainers).catch(( ) => [])
+      notRatedEntertainers: OrderResource.fetchNotRatedEntertainers($stateParams.notRatedEntertainers).$promise
     }).then(({ notAccomplishedOrder, notRatedEntertainers }) => {
       if (notAccomplishedOrder) {
         $state.go('main.manipulationEntertainers', { orderId: notAccomplishedOrder.id });
@@ -54,14 +56,13 @@ class controller {
     this.time = this.Helper.getNearestTime('time');
     this.range = this.Helper.getNearestTime('range');
 
-    if (this.StatefulUserData.get('is_newcomer')) {
-      this.entertainers = _.slice(this.entertainers, 1);
-      this.entertainer = _.head(this.entertainers);
-    }
-
     if (!this.StatefulUserData.get('is_newcomer')) {
-      this.hours = _.slice(this.hours, 1);
-      this.hour = _.head(this.hours);
+      this.isNewcomer = true;
+      this.entertainers = this.entertainers.slice(1);
+      this.entertainer = this.entertainers[0];
+    } else {
+      this.hours = this.hours.slice(1);
+      this.hour = this.hours[0];
     }
   }
 
@@ -124,17 +125,14 @@ class controller {
       return false;
     }
 
-    this.$http.post('{{config_api_url}}/api/order', this.orderData(orderModel)).then(
-      ({ data }) => {
-        this.orderLoading = false;
-        this.StatefulUserData.extend(data.customer);
-        this.$state.go('main.manipulationEntertainers', { orderId: data.id, channelName: data.channel_name });
-      },
-      error => {
-        this.orderLoading = false;
-        console.log(error);
-      }
-    );
+    this.$http.post('{{config_api_url}}/api/order', this.orderData(orderModel)).then(({ data: { customer, id: orderId, channel_name: channelName } }) => {
+      this.orderLoading = false;
+      console.log(customer);
+      this.StatefulUserData.extend(customer);
+      this.$state.go('main.manipulationEntertainers', { orderId, channelName });
+    }).finally(( ) => {
+      this.orderLoading = false;
+    });
   }
 
   orderData (orderModel) {
@@ -144,13 +142,6 @@ class controller {
     })
     );
   }
-
-  showEntertainersCountInfo (event) {
-    this.$mdDialog.show({
-      contentElement: '#entertainers-count-info',
-      targetEvent: event
-    });
-  }
 }
 
 export default angular.module('order', [
@@ -158,6 +149,8 @@ export default angular.module('order', [
   Validation,
   orderConfirm,
   OrderService,
+  OrderResource,
+  TipModalComponent,
   manipulationEntertainers,
   RateEntertainersComponent,
   acceptTermsAndConditionsPage

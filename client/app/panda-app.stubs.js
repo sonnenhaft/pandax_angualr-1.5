@@ -8,6 +8,7 @@ export default angular.module('panda-stubs', [
   $provide.decorator('$http', ($delegate, $q, $window, PandaHttpInterceptor) => {
     const $http = $delegate;
     const role = 'customer';
+    const orderId = 113;
     if ($window.localStorage.stub) {
       const mocks = {
         '/api/sessions': { data: { role }, token: 1 },
@@ -15,7 +16,9 @@ export default angular.module('panda-stubs', [
         [`/api/${role}/orders/last-not-accomplished`]: [],
         '/api/orders/1/entertainers/search': [{}],
         '/api/customer/orders/1/invites': { items: [] },
-        '/api/orders/1': { serviceType: {} },
+        [`/api/orders/${orderId}`]: { serviceType: {} },
+        [`/api/orders/${orderId}/entertainers/search`]: {},
+        [`/api/${role}/orders/${orderId}/invites`]: { items: [] },
         [`/api/${role}/service-types`]: [],
         [`/api/${role}/unratedinvites`]: [
           { id: 204, order_id: 102, location: 'vulica Prytyckaha 2, Minsk, Belarus', location_notes: '111' },

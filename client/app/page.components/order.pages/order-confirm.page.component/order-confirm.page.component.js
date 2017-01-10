@@ -4,52 +4,43 @@ import showInTime from '../../../common/show-in-time.directive';
 import template from './order-confirm.page.component.html';
 
 class controller {
-  constructor (moment, $state, OrderService, Helper) {
+  timeToCleanCancel = 5;
+
+  constructor (moment, $state, OrderService, Helper, $stateParams) {
     'ngInject';
 
-    Object.assign(this, { moment, $state, OrderService, Helper });
-
-    this.timeToCleanCancel = 5;
+    Object.assign(this, { moment, $state, OrderService, Helper, $stateParams });
   }
 
-  cancelOrder (ev, invite) {
-    const cost = this.moment(invite.datetime).add(this.timeToCleanCancel, 'm') > this.moment( ) ? 0 : invite.type.penalty_amount;
-
-    this.OrderService.cancelOrderForEntertainer(ev, invite, cost).then(_data => {
-      this.Helper.showToast('Done');
+  $onInit ( ) {
+    this.OrderService.fetchEntertainersConfirmed(this.$stateParams.orderId).then(( ) => {
+      this.invites = this.OrderService.listConfirmed;
     });
   }
 
+  cancelOrder ($event, invite) {
+    const cost = this.moment(invite.datetime).add(this.timeToCleanCancel, 'm') > this.moment( ) ? 0 : invite.type.penalty_amount;
+
+    this.OrderService.cancelOrderForEntertainer($event, invite, cost).then(( ) => {
+      this.Helper.showToast('Done');
+    });
+  }
 }
 
-export default angular.module('orderConfirm', [
+const name = 'orderConfirm';
+export default angular.module(name, [
   timer,
   showInTime
 ]).config($stateProvider => {
   'ngInject';
 
-  $stateProvider.state('main.orderConfirm', {
-    url: '/:orderId/orderConfirm',
+  $stateProvider.state({
+    url: '/:orderId/order-confirm',
     parent: 'main',
-    template: '<order-confirm  invites="OrderService.listConfirmed"></order-confirm>',
-    controller ($scope, OrderService) {
-      $scope.OrderService = OrderService;
-    },
-    resolve: {
-      orderId ($stateParams) {
-        'ngInject';
-
-        return $stateParams.orderId || 0;
-      },
-      entertainersConfirmed (OrderService, orderId) {
-        'ngInject';
-
-        return OrderService.fetchEntertainersConfirmed(orderId);
-      }
-    }
+    name,
+    component: name
   });
-}).component('orderConfirm', {
-  bindings: { invites: '=' },
+}).component(name, {
   template,
   controller
 }).name;

@@ -25,7 +25,7 @@ export default angular.module('loginPage', [
       } else if (StatefulUserData.isCustomer( )) {
         $state.go('main.create-order');
       } else if (StatefulUserData.isAdmin( )) {
-        $state.go('admin.entertainers');
+        $state.go('entertainersAdminPage');
       } else if (!user.first_name || user.last_name) {
         $state.go('main.profile.create');
       } else {

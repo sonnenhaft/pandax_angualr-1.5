@@ -31,9 +31,7 @@
           <span class="navbar_admin__link-text">{{nav.text}}</span>
         </a>
         <a ng-if="nav.isComponent" href="javascript:void(0)" class="navbar_admin__link">
-          <div ng-if="nav.component == 'logout'">
-            <logout/>
-          </div>
+          <logout ng-if="nav.component == 'logout'"></logout>
         </a>
       </li>
     </ul>

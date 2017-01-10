@@ -1,11 +1,14 @@
 import template from './payments.page.html';
 import Cards from '../../common-services/card.service';
 
+import TipModalComponent from '../../common/tip-modal.component/tip-modal.component';
+
 class controller {
-  constructor (Cards, $mdToast, $q) {
+  constructor (Cards, $mdToast, $q, $mdDialog) {
     'ngInject';
 
-    Object.assign(this, { Cards, $mdToast, $q });
+    // $mdDialog necessary to hide "Why" tooltip
+    Object.assign(this, { Cards, $mdToast, $q, $mdDialog });
     Cards.getCards( ).then(data => { this.cards = data; });
   }
 
@@ -50,7 +53,7 @@ class controller {
 }
 
 export default angular.module('payments', [
-
+  TipModalComponent,
   Cards
 ]).config($stateProvider => {
   'ngInject';

@@ -2,15 +2,24 @@ import OrderService from '../../../../common-services/orderService.service';
 import billing from '../../../main.page.component/billing.page.component/billing.page.component';
 import entertainerPhotosModal from '../entertainer-protos.modal/entertainer-protoes.modal';
 
+import ratingsModalComponent from './view-entertainer-ratings.modal/view-entertainer-ratings.modal';
+
 import template from './search-entertainers.page.html';
 
 class controller {
   photoActiveIndex = 0
+  modalName = 'entertainer-rating'
 
-  constructor (OrderService, $state, $mdDialog, $stateParams, entertainerPhotosModal) {
+  constructor (OrderService, $state, $mdDialog, $stateParams, entertainerPhotosModal, $location) {
     'ngInject';
 
-    Object.assign(this, { OrderService, entertainerPhotosModal, $state, $mdDialog, $stateParams });
+    Object.assign(this, { OrderService, entertainerPhotosModal, $state, $mdDialog, $stateParams, $location });
+  }
+
+  $onInit ( ) {
+    if (this.$location.search( ).modal === this.modalName) {
+      this.showRatings( );
+    }
   }
 
   goToEntertainerByIndex (direction) {
@@ -41,20 +50,19 @@ class controller {
   }
 
   showRatings (targetEvent) {
+    this.$location.search({ modal: this.modalName }).replace( );
     this.$mdDialog.show({
       controller: angular.noop,
       controllerAs: '$ctrl',
       clickOutsideToClose: true,
-      template: `<div layout="row" layout-align="end" class="icon_modal-close">
-                    <div class="icon_modal-close__image icon_modal-close__image_right" ng-click="vm.$mdDialog.hide()"></div>
-                  </div>
-  <ratings user-id="$ctrl.userId"></ratings>
-`,
+      template: '<ratings-modal-component user-id="$ctrl.userId"></ratings-modal-component>',
       targetEvent,
       bindToController: true,
       locals: {
         userId: this.entertainers[this.itemActiveIndex].id
       }
+    }).finally(( ) => {
+      this.$location.search({ modal: null }).replace( );
     });
   }
 }
@@ -62,7 +70,8 @@ class controller {
 export default angular.module('searchEntertainers', [
   billing,
   OrderService,
-  entertainerPhotosModal
+  entertainerPhotosModal,
+  ratingsModalComponent
 ]).component('searchEntertainers', {
   bindings: {
     entertainers: '=',

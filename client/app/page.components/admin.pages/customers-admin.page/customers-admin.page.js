@@ -1,8 +1,9 @@
-import template from './customers.page.html';
+import template from './customers-admin.page.html';
+import AdminDataResource from '../admin-data.resource';
 
-class controller {
-  currentPage = 0
-  list = []
+import AbstractScrollableController from '../../../common/abstract-scrollable.controller';
+
+class controller extends AbstractScrollableController {
   statusType = 'customer'
   statuses = {
     active: 'active',
@@ -10,26 +11,25 @@ class controller {
     unblocked: 'unblocked',
   }
 
-  constructor ($http, $mdDialog, $q) {
+  constructor ($mdDialog, $q, AdminDataResource, $http, $location) {
     'ngInject';
 
-    Object.assign(this, { $http, $mdDialog, $q });
-    this.fetchMoreItems( );
+    super( );
+    Object.assign(this, { $mdDialog, $q, AdminDataResource, $http, $location });
+    this.selectedStatus = this.$location.search( ).status;
   }
 
   _next (page) {
-    return this.$http.get(`{{config_api_url}}/api/admin/customers?page=${page}`);
+    const status = this.selectedStatus;
+    this.$location.search({ status }).replace( );
+    return this._getList({ page, status });
   }
 
-  fetchMoreItems ( ) {
-    this.isOnProgress = true;
-    return this._next(this.currentPage + 1).then(({ data: { items, meta: { pagination } } }) => {
-      this.list = this.list.concat(items);
-      this.currentPage = pagination.current_page;
-      this.isLastPage = this.currentPage === pagination.total_pages;
-    }).finally(( ) => {
-      this.isOnProgress = false;
-    });
+  _getList (params) { return this.AdminDataResource.fetchCustomers(params); }
+
+  filterByStatus ( ) {
+    this.resetItems( );
+    this.fetchMoreItems( );
   }
 
   setStatus (targetEvent, entity, targetStatus, showPopup = true, status) {
@@ -67,15 +67,21 @@ class controller {
 }
 
 export { controller };
-export default angular.module('customers', []).config($stateProvider => {
+
+const name = 'customersAdminPage';
+export default angular.module(name, [
+  AdminDataResource
+]).config($stateProvider => {
   'ngInject';
 
-  $stateProvider.state('admin.customers', {
-    url: '/customers',
+  $stateProvider.state({
+    url: '/customers?status',
+    reloadOnSearch: false,
     parent: 'admin',
-    component: 'customers'
+    name,
+    component: name
   });
-}).component('customers', {
+}).component(name, {
   template,
   controller
 }).name;

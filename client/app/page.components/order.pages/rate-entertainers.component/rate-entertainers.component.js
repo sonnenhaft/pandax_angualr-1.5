@@ -1,34 +1,34 @@
 import template from './rate-entertainers.html';
+import OrderResource from '../order.resource';
 
 class controller {
   rating = { range: [1, 2, 3, 4, 5, 6, 7], default: 7 }
 
-  constructor (OrderService, $state, $stateParams, $q, $http, StatefulUserData) {
+  constructor ($state, $stateParams, $q, StatefulUserData, OrderResource) {
     'ngInject';
 
-    Object.assign(this, { OrderService, $state, $stateParams, $q, $http, StatefulUserData });
+    Object.assign(this, { $state, $stateParams, $q, StatefulUserData, OrderResource });
 
-    OrderService.fetchNotRatedEntertainers($stateParams.notRatedEntertainers)
-      .then(notRatedEntertainers => {
-        if (notRatedEntertainers && notRatedEntertainers.length) {
-          this.notRatedEntertainers = notRatedEntertainers;
-        } else {
-          $state.go('main.create-order', { notRatedEntertainers });
-        }
-      });
+    OrderResource.fetchNotRatedEntertainers($stateParams.notRatedEntertainers).$promise.then(notRatedEntertainers => {
+      if (notRatedEntertainers && notRatedEntertainers.length) {
+        this.notRatedEntertainers = notRatedEntertainers;
+      } else {
+        $state.go('main.create-order', { notRatedEntertainers });
+      }
+    });
   }
 
   rateEntertainers ( ) {
-    this.$q.all(_(this.notRatedEntertainers).chain( ).groupBy('order_id')
-      .map(items => this.OrderService.rateEntertainers(this.orderId, items.map(invite => ({
-        rating: invite.rating || this.rating.default,
-        comment: invite.comment,
-        provider_id: invite.provider.id
-      }))))
-      .value( ))
-      .then(( ) => {
-        this.$state.go(this.$stateParams.from, {}, { reload: true });
-      });
+    const orderMap = this.notRatedEntertainers.reduce((map, { order_id, rating = this.rating.default, comment, provider: { id: provider_id } }) => {
+      map[order_id] = map[order_id] || []; // eslint-disable-line camelcase
+      map[order_id].push({ rating, comment, provider_id }); // eslint-disable-line camelcase
+      return map;
+    }, {});
+    return this.$q.all(Object.keys(orderMap).map(order_id =>  // eslint-disable-line camelcase
+      this.OrderResource.rateEntertainers({ order_id }, orderMap[order_id]).$promise // eslint-disable-line camelcase
+    )).then(( ) => {
+      this.$state.go('main.create-order', { reload: true });
+    });
   }
 }
 
@@ -42,6 +42,7 @@ export default angular.module('rateEntertainers', []).config($stateProvider => {
     params: { notRatedEntertainers: null }
   });
 }).component('rateEntertainers', {
+  OrderResource,
   template,
   controller
 }).name;

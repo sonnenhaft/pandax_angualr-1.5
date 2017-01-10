@@ -1,9 +1,10 @@
 import entertainerPhotosModal from '../../order.pages/manipulation-entertainers.component/entertainer-protos.modal/entertainer-protoes.modal';
-import { controller as CustomersPageComponent } from '../customers.page/customers.page.component';
+import { controller as CustomersPageController } from '../customers-admin.page/customers-admin.page';
 
-import template from './entertainers.page.html';
+import template from './entertainers-admin.page.html';
+import AdminDataResource from '../admin-data.resource';
 
-class controller extends CustomersPageComponent {
+class controller extends CustomersPageController {
   statuses = {
     accepted: 'accepted',
     active: 'active',
@@ -15,10 +16,10 @@ class controller extends CustomersPageComponent {
     unblocked: 'unblocked',
   }
 
-  constructor ($http, $mdDialog, $q, entertainerPhotosModal, $window) {
+  constructor ($http, $mdDialog, $q, entertainerPhotosModal, $window, $location, AdminDataResource) {
     'ngInject';
 
-    super($http, $mdDialog, $q);
+    super($mdDialog, $q, AdminDataResource, $http, $location);
 
     // so we expect that in required 'admin' component there is #admin div, sorry for this
     this.$scrollableElement = angular.element($window.document.getElementById('admin'));
@@ -26,9 +27,7 @@ class controller extends CustomersPageComponent {
     this.statusType = 'provider';
   }
 
-  _next (page) {
-    return this.$http.get(`{{config_api_url}}/api/provider?page=${page}`);
-  }
+  _getList (params) { return this.AdminDataResource.fetchEntertainers(params); }
 
   showPopup (targetEvent, index) {
     this.entertainerPhotosModal({
@@ -38,15 +37,18 @@ class controller extends CustomersPageComponent {
   }
 }
 
-const name = 'entertainersPage';
+const name = 'entertainersAdminPage';
 export default angular.module(name, [
-  entertainerPhotosModal
+  entertainerPhotosModal,
+  AdminDataResource
 ]).config($stateProvider => {
   'ngInject';
 
-  $stateProvider.state('admin.entertainers', {
+  $stateProvider.state({
     url: '/entertainers',
     parent: 'admin',
+    reloadOnSearch: false,
+    name,
     component: name
   });
 }).component(name, {

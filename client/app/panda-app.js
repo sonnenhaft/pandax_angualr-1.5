@@ -37,7 +37,7 @@ import PasswordPage from './page.components/password.page.component/password.pag
 import PaymentsPage from './page.components/payments.page.component/payments.page.component';
 import HistoryMinxPage from './page.components/history-minx.page.component/history-minx.page.component';
 import ContactUsPage from './page.components/contact-us.page.component/contact-us.page.component';
-import AdminComponent from './page.components/admin.pages/admin.component';
+import AdminComponent from './page.components/admin.pages/admin-pages.abstract.route';
 import LoginPagesRoutes, { LoginPageComponent as loginPageStateName } from './page.components/login.pages/login.pages.routes';
 
 import hoursToTime from './common/hoursToTime.filter';

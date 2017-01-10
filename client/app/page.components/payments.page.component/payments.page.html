@@ -38,6 +38,24 @@
       </form>
     </div>
 
+    <tip-modal modal-selector=".entertainers-count-info">
+      Why do we need this? <i class="desc-icon"></i>
+      <div style="display: none">
+        <div class="md-dialog-container desc entertainers-count-info">
+          <md-dialog>
+            <span class="close" ng-click="$ctrl.$mdDialog.hide()"></span>
+            <div layout-gt-sm="row" layout-align="space-between center">
+              <p>
+                Your earnings are deposited directly into your bank account via Stripe
+                by the next business day so make sure your debit card info is accurate
+                You can update this info at any time.
+              </p>
+            </div>
+          </md-dialog>
+        </div>
+      </div>
+    </tip-modal>
+
     <div class="payments-cards">
       <p class="no-cards" ng-if="!$ctrl.cards.length">
         No cards available
