@@ -1,7 +1,6 @@
 <form name="registerForm" class="animated fadeIn sign-up-page" novalidate>
   <div class="choose-type">
-    <md-button class="customer-user" ng-class="{black: !$ctrl.isCustomer}" ng-click="$ctrl.setIsCustomer(true)" ng-disabled="true"
-               title="coming soon">
+    <md-button class="customer-user" ng-class="{black: !$ctrl.isCustomer}" ng-click="$ctrl.setIsCustomer(true)">
       Customer
     </md-button>
     <md-button class="provider-user" ng-class="{black: $ctrl.isCustomer}" ng-click="$ctrl.setIsCustomer(false)">
