@@ -56,7 +56,7 @@ class controller {
     this.time = this.Helper.getNearestTime('time');
     this.range = this.Helper.getNearestTime('range');
 
-    if (!this.StatefulUserData.get('is_newcomer')) {
+    if (this.StatefulUserData.get('is_newcomer')) {
       this.isNewcomer = true;
       this.entertainers = this.entertainers.slice(1);
       this.entertainer = this.entertainers[0];
