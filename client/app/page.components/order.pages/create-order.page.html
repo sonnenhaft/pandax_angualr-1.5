@@ -70,6 +70,7 @@
                 <panda-find-location-input flex="60" ng-model="$ctrl.inputLocation" name="inputLocation"
                                            address-regex="NY.+USA"
                                            recognizable-address="true"
+                                           nyc-only="true"
                                            ng-required="true"></panda-find-location-input>
                 <div class="map" ng-if="$ctrl.mobile">
                     <panda-google-map-input ng-model="$ctrl.inputLocation"></panda-google-map-input>
@@ -91,6 +92,7 @@
 
           <span class="error" ng-messages="orderForm.inputLocation.$error" ng-if="orderForm.inputLocation.$invalid && orderForm.$submitted" style="color: #ba192f;">
             <div ng-message="addressRegex"> Only NYC area is available for placing the order</div>
+            <div ng-message="nycOnly">Only NYC area is available for placing the order</div>
             <div ng-message="required">This field is required</div>
             <div ng-message="recognizableAddress">We don’t recognize the address</div>
           </span>
