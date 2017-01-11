@@ -44,17 +44,6 @@ class Validation {
   }
 
   /** @deprecated mass */
-  location (point) {
-    if (_.isEmpty(point)) {
-      return this.message('location', false, 'This field is required');
-    } else if (!_.isObject(point) || !point.location) {
-      return this.message('location', false, 'We don’t recognize the address');
-    } else {
-      return this.message('location', true);
-    }
-  }
-
-  /** @deprecated mass */
   date (date) {
     if (!date) {
       return this.message('date', false, 'This field is required');

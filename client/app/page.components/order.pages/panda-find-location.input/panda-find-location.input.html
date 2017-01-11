@@ -1,0 +1,23 @@
+<div class="input" id="location-container">
+    <label>Location</label>
+    <div class="location-input" ng-class="{text: $ctrl.locationName}">
+        <input type="text"
+               ng-model="$ctrl.locationName"
+               ng-model-options="{ debounce: 300 }"
+               ng-change="$ctrl.findLocationsByName($ctrl.locationName)"
+               ng-class="{error: $ctrl.locationError}"
+               ng-blur="$ctrl.ifEmptySetFirstLocation($ctrl.fechedLocations)"
+               class="first">
+        <ul ng-if="$ctrl.fechedLocations.length" class="location-drop">
+            <li ng-repeat="item in $ctrl.fechedLocations" ng-click="$ctrl.chooseLocation(item)" ng-if="item.formatted_address">
+                {{item.formatted_address}}
+            </li>
+        </ul>
+        <md-button ng-show="$ctrl.locationName" ng-click="$ctrl.clearLocation()" aria-label="remove">
+        </md-button>
+        <md-progress-linear ng-show="$ctrl.isSearching" class="animated fadeIn"></md-progress-linear>
+    </div>
+    <span class="error" ng-if="$ctrl.locationError">
+    {{$ctrl.locationError}}
+  </span>
+</div>

@@ -85,10 +85,10 @@ class controller {
 
   getTotalPrice ( ) {
     return _
-        .chain(this.Helper.getActiveObjectFromArray(this.providers))
-        .map('price')
-        .sum( )
-        .value( ) * parseFloat(this.hour) * Number(this.entertainer);
+                .chain(this.Helper.getActiveObjectFromArray(this.providers))
+                .map('price')
+                .sum( )
+                .value( ) * parseFloat(this.hour) * Number(this.entertainer);
   }
 
   validate (field) {
@@ -101,39 +101,41 @@ class controller {
     return true;
   }
 
-  /** @deprecated mass */
-  onSearch (orderModel, form) {
+    /** @deprecated mass */
+  onSearch (form) {
+    if (!form.$submitted) {
+      form.$setSubmitted( );
+    }
+    const orderModel = {
+      hour: form.hour.$viewValue,
+      entertainer: form.entertainer.$viewValue,
+      apt: form.apt.$viewValue,
+      notes: form.notes.$viewValue,
+      guest: form.guest.$viewValue,
+      asap: form.asap.$viewValue,
+      later: form.later.$viewValue,
+      date: form.date.$viewValue,
+      time: form.time.$viewValue
+    };
     if ((this.typeError = !this.Helper.getActiveObjectFromArray(this.providers).length) || form.$invalid) { // eslint-disable-line no-cond-assign
       return false;
-    }
-
-    this.orderLoading = true;
-
-    if (
-      !this.validate({
-        apt: orderModel.apt,
-        location: this.inputLocation,
-        date: orderModel.date
-      })
-    ) {
+    } else if (!this.validate({ apt: orderModel.apt, location: this.inputLocation, date: orderModel.date })) {
       this.location = false;
-      this.orderLoading = false;
       return false;
-    }
-
-    if (this.StatefulUserData.get('is_newcomer')) {
+    } else if (this.StatefulUserData.get('is_newcomer')) {
       this.$state.go(acceptTermsAndConditionsPage, { order: this.orderData(orderModel) });
       return false;
+    } else {
+      this.orderLoading = true;
+      this.$http.post('{{config_api_url}}/api/order', this.orderData(orderModel)).then(({ data: { customer, id: orderId, channel_name: channelName } }) => {
+        this.orderLoading = false;
+        console.log(customer);
+        this.StatefulUserData.extend(customer);
+        this.$state.go('main.manipulationEntertainers', { orderId, channelName });
+      }).finally(( ) => {
+        this.orderLoading = false;
+      });
     }
-
-    this.$http.post('{{config_api_url}}/api/order', this.orderData(orderModel)).then(({ data: { customer, id: orderId, channel_name: channelName } }) => {
-      this.orderLoading = false;
-      console.log(customer);
-      this.StatefulUserData.extend(customer);
-      this.$state.go('main.manipulationEntertainers', { orderId, channelName });
-    }).finally(( ) => {
-      this.orderLoading = false;
-    });
   }
 
   orderData (orderModel) {
@@ -141,7 +143,7 @@ class controller {
       geo: this.inputLocation,
       price: this.getTotalPrice( )
     })
-    );
+        );
   }
 }
 

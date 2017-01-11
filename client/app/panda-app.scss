@@ -96,9 +96,9 @@ app {
 
 // components
 @import "page.components/main.page.component/navbar.component/navbar.scss";
-@import "page.components/order.pages/map.component/map.scss";
+@import "page.components/order.pages/panda-google-map.input/panda-google-map.input";
 @import "common/spinner.component/spinner.scss";
-@import "page.components/order.pages/find-location.page.component/find-location.page.scss";
+@import "page.components/order.pages/panda-find-location.input/panda-find-location.input";
 @import "page.components/main.page.component/billing.page.component/order-details.component/order-details.scss";
 @import "page.components/login.pages/logout.component/logout.scss";
 

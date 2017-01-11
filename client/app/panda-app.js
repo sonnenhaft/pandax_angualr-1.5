@@ -22,10 +22,10 @@ import PandaHttpInterceptor from './panda-app.http-interceptor';
 
 // common
 import NavbarComponent from './page.components/main.page.component/navbar.component/navbar.component';
-import Map from './page.components/order.pages/map.component/map.component';
+import Map from './page.components/order.pages/panda-google-map.input/panda-google-map.input';
 import ProfilePagesComponent from './page.components/profile.pages/profile.pages.component';
 import SpinnerComponent from './common/spinner.component/spinner.component';
-import FindLocationComponent from './page.components/order.pages/find-location.page.component/find-location.page.component';
+import FindLocationComponent from './page.components/order.pages/panda-find-location.input/panda-find-location.input';
 import OrderDetailsComponent from './page.components/main.page.component/billing.page.component/order-details.component/order-details.component';
 import LogoutComponent from './page.components/login.pages/logout.component/logout.component';
 
@@ -49,7 +49,6 @@ import PandaAppStubsConfig from './panda-app.stubs';
 angular.module('app', [
   uiRouter,
   'ui.router.state.events',
-  'uiGmapgoogle-maps',
   'angularMoment',
   'angular.filter',
   angularMessages,

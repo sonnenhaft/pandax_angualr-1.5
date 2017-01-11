@@ -1,0 +1,21 @@
+<div id="map" ng-style="$ctrl.height">
+    <div class="progress animated" ng-hide="$ctrl.currentMarkerPosition" ng-class="{fadeIn: !$ctrl.currentMarkerPosition, fadeOut: $ctrl.currentMarkerPosition}">
+        <div layout="row" layout-sm="column" layout-align="space-around">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+    <ui-gmap-google-map ng-if="$ctrl.currentMarkerPosition"
+            center="$ctrl.currentMarkerPosition"
+            zoom="$ctrl.zoom"
+            options="$ctrl.MAP_OPTIONS"
+            styles="$ctrl.MAP_STYLES"
+            events="$ctrl.pandaMapEvents">
+        <ui-gmap-marker
+                        idKey="1"
+                        coords="$ctrl.currentMarkerPosition"
+                        options="$ctrl.markerConfig.options"></ui-gmap-marker>
+    </ui-gmap-google-map>
+    <md-button class="user-location animated" aria-label="Location" ng-click="$ctrl.setDefaultLocation()"
+               ng-show="$ctrl.currentMarkerPosition" ng-class="{fadeOut: !$ctrl.currentMarkerPosition, bounceIn: $ctrl.currentMarkerPosition}">
+    </md-button>
+</div>
