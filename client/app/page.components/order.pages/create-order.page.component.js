@@ -28,6 +28,7 @@ class controller {
     $q.all({
       notAccomplishedOrder: OrderService.fetchLastNotAccomplishedOrder( ).then(({ data }) => data),
       notRatedEntertainers: OrderResource.fetchNotRatedEntertainers($stateParams.notRatedEntertainers).$promise
+      // notRatedEntertainers: $q.when([]) || OrderResource.fetchNotRatedEntertainers($stateParams.notRatedEntertainers).$promise
     }).then(({ notAccomplishedOrder, notRatedEntertainers }) => {
       if (notAccomplishedOrder) {
         $state.go('main.manipulationEntertainers', { orderId: notAccomplishedOrder.id });
@@ -59,11 +60,11 @@ class controller {
     if (this.StatefulUserData.get('is_newcomer')) {
       this.isNewcomer = true;
       this.entertainers = this.entertainers.slice(1);
-      this.entertainer = this.entertainers[0];
     } else {
       this.hours = this.hours.slice(1);
-      this.hour = this.hours[0];
     }
+    this.entertainer = this.entertainers[0];
+    this.hour = this.hours[0];
   }
 
   showDescription (event, index) {
