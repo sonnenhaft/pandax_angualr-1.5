@@ -121,12 +121,12 @@ class controller {
       first_name: profileForm.first_name.$viewValue,
       last_name: profileForm.last_name.$viewValue,
       phone: profileForm.phone.$viewValue,
-      email: profileForm.email.$viewValue,
-      dob: profileForm.dob.$viewValue
+      email: profileForm.email.$viewValue
     };
 
     if (this.isProvider) {
       Object.assign(profile, {
+        dob: profileForm.dob.$viewValue,
         displaying_name: profileForm.displaying_name.$viewValue,
         images: this.images
       });
