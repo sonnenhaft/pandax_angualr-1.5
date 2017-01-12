@@ -32,7 +32,7 @@ import LogoutComponent from './page.components/login.pages/logout.component/logo
 // pages
 import MainPage from './page.components/main.page.component/main.page.component';
 import OrderPage from './page.components/order.pages/create-order.page.component';
-import HistoryPage from './page.components/history.pages/history.page.component';
+import HistoryPage from './page.components/orders-history.pages/orders-history';
 import PasswordPage from './page.components/password.page.component/password.page.component';
 import PaymentsPage from './page.components/payments.page.component/payments.page.component';
 import HistoryMinxPage from './page.components/history-minx.page.component/history-minx.page.component';

@@ -1,5 +1,5 @@
-import template from './past-orders-privider.page.html';
-import './past-orders-privider.page.scss';
+import template from './past-orders.provider.tab.html';
+import './past-orders.provider.tab.scss';
 import ORDER_STATUSES from '../../../common/ORDER_STATUSES';
 
 class controller {
@@ -31,7 +31,7 @@ class controller {
   }
 }
 
-export default angular.module('pastOrdersProvider', []).component('pastOrdersProvider', {
+export default angular.module('pastOrdersProviderTab', []).component('pastOrdersProviderTab', {
   template,
   controller
 }).name;

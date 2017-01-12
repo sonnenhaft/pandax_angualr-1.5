@@ -1,7 +1,6 @@
-import template from './future-orders.page.html';
+import template from './future-orders.customer.tab.html';
 
 class controller {
-
   futures = []
   isOnProgress = false
   isLastPage = false
@@ -54,7 +53,7 @@ class controller {
   }
 }
 
-export default angular.module('futureOrders', []).component('futureOrders', {
+export default angular.module('futureOrdersCustomerTab', []).component('futureOrdersCustomerTab', {
   template,
   controller
 }).name;

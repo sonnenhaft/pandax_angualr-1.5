@@ -1,0 +1,35 @@
+<div class="list past-orders">
+    <ul ng-if="$ctrl.history.length" infinite-scroll="$ctrl.fetchMoreItems()" infinite-scroll-disabled='$ctrl.isOnProgress || $ctrl.isLastPage'>
+        <li ng-repeat="order in $ctrl.history">
+            <div class="order-information">
+        <span class="date">
+          {{order.status == $ctrl.statuses.canceledbyProvider || order.status == $ctrl.statuses.canceledbyCustomer ? '-' : (order.startDt | amDateFormat:'h:mm A, MMM DD (dddd)')}}
+        </span>
+                <span class="minx">{{order.serviceType.name}}</span>
+                <!--<span class="address">{{order.location}}</span>-->
+                <div layout="row">
+                    <span flex="15" class="guest">{{order.guestNumber}}</span>
+                    <!-- <span flex="15" class="minx">{{order.entertainers_number}}</span> -->
+                </div>
+                <span class="time">{{order.length | hoursToTime: 'seconds'}}</span>
+                <div layout="row" class="price">
+                    <div flex><span class="initial">${{order.cost}}</span>
+                        <p>Initial</p>
+                    </div>
+                    <div flex><span class="final">${{order.finalCost}}</span>
+                        <p>Final</p>
+                    </div>
+                </div>
+            </div>
+            <div class="order-minx">
+                <span class="minx" ui-sref="main.minx({type: 'past', id: order.id})">MINX ({{order.entertainers_number}})</span>
+            </div>
+        </li>
+    </ul>
+    <div layout="row" layout-align="center center" ng-if="$ctrl.isOnProgress">
+        <md-progress-circular md-mode="indeterminate" md-diameter="30" class="md-progress-circular_dark"></md-progress-circular>
+    </div>
+    <div class="empty-history" ng-if="!$ctrl.history.length && $ctrl.isOnProgress == false">
+        <p>You don't have any past orders</p>
+    </div>
+</div>

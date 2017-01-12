@@ -1,4 +1,4 @@
-import template from './past-orders.page.html';
+import template from './past-orders.customer.tab.html';
 import ORDER_STATUSES from '../../../common/ORDER_STATUSES';
 
 class controller {
@@ -32,7 +32,7 @@ class controller {
   }
 }
 
-export default angular.module('pastOrders', []).component('pastOrders', {
+export default angular.module('pastOrdersCustomerTab', []).component('pastOrdersCustomerTab', {
   template,
   controller
 }).name;
