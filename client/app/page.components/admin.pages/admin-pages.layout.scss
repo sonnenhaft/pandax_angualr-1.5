@@ -1,4 +1,27 @@
 #admin {
+  panda-find-location-input {
+    label {
+      @extend .font_admin-manip__label;
+      margin-left: 10px;
+    }
+    input {
+      width: 100%;
+      background: white url('../assets/images/icon_search.png') no-repeat center right 9px !important;
+      margin-top: 1px;
+      border: none;
+      padding: 4px 12px 10px 12px;
+      &::-webkit-input-placeholder {
+        @extend .font_admin-filter__placeholder;
+      }
+      &_half {
+        width: 50%;
+        &:not(:first-child) {
+          margin-left: 1px;
+        }
+      }
+    }
+  }
+
   $ordersContentMinWidth: 914px;
 
   .font_header {

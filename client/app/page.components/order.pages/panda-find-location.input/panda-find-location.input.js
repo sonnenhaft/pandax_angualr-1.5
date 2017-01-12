@@ -15,7 +15,9 @@ class controller {
   $onInit ( ) {
     this.ngModel.$render = ( ) => {
       const currentLocation = this.ngModel.$viewValue; // {coords: {latitude: Number, longitude: Number}, location: object with location}
-      if (currentLocation && currentLocation.location) {
+      if (this.asText) {
+        this.locationName = currentLocation;
+      } else if (currentLocation && currentLocation.location) {
         this.locationName = currentLocation.location.formatted_address;
       } else {
         this.locationName = UNKNOWN_PLACE; // actually if there is currentLocation and no location object in there - it is an error
@@ -43,10 +45,12 @@ class controller {
     this.ngModel.$setValidity('addressRegex', !this.addressRegex || !(this.locationName && new RegExp(this.locationName).test(this.locationName)));
     this.ngModel.$setValidity('required', !this.ngRequired || this.locationName);
     this.ngModel.$setValidity('recognizableAddress', !this.recognizableAddress || this.locationName !== UNKNOWN_PLACE);
-    const { location = {} } = (this.ngModel.$viewValue || { location: { address_components: [] } });
-    const { short_name: zip } = location.address_components.find(item => item.types.indexOf('postal_code') !== -1) || {};
+    if (!this.asText) {
+      const { location = {} } = (this.ngModel.$viewValue || { location: { address_components: [] } });
+      const { short_name: zip } = location.address_components.find(item => item.types.indexOf('postal_code') !== -1) || {};
 
-    this.ngModel.$setValidity('nycOnly', !this.nycOnly || (zip && this.validateBigAppleZip(zip)));
+      this.ngModel.$setValidity('nycOnly', !this.nycOnly || (zip && this.validateBigAppleZip(zip)));
+    }
   }
 
   validateBigAppleZip (zip) {
@@ -58,7 +62,12 @@ class controller {
     const { geometry: { location: coords }, formatted_address: locationName } = location;
 
     this.locationName = locationName;
-    this.ngModel.$setViewValue({ coords, location });
+    if (this.asText) {
+      this.ngModel.$setViewValue(locationName);
+    } else {
+      this.ngModel.$setViewValue({ coords, location });
+    }
+
     this.validateModel( );
   }
 
@@ -73,7 +82,15 @@ export default angular.module('pandaFindLocationInput', [
   GoogleGeoLocationService
 ]).component('pandaFindLocationInput', {
   require: { ngModel: '^ngModel' },
-  bindings: { addressContains: '@', ngRequired: '<', recognizableAddress: '<', nycOnly: '<' },
+  bindings: {
+    addressContains: '@',
+    label: '@',
+    placeholder: '@',
+    ngRequired: '<',
+    recognizableAddress: '<',
+    nycOnly: '<',
+    asText: '<'
+  },
   template,
   controller
 }).name;

@@ -1,13 +1,21 @@
 import AdminDataResource from '../admin-data.resource';
 import template from './orders-admin.page.html';
-import ORDER_STATUSES from '../../../common/ORDER_STATUSES';
 import AbstractScrollableController from '../../../common/abstract-scrollable.controller';
+import FindLocationComponent from '../../order.pages/panda-find-location.input/panda-find-location.input';
 
 class controller extends AbstractScrollableController {
   activeOrderIndex = -1
   typesOfService = []
   orderActive = null
-  ORDER_STATUSES = ORDER_STATUSES
+  SATUSES = {
+    no_invites: 'No Invites',
+    not_confirmed: 'Not Confirmed',
+    accepted: 'Accepted',
+    declined: 'Declined',
+    completed: 'Completed',
+    canceled_by_customer: 'Canceled by Customer',
+    canceled_by_entertainer: 'Canceled by Entertainer'
+  }
 
   constructor (AdminDataResource, Resolve, $location) {
     'ngInject';
@@ -19,9 +27,20 @@ class controller extends AbstractScrollableController {
     Resolve.providers( ).then(typesOfService => this.typesOfService = typesOfService);
   }
 
+  DATE_KEYS = ['create_dt_from', 'create_dt_to', 'start_dt_from', 'start_dt_to']
+  NUMBER_KEYS = ['cost_from', 'cost_to']
+
   $onInit ( ) {
     const { orderId: activeOrderId, ...searchParams } = this.$location.search( );
     this.searchParams = searchParams;
+
+    Object.keys(searchParams).filter(key => this.DATE_KEYS.includes(key)).forEach(key => {
+      this.searchParams[key] = new Date(searchParams[key]);
+    });
+    Object.keys(searchParams).filter(key => this.NUMBER_KEYS.includes(key)).forEach(key => {
+      this.searchParams[key] = searchParams[key] - 0;
+    });
+
     if (activeOrderId) {
       this.activeOrderId = activeOrderId;
       this.getOrderDetails(activeOrderId);
@@ -50,11 +69,19 @@ class controller extends AbstractScrollableController {
   _setLocation ( ) {
     const orderId = this.activeOrderId;
     const paramsMap = Object.keys(this.searchParams)
-      .filter(key => this.searchParams[key] !== '')
-      .reduce((map, key) => {
-        map[key] = this.searchParams[key];
-        return map;
-      }, {});
+            .filter(key => {
+              const value = this.searchParams[key];
+              return value !== '' && value !== null;
+            })
+            .reduce((map, key) => {
+              if (this.DATE_KEYS.includes(key)) {
+                map[key] = this.searchParams[key].toISOString( );
+              } else {
+                map[key] = this.searchParams[key];
+              }
+              return map;
+            }, {});
+
     this.$location.search({ ...paramsMap, ...{ orderId } }).replace( );
   }
 
@@ -69,14 +96,10 @@ class controller extends AbstractScrollableController {
   }
 }
 
-const statusesViewCorrection = {
-  canceled_by_provider: 'canceled by entertainer',
-  canceled_by_customer: 'canceled by customer'
-};
-
 const name = 'adminOrdersPage';
 export default angular.module(name, [
   AdminDataResource,
+  FindLocationComponent
 ]).config($stateProvider => {
   'ngInject';
 
@@ -90,5 +113,4 @@ export default angular.module(name, [
 }).component(name, {
   template,
   controller
-}).filter('statusCorrection', ( ) => status => statusesViewCorrection[status] || status)
-  .name;
+}).name;
