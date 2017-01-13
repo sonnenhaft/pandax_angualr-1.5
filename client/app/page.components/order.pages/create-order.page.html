@@ -91,7 +91,7 @@
             </div>
             <div>
 
-          <span class="error" ng-messages="orderForm.inputLocation.$error" ng-if="orderForm.inputLocation.$invalid && orderForm.$submitted" style="color: #ba192f;">
+          <span class="find-location-error" ng-messages="orderForm.inputLocation.$error" ng-if="orderForm.inputLocation.$invalid && orderForm.$submitted">
             <div ng-message="addressRegex"> Only NYC area is available for placing the order</div>
             <div ng-message="nycOnly">Only NYC area is available for placing the order</div>
             <div ng-message="required">This field is required</div>

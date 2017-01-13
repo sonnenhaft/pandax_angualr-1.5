@@ -64,6 +64,7 @@
     "gulp-template": "^3.0.0",
     "gulp-util": "^3.0.7",
     "html-webpack-plugin": "^1.7.0",
+    "json-loader": "^0.5.4",
     "karma": "^0.13.9",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^0.2.3",
@@ -98,7 +99,12 @@
     "create-component": "gulp create-component --gulpfile gulpfile.templates.js",
     "eslint:fix": "eslint client gulpfile.babel.js webpack.* --fix"
   },
-  "keywords": ["angular", "webpack", "es6", "panda"],
+  "keywords": [
+    "angular",
+    "webpack",
+    "es6",
+    "panda"
+  ],
   "repository": {
     "type": "git",
     "url": "https://gitlab.isdev.info/Pandax/Frontend.git"

@@ -1,9 +1,11 @@
 import GoogleGeoLocationService from '../google-geo-location.service';
 import template from './panda-find-location.input.html';
+import ALLOWED_ZIPS from './allowed-nyc-zips-aka-postal-codes.json';
 
 const UNKNOWN_PLACE = 'Unknown place';
 
 class controller {
+  ALLOWED_ZIPS = ALLOWED_ZIPS
 
   constructor (GoogleGeoLocationService, $log) {
     'ngInject';
@@ -46,16 +48,21 @@ class controller {
     this.ngModel.$setValidity('required', !this.ngRequired || this.locationName);
     this.ngModel.$setValidity('recognizableAddress', !this.recognizableAddress || this.locationName !== UNKNOWN_PLACE);
     if (!this.asText) {
-      const { location = {} } = (this.ngModel.$viewValue || { location: { address_components: [] } });
-      const { short_name: zip } = location.address_components.find(item => item.types.indexOf('postal_code') !== -1) || {};
+      const { location = {} } = this.ngModel.$viewValue || { };
+      const { address_components: address = [] } = location;
+      const { short_name: zip } = address.find(({ types }) => types.includes('postal_code')) || {};
 
-      this.ngModel.$setValidity('nycOnly', !this.nycOnly || (zip && this.validateBigAppleZip(zip)));
+      this.ngModel.$setValidity('nycOnly', !this.nycOnly || this.validateIfZipIsAllowed(zip));
     }
   }
 
-  validateBigAppleZip (zip) {
-    this.$log.warn('TODO(vald): add zip validation', zip);
-    return true;
+  validateIfZipIsAllowed (zip) {
+    if (zip) {
+      const zipAsInteger = parseInt(zip, 10); // we don't care 0 value or values with "-" sign, because we have exact list of postal codes
+      return !isNaN(zipAsInteger) && this.ALLOWED_ZIPS.includes(zipAsInteger);
+    } else {
+      return false;
+    }
   }
 
   chooseLocation (location) {
