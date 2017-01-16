@@ -42,6 +42,7 @@ class controller {
     this.isEditable = this.isCreate || this.isEdit;
 
     this.images = [];
+    this.invalidFiles = [];
     this.backupModel = {};
     this.photosBuffer = [];
     if (this.isCreate) {
@@ -183,7 +184,6 @@ class controller {
   }
 
   onImageChange (image, slot) {
-    console.log('x');
     if (!image) { return; }
     const item = this.photosBuffer.find(item => item.slot === slot);
     if (item) {

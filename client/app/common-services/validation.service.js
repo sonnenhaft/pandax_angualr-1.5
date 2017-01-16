@@ -101,11 +101,6 @@ class Validation {
   }
 
   /** @deprecated mass */
-  images (files = []) {
-    return this.message('images', files.filter(file => !_.isEmpty(file.file)).length === 3, 'Please upload 3 photos');
-  }
-
-  /** @deprecated mass */
   phone (number) {
     if (!number) {
       return this.message('phone', false, 'This field is required');

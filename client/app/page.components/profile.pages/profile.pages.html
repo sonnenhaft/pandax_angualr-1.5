@@ -1,38 +1,55 @@
 <div id="profile">
-  <div class="profile-pages">
-    <div id="{{::$ctrl.isCreate ? 'profile-create' : 'profile-view'}}" class="animated fadeIn">
-      <span class="page-name">{{::$ctrl.isCreate ? 'Create profile' : 'Profile'}}</span>
-      <form name="profileForm" id="profile-form" ng-class="{ 'view-mode': !$ctrl.isEditable, 'edit-mode': $ctrl.isEdit}" novalidate>
-        <div class="basic-data">
-          <div class="input image">
+    <div class="profile-pages">
+        <div id="{{::$ctrl.isCreate ? 'profile-create' : 'profile-view'}}" class="animated fadeIn">
+            <span class="page-name">{{::$ctrl.isCreate ? 'Create profile' : 'Profile'}}</span>
+            <form name="profileForm" id="profile-form" ng-class="{ 'view-mode': !$ctrl.isEditable, 'edit-mode': $ctrl.isEdit}" novalidate>
+                <div class="basic-data">
+          <span class="input image">
             <label ng-if="$ctrl.isCreate">Add photo</label>
             <div layout="row">
               <div class="file-container" flex ng-repeat="image in $ctrl.images" ng-class="{first: $index === 0, last: $index === 2}">
                 <md-button class="file" aria-label="file" ngf-select ng-disabled="!$ctrl.isEditable" ng-model="image.file"
-                           name="file" ngf-capture="'camera'" ngf-max-size="10MB" ngf-model-invalid="$ctrl.invalidFiles"
-                           ng-change="$ctrl.onImageChange(image.file, $index + 1)"
-                           ng-click="$ctrl.imagesError = false">
-                  <a ui-sref="main.profile.edit" ng-hide="$ctrl.isEditable">
-                    <img ngf-src="image.file" alt="profile image" title="click to edit profile"/>
-                  </a>
-                  <img ngf-src="image.file" alt="profile image" ng-show="!$ctrl.isEditable" title="click to choose image"/>
+                           name="file{{::$index}}" ngf-capture="'camera'"
+                           ngf-max-size="10MB"
+                           ngf-max-height="7000"
+                           ngf-max-width="7000"
+                           ngf-min-height="200"
+                           ngf-min-width="200"
+                           ngf-pattern="'.png,.jpg'"
+                           ngf-accept="'.png,.jpg'"
+                           ng-required="true"
+                           ng-change="$ctrl.onImageChange(image.file, $index + 1)">
+                          <!--ngf-min-height="200"-->
+                    <!--ngf-min-width="200"-->
+                    <span ng-show="image.file">
+                      <a ui-sref="main.profile.edit" ng-hide="$ctrl.isEditable">
+                        <img ngf-src="image.file" alt="profile image" title="click to edit profile"/>
+                      </a>
+                      <img ngf-src="image.file" alt="profile image" ng-show="!$ctrl.isEditable" title="click to choose image"/>
+                    </span>
                 </md-button>
               </div>
             </div>
-            <span class="error" ng-if="$ctrl.imagesError"> {{$ctrl.imagesError}}</span>
-            <span class="error" ng-if="$ctrl.invalidFiles">
-             The file size should be less than 10MB
-             </span>
-          </div>
+              <span ng-messages="profileForm['file' + idx].$error" class="error" ng-repeat="idx in [0,1,2]"
+                    ng-show="profileForm['file' + idx].$touched || profileForm.$submitted">
+                  <span ng-show="$ctrl.images.length > 1 && profileForm['file' + idx].$invalid">[{{::idx}}]</span>
+                  <span ng-message="maxHeight">Photo must be no less than 200 and no more than 7 000 pixels tall and wide</span>
+                  <span ng-message="maxWidth">Photo must be no less than 200 and no more than 7 000 pixels tall and wide</span>
+                  <span ng-message="minHeight">Photo must be no less than 200 and no more than 7 000 pixels tall and wide</span>
+                  <span ng-message="minWidth">Photo must be no less than 200 and no more than 7 000 pixels tall and wide</span>
+                  <span ng-message="maxSize">The file may not exceed 10 MB</span>
+                  <span ng-message="pattern">Invalid photo format</span>
+                  <span ng-message="required">Image is required</span>
+              </span>
           <div class="input-container" ng-repeat="field in $ctrl.fields">
             <div ng-if="field.type === 'dob'" class="input" ng-show="$ctrl.dob.year || $ctrl.isEditable">
               <label>Date of birth</label>
               <div ng-if="$ctrl.isEditable">
                 <date-of-birth-input ng-model="$ctrl.dob" min-age="18" required name="dob" as-object="true"></date-of-birth-input>
-                <span class="error" ng-messages="profileForm.dob.$error" ng-show="profileForm.dob.$touched || profileForm.$submitted">
-                        <div ng-message="required">Date of birth is required</div>
-                        <div ng-message="minAge">Minimum allowed age is 18 years</div>
-                    </span>
+                <span class="error" ng-messages="profileForm.dob.$error" ng-show="profileForm.$submitted">
+                    <div ng-message="required">Date of birth is required</div>
+                    <div ng-message="minAge">Minimum allowed age is 18 years</div>
+                </span>
               </div>
               <div ng-show="!$ctrl.isEditable" class="fake-input">
                     <span>
@@ -74,7 +91,7 @@
             </div>
           </div>
 
-          <!-- Add new card form -->
+              <!-- Add new card form -->
           <div class="payments-add-card" ng-if="$ctrl.isCreate" flex="50" layout="column">
             <card-info form-object="profileForm" model="$ctrl.newCard"></card-info>
           </div>
@@ -99,10 +116,10 @@
               </md-button>
             </div>
           </div>
-        </div>
-      </form>
-      <div class="user-photo" ng-style="$ctrl.photo" ng-if="$ctrl.photo"></div>
+                </div>
+            </form>
+            <div class="user-photo" ng-style="$ctrl.photo" ng-if="$ctrl.photo"></div>
 
+        </div>
     </div>
-  </div>
 </div>

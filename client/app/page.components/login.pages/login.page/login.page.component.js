@@ -27,12 +27,11 @@ export default angular.module('loginPage', [
         $state.go('main.create-order');
       } else if (StatefulUserData.isAdmin( )) {
         $state.go('entertainersAdminPage');
-      } else if (!user.first_name || user.last_name) {
-        $state.go('main.profile.create');
-      } else {
+      } else if (user.first_name && user.last_name) {
         $state.go('main.profile.view');
+      } else {
+        $state.go('main.profile.create');
       }
     });
   }
 }).name;
-
