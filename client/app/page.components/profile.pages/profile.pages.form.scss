@@ -1,44 +1,35 @@
 #profile-form {
   max-width: 360px;
 
-  &.edit-mode {
-    .input {
-      &.image {
-        .file-container {
-          .file {
-            &:hover {
-              border: 1px solid white;
-              background: $Charcoal;
+  [name=cvc] {
+    border-left: 1px solid black !important;
+    border-right: 1px solid black !important;
+  }
 
-              &:before {
-                content: '';
-                z-index: 15;
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                border-radius: 50%;
-                background: rgba(0, 0, 0, .5) url('../assets/images/pen.png') no-repeat center;
-              }
-            }
-          }
-        }
-      }
+  &.edit-mode .input.image .file-container .file:hover {
+    border: 1px solid white;
+    background: $Charcoal;
+
+    &:before {
+      content: '';
+      z-index: 15;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, .5) url('../assets/images/pen.png') no-repeat center;
     }
   }
 
-  &.view-mode {
-    .input {
-      input, .fake-input {
-        background: transparent;
-        color: $AuroMetalSaurus;
-        font-weight: bold;
-        padding: 0 10px;
-        &.first {
-          border: 0;
-        }
-      }
+  &.view-mode .input input, .fake-input {
+    background: transparent;
+    color: $AuroMetalSaurus;
+    font-weight: bold;
+    padding: 0 10px;
+    &.first {
+      border: 0;
     }
   }
 
@@ -47,32 +38,30 @@
 
     width: 100%;
 
-    &.image {
-      .file-container {
-        text-align: center;
+    &.image .file-container {
+      text-align: center;
 
-        &.first {
-          text-align: left;
-        }
+      &.first {
+        text-align: left;
+      }
 
-        &.last {
-          text-align: right;
-        }
+      &.last {
+        text-align: right;
+      }
 
-        .file {
-          position: relative;
-          width: 88px;
-          height: 88px;
-          border-radius: 50%;
-          background: $Charcoal url('../assets/images/add.png') no-repeat center;
-          margin: 0 0 23px 0;
-          padding: 0;
-          line-height: 0;
+      .file {
+        position: relative;
+        width: 88px;
+        height: 88px;
+        border-radius: 50%;
+        background: $Charcoal url('../assets/images/add.png') no-repeat center;
+        margin: 0 0 23px 0;
+        padding: 0;
+        line-height: 0;
 
-          img {
-            max-width: 100%;
-            display: block;
-          }
+        img {
+          max-width: 100%;
+          display: block;
         }
       }
     }
@@ -87,7 +76,7 @@
         left: 8px;
         bottom: 14px;
         top: 13px;
-      };
+      }
     }
 
     input {
@@ -143,7 +132,7 @@
         margin: {
           left: 8px;
           top: 10px;
-        };
+        }
         font: 0.938em $open-sans, sans-serif;
       }
     }
@@ -152,7 +141,7 @@
       margin: {
         top: 15px;
         left: 8px;
-      };
+      }
 
       p {
         font: 0.813em $open-sans, sans-serif;
