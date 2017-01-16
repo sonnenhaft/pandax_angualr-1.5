@@ -32,7 +32,7 @@ class controller {
     { name: 'Email', model: 'email', type: 'email' }
   ]
 
-  constructor (Validation, $state, $q, Helper, Cards, StatefulUserData, UserProfileResource) {
+  constructor(Validation, $state, $q, Helper, Cards, StatefulUserData, UserProfileResource) {
     'ngInject';
 
     Object.assign(this, { Validation, $state, $q, Helper, Cards, StatefulUserData, UserProfileResource });
@@ -42,36 +42,30 @@ class controller {
     this.isEditable = this.isCreate || this.isEdit;
 
     this.images = [];
-    this.invalidFiles = [];
-    this.backupModel = {};
     this.photosBuffer = [];
     if (this.isCreate) {
-      this.email = this.StatefulUserData.get('email');
-      this.backupModel.email = this.email;
       this.newCard = {};
-    } else {
-      this._buildProfileModels( );
     }
+    Object.assign(this, this.StatefulUserData.get());
 
-    if (StatefulUserData.isCustomer( )) {
+    if (StatefulUserData.isCustomer()) {
       this.fields = controller.CUSTOMER_FIELDS;
       this.images = [{ file: '' }];
-    } else if (StatefulUserData.isProvider( )) {
+    } else if (StatefulUserData.isProvider()) {
       this.images = [{ file: '' }, { file: '' }, { file: '' }];
       this.isProvider = true;
       this.fields = controller.PROVIDER_FIELDS;
     }
 
-    const user = this.StatefulUserData.getUser( );
+    const user = this.StatefulUserData.getUser();
     const serverPhotos = user.photo ? [user.photo] : (user.photos || []);
     if (!serverPhotos.length || !serverPhotos[0]) {
       serverPhotos[0] = {};
     }
-    this.backupModel.images = [];
     serverPhotos.forEach((photo, i) => {
-      if (!photo) { return; }
-      this.images[i] = { file: photo.preview };
-      this._backupPhoto(photo, i);
+      if (photo) {
+        this.images[i] = { file: photo.preview };
+      }
     });
 
     this._profilePhoto(serverPhotos[0].original);
@@ -79,27 +73,13 @@ class controller {
 
   // add string to tell browser
   // to send request, instead of get image from cache
-  _profilePhoto (photoSrc = '') {
+  _profilePhoto(photoSrc = '') {
     this.photo = {
-      background: `url(${photoSrc}?${Date.now( )}) no-repeat fixed center`
-    };
-
-    this.backupModel.photo = angular.copy(this.photo);
-  }
-
-  _backupPhoto ({ file }, i) {
-    this.backupModel.images[i] = {
-      file: `${file}?${Date.now( )}`
+      background: `url(${photoSrc}?${Date.now()}) no-repeat fixed center`
     };
   }
 
-  _buildProfileModels ( ) {
-    const user = this.StatefulUserData.getUser( );
-    Object.assign(this, user);
-    Object.assign(this.backupModel, angular.copy(user));
-  }
-
-  validate (profileFields) {
+  validate(profileFields) {
     const errors = this.Validation.error(profileFields);
     if (errors.length) {
       errors.forEach(error => this[`${error.name}Error`] = error.text);
@@ -109,15 +89,15 @@ class controller {
     }
   }
 
-  createProfile (profileForm) {
+  createProfile(profileForm) {
     this._onReady(profileForm, true);
   }
 
-  updateProfile (form) {
+  updateProfile(form) {
     this._onReady(form);
   }
 
-  _onReady (profileForm, addCard = false) {
+  _onReady(profileForm, addCard = false) {
     const profile = {
       first_name: profileForm.first_name.$viewValue,
       last_name: profileForm.last_name.$viewValue,
@@ -134,14 +114,14 @@ class controller {
     }
 
     // show error messages if all validations messages should be shown at one moment
-    profileForm.$setSubmitted( );
+    profileForm.$setSubmitted();
     if (!this.validate(profile) || profileForm.$invalid) {
       return false;
     }
     this.saveLoading = true;
 
     const UploadPhoto = (file, slot_id) => { // eslint-disable-line camelcase
-      if (this.StatefulUserData.isProvider( )) {
+      if (this.StatefulUserData.isProvider()) {
         return this.UserProfileResource.uploadPhoto({ slot_id }, file).$promise.then(newUser => { // eslint-disable-line camelcase
           if (slot_id === 1) { // eslint-disable-line camelcase
             this.StatefulUserData.extend(newUser);
@@ -154,36 +134,33 @@ class controller {
     };
 
     this.$q.all(this.photosBuffer.map(photo => UploadPhoto(photo.image, photo.slot).then(uploadedPhoto => {
-      const photoResult = uploadedPhoto.photo ? uploadedPhoto.photo : uploadedPhoto.photos[photo.slot - 1];
+        const photoResult = uploadedPhoto.photo ? uploadedPhoto.photo : uploadedPhoto.photos[photo.slot - 1];
 
-      if (photoResult) {
-        this._backupPhoto({ file: photoResult.preview }, photo.slot - 1);
-        if (photo.slot === 1) {
+        if (photoResult && photo.slot === 1) {
           this._profilePhoto(photoResult.original);
         }
-      }
 
-      const updateKey = this.isProvider ? 'photos' : 'photo';
-      return this.StatefulUserData.extend({ [updateKey]: uploadedPhoto[updateKey] });
-    }
+        const updateKey = this.isProvider ? 'photos' : 'photo';
+        return this.StatefulUserData.extend({ [updateKey]: uploadedPhoto[updateKey] });
+      }
     )))
-      .then(( ) => {
+      .then(() => {
         profile[(!this.isProvider ? 'image' : 'images')] = this.StatefulUserData.get(this.isProvider ? 'photos' : 'photo');
         return this.UserProfileResource.update({}, profile);
       })
       .then(({ data: user }) => {
-        this.StatefulUserData.extend(user);
+        Object.assign(this, this.StatefulUserData.extend(user));
         this.photosBuffer = [];
-        this._buildProfileModels( );
+
         if (addCard) {
           return this.Cards.add(this.newCard);
         }
       })
-      .then(( ) => this.$state.go('main.profile.view'))
-      .finally(( ) => this.saveLoading = false);
+      .then(() => this.$state.go('main.profile.view'))
+      .finally(() => this.saveLoading = false);
   }
 
-  onImageChange (image, slot) {
+  onImageChange(image, slot) {
     if (!image) { return; }
     const item = this.photosBuffer.find(item => item.slot === slot);
     if (item) {
@@ -202,7 +179,7 @@ export default angular.module('profileFields', [
 ]).component('profileFields', {
   template,
   controller
-}).filter('customDate', ( ) => dateLikeObject => {
+}).filter('customDate', () => dateLikeObject => {
   if (dateLikeObject) {
     return new Date(`${dateLikeObject.month}/${dateLikeObject.day}/${dateLikeObject.year}`);
   } else {

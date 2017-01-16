@@ -32,6 +32,7 @@ class StatefulUserData {
   extend (user) {
     this._setUser(user);
     this._saveInStorage(this._user);
+    return this._user;
   }
 
   _setUser (user) {
