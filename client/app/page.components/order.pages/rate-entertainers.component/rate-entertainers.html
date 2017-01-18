@@ -7,9 +7,17 @@
           <div layout="row" class="rate-entertainers__card-info">
             <img class="rate-entertainers__card-avatar-img" ng-src="{{invite.provider.photos[0].preview}}"></img>
             <div layout="column" class="rate-entertainers__card-personal-info">
-              <span class="rate-entertainers__card-field rate-entertainers__card-name">{{invite.provider.displaying_name}}</span>
-              <span class="rate-entertainers__card-field rate-entertainers__card-date">{{invite.datetime | amDateFormat:'h:mm A, MMM DD (dddd)'}}</span>
-              <span class="rate-entertainers__card-field rate-entertainers__card-location">{{invite.location}}</span>
+              <span class="rate-entertainers__card-field rate-entertainers__card-name">
+                {{invite.provider.displaying_name}}
+              </span>
+              <span class="rate-entertainers__card-field rate-entertainers__card-date" ng-show="invite.start_dt">
+                <span class="sub-icon"></span>
+                {{invite.start_dt | amDateFormat:'h:mm A, MMM DD (dddd)'}}
+              </span>
+              <span class="rate-entertainers__card-field rate-entertainers__card-location" ng-show="invite.location">
+                <span class="sub-icon"></span>
+                {{invite.location}}
+              </span>
             </div>
           </div>
           <div layout="row" layout-align="space-between" class="rate-entertainers__card-manip-rating-wrapper">

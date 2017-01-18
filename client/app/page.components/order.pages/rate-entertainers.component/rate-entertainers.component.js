@@ -2,7 +2,10 @@ import template from './rate-entertainers.html';
 import OrderResource from '../order.resource';
 
 class controller {
-  rating = { range: [1, 2, 3, 4, 5, 6, 7], default: 7 }
+  rating = {
+    range: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    default: 7
+  }
 
   constructor ($state, $stateParams, $q, StatefulUserData, OrderResource) {
     'ngInject';

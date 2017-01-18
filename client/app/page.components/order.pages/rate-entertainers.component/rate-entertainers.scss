@@ -23,118 +23,141 @@
 }
 
 .rate-entertainers-component {
-	$width_main: 100%;
+  $width_main: 100%;
 
   padding: 52px 30px 30px 30px;
 
-	md-content {
-		padding-left: 5%;
-		padding-right: 5%;
-	}
-	.rate-entertainers {
-		color: $white;
-		@extend .font_name;
-		font: {
-			size: 19px;
-		}
-		letter-spacing:  0.0667em;
+  md-content {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  .rate-entertainers {
+    color: $white;
+    @extend .font_name;
+    font: {
+      size: 19px;
+    }
+    letter-spacing: 0.0667em;
 
-		@media (max-width: 960px) {
-			padding-left: 31px;
-			padding-right: 32px;
-		}
-		&__cards-container {
-			margin-top: 34px;
-			margin-bottom: 49px;
-			@media (min-width: 960px) {
-				width: $width_main;
-			}
-		}
-		&__card {
-			background-color: $Charcoal;
-			border-radius: 0px;
-			margin: 0px;
-			padding: 20px;
-			&:not(:first-child) {
-				margin-top: 20px;
-			}
-			&-personal-info {
-				margin-left: 16px;
-			}
-			&-avatar-img {
-				height: 115px !important;
-				max-height: 115px;
-				max-width: 82px;
-				width: 82px;
-			}
-			&-field {
-				&:not(:first-child) {
-					margin-top: 5px;
-				}
-			}
-			&-name {
-				text-transform: uppercase;
-			}
-			&-manip {
-				&-rating {
-					&-wrapper {
-						margin-top: 19px;
-					}
-					&-icon {
-						cursor: pointer;
-						height: 23px;
-						width: 23px;
-						&:not(:first-child) {
-							margin-left: 6px;
-						}
-						svg {
-							fill: $TrolleyGrey;
-						}
-						&_filled {
-							svg {
-								fill: $Orange;
-							}
-						}
-					}
-				}
-				&-comment {
-					@extend .font_comment;
-					color: $TrolleyGrey;
-					margin-top: 30px;
-					min-height: 64px;
-					padding: 2px 9px;
-					&::-webkit-input-placeholder {
-					  @extend .font_comment;
-					  color: $TrolleyGrey;
-					}
-				}
-			}
-		}
-		&__submit {
-			color: $white;
-			font: 15px $oswald;
-			letter-spacing: 0.1px;
-			line-height: 24px;
-			margin: 0px;
-			padding-bottom: 17px;
-			padding-top: 13px;
-			text-align: center;
-			width: 100%;
-			@media (min-width: 960px) {
-				width: $width_main;
-			}
-			&_1 {
-				@media (min-width: 960px) {
-					width: 100%;
-				}
-			}
-			&-wrapper {
-				@media (max-width: 960px) {
-					padding-left: 8px;
-					padding-right: 7px;
-				}
-				width: 100%;
-			}
-		}
-	}
+    .rate-entertainers__card-name {
+      margin: 5px 0;
+    }
+
+    .rate-entertainers__card-location,
+    .rate-entertainers__card-date {
+      font: 0.75em "Open Sans", sans-serif;
+      line-height: 24px;
+      .sub-icon {
+        background: url(/assets/images/location.png) no-repeat left center;
+        width: 16px;
+        height: 23px;
+        display: inline-block;
+        vertical-align: top;
+        opacity: 0.6;
+      }
+    }
+
+    .rate-entertainers__card-date .sub-icon{
+      background: url(/assets/images/font-awesome_calendar-check-o.png) no-repeat left center;
+      background-size: 100%;
+    }
+
+    @media (max-width: 960px) {
+      padding-left: 31px;
+      padding-right: 32px;
+    }
+    &__cards-container {
+      margin-top: 34px;
+      margin-bottom: 49px;
+      @media (min-width: 960px) {
+        width: $width_main;
+      }
+    }
+    &__card {
+      background-color: $Charcoal;
+      border-radius: 0px;
+      margin: 0px;
+      padding: 20px;
+      &:not(:first-child) {
+        margin-top: 20px;
+      }
+      &-personal-info {
+        margin-left: 16px;
+      }
+      &-avatar-img {
+        height: 115px !important;
+        max-height: 115px;
+        max-width: 82px;
+        width: 82px;
+      }
+      &-field {
+        &:not(:first-child) {
+          margin-top: 5px;
+        }
+      }
+      &-name {
+        text-transform: uppercase;
+      }
+      &-manip {
+        &-rating {
+          &-wrapper {
+            margin-top: 19px;
+          }
+          &-icon {
+            cursor: pointer;
+            height: 23px;
+            width: 23px;
+            &:not(:first-child) {
+              margin-left: 6px;
+            }
+            svg {
+              fill: $TrolleyGrey;
+            }
+            &_filled {
+              svg {
+                fill: $Orange;
+              }
+            }
+          }
+        }
+        &-comment {
+          @extend .font_comment;
+          color: $TrolleyGrey;
+          margin-top: 30px;
+          min-height: 64px;
+          padding: 2px 9px;
+          &::-webkit-input-placeholder {
+            @extend .font_comment;
+            color: $TrolleyGrey;
+          }
+        }
+      }
+    }
+    &__submit {
+      color: $white;
+      font: 15px $oswald;
+      letter-spacing: 0.1px;
+      line-height: 24px;
+      margin: 0px;
+      padding-bottom: 17px;
+      padding-top: 13px;
+      text-align: center;
+      width: 100%;
+      @media (min-width: 960px) {
+        width: $width_main;
+      }
+      &_1 {
+        @media (min-width: 960px) {
+          width: 100%;
+        }
+      }
+      &-wrapper {
+        @media (max-width: 960px) {
+          padding-left: 8px;
+          padding-right: 7px;
+        }
+        width: 100%;
+      }
+    }
+  }
 }
