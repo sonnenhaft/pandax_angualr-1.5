@@ -96,9 +96,6 @@
             <card-info form-object="profileForm" model="$ctrl.newCard"></card-info>
           </div>
 
-          <div class="terms" ng-if="$ctrl.isProvider">
-            By clicking Ready you agree to the <a ui-sref="acceptTermsAndConditionsPage">Terms and Privacy</a>
-          </div>
           <div class="submit" layout="row" layout-align="{{$ctrl.isEdit ? 'space-between center' : 'center'}}">
             <div flex="100" ng-if="!$ctrl.isEditable">
               <md-button ui-sref="main.profile.edit"> Edit Profile</md-button>
