@@ -7,6 +7,7 @@ class controller {
     'ngInject';
 
     Object.assign(this, { $http, $state, StatefulUserData, $stateParams });
+    this.cameFromOderPage = !angular.equals(this.$stateParams.order || {}, {})
   }
 
   createOrderAndRedirectToManipulation ( ) {
