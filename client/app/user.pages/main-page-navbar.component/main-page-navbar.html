@@ -1,0 +1,55 @@
+<nav class="main-page-navbar" ng-class="{'mobile-opened': $ctrl.mobile == true}" flex-sm="100">
+
+    <div class="logo" layout="row">
+        <div class="name" show-gt-sm flex><a ui-sref="{{$ctrl.defaultLink}}" class="logo__link">MINX</a></div>
+        <md-icon flex aria-label="menu" ng-click="$ctrl.mobile = !$ctrl.mobile" ng-class="{mobile: $ctrl.mobile}"></md-icon>
+    </div>
+
+    <div class="mobilemenu">
+        <div class="avatar" ui-sref="viewProfilePage" ng-style="{'background-image': 'url(' + $ctrl.userAvatarSrc + ')'}">
+            <!-- <img ng-src="{{$ctrl.userAvatarSrc}}" alt=""/> -->
+        </div>
+
+        <div class="navigation" ng-if="$ctrl.$state.current.name !== 'createProfilePage'">
+            <ul active-menu-item>
+                <li ng-repeat="nav in $ctrl.navigation" ng-click="$ctrl.hideSubMenu(nav)">
+                    <a href="" ui-sref="{{nav.url.length > 0 ? nav.url : '#'}}" ui-sref-active="active"> {{nav.text}} </a>
+                    <ul class="navigation_sub">
+                        <li ng-repeat="subnav in $ctrl.submenu | filterBy: ['parent']: nav.text" ng-click="$ctrl.hideSubMenu(subnav)">
+                            <a ng-if="!subnav.isComponent" href="" ui-sref="{{subnav.url}}" ui-sref-active="active"> {{subnav.text}} </a>
+                            <a ng-if="subnav.isComponent" href="javascript:void(0)">
+                                <div ng-if="subnav.component == 'logout'">
+                                    <logout></logout>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div hide show-gt-sm class="avatar" ui-sref="viewProfilePage" ng-style="{'background-image': 'url(' + $ctrl.userAvatarSrc + ')'}">
+        <!-- <img ng-src="{{$ctrl.userAvatarSrc}}" alt=""/> -->
+    </div>
+
+    <div class="navigation" hide show-gt-sm ng-if="$ctrl.$state.current.name !== 'createProfilePage'">
+        <ul active-menu-item>
+            <li ng-repeat="nav in $ctrl.navigation">
+                <a href="" ui-sref="{{nav.url.length > 0 ? nav.url : '#'}}" ui-sref-active="active"> {{nav.text}} </a>
+                <ul class="navigation_sub">
+                    <li ng-repeat="subnav in $ctrl.submenu | filterBy: ['parent']: nav.text">
+                        <a ng-if="!subnav.isComponent" href="" ui-sref="{{subnav.url}}" ui-sref-active="active"> {{subnav.text}} </a>
+                        <a ng-if="subnav.isComponent" href="javascript:void(0)">
+                            <div ng-if="subnav.component == 'logout'">
+                                <logout/>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+</nav>

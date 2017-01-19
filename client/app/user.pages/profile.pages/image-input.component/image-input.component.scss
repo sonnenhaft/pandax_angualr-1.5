@@ -1,0 +1,38 @@
+.panda-image-input {
+  text-align: center;
+  position: relative;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: block;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+  border: 1px solid grey;
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+
+  .hover-background {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: none;
+    background: rgba(0, 0, 0, .5) url('../assets/images/pen.png') no-repeat center;
+  }
+
+  background: $Charcoal url('../assets/images/add.png') no-repeat center;
+
+  &:hover:not([disabled]) {
+    border: 1px solid white;
+    background: $Charcoal;
+    .hover-background {
+      display: block;
+    }
+  }
+}

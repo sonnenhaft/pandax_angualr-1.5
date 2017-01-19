@@ -21,24 +21,24 @@ import StatefulUserData from './common-services/StatefulUserData';
 import PandaHttpInterceptor from './panda-app.http-interceptor';
 
 // common
-import NavbarComponent from './page.components/main.page.component/navbar.component/navbar.component';
-import Map from './page.components/order.pages/panda-google-map.input/panda-google-map.input';
-import ProfilePagesComponent from './page.components/profile.pages/profile.pages.component';
+import NavbarComponent from './user.pages/main-page-navbar.component/main-page-navbar.component';
+import Map from './inputs/panda-google-map.input/panda-google-map.input';
+import ProfilePagesComponent from './user.pages/profile.pages/profile.pages.component';
 import SpinnerComponent from './common/spinner.component/spinner.component';
-import FindLocationComponent from './page.components/order.pages/panda-find-location.input/panda-find-location.input';
-import OrderDetailsComponent from './page.components/main.page.component/billing.page.component/order-details.component/order-details.component';
-import LogoutComponent from './page.components/login.pages/logout.component/logout.component';
+import FindLocationComponent from './inputs/panda-find-location.input/panda-find-location.input';
+import OrderDetailsComponent from './user.pages/billing.page.component/order-details.component/order-details.component';
+import LogoutComponent from './login.pages/logout.component/logout.component';
 
 // pages
-import MainPage from './page.components/main.page.component/main.page.component';
-import OrderPage from './page.components/order.pages/create-order.page.component';
-import HistoryPage from './page.components/orders-history.pages/orders-history';
-import PasswordPage from './page.components/password.page.component/password.page.component';
-import PaymentsPage from './page.components/payments.page.component/payments.page.component';
-import HistoryMinxPage from './page.components/history-minx.page.component/history-minx.page.component';
-import ContactUsPage from './page.components/contact-us.page.component/contact-us.page.component';
-import AdminComponent from './page.components/admin.pages/admin-pages.abstract.route';
-import LoginPagesRoutes, { LoginPageComponent as loginPageStateName } from './page.components/login.pages/login.pages.routes';
+import MainPage from './user.pages/main-page.layout';
+import OrderPage from './user.pages/order.pages/create-order.page.component';
+import HistoryPage from './user.pages/orders-history.pages/orders-history';
+import PasswordPage from './user.pages/password.page.component/password.page.component';
+import PaymentsPage from './user.pages/payments.page.component/payments.page.component';
+import HistoryMinxPage from './user.pages/history-minx.page.component/history-minx.page.component';
+import ContactUsPage from './user.pages/contact-us.page.component/contact-us.page.component';
+import AdminComponent from './admin.pages/admin-pages.abstract.route';
+import LoginPagesRoutes, { LoginPageComponent as loginPageStateName } from './login.pages/login.pages.routes';
 
 import hoursToTime from './common/hoursToTime.filter';
 

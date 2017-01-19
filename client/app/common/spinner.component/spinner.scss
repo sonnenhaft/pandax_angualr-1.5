@@ -1,4 +1,8 @@
-#spinner {
+.loading-spinner {
+  .spinner-inner {
+    display: flex;
+    align-items: center;
+  }
   path {
     stroke: $Cardinal;
   }

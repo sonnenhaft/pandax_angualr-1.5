@@ -17,6 +17,8 @@ class StatefulUserData {
 
   getAvatar ( ) { return this._avatar; }
 
+  getBackground ( ) { return this._background; }
+
   getRole ( ) { return this.get('role'); }
 
   isProvider ( ) { return this.getRole( ) === 'provider'; }
@@ -42,12 +44,12 @@ class StatefulUserData {
       this.$injector.get('StatefulAuthTokenService').remember(this._user.token);
       delete this._user.token;
     }
-    const photo = (this._user.photos || [this._user.photo])[0];
-    if (photo && photo.preview) {
-      this._avatar = `${photo.preview}?${Date.now( )}`;
-    } else {
-      this._avatar = '../assets/images/avatar.png';
-    }
+    const photo = this.isCustomer( ) ? this._user.photo : (this._user.photos || [])[0];
+    const { preview: avatar = '../assets/images/avatar.png', original: background = null } = photo || {};
+    this._avatar = avatar;
+    this._background = background;
+    // this._avatar = `${avatar}?${Date.now( )}`;
+    // this._background = `${background}?${Date.now( )}`;
   }
 
   _saveInStorage (user) {

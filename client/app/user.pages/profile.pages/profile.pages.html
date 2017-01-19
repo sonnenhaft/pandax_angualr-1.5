@@ -1,0 +1,52 @@
+<div class="user-photo" ng-style="{background: $ctrl.photoBackground}" ng-if="$ctrl.photoBackground"></div>
+<form name="userDateForm" ng-class="{'view-only': $ctrl.isReadOnly}">
+    <div class="page-name">{{::$ctrl.pageName}}</div>
+
+    <label ng-if="$ctrl.isCreate" class="create-label">
+        Add photo
+        <!--<div ng-show="$ctrl.isProvider" class="set-as-default-photo">SET FIRST AS DEFAULT PHOTO</div>-->
+    </label>
+    <div layout="row" layout-align="space-between center">
+        <div ng-repeat="image in $ctrl.images track by $index">
+            <panda-image-input model="image.original" name="file{{::$index}}" ng-readonly="$ctrl.isReadOnly"></panda-image-input>
+        </div>
+    </div>
+
+    <panda-image-input-messages
+            ng-repeat="image in $ctrl.images track by $index"
+            ng-class="{error: userDateForm['file' + $index].$touched || userDateForm.$submitted}"
+            name="file{{::$index}}"
+            header="::$ctrl.isProvider && 'Image ' + ($index + 1)+ ' -'"
+    ></panda-image-input-messages>
+
+    <input-wrapper name="displaying_name" field="Display Name" ng-if="$ctrl.isProvider">
+        <input type="text" name="displaying_name"
+               required touched-invalid ng-readonly="$ctrl.isReadOnly"
+               ng-model="$ctrl.userData.displaying_name"/>
+    </input-wrapper>
+
+    <common-user-fields model="$ctrl.userData" is-read-only="$ctrl.isReadOnly"></common-user-fields>
+    <panda-email-input model="$ctrl.userData" is-read-only="$ctrl.isReadOnly"></panda-email-input>
+
+    <input-wrapper name="dob" field="Date of birth" ng-if="$ctrl.isProvider">
+        <date-of-birth-input name="dob" min-age="18" as-object="true"
+                             required touched-invalid ng-readonly="$ctrl.isReadOnly"
+                             ng-model="$ctrl.userData.dob"></date-of-birth-input>
+    </input-wrapper>
+
+    <div ng-if="$ctrl.isCreate">
+        <add-new-card-form model="$ctrl.newPaymentCard" is-required="$ctrl.isProvider"></add-new-card-form>
+
+        <div ng-show="$ctrl.isProvider" class="sub-label-no-icon">By clicking Ready you agree to the <a ui-sref="pandaxTermsPageComponent">Terms and Privacy</a></div>
+    </div>
+
+    <div layout="row" ng-hide="$ctrl.isReadOnly">
+        <md-button class="black" ui-sref="viewProfilePage" ng-hide="$ctrl.isCreate"> Cancel</md-button>
+        <div style="width: 32px" ng-hide="$ctrl.isCreate"></div>
+        <md-button ng-click="$ctrl.submit(userDateForm)" ng-disabled="(userDateForm.$submitted && userDateForm.$invalid) || $ctrl.saveLoading">
+            <spinner input="$ctrl.saveLoading">{{$ctrl.submitButtonName}}</spinner>
+        </md-button>
+    </div>
+
+    <md-button ui-sref="editProfilePage" ng-show="$ctrl.isReadOnly">Edit Profile</md-button>
+</form>
