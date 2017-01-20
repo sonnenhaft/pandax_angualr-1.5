@@ -39,7 +39,6 @@ class controller {
     $scope.$on('$destroy', ( ) => this.isDestoryed = true);
   }
 
-  static alreadySet = false
   $onInit ( ) {
     const initPromise = this.$q.all({
       googleMaps: this.uiGmapGoogleMapApi,
@@ -67,8 +66,7 @@ class controller {
           this.$log.warn('seems like you moved from one resolution to another one, map can fail');
           this.currentMarkerPosition = position;
         }
-      } else if (!controller.alreadySet) {
-        controller.alreadySet = true;
+      } else {
         this.setDefaultLocation( );
       }
     });

@@ -46,7 +46,7 @@ class GoogleGeoLocationService {
             ({ coords: { latitude, longitude } }) => ({ lat: ( ) => latitude, lng: ( ) => longitude }),
             e => {
               console.log(e);
-              return { latitude: 35.5375307, longitude: -100.0695645 };
+              return { lat: () => 35.5375307, lng: ()=> -100.0695645 };
             }
         );
   }

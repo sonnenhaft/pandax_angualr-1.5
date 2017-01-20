@@ -55,6 +55,8 @@ class controller extends AbstractScrollableController {
       if (data.items.length && !this.activeOrderId) {
         return this.getOrderDetails(data.items[0].id).then(( ) => data);
       } else {
+        this.activeOrderDetails = this.activeOrderId = null;
+        this._setLocationSearchParams( );
         return data;
       }
     });
@@ -62,26 +64,26 @@ class controller extends AbstractScrollableController {
   }
 
   filterData ( ) {
-    this._setLocation( );
+    this._setLocationSearchParams( );
     this.resetItems( );
     this.fetchMoreItems( );
   }
 
-  _setLocation ( ) {
+  _setLocationSearchParams ( ) {
     const orderId = this.activeOrderId;
     const paramsMap = Object.keys(this.searchParams)
-            .filter(key => {
-              const value = this.searchParams[key];
-              return value !== '' && value !== null;
-            })
-            .reduce((map, key) => {
-              if (this.DATE_KEYS.includes(key)) {
-                map[key] = this.searchParams[key].toISOString( );
-              } else {
-                map[key] = this.searchParams[key];
-              }
-              return map;
-            }, {});
+      .filter(key => {
+        const value = this.searchParams[key];
+        return value !== '' && value !== null;
+      })
+      .reduce((map, key) => {
+        if (this.DATE_KEYS.includes(key)) {
+          map[key] = this.searchParams[key].toISOString( );
+        } else {
+          map[key] = this.searchParams[key];
+        }
+        return map;
+      }, {});
 
     this.$location.search({ ...paramsMap, ...{ orderId } }).replace( );
   }
@@ -89,7 +91,7 @@ class controller extends AbstractScrollableController {
   getOrderDetails (orderId) {
     this.isLoadingDetails = true;
     this.activeOrderId = orderId;
-    this._setLocation( );
+    this._setLocationSearchParams( );
     return this.AdminDataResource.fetchOrderDetails({ orderId }).$promise.then(activeOrderDetails => {
       this.isLoadingDetails = false;
       return this.activeOrderDetails = activeOrderDetails;
