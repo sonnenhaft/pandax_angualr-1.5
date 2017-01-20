@@ -109,7 +109,11 @@ angular.module('app', [
   });
 
   // Stripe integration
-  stripeProvider.setPublishableKey(config.STRIPE_PUBLIC_KEY);
+  if (window.location.host.indexOf('app.minxnow.com') !== -1) {
+    stripeProvider.setPublishableKey('pk_live_FyfabM0CcdsPhNrw2MNtUw7F');
+  } else {
+    stripeProvider.setPublishableKey('pk_test_53uGNlHfMPbElFTnPN8sXQ9N');
+  }
 })
   .filter('hoursToTime', hoursToTime)
   .component('app', { template });
