@@ -7,10 +7,10 @@ const UNKNOWN_PLACE = 'Unknown place';
 class controller {
   ALLOWED_ZIPS = ALLOWED_ZIPS
 
-  constructor (GoogleGeoLocationService, $log) {
+  constructor (GoogleGeoLocationService, $log, $location) {
     'ngInject';
 
-    Object.assign(this, { GoogleGeoLocationService, $log });
+    Object.assign(this, { GoogleGeoLocationService, $log, $location });
     this.locationName = 'Loading current location...';
   }
 
@@ -57,6 +57,9 @@ class controller {
   }
 
   validateIfZipIsAllowed (zip) {
+    if (this.$location.search( ).skipNYcheck) {
+      return true;
+    }
     if (zip) {
       const zipAsInteger = parseInt(zip, 10); // we don't care 0 value or values with "-" sign, because we have exact list of postal codes
       return !isNaN(zipAsInteger) && this.ALLOWED_ZIPS.includes(zipAsInteger);

@@ -2,14 +2,18 @@ import messages from './messages.component';
 import TouchedInvalidDirective from './touched-invalid.directive';
 
 class controller {
-  constructor (stripe, StatefulUserData) {
+  constructor (stripe, StatefulUserData, $stateParams) {
     'ngInject';
 
     this.stripeCardValidations = stripe.card;
     this.isCustomer = StatefulUserData.isCustomer( );
+    this.$stateParams = $stateParams;
   }
 
   $onInit ( ) {
+    if (this.$stateParams.stub) {
+      this.model = { number: '5200828282828210 ', expiry: '12/18', cvc: 123, zip: 123456 };
+    }
     this.model = this.model || {};
   }
 
