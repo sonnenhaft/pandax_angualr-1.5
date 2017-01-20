@@ -10,10 +10,6 @@ class controller {
     // $mdDialog necessary to hide "Why" tooltip
     Object.assign(this, { Cards, $mdDialog, $stateParams });
     this.Cards.getCards( ).then(cards => this.cards = cards);
-
-    if (this.$stateParams.stub) {
-      this.newCard = { number: '5200828282828210 ', expiry: '12/18', cvc: 123, zip: 123456 };
-    }
   }
 
   addCard (form, card) {

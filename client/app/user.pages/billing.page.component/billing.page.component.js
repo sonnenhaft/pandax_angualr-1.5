@@ -36,11 +36,7 @@ class controller {
     }
 
     if (!this.billingInfo.cards || !this.billingInfo.cards.length) {      // should add card
-      promises.push(this.Cards.add(this.newCard).then(card => {
-        if (card.message) {
-          return card;
-        }
-      }));
+      promises.push(this.Cards.add(this.newCard));
     } else if (this.defaultCardId !== this.getDefaultCardId( )) {
       // ToDo: send request to change default card
     }
@@ -63,22 +59,12 @@ class controller {
     return result;
   }
 
-  showError (message) {
-    this.$mdToast.show(this.$mdToast.simple( )
-      .content(message || message.type)
-      .position('top right')
-      .hideDelay(200000)
-      .action('OK'));
-  }
-
   payForOrder ( ) {
     return this.OrderService.payForOrder(this.$stateParams.orderId, this.getDefaultCardId( )).then(
       data => this.OrderService.inviteEntertainer(this.$stateParams.orderId, parseInt(this.$stateParams.entertainerId, 10)),
       error => {
         this.showMoneyReservationFailedPopUp( );
-        const defer = this.$q.defer( );
-        defer.reject(error);
-        return defer.promise;
+        return this.$q.reject(error);
       });
   }
 
@@ -108,7 +94,7 @@ export default angular.module(component, [
   'ngInject';
 
   $stateProvider.state('main.billing', {
-    url: '/billing/:orderId/:entertainerId?from',
+    url: '/billing/:orderId/:entertainerId?from?stub',
     parent: 'main',
     component
   });

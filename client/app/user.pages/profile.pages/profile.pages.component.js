@@ -27,11 +27,6 @@ class controller {
     this.newPaymentCard = {};
     const user = angular.copy(this.StatefulUserData.getUser( )) || {};
 
-    if (this.$stateParams.stub) {
-      Object.assign(user, { phone: 12345678910, first_name: 1, displaying_name: 1, last_name: 1, dob: { year: 1991, month: 1, day: 2 } });
-      this.newPaymentCard = { number: '5200828282828210 ', expiry: '12/18', cvc: 123, zip: 123456 };
-    }
-
     const { displaying_name, first_name, last_name, phone, email, dob, photo, photos = [] } = user;
     this.userData = { displaying_name, first_name, last_name, phone, email, dob };
     if (!dob || !dob.year || !dob.day || !dob.month) {
