@@ -57,7 +57,6 @@ class controller {
         const images = this.images
           .map(({ original: file }, idx) => ({ file, idx: idx + 1 }))
           .filter(({ file }) => !angular.isString(file));
-        console.log(images);
         if (!images.length) {
           return this.$q.when({});
         } else if (this.isProvider) {

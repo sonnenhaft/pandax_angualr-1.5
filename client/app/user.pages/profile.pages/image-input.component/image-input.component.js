@@ -14,7 +14,8 @@ export default angular.module('pandaImageInput', [
         ngf-min-width="200"
         ngf-pattern="'.png,.jpg'"
         ngf-accept="'.png,.jpg'"
-        ng-required="true">
+        ng-required="!$ctrl.model">
+  <!--ng-required="!$ctrl.model" is necessary in here because after minification app thinks that images does not exist-->
   <img ngf-src="$ctrl.model" alt="profile image" ng-show="$ctrl.model"/>
   <div class="hover-background"></div>
 </button>`
