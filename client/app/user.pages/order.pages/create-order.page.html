@@ -1,6 +1,6 @@
 <div id="order" layout-gt-sm="row" ng-if="$ctrl.resolved">
 
-    <div class="order-form animated fadeIn" flex>
+    <div class="order-form" flex>
         <h1 class="page-name">Create Order</h1>
         <div class="provider-type" layout="row">
             <div flex ng-repeat="type in $ctrl.providers">
@@ -175,7 +175,7 @@
         </form>
     </div>
 
-    <div class="order-map animated fadeInRight" flex ng-if="!$ctrl.mobile">
+    <div class="order-map" flex ng-if="!$ctrl.mobile">
         <panda-google-map-input ng-model="$ctrl.inputLocation"></panda-google-map-input>
     </div>
 </div>
