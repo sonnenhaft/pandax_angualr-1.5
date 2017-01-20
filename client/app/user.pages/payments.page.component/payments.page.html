@@ -13,7 +13,7 @@
             <form name="billingInformationForm" layout="column" class="billing-information-form" novalidate>
                 <add-new-card-form model="$ctrl.newCard"  is-required="true"></add-new-card-form>
                 <div layout="row">
-                    <md-button class="black" ng-click="$ctrl.resetCardInfo(); $ctrl.add = false">Cancel</md-button>
+                    <md-button class="black" ng-click="$ctrl.newCard = {}; $ctrl.add = false">Cancel</md-button>
                     <div style="width: 32px"></div>
                     <md-button ng-click="$ctrl.addCard(billingInformationForm, $ctrl.newCard)" ng-disabled="$ctrl.saveLoading || (billingInformationForm.$invalid && billingInformationForm.$submitted)">
                         <spinner input="$ctrl.saveLoading">Add</spinner>

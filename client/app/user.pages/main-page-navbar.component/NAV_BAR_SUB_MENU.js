@@ -3,7 +3,7 @@ export default [
     role: ['customer', 'provider'],
     parent: 'Settings',
     text: 'Payments',
-    url: 'main.payments'
+    url: 'paymentsPage'
   },
   {
     role: ['customer', 'provider'],
