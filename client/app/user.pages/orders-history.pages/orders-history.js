@@ -10,7 +10,7 @@ class controller {
   constructor ($stateParams, StatefulUserData, $http) {
     'ngInject';
 
-    Object.assign(this, { $stateParams });
+    Object.assign(this, { $stateParams, StatefulUserData });
 
     if (StatefulUserData.isProvider( )) {
       $http.get('{{config_api_url}}/api/status').then(({ data: user }) => {

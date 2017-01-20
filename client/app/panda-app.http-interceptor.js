@@ -51,7 +51,9 @@ class PandaHttpInterceptor {
       if (response.data) {
         messageText = response.data.detail || response.data.message;
       }
-      Helper.showToast(messageText, 5000);
+      if (messageText !== 'PHONE_ALREADY_EXIST') {
+        Helper.showToast(messageText, 5000);
+      }
       if (response.status == 401) {
         this.StatefulAuthTokenService.logout( );
       }

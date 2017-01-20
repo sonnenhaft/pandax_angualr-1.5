@@ -27,6 +27,10 @@ class controller {
     this.newPaymentCard = {};
     const user = angular.copy(this.StatefulUserData.getUser( )) || {};
 
+    if (this.$stateParams.stub) {
+      Object.assign(user, { phone: 12345678910, first_name: 1, displaying_name: 1, last_name: 1, dob: { year: 1991, month: 1, day: 2 } });
+    }
+
     const { displaying_name, first_name, last_name, phone, email, dob, photo, photos = [] } = user;
     this.userData = { displaying_name, first_name, last_name, phone, email, dob };
     if (!dob || !dob.year || !dob.day || !dob.month) {
@@ -66,12 +70,14 @@ class controller {
         .then(( ) => this.$state.go('viewProfilePage'))
         .catch(e => {
           this.saveLoading = false;
-
-          // form.phone.$setValidity('phone_already_taken', false);
-          // form.phone.setTouchedInvalid();
-
-          console.log(e);
-          throw new Error(e);
+          const { data: { detail } } = e;
+          if (detail === 'PHONE_ALREADY_EXIST') {
+            form.phone.$setValidity('phone_already_taken', false);
+            form.phone.setTouchedInvalid( );
+          } else {
+            console.log(e);
+            return this.$q.reject(e);
+          }
         });
     }
   }
