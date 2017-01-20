@@ -1,0 +1,28 @@
+<div class="billing-page-component billing animated fadeIn" layout="column">
+  <span class="page-name">CREATE ORDER</span>
+  <h4 ng-show="!$ctrl.hasPersonalInfo" class="personal-information__title">PERSONAL INFORMATION</h4>
+  <form name="personalInformationForm" layout="column" class="personal-information-form form_1" novalidate ng-show="!$ctrl.hasPersonalInfo">
+    <common-user-fields model="$ctrl.billingInfo"></common-user-fields>
+  </form>
+
+  <order-details order="$ctrl.orderDetails"></order-details>
+
+  <h4 ng-show="!$ctrl.billingInfo.cards || $ctrl.billingInfo.cards.length == 0" class="billing-information__title">BILLING INFORMATION</h4>
+  <form name="billingInformationForm" layout="column" class="billing-information-form" novalidate
+        ng-show="!$ctrl.billingInfo.cards || $ctrl.billingInfo.cards.length == 0">
+    <add-new-card-form model="$ctrl.newCard" is-required="true"></add-new-card-form>
+  </form>
+
+  <card-list ng-if="$ctrl.billingInfo.cards.length > 0" cards="$ctrl.billingInfo.cards"></card-list>
+
+  <div layout="row" ng-hide="$ctrl.isReadOnly">
+    <md-button class="black" ng-click="$ctrl.goToPreviousStep()"> Cancel</md-button>
+    <div style="width: 32px"></div>
+    <md-button ng-click="$ctrl.saveInfo()" ng-disabled="(!$ctrl.hasPersonalInfo && personalInformationForm.$invalid) ||
+    							 ((!$ctrl.billingInfo.cards || $ctrl.billingInfo.cards.length == 0) && billingInformationForm.$invalid) ||
+    							 $ctrl.saveLoading">
+      <spinner input="$ctrl.saveLoading">Pay</spinner>
+    </md-button>
+  </div>
+</div>
+

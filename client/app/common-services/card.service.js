@@ -26,8 +26,9 @@ class Cards {
         if (!card) {
           return { message: 'Something went wrong with server communication' };
         } else if (card.id) {
-          this.billingInfo = Object.assign(this.billingInfo, {
-            cards: _.chain(this.billingInfo.cards).map(card => {
+          const billingInfo = this.billingInfo || {};
+          this.billingInfo = Object.assign(billingInfo, {
+            cards: _.chain(billingInfo).map(card => {
               card.is_default = false;
               return card;
             }).union([card]).value( )

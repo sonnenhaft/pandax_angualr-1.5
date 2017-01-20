@@ -1,8 +1,8 @@
 export default [
   { role: ['customer'], text: 'Create order', url: 'main.create-order' },
   // { role: ['customer'], text: 'Rate Entertainers', url: 'main.rate-entertainers' },
-  { role: ['provider'], text: 'Order History', url: 'main.history' },
-  { role: ['customer'], text: 'Orders', url: 'main.history' },
+  { role: ['provider'], text: 'Order History', url: 'ordersHistoryPages' },
+  { role: ['customer'], text: 'Orders', url: 'ordersHistoryPages' },
   { role: ['customer', 'provider'], text: 'Contact Us', url: 'main.contact-us' },
   { role: ['customer', 'provider'], text: 'Settings', url: '' },
   {

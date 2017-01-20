@@ -23,9 +23,6 @@ class Validation {
       case 'repeater':
         return this[field](credentials.password, credentials[field]);
 
-      case 'first_name':
-      case 'last_name':
-      case 'displaying_name':
       case 'old_password': // eslint-disable-line no-fallthrough
         return this.isEmpty(field, credentials[field]);
 
@@ -44,17 +41,6 @@ class Validation {
   }
 
   /** @deprecated mass */
-  location (point) {
-    if (_.isEmpty(point)) {
-      return this.message('location', false, 'This field is required');
-    } else if (!_.isObject(point) || !point.location) {
-      return this.message('location', false, 'We don’t recognize the address');
-    } else {
-      return this.message('location', true);
-    }
-  }
-
-  /** @deprecated mass */
   date (date) {
     if (!date) {
       return this.message('date', false, 'This field is required');
@@ -69,18 +55,6 @@ class Validation {
     }
   }
 
-  /** @deprecated mass */
-  email (str) {
-    if (!str) {
-      return this.message('email', false, 'This field is required');
-    } else if (str.length > 100) {
-      return this.message('email', false, 'Max 100 characters allowed');
-    } else if (!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(str.toLowerCase( ))) { // eslint-disable-line max-len
-      return this.message('email', false, 'Email is not valid');
-    } else {
-      return this.message('email', true);
-    }
-  }
 
   /** @deprecated mass */
   password (password) {
@@ -97,17 +71,6 @@ class Validation {
       return this.message('repeater', pass === repeater, 'Password doesn’t match');
     } else {
       return this.message('repeater', false, 'This field is required');
-    }
-  }
-
-  /** @deprecated mass */
-  phone (number) {
-    if (!number) {
-      return this.message('phone', false, 'This field is required');
-    } else if (!/(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}/.test(number)) {
-      return this.message('phone', false, 'Phone number is invalid');
-    } else {
-      return this.message('phone', true);
     }
   }
 

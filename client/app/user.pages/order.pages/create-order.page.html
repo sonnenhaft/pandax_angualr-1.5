@@ -1,0 +1,181 @@
+<div id="order" layout-gt-sm="row" ng-if="$ctrl.resolved">
+
+    <div class="order-form animated fadeIn" flex>
+        <h1 class="page-name">Create Order</h1>
+        <div class="provider-type" layout="row">
+            <div flex ng-repeat="type in $ctrl.providers">
+                <md-button ng-click="$ctrl.Helper.switchObjectActivity($ctrl.providers, $index); $ctrl.typeError = false;" ng-class="{active: type.active}" aria-label="{{type.name}}">
+                    <div class="price">${{type.price}}</div>
+                    <div class="name">{{type.name}}</div>
+                    <i class="desc-icon" ng-click="$ctrl.showDescription($event, $index)"></i>
+                    <div style="visibility: hidden" ng-if="type.description">
+                        <div class="md-dialog-container desc" id="typeDescr-{{$index}}">
+                            <md-dialog>
+                                <span class="close" ng-click="$ctrl.$mdDialog.hide()"></span>
+                                <div layout-gt-sm="row" layout-align="space-between center">
+                                    <div flex="35">
+                                        <div class="image">
+                                            <img ng-src="{{type.img}}" alt="{{type.name}}"/>
+                                        </div>
+                                    </div>
+                                    <div flex="60"><p>{{type.description}}</p></div>
+                                </div>
+                            </md-dialog>
+                        </div>
+                    </div>
+                </md-button>
+            </div>
+        </div>
+        <div class="type-error" ng-if="$ctrl.typeError == true">
+            Please choose type of service.
+        </div>
+        <form name="orderForm" id="profile-form" novalidate>
+            <div class="input" layout="row">
+                <div flex>
+                    <label>Length of booking</label>
+                    <md-select ng-model="$ctrl.hour" aria-label="Hour" name="hour">
+                        <md-option ng-repeat="hour in $ctrl.hours" value="{{hour}}">
+                            {{hour}}
+                        </md-option>
+                    </md-select>
+                </div>
+                <div flex>
+                    <label>Entertainers</label>
+                    <md-select ng-model="$ctrl.entertainer" aria-label="Entertainer" name="entertainer">
+                        <md-option ng-repeat="entertainer in $ctrl.entertainers" value="{{entertainer}}">
+                            {{entertainer}}
+                        </md-option>
+                    </md-select>
+                    <div class="descr" ng-if="$ctrl.isNewcomer">
+                        <p>
+                            Minimum 2 entertainers for first time customers.
+                            <tip-modal modal-selector=".entertainers-count-info">
+                                Why? <i class="desc-icon"></i>
+                                <div style="display: none">
+                                    <div class="md-dialog-container desc entertainers-count-info">
+                                        <md-dialog>
+                                            <span class="close" ng-click="$ctrl.$mdDialog.hide()"></span>
+                                            <div layout-gt-sm="row" layout-align="space-between center">
+                                                <div>Just trying to get to know you better for the safety of our Minx.</div>
+                                            </div>
+                                        </md-dialog>
+                                    </div>
+                                </div>
+                            </tip-modal>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="location" layout-gt-sm="row">
+                <panda-find-location-input flex="60" ng-model="$ctrl.inputLocation" name="inputLocation"
+                                           address-regex="NY.+USA"
+                                           recognizable-address="true"
+                                           nyc-only="true"
+                                           ng-required="true"
+                                           label="Location"></panda-find-location-input>
+                <div class="map" ng-if="$ctrl.mobile">
+                    <panda-google-map-input ng-model="$ctrl.inputLocation"></panda-google-map-input>
+                </div>
+                <div class="input" flex="40">
+                    <label>Apt</label>
+                    <input type="text"
+                           name="apt"
+                           autocomplete="off"
+                           ng-model="$ctrl.apt"
+                           ng-keyup="$ctrl.aptError = false"
+                           ng-class="{error: $ctrl.aptError}">
+                    <span class="error" ng-if="$ctrl.aptError">
+                        {{$ctrl.aptError}}
+                    </span>
+                </div>
+            </div>
+            <div>
+
+          <span class="find-location-error" ng-messages="orderForm.inputLocation.$error" ng-if="orderForm.inputLocation.$invalid && orderForm.$submitted">
+            <div ng-message="addressRegex"> Only NYC area is available for placing the order</div>
+            <div ng-message="nycOnly">Only NYC area is available for placing the order</div>
+            <div ng-message="required">This field is required</div>
+            <div ng-message="recognizableAddress">We don’t recognize the address</div>
+          </span>
+            </div>
+            <div class="input">
+                <label>Event details and location notes</label>
+                <textarea name="notes" ng-model="$ctrl.notes"></textarea>
+            </div>
+            <div class="input">
+                <label>Number of guests</label>
+                <md-select ng-model="$ctrl.guest" aria-label="Guest" name="guest">
+                    <md-option ng-repeat="guest in $ctrl.guests" value="{{guest}}">
+                        {{guest}}
+                    </md-option>
+                </md-select>
+            </div>
+            <div class="input radio" layout="row">
+                <div flex>
+                    <md-button aria-label="ASAP"
+                               class="first"
+                               ng-class="{active: $ctrl.asap}"
+                               ng-click="$ctrl.asap = true; $ctrl.later = false">
+                        <label for="asap">ASAP</label>
+                        <input id="asap" type="checkbox" name="asap" ng-model="$ctrl.asap">
+                    </md-button>
+                </div>
+                <div flex>
+                    <md-button aria-label="Later"
+                               ng-class="{active: $ctrl.later}"
+                               ng-click="$ctrl.later = true; $ctrl.asap = false">
+                        <label for="later">Later</label>
+                        <input id="later" type="checkbox" name="later" ng-model="$ctrl.later">
+                    </md-button>
+                </div>
+            </div>
+            <div class="input datepicker animated"
+                 layout="row"
+                 ng-class="{hidden: $ctrl.asap, fadeIn: !$ctrl.asap, fadeOut: $ctrl.asap}">
+                <div flex>
+                    <label>Date</label>
+                    <md-datepicker ng-model="$ctrl.date"
+                                   ng-change="$ctrl.onDateChange($ctrl.date)"
+                                   ng-class="{error: $ctrl.dateError}"
+                                   md-placeholder="Enter date"
+                                   md-min-date="$ctrl.currentDate"
+                                   md-max-date="$ctrl.maxDateForCreating"
+                                   aria-readonly="true"
+                                   name="date">
+                    </md-datepicker>
+                    <span class="error" ng-if="$ctrl.dateError">
+            {{$ctrl.dateError}}
+          </span>
+                    <span class="error" ng-messages="orderForm.date.$error" ng-if="orderForm.date.$error">
+            <div ng-message="mindate">Date is too early!</div>
+            <div ng-message="maxdate">Date is too late!</div>
+          </span>
+                </div>
+                <div flex>
+                    <label></label>
+                    <md-select ng-model="$ctrl.time" aria-label="Time" name="time" ng-disabled="$ctrl.asap">
+                        <md-option ng-repeat="time in $ctrl.range" value="{{time}}">
+                            {{time}}
+                        </md-option>
+                    </md-select>
+                </div>
+            </div>
+            <div class="total animated">
+                <span>TOTAL: $ {{$ctrl.getTotalPrice()}}</span>
+            </div>
+            <div class="submit">
+                <md-button ng-disabled="$ctrl.orderLoading"
+                           ng-class="{disabled: $ctrl.orderLoading}"
+                           type="submit"
+                           ng-click="$ctrl.onSearch(orderForm)">
+                    {{!$ctrl.orderLoading ? 'SEARCH FOR MINX' : ''}}
+                    <spinner input="$ctrl.orderLoading"></spinner>
+                </md-button>
+            </div>
+        </form>
+    </div>
+
+    <div class="order-map animated fadeInRight" flex ng-if="!$ctrl.mobile">
+        <panda-google-map-input ng-model="$ctrl.inputLocation"></panda-google-map-input>
+    </div>
+</div>

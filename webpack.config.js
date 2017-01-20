@@ -17,7 +17,8 @@ module.exports = {
         test: /\.svg$/,
         exclude: [/assets\/fonts/],
         loader: 'file-loader?limit=30000&name=assets/images/icons/[name].[ext]'
-      }
+      },
+      { test: /\.json$/, loader: 'json-loader' }
     ]
   },
   plugins: [

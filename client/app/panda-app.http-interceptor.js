@@ -26,7 +26,6 @@ class PandaHttpInterceptor {
 
       if (config.data) {
         if (config.data.type) {
-          console.log(config.data);
           config.headers['Content-Type'] = config.data.type;
         } else {
           config.data = JSON.stringify(config.data);

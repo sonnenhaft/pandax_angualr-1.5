@@ -1,0 +1,44 @@
+@import "order.page.dialog.scss";
+
+#order {
+  overflow-x: hidden;
+
+  .order-map {
+    height: 100%;
+    width: 100%;
+  }
+  .find-location-error {
+    color: #ba192f;
+    text-align: center;
+    margin-top: 10px;
+    font: 0.938em "Open Sans", sans-serif;
+  }
+
+  .order-form .input .descr p a {
+    position: absolute;
+    bottom: 0;
+    right: -10px;
+
+    @media (max-width: 960px) {
+      position: static;
+    }
+  }
+}
+
+#order,
+#orderConfirm {
+  height: 100%;
+
+  @import "order.page.types.scss";
+  @import "order.page.form.scss";
+
+  @media (max-width: 960px) {
+    .page-name {
+      padding: 0 5%;
+    }
+  }
+}
+
+@import "manipulation-entertainers.component/manipulation-entertainers.page";
+@import "order-confirm.page.component/order-confirm.page";
+@import "accept-terms-and-conditions.page.component/accept-terms-and-conditions.page";

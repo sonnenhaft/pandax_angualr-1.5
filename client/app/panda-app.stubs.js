@@ -15,15 +15,16 @@ export default angular.module('panda-stubs', [
         [`/api/${role}/profile`]: { data: { role } },
         [`/api/${role}/orders/last-not-accomplished`]: [],
         '/api/orders/1/entertainers/search': [{}],
-        '/api/customer/orders/1/invites': { items: [] },
+        [`/api/${role}/orders/1/invites`]: { items: [] },
         [`/api/orders/${orderId}`]: { serviceType: {} },
         [`/api/orders/${orderId}/entertainers/search`]: {},
+        [`/api/${role}/orders?page=1&status[]=accepted&status[]=in+progress&include=invites`]: { items: [] },
         [`/api/${role}/orders/${orderId}/invites`]: { items: [] },
         [`/api/${role}/service-types`]: [],
         [`/api/${role}/unratedinvites`]: [
-          { id: 204, order_id: 102, location: 'vulica Prytyckaha 2, Minsk, Belarus', location_notes: '111' },
-          { id: 204, order_id: 102, location: 'vulica Prytyckaha 3, Minsk, Belarus', location_notes: '111', provider: { displaying_name: 'John7' } },
-          { id: 204, order_id: 102, location: 'vulica Prytyckaha 4, Minsk, Belarus', location_notes: '111', finish_dt: '2016-11-02T14:24:50+00:00' }
+          // { id: 204, order_id: 102, location: 'vulica Prytyckaha 2, Minsk, Belarus', location_notes: '111' },
+          // { id: 204, order_id: 102, location: 'vulica Prytyckaha 3, Minsk, Belarus', location_notes: '111', provider: { displaying_name: 'John7' } },
+          // { id: 204, order_id: 102, location: 'vulica Prytyckaha 4, Minsk, Belarus', location_notes: '111', finish_dt: '2016-11-02T14:24:50+00:00' }
         ]
       };
 
