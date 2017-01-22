@@ -19,14 +19,10 @@ class controller {
   fetchMoreItems ( ) {
     this.isOnProgress = true;
 
-    this.OrderService.fetchProviderPastOrders(this.currentPage + 1).then(data => {
+    this.OrderService.fetchProviderPastOrders(this.currentPage + 1).then(({ meta: { pagination }, items: history }) => {
       this.isOnProgress = false;
-      this.currentPage = data.meta.pagination.current_page;
-      this.history = this.history.concat(data.items);
-
-      if (this.currentPage == data.meta.pagination.total_pages) {
-        this.isLastPage = true;
-      }
+      this.currentPage = pagination.current_page;
+      this.history = this.history.concat(history); this.isLastPage = this.currentPage == pagination.total_pages;
     });
   }
 }

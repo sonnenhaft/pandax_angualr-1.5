@@ -110,13 +110,10 @@ class OrderService {
   }
 
   fetchProviderPastOrders (page = 1) {
-    return this.$http.get(this._apiUrl(page)).then(
-      result => {
-        this.historyProvider = result.data.items;
-        return result.data;
-      },
-      error => console.log(error)
-    );
+    return this.$http.get(this._apiUrl(page)).then(result => {
+      this.historyProvider = result.data.items;
+      return result.data;
+    });
   }
 
   inviteEntertainer (orderId, entertainerId) {
