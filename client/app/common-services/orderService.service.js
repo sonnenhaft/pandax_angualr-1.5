@@ -182,7 +182,7 @@ class OrderService {
   }
 
   fetchLastNotAccomplishedOrder ( ) {
-    return this.$http.get('{{config_api_url}}/api/{{current_user_role}}/orders/last-not-accomplished').then(result => result.data);
+    return this.$http.get('{{config_api_url}}/api/customer/orders/last-not-accomplished');
   }
 
   payForOrder (orderId, cardId) {
@@ -217,7 +217,7 @@ class OrderService {
     if (data) {
       return this.$q.when(data);
     } else {
-      return this.$http.get('{{config_api_url}}/api/{{current_user_role}}/unratedinvites').then(result => result.data);
+      return this.$http.get('{{config_api_url}}/api/customer/unratedinvites').then(result => result.data);
     }
   }
 }
