@@ -37,12 +37,12 @@
       <td class="table_admin__cell table_admin__cell_label"> Raiting</td>
       <td class="table_admin__cell"> {{entertainer.rating}}</td>
       <td class="table_admin__cell table_admin__cell_actions">
-        <!--<img
+        <img
           ng-if="entertainer.status == $ctrl.statuses.pending"
           src="/assets/images/icons/admin/icon_approve.png"
           ng-click="$ctrl.setStatus($event, entertainer, $ctrl.statuses.active, false)"
           title="Approve"
-          alt="Approve">-->
+          alt="Approve">
         <img
           ng-if="entertainer.status == $ctrl.statuses.rejected"
           src="/assets/images/icons/admin/icon_approve.png"
