@@ -1,7 +1,7 @@
-import OrderService from '../../common-services/orderService.service';
-import timer from '../../common/timer.directive';
-import showInTime from '../../common/show-in-time.directive';
-import template from './history-minx.page.html';
+import OrderService from '../../../common-services/orderService.service';
+import timer from '../../../common/timer.directive';
+import showInTime from '../../../common/show-in-time.directive';
+import template from './history-order-detail.page.html';
 
 class controller {
   timeToCleanCancel = 5
@@ -10,6 +10,9 @@ class controller {
     'ngInject';
 
     Object.assign(this, { $stateParams, moment, OrderService, Helper });
+
+    this.OrderService.getOrdersWithParam(this.$stateParams.id)
+      .then(order => this.order = order);
 
     this.type = $stateParams.type;
   }
@@ -21,28 +24,21 @@ class controller {
   }
 }
 
-export default angular.module('historyMinx', [
+const component = 'historyOrderDetailPage';
+export default angular.module(component, [
   OrderService,
   timer,
   showInTime
 ]).config($stateProvider => {
   'ngInject';
 
-  $stateProvider.state('main.minx', {
+  $stateProvider.state({
     url: '/orders-history/:type/:id',
     parent: 'main',
-    template: '<history-minx order="order"></history-minx>',
-    controller: (order, $scope) => $scope.order = order,
-    resolve: {
-      order: (OrderService, $stateParams) => {
-        'ngInject';
-
-        return OrderService.getOrdersWithParam($stateParams.id);
-      }
-    }
+    name: component,
+    component
   });
-}).component('historyMinx', {
-  bindings: { order: '<' },
+}).component(component, {
   template,
   controller
 }).name;
