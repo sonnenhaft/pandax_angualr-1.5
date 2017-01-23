@@ -12,7 +12,13 @@ class controller {
     Object.assign(this, { $stateParams, moment, OrderService, Helper });
 
     this.OrderService.getOrdersWithParam(this.$stateParams.id)
-      .then(order => this.order = order);
+      .then(order => {
+        this.order = order(order.invites || []).forEach(invite => {
+          if (angular.isString(invite.length)) {
+            invite.length = (invite.length - 0) * 60;
+          }
+        });
+      });
 
     this.type = $stateParams.type;
   }
