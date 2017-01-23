@@ -11,10 +11,10 @@ class controller {
   saveLoading = false
   hasPersonalInfo = false
 
-  constructor ($state, Cards, $stateParams, Resolve, $mdToast, $q, OrderService, $mdDialog, StatefulUserData) {
+  constructor ($state, Cards, $stateParams, Resolve, $mdToast, $q, OrderService, $mdDialog, StatefulUserData, $http) {
     'ngInject';
 
-    Object.assign(this, { $state, $stateParams, Resolve, Cards, $mdToast, $q, OrderService, $mdDialog, StatefulUserData });
+    Object.assign(this, { $state, $stateParams, Resolve, Cards, $mdToast, $q, OrderService, $mdDialog, StatefulUserData, $http });
 
     $q.all({
       orderDetails: OrderService.fetchOrderDetails($stateParams.orderId),

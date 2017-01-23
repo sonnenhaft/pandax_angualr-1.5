@@ -13,7 +13,7 @@ class controller {
 
   $onInit ( ) {
     const { email, password } = this.$stateParams;
-    this.credentials = Object.assign(this.credentials || {}, { email, password });
+    this.credentials = Object.assign({ email, password }, this.credentials || {});
     if (this.$stateParams.auto) {
       this.$timeout(( ) => this.submit( ), 0, false);
     }
