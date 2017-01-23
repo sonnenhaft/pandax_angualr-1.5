@@ -3,7 +3,7 @@ import ngFileUpload from 'ng-file-upload';
 export default angular.module('pandaImageInput', [
   ngFileUpload
 ]).component('pandaImageInput', {
-  bindings: { name: '@', model: '=', onChange: '&', ngReadonly: '<' },
+  bindings: { name: '@', model: '=', onChange: '&', ngReadonly: '<', ngRequired: '<' },
   template: `
 <button class="panda-image-input" aria-label="file" ngf-select ng-model="$ctrl.model" ng-disabled="$ctrl.ngReadonly"
         name="{{::$ctrl.name}}" ngf-capture="'camera'"
@@ -14,7 +14,7 @@ export default angular.module('pandaImageInput', [
         ngf-min-width="200"
         ngf-pattern="'.png,.jpg'"
         ngf-accept="'.png,.jpg'"
-        ng-required="!$ctrl.model">
+        ng-required="$ctrl.ngRequired && !$ctrl.model">
   <!--ng-required="!$ctrl.model" is necessary in here because after minification app thinks that images does not exist-->
   <img ngf-src="$ctrl.model" alt="profile image" ng-show="$ctrl.model"/>
   <div class="hover-background"></div>
