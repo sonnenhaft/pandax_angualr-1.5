@@ -12,7 +12,6 @@ export default moment => {
       hours = parseInt(dateTimeValue, 10);
       minutes = parseInt((parseFloat(dateTimeValue) - hours) * 60, 10);
     }
-
     let timeString = '';
     if (hours > 0) {
       timeString += `${hours}h `;

@@ -1,7 +1,7 @@
 export default [
   { role: ['customer'], text: 'Create order', url: 'main.create-order' },
   // { role: ['customer'], text: 'Rate Entertainers', url: 'main.rate-entertainers' },
-  { role: ['provider'], text: 'Order History', url: 'ordersHistoryPages' },
+  { role: ['provider'], text: 'Orders History', url: 'ordersHistoryPages' },
   { role: ['customer'], text: 'Orders', url: 'ordersHistoryPages' },
   { role: ['customer', 'provider'], text: 'Contact Us', url: 'main.contact-us' },
   { role: ['customer', 'provider'], text: 'Settings', url: '' },

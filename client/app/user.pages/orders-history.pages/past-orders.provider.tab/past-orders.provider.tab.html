@@ -16,22 +16,21 @@
                         <img src="/assets/images/icons/raiting.png" class="icon_small order-information-customer-raiting__icon"/>
                     </div>
                 </div>
-
-                <span class="date">
+                <span class="date" title="Start date">
                     {{
                         item.order.status == $ctrl.ORDER_STATUSES.canceledbyProvider ||
                         item.order.status == $ctrl.ORDER_STATUSES.canceledbyCustomer
                         ? '-'
-                        : (item.order.startDt | amDateFormat:'h:mm A, MMM DD (dddd)')
+                        : (item.start_dt | amDateFormat:'h:mm A, MMM DD (dddd)')
                     }}
                 </span>
-
-                <span class="minx">{{item.order.service_type.name}}</span>
-                <span class="address">{{item.order.location.location}}</span>
+                <span class="minx" title="Service type">{{item.order.serviceType.name}}</span>
+                <span class="address" title="Address">{{item.order.location.location}}</span>
                 <div layout="row">
-                    <span flex="15" class="guest">{{item.order.guestNumber}}</span>
+                    <span flex="15" class="guest" title="Guests number">{{item.order.guestNumber}}</span>
+                    <span flex="15" class="minx" title="Entertainers number">{{item.order.entertainers_number}}</span>
                 </div>
-                <span class="time">{{(item.worked_time) | hoursToTime: 'seconds' }}</span>
+                <span class="time" title="Worked time">{{item.worked_time | hoursToTime: 'seconds' }}</span>
 
                 <div layout="row" class="price">
                     <div flex ng-if="item.moneyEarned > 0">
