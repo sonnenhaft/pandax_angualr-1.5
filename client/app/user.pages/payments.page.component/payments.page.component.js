@@ -4,12 +4,13 @@ import Cards from '../../common-services/card.service';
 import TipModalComponent from '../../common/tip-modal.component/tip-modal.component';
 
 class controller {
-  constructor (Cards, $mdDialog, $stateParams) {
+  constructor (Cards, $mdDialog, $stateParams, StatefulUserData) {
     'ngInject';
 
     // $mdDialog necessary to hide "Why" tooltip
-    Object.assign(this, { Cards, $mdDialog, $stateParams });
+    Object.assign(this, { Cards, $mdDialog, $stateParams, StatefulUserData });
     this.Cards.getCards( ).then(cards => this.cards = cards);
+    this.isProvider = this.StatefulUserData.isProvider( );
   }
 
   addCard (form, card) {
