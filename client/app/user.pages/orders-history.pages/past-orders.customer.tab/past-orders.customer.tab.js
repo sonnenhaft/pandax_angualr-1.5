@@ -11,24 +11,24 @@ class controller {
     'ngInject';
 
     this.OrderService = OrderService;
-    this.ORDER_STATUSES = ORDER_STATUSES;
     this.fetchMoreItems( );
   }
 
   fetchMoreItems ( ) {
     this.isOnProgress = true;
 
-    this.OrderService.fetchHistoryOrders(this.currentPage + 1).then(data => {
+    this.OrderService.fetchHistoryOrders(this.currentPage + 1).then(({ meta: { pagination }, items: history }) => {
+      this.currentPage = pagination.current_page;
+      history.forEach(order => {
+        const s = ORDER_STATUSES;
+        const status = order.status;
+        order.isCancelled = status === s.canceledByProvider || status === s.canceledByCustomer;
+      });
+      this.history = this.history.concat(history);
+
+      this.isLastPage = this.currentPage == pagination.total_pages;
       this.isOnProgress = false;
-      this.currentPage = data.meta.pagination.current_page;
-      this.history = this.history.concat(data.items);
-
-      this.isLastPage = this.checkIsLastPage(data.meta.pagination.total_pages);
-    });
-  }
-
-  checkIsLastPage (totalPages) {
-    return this.currentPage == totalPages;
+    }).catch(e => console.log(e));
   }
 }
 

@@ -9,6 +9,6 @@ export default {
   paid: 'paid',
   canceled: 'canceled',
   active: 'active',
-  canceledbyProvider: 'canceled_by_provider',
-  canceledbyCustomer: 'canceled_by_customer'
+  canceledByProvider: 'canceled_by_provider',
+  canceledByCustomer: 'canceled_by_customer'
 };

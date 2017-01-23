@@ -17,8 +17,8 @@
           </div>
           <div class="minx-info" flex="75">
             <span class="name">{{invite.provider.displaying_name}}</span>
-            <span class="cancel" ng-if="invite.status == $ctrl.ORDER_STATUSES.canceledbyCustomer">Cancelled by you</span>
-            <span class="cancel" ng-if="invite.status == $ctrl.ORDER_STATUSES.canceledbyProvider">Cancelled</span>
+            <span class="cancel" ng-if="invite.status == $ctrl.ORDER_STATUSES.canceledByCustomer">Cancelled by you</span>
+            <span class="cancel" ng-if="invite.status == $ctrl.ORDER_STATUSES.canceledByProvider">Cancelled</span>
             <span class="duration">{{invite.length | hoursToTime: 'seconds'}}</span>
             <span class="price">${{invite.finalPrice}}</span>
 
@@ -26,7 +26,7 @@
               class="minx-actions"
               layout="row"
               layout-align="start center"
-              ng-if="invite.status != $ctrl.ORDER_STATUSES.canceledbyProvider && invite.status != $ctrl.ORDER_STATUSES.canceledbyCustomer">
+              ng-if="invite.status != $ctrl.ORDER_STATUSES.canceledByProvider && invite.status != $ctrl.ORDER_STATUSES.canceledByCustomer">
               <md-button class="md-raised md-accent minx-actions__button" type="button" ng-click="$ctrl.cancelOrder($event, invite)">Cancel Minx</md-button>
               <span timer="{{::$ctrl.moment(invite.datetime).add($ctrl.timeToCleanCancel, 'm').valueOf()}}"></span>
             </div>
