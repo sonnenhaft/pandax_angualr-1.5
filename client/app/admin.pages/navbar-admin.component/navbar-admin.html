@@ -1,9 +1,7 @@
-<nav id="navbar-admin" class="navbar navbar_admin" ng-class="{'navbar_collapsed': $ctrl.collapsed == true}" flex-sm="100">
+<nav class="navbar-admin" ng-class="{'navbar-collapsed': $ctrl.collapsed}" flex-sm="100">
 
-  <div class="logo logo_admin" layout="row">
-    <div class="name name_admin">
-      <a class="logo__link" ng-click="$ctrl.collapsed = !$ctrl.collapsed">MINX</a>
-    </div>
+  <div class="logo_admin" ng-click="$ctrl.collapsed = !$ctrl.collapsed">
+    MINX
   </div>
 
   <div layout="column" layout-align="space-between" class="navigation navigation_admin">

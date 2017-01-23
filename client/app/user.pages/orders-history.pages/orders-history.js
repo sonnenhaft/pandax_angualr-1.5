@@ -10,18 +10,19 @@ class controller {
   constructor ($stateParams, StatefulUserData, $http) {
     'ngInject';
 
-    Object.assign(this, { $stateParams });
+    Object.assign(this, { $stateParams, StatefulUserData });
 
-    if (StatefulUserData.isProvider( )) {
-      $http.get('{{config_api_url}}/api/status').then(({ data: user }) => {
-        StatefulUserData.extend(user);
-        this.isOnPending = user && user.status === 'pending';
+    this.isProvider = this.StatefulUserData.isProvider( );
+
+    if (this.isProvider) {
+      $http.get('{{config_api_url}}/api/status').then(({ data: user = {} }) => {
+        this.isOnPending = user.status === 'pending';
       });
     }
   }
 
   $onInit ( ) {
-    this.selectedTab = this.TABS_ARRAY.indexOf(this.$stateParams.type || 'history');
+    this.selectedTab = this.TABS_ARRAY.indexOf(this.$stateParams.type || 'future');
   }
 }
 

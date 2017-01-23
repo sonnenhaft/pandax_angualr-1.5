@@ -1,74 +1,71 @@
-#navbar-admin {
+nav {
+  height: 100%;
+  z-index: 1;
+}
+
+.navbar-admin {
   display: flex;
   flex-direction: column;
   position: fixed;
   width: 230px;
+  background: black;
 
   .logo_admin {
-  	height: 89px;
-  	min-height: 89px;
+    height: 89px;
+    background: rgba(194, 28, 54, 1);
+    padding: 27px 15px;
+    font-size: 26px;
+    letter-spacing: 1px;
+    line-height: 36px;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    &:hover {
+      opacity: 0.9;
+    }
   }
 
-  .name_admin {
-  	font: {
-  		size: 26px;
-  	}
-  	letter-spacing: 1px;
-  	line-height: 36px;
+  &.navbar-collapsed {
+    width: 70px;
+    .logo_admin {
+      font-size: 15px
+    }
+
+    .navbar_admin__link-text {
+      display: none;
+    }
   }
 
-	.navigation_admin {
-		height: 100%;
-		margin-left: 24px;
+  .navigation_admin {
+    height: 100%;
+    margin-left: 24px;
 
-		&__block {
-			&_top {
-				margin-top: 79px;
-			}
-			&_bottom {
-				margin-bottom: 7px;
-			}
-		}
-	}
+    &__block {
+      &_top {
+        margin-top: 79px;
+      }
+      &_bottom {
+        margin-bottom: 7px;
+      }
+    }
+  }
 
-	.navbar {
-		&_admin {
-			&__row {
-				margin-top: 10px;
-				margin-bottom: 20px;
-			}
-			&__link {
-				display: flex;
-				line-height: normal;
-				&-text {
-					margin-left: 20px;
-				}
-			}
-			&__icon-wrapper {
-				cursor: pointer;
-    		display: flex;
-    		flex-direction: row;
-				width: 20px;
-			}
-		}
-	}
-
-	/*
-		All styles for collapsed menu should be here
-	*/
-	&.navbar_collapsed {
-		width: 70px;
-
-  	.name_admin {
-  		font: {
-  			size: 15px;
-  		}
-  		letter-spacing: .6px;
-  	}
-
-  	.navbar_admin__link-text {
-  		display: none;
-  	}
-	}
-
+  .navbar_admin__row {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  .navbar_admin__link-text {
+    margin-left: 20px;
+    color: white;
+  }
+  .navbar_admin__link {
+    display: flex;
+    line-height: normal;
+  }
+  .navbar_admin__icon-wrapper {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    width: 20px;
+  }
 }
