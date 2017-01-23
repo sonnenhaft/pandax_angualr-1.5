@@ -113,6 +113,12 @@ export default angular.module(name, [
     name,
     component: name
   });
+}).config($compileProvider => {
+  'ngInject';
+
+  // necessary for date picker only
+  // https://stackoverflow.com/questions/41170639/angular-material-date-picker-with-blank-calendar/41566534#41566534
+  $compileProvider.preAssignBindingsEnabled(true);
 }).component(name, {
   template,
   controller
