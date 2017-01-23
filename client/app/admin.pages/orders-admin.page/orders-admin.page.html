@@ -85,7 +85,7 @@
     <br>
     <md-progress-linear ng-show="$ctrl.isOnProgress"></md-progress-linear>
 
-    <div class="orders-content" layout="row" ng-hide="$ctrl.isOnProgress && !$ctrl.list.length">
+    <div class="orders-content" layout="row" ng-hide="$ctrl.isOnProgress || !$ctrl.list.length">
         <div class="orders-list">
             <div class="infinite-scroll-wrapper" infinite-scroll="$ctrl.fetchMoreItems()" infinite-scroll-disabled='$ctrl.isOnProgress || $ctrl.isLastPage' infinite-scroll-container="'.orders-list'">
                 <div class="order" ng-class="{order_active: $ctrl.activeOrderDetails.id === order.id}" layout="column" ng-repeat="order in $ctrl.list" ng-click="$ctrl.getOrderDetails(order.id)">

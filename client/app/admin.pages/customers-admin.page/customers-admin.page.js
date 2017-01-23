@@ -6,9 +6,9 @@ import AbstractScrollableController from '../../common/abstract-scrollable.contr
 class controller extends AbstractScrollableController {
   statusType = 'customer'
   statuses = {
-    active: 'active',
-    blocked: 'blocked',
-    unblocked: 'unblocked',
+    '': 'All',
+    blocked: 'Blocked',
+    active: 'Active',
   }
 
   constructor ($mdDialog, $q, AdminDataResource, $http, $location) {
@@ -20,7 +20,7 @@ class controller extends AbstractScrollableController {
   }
 
   _next (page) {
-    const status = this.selectedStatus;
+    const status = this.selectedStatus || undefined;
     this.$location.search({ status }).replace( );
     return this._getList({ page, status });
   }
