@@ -17,8 +17,8 @@ class controller {
     paid: 'paid',
     canceled: 'canceled',
     active: 'active',
-    canceledbyProvider: 'canceled_by_provider',
-    canceledbyCustomer: 'canceled_by_customer'
+    canceledByProvider: 'canceled_by_provider',
+    canceledByCustomer: 'canceled_by_customer'
   }
   timeToCleanCancel = 5
 
@@ -30,8 +30,8 @@ class controller {
     this.$scope.$watch(( ) => this.entertainers, newValue => {
       if (newValue.filter(item => item.status && ([
         this.statuses.accepted,
-        this.statuses.canceledbyCustomer,
-        this.statuses.canceledbyProvider
+        this.statuses.canceledByCustomer,
+        this.statuses.canceledByProvider
       ].indexOf(item.status) >= 0)).length == this.countOfRequiredEntertainers) {
         this.$state.go('orderConfirm', { orderId: this.$stateParams.orderId });
       }

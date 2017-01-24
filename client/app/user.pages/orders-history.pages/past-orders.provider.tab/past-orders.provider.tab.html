@@ -18,14 +18,14 @@
                 </div>
                 <span class="date" title="Start date">
                     {{
-                        item.order.status == $ctrl.ORDER_STATUSES.canceledbyProvider ||
-                        item.order.status == $ctrl.ORDER_STATUSES.canceledbyCustomer
+                        item.order.status == $ctrl.ORDER_STATUSES.canceledByProvider ||
+                        item.order.status == $ctrl.ORDER_STATUSES.canceledByCustomer
                         ? '-'
                         : (item.start_dt | amDateFormat:'h:mm A, MMM DD (dddd)')
                     }}
                 </span>
                 <span class="minx" title="Service type">{{item.order.serviceType.name}}</span>
-                <span class="address" title="Address">{{item.order.location.location}}</span>
+                <!--<span class="address" title="Address">{{item.order.location.location}}</span>-->
                 <div layout="row">
                     <span flex="15" class="guest" title="Guests number">{{item.order.guestNumber}}</span>
                     <span flex="15" class="minx" title="Entertainers number">{{item.order.entertainers_number}}</span>
@@ -39,10 +39,10 @@
                     </div>
                 </div>
 
-                <div ng-if="item.status == $ctrl.ORDER_STATUSES.canceledbyProvider" layout="row" class="order-information-canceled-message">
+                <div ng-if="item.status == $ctrl.ORDER_STATUSES.canceledByProvider" layout="row" class="order-information-canceled-message">
                     Order canceled by entertainer. Cancelation fee will be deducted from the next payment
                 </div>
-                <div ng-if="item.status == $ctrl.ORDER_STATUSES.canceledbyCustomer" layout="row" class="order-information-canceled-message">
+                <div ng-if="item.status == $ctrl.ORDER_STATUSES.canceledByCustomer" layout="row" class="order-information-canceled-message">
                     Order canceled by customer
                 </div>
 

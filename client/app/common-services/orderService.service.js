@@ -161,7 +161,7 @@ class OrderService {
       .cancel('No'))
       .then(data => this.$http.put(`{{config_api_url}}/api/invite/${invite.id}/cancel`))
       .then(result => {
-        invite.status = ORDER_STATUSES.canceledbyCustomer;
+        invite.status = ORDER_STATUSES.canceledByCustomer;
         return result;
       });
   }

@@ -6,14 +6,14 @@
 
 	<div class="confirmed-entertainers__header">
 		<h2 class="confirmed-entertainers__header-text">
-      CONFIRMATIONS {{($ctrl.entertainers | byStatuses: [$ctrl.statuses.accepted, $ctrl.statuses.canceledbyProvider, $ctrl.statuses.canceledbyCustomer]).length}}/{{$ctrl.countOfRequiredEntertainers}}
+      CONFIRMATIONS {{($ctrl.entertainers | byStatuses: [$ctrl.statuses.accepted, $ctrl.statuses.canceledByProvider, $ctrl.statuses.canceledByCustomer]).length}}/{{$ctrl.countOfRequiredEntertainers}}
     </h2>
 	</div>
 
   <md-card
     layout="row"
   	class="confirmed-entertainers__card"
-  	ng-repeat="invite in $ctrl.entertainers | byStatuses : [$ctrl.statuses.accepted, $ctrl.statuses.canceledbyProvider, $ctrl.statuses.canceledbyCustomer] track by $index">
+  	ng-repeat="invite in $ctrl.entertainers | byStatuses : [$ctrl.statuses.accepted, $ctrl.statuses.canceledByProvider, $ctrl.statuses.canceledByCustomer] track by $index">
 
     <md-card-header class="confirmed-entertainers__card-header">
     	<md-card-avatar class="confirmed-entertainers__avatar" ng-style="{'background-image': 'url(' + invite.provider.photos[0].preview + ')'}">
@@ -29,7 +29,7 @@
 
       <span class="confirmed-entertainers__name">{{invite.provider.displaying_name}} is confirmed!</span>
 
-      <div ng-hide="(invite.status == $ctrl.statuses.canceledbyProvider) || (invite.status == $ctrl.statuses.canceledbyCustomer)">
+      <div ng-hide="(invite.status == $ctrl.statuses.canceledByProvider) || (invite.status == $ctrl.statuses.canceledByCustomer)">
         <div
           layout="row"
           layout-align="space-between"
@@ -63,7 +63,7 @@
 
       <span
         class="confirmed-entertainers__canceling-message"
-        ng-show="invite.status == $ctrl.statuses.canceledbyCustomer">
+        ng-show="invite.status == $ctrl.statuses.canceledByCustomer">
         Canceled by you
       </span>
 

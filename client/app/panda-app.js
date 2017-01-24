@@ -35,7 +35,7 @@ import OrderPage from './user.pages/order.pages/create-order.page.component';
 import HistoryPage from './user.pages/orders-history.pages/orders-history';
 import PasswordPage from './user.pages/password.page.component/password.page.component';
 import PaymentsPage from './user.pages/payments.page.component/payments.page.component';
-import HistoryMinxPage from './user.pages/history-minx.page.component/history-minx.page.component';
+import HistoryMinxPage from './user.pages/orders-history.pages/history-order-detail.page/history-order-detail.page';
 import ContactUsPage from './user.pages/contact-us.page.component/contact-us.page.component';
 import AdminComponent from './admin.pages/admin-pages.abstract.route';
 import LoginPagesRoutes, { LoginPageComponent as loginPageStateName } from './login.pages/login.pages.routes';
