@@ -78,7 +78,7 @@
     "node-libs-browser": "^0.5.0",
     "node-sass": "^3.8.0",
     "raw-loader": "^0.5.1",
-    "resolve-url-loader": "1.5.9",
+    "resolve-url-loader": "1.6.0",
     "run-sequence": "^1.1.0",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.12.4",
