@@ -11,7 +11,7 @@
         placeholder="Status"
         class="select-container_admin"
         ng-change="$ctrl.filterByStatus($ctrl.selectedStatus)">
-        <md-option ng-repeat="(key, val) in ::$ctrl.statuses" value="{{::key}}">{{::val}}</md-option>
+        <md-option ng-repeat="(key, val) in ::$ctrl.tableStatuses" value="{{::key}}">{{::val}}</md-option>
       </md-select>
     </div>
   </div>
@@ -37,16 +37,16 @@
       <td class="table_admin__cell"> {{::customer.rating}}</td>
       <td class="table_admin__cell table_admin__cell_actions">
         <img
-          ng-if="customer.status === $ctrl.statuses.active"
+          ng-if="customer.status === $ctrl.tableStatuses.active"
           src="/assets/images/icons/admin/icon_block.png"
-          ng-click="$ctrl.setStatus($event, customer, $ctrl.statuses.blocked, true)"
+          ng-click="$ctrl.setStatus($event, customer, $ctrl.tableStatuses.blocked, true)"
           title="Block"
           alt="Block">
 
         <img
-          ng-if="customer.status === $ctrl.statuses.blocked"
+          ng-if="customer.status === $ctrl.tableStatuses.blocked"
           src="/assets/images/icons/admin/icon_unblock.png"
-          ng-click="$ctrl.setStatus($event, customer, $ctrl.statuses.active, true, $ctrl.statuses.unblocked)"
+          ng-click="$ctrl.setStatus($event, customer, $ctrl.tableStatuses.active, true, $ctrl.tableStatuses.unblocked)"
           title="Unblock"
           alt="Unblock">
       </td>
