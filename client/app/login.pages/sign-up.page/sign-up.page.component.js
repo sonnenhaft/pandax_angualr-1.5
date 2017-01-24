@@ -4,9 +4,19 @@ class controller {
   constructor (LoginResource, $stateParams, $location, $state) {
     'ngInject';
 
-    Object.assign(this, { LoginResource, $location, $state });
+    Object.assign(this, { LoginResource, $location, $state, $stateParams });
+  }
 
-    this.isCustomer = $stateParams.customer;
+  $onInit(){
+    if (this.$stateParams.auto) {
+
+      this.credentials = Object.assign(this.credentials || {},{
+        email: `${Date.now( )}hello-kitty@gmail.com`,
+        password: Date.now( )
+      });
+    }
+
+    this.isCustomer = this.$stateParams.customer;
   }
 
   setIsCustomer (isCustomer) {

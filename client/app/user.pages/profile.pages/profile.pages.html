@@ -8,7 +8,7 @@
     </label>
     <div layout="row" layout-align="space-between center">
         <div ng-repeat="image in $ctrl.images track by $index">
-            <panda-image-input model="image.original" name="file{{::$index}}" ng-readonly="$ctrl.isReadOnly"></panda-image-input>
+            <panda-image-input model="image.original" name="file{{::$index}}" ng-readonly="$ctrl.isReadOnly" ng-required="$ctrl.isProvider"></panda-image-input>
         </div>
     </div>
 
