@@ -24,7 +24,7 @@ export default class AbstractScrollableController {
 
     this.isOnProgress = true;
     this.currentPage += 1;
-    return this._next( ).$promise.then(
+    return this._next(this.currentPage).$promise.then(
       ({ items, meta: { pagination: { current_page: currentPage, total_pages: totalPages } } }) => {
         if (this.currentPage !== currentPage) {
           console.log('error happened, our and ajax pages do not match', this.currentPage, currentPage);

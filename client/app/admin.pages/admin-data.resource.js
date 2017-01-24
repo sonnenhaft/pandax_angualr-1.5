@@ -5,7 +5,7 @@ export default angular.module('AdminDataResource', [
 ]).factory('AdminDataResource', $resource => {
   'ngInject';
 
-  const resourceParams = { method: 'GET', interceptor: { response: ({ data }) => data }, isArray: false };
+  const resourceParams = { method: 'GET', isArray: false };
   return $resource('', {}, {
     fetchCustomers: { url: '{{config_api_url}}/api/admin/customers', ...resourceParams }, // {status, page}
     fetchEntertainers: { url: '{{config_api_url}}/api/provider', ...resourceParams }, // {status, page}

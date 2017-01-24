@@ -17,6 +17,7 @@
   </div>
   <md-progress-linear ng-show="$ctrl.isOnProgress"></md-progress-linear>
   <table class="admin__table table_admin"
+         infinite-scroll-container="'#admin'"
          infinite-scroll="$ctrl.fetchMoreItems()"
          infinite-scroll-disabled='$ctrl.isOnProgress || $ctrl.isLastPage'>
     <tr class="table_admin__row table_admin__row_start" ng-repeat-start="customer in $ctrl.list">
@@ -61,4 +62,5 @@
       <td class="table_admin__cell_rowspaned"></td>
     </tr>
   </table>
+  <md-progress-linear ng-show="$ctrl.isOnProgress && $ctrl.list.length"></md-progress-linear>
 </div>

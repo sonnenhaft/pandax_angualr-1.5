@@ -21,8 +21,6 @@ class controller extends CustomersPageController {
 
     super($mdDialog, $q, AdminDataResource, $http, $location);
 
-    // so we expect that in required 'admin' component there is #admin div, sorry for this
-    this.$scrollableElement = angular.element($window.document.getElementById('admin'));
     this.entertainerPhotosModal = entertainerPhotosModal;
     this.statusType = 'provider';
   }
