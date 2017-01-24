@@ -85,6 +85,9 @@
     <br>
     <md-progress-linear ng-show="$ctrl.isOnProgress"></md-progress-linear>
 
+    <div ng-hide="$ctrl.isOnProgress || $ctrl.list.length">
+      No results found
+    </div>
     <div class="orders-content" layout="row" ng-hide="$ctrl.isOnProgress || !$ctrl.list.length">
         <div class="orders-list">
             <div class="infinite-scroll-wrapper" infinite-scroll="$ctrl.fetchMoreItems()" infinite-scroll-disabled='$ctrl.isOnProgress || $ctrl.isLastPage' infinite-scroll-container="'.orders-list'">
