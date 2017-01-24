@@ -25,7 +25,11 @@ export default class AbstractScrollableController {
     this.isOnProgress = true;
     this.currentPage += 1;
     return this._next( ).$promise.then(
-      ({ items, meta: { current_page: currentPage, total_pages: totalPages } }) => {
+      ({ items, meta: { pagination: { current_page: currentPage, total_pages: totalPages } } }) => {
+        if (this.currentPage !== currentPage) {
+          console.log('error happened, our and ajax pages do not match', this.currentPage, currentPage);
+          currentPage = this.currentPage;
+        }
         const list = [...this.list, ...items];
         const isLastPage = currentPage === totalPages;
         const isEmpty = !this.list.length;

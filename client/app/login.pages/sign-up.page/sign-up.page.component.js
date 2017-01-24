@@ -7,10 +7,9 @@ class controller {
     Object.assign(this, { LoginResource, $location, $state, $stateParams });
   }
 
-  $onInit(){
+  $onInit ( ) {
     if (this.$stateParams.auto) {
-
-      this.credentials = Object.assign(this.credentials || {},{
+      this.credentials = Object.assign(this.credentials || {}, {
         email: `${Date.now( )}hello-kitty@gmail.com`,
         password: Date.now( )
       });
