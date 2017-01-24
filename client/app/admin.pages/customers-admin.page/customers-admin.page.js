@@ -11,6 +11,12 @@ class controller extends AbstractScrollableController {
     active: 'Active',
   }
 
+  tableStatuses = {
+    active: 'active',
+    blocked: 'blocked',
+    unblocked: 'unblocked'
+  }
+
   constructor ($mdDialog, $q, AdminDataResource, $http, $location) {
     'ngInject';
 
