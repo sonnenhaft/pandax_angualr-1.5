@@ -118,6 +118,7 @@ class controller {
       date: form.date.$viewValue,
       time: form.time.$viewValue
     };
+
     if ((this.typeError = !this.Helper.getActiveObjectFromArray(this.providers).length) || form.$invalid) { // eslint-disable-line no-cond-assign
       return false;
     } else if (!this.validate({ apt: orderModel.apt, location: this.inputLocation, date: orderModel.date })) {
