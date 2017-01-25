@@ -45,6 +45,7 @@ import hoursToTime from './common/hoursToTime.filter';
 import template from './panda-app.html';
 import './panda-app.scss';
 import PandaAppStubsConfig from './panda-app.stubs';
+import packageJson from '../../package.json';
 
 angular.module('app', [
   uiRouter,
@@ -93,7 +94,7 @@ angular.module('app', [
   $mdDateLocaleProvider.formatDate = date => moment(date).format('MMMM DD, YYYY');
 
   // without this line tap on 'md-button' with 'ng-file-upload' not working in iPhone https://github.com/danialfarid/ng-file-upload/issues/1049
-  $mdGestureProvider.skipClickHijack( );
+  $mdGestureProvider.skipClickHijack();
 }).config(($locationProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider, stripeProvider, $httpProvider) => {
   'ngInject';
 
@@ -116,4 +117,11 @@ angular.module('app', [
   }
 })
   .filter('hoursToTime', hoursToTime)
-  .component('app', { template });
+  .component('app', {
+    template,
+    controller: function ($window) {
+      'ngInject';
+
+      this.PANDA_VERSION = $window.PANDA_VERSION = packageJson.version;
+    }
+  });
