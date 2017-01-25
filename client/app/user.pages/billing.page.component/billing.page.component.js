@@ -26,7 +26,23 @@ class controller {
     });
   }
 
-  saveInfo ( ) {
+  hasNoCards ( ) {
+    const { cards } = this.billingInfo || { cards: [] };
+    return !cards || cards.length === 0;
+  }
+
+  isButtonDisabled (billingInformationForm, personalInformationForm) {
+    const personalValid = personalInformationForm.$submitted && personalInformationForm.$invalid;
+    const billingValid = billingInformationForm.$submitted && billingInformationForm.$invalid;
+    return (!this.hasPersonalInfo && personalValid) || (this.hasNoCards( ) && billingValid) || this.saveLoading;
+  }
+
+  saveInfo (billingInformationForm, personalInformationForm) {
+    [billingInformationForm, personalInformationForm].forEach(form => form.$setSubmitted( ));
+
+    const isStillDisabled = this.isButtonDisabled(billingInformationForm, personalInformationForm);
+
+    if (isStillDisabled) { return; }
     const promises = [];
 
     this.saveLoading = true;
@@ -47,7 +63,7 @@ class controller {
         this.StatefulUserData.extend({ is_newcomer: false });
         this.$state.go(this.$stateParams.from, { orderId: this.$stateParams.orderId });
       })
-      .finally(( ) => this.saveLoading = false);
+      .catch(( ) => this.saveLoading = false);
   }
 
   getDefaultCardId ( ) {

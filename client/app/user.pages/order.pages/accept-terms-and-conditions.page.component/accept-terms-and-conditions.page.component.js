@@ -7,6 +7,7 @@ class controller {
     'ngInject';
 
     Object.assign(this, { $http, $state, StatefulUserData, $stateParams });
+    this.isAccepted = this.StatefulUserData.isAccepted( );
     this.cameFromOderPage = !angular.equals(this.$stateParams.order || {}, {});
   }
 

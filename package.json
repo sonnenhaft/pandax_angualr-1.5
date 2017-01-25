@@ -1,6 +1,6 @@
 {
   "name": "panda",
-  "version": "0.10.2",
+  "version": "0.10.4",
   "description": "Panda description",
   "main": "index.js",
   "dependencies": {

@@ -1,4 +1,3 @@
-import config from 'config';
 import angular from 'angular';
 import angularMaterial from 'angular-material';
 import 'angular-material/angular-material.css';
@@ -94,7 +93,7 @@ angular.module('app', [
   $mdDateLocaleProvider.formatDate = date => moment(date).format('MMMM DD, YYYY');
 
   // without this line tap on 'md-button' with 'ng-file-upload' not working in iPhone https://github.com/danialfarid/ng-file-upload/issues/1049
-  $mdGestureProvider.skipClickHijack();
+  $mdGestureProvider.skipClickHijack( );
 }).config(($locationProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider, stripeProvider, $httpProvider) => {
   'ngInject';
 
@@ -119,7 +118,7 @@ angular.module('app', [
   .filter('hoursToTime', hoursToTime)
   .component('app', {
     template,
-    controller: function ($window) {
+    controller ($window) {
       'ngInject';
 
       this.PANDA_VERSION = $window.PANDA_VERSION = packageJson.version;

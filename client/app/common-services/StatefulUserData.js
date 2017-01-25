@@ -15,6 +15,18 @@ class StatefulUserData {
     this._setUser(user);
   }
 
+  isAccepted ( ) {
+    return !!this.storage.getItem('PANDA_RULES');
+  }
+
+  setIsAccepted (value) {
+    if (value) {
+      this.storage.setItem('PANDA_RULES', true);
+    } else {
+      this.storage.removeItem('PANDA_RULES');
+    }
+  }
+
   getAvatar ( ) { return this._avatar; }
 
   getBackground ( ) { return this._background; }

@@ -6,7 +6,7 @@
     <pandax-terms-page-component></pandax-terms-page-component>
 
     <div class="accept" ng-show="$ctrl.cameFromOderPage">
-      <md-checkbox aria-label="Agree" ng-model="$ctrl.isAccepted">
+      <md-checkbox aria-label="Agree" ng-model="$ctrl.isAccepted" ng-change="$ctrl.StatefulUserData.setIsAccepted($ctrl.isAccepted)">
         I am 18 and agree to the terms and conditions
       </md-checkbox>
       <md-button ng-click="$ctrl.createOrderAndRedirectToManipulation()"
