@@ -13,20 +13,19 @@ class controller {
 
     this.OrderService.getOrdersWithParam(this.$stateParams.id)
       .then(order => {
-        this.order = order(order.invites || []).forEach(invite => {
-          if (angular.isString(invite.length)) {
-            invite.length = (invite.length - 0) * 60;
-          }
-        });
+        this.order = order;
+        (order.invites || [])
+          .filter(invite => angular.isString(invite.length))
+          .forEach(invite => invite.length = (invite.length - 0) * 60);
       });
 
     this.type = $stateParams.type;
   }
 
   cancelOrder (ev, invite) {
-    const cost = this.moment(invite.datetime).add(this.timeToCleanCancel, 'm') > this.moment( ) ? 0 : invite.type.penalty_amount;
+    const cost = this.moment(invite.datetime).add(this.timeToCleanCancel, 'm') > this.moment() ? 0 : invite.type.penalty_amount;
 
-    this.OrderService.cancelOrderForEntertainer(ev, invite, cost).then(( ) => this.Helper.showToast('Done'));
+    this.OrderService.cancelOrderForEntertainer(ev, invite, cost).then(() => this.Helper.showToast('Done'));
   }
 }
 
