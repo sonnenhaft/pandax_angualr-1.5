@@ -12,8 +12,8 @@ export default angular.module('pandaImageInput', [
         ngf-max-width="7000"
         ngf-min-height="200"
         ngf-min-width="200"
-        ngf-pattern="'.png,.jpg'"
-        ngf-accept="'.png,.jpg'"
+        ngf-pattern="'.png,.jpg,.jpeg'"
+        ngf-accept="'.png,.jpg,.jpeg'"
         ng-required="$ctrl.ngRequired && !$ctrl.model">
   <!--ng-required="!$ctrl.model" is necessary in here because after minification app thinks that images does not exist-->
   <img ngf-src="$ctrl.model" alt="profile image" ng-show="$ctrl.model"/>
