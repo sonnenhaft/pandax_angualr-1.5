@@ -84,10 +84,10 @@ class controller {
 
   getTotalPrice ( ) {
     return _
-                .chain(this.Helper.getActiveObjectFromArray(this.providers))
-                .map('price')
-                .sum( )
-                .value( ) * parseFloat(this.hour) * Number(this.entertainer);
+        .chain(this.Helper.getActiveObjectFromArray(this.providers))
+        .map('price')
+        .sum( )
+        .value( ) * parseFloat(this.hour) * Number(this.entertainer);
   }
 
   validate (field) {
@@ -100,7 +100,7 @@ class controller {
     return true;
   }
 
-    /** @deprecated mass */
+  /** @deprecated mass */
   onSearch (form) {
     if (!form.$submitted) {
       form.$setSubmitted( );
@@ -142,8 +142,7 @@ class controller {
     return this.OrderService.buildOrder(Object.assign(orderModel, {
       geo: this.inputLocation,
       price: this.getTotalPrice( )
-    })
-        );
+    }));
   }
 }
 
