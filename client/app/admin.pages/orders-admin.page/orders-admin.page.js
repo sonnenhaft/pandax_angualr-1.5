@@ -99,7 +99,6 @@ class controller extends AbstractScrollableController {
 }
 
 
-
 const name = 'adminOrdersPage';
 export default angular.module(name, [
   AdminDataResource,

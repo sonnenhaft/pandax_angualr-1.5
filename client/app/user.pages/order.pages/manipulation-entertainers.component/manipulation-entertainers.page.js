@@ -1,6 +1,6 @@
 import OrderService from '../../../common-services/orderService.service';
-import searchEntertainers from './search-entertainers.page/search-entertainers.page.component';
-import confirmedEntertainers from './confirmed-entertainers.page.component/confirmed-entertainers.page.component';
+import SearchEntertainersPage from './search-entertainers.page/search-entertainers.page.component';
+import ConfirmedEntertainersPage from './confirmed-entertainers.page.component/confirmed-entertainers.page.component';
 import ORDER_STATUSES from '../../../common/ORDER_STATUSES';
 
 import template from './manipulation-entertainers.page.html';
@@ -10,10 +10,28 @@ class controller {
   itemActiveIndex = 0
   ORDER_STATUSES = ORDER_STATUSES
 
-  constructor ($state, $mdMedia, $stateParams, OrderService) {
+  constructor ($state, $mdMedia, $stateParams, OrderService, $q) {
     'ngInject';
 
-    Object.assign(this, { $state, $mdMedia, $stateParams, OrderService });
+    Object.assign(this, { $state, $mdMedia, $stateParams, OrderService, $q });
+  }
+
+  $onInit ( ) {
+    const orderId = this.$stateParams.orderId || 0;
+    return this.$q.all({
+      entertainersIgnored: this.OrderService.fetchEntertainers(orderId),
+      invitedIgnored: this.OrderService.fetchEntertainersInvited(orderId),
+      orderDetails: this.OrderService.fetchOrderDetails(orderId)
+    }).then(({ orderDetails }) => {
+      this.OrderService.subcribeOnEntertainerInvite(orderDetails.channel_name);
+      console.log(orderDetails);
+      this.orderDetails = orderDetails;
+    });
+  }
+
+  refresh ( ) {
+    this.OrderService.fetchEntertainers(this.$stateParams.orderId);
+    this.itemActiveIndex = 0;
   }
 
   cancelOrder (ev) {
@@ -25,89 +43,37 @@ class controller {
       messageType = 1;
     }
 
-    this.OrderService.cancelOrder(ev, this.$stateParams.orderId, messageType).then(data => {
-      if (data.status == this.ORDER_STATUSES.accepted) {
+    this.OrderService.cancelOrder(ev, this.$stateParams.orderId, messageType).then(({ status }) => {
+      if (status === this.ORDER_STATUSES.accepted) {
         this.$state.go('orderConfirm', { orderId: this.$stateParams.orderId });
       } else {
         this.$state.go('main.create-order');
       }
     });
   }
+
+  $onDestroy ( ) {
+    this.OrderService.unsubcribeOnEntertainerInvite( );
+  }
 }
 
-export default angular.module('manipulationEntertainers', [
+// TODO(vlad): rename this weird component
+const component = 'manipulationEntertainers';
+export default angular.module(component, [
   OrderService,
-  searchEntertainers,
-  confirmedEntertainers
+  SearchEntertainersPage,
+  ConfirmedEntertainersPage
 ]).config($stateProvider => {
   'ngInject';
 
-  $stateProvider.state('main.manipulationEntertainers', {
+  $stateProvider.state({
     url: '/:orderId/manipulation-entertainers?modal',
     reloadOnSearch: false,
+    name: component,
     parent: 'main',
-    template: `<manipulation-entertainers 
-                    entertainers="OrderService.list" 
-                    entertainers-invited="OrderService.listInvited"
-                    count-of-required-entertainers="countOfRequiredEntertainers"
-                    service-type-price="serviceTypePrice">
-                  </manipulation-entertainers>`,
-    controller ($scope, OrderService, countOfRequiredEntertainers, serviceTypePrice) {
-      $scope.OrderService = OrderService;
-      $scope.countOfRequiredEntertainers = countOfRequiredEntertainers;
-      $scope.serviceTypePrice = serviceTypePrice;
-    },
-    resolve: {
-      orderId ($stateParams) {
-        'ngInject';
-
-        return $stateParams.orderId || 0;
-      },
-      entertainers (OrderService, orderId) {
-        'ngInject';
-
-        return OrderService.fetchEntertainers(orderId);
-      },
-      orderDetails (OrderService, orderId) {
-        'ngInject';
-
-        return OrderService.fetchOrderDetails(orderId);
-      },
-      channelName (orderDetails) {
-        'ngInject';
-
-        return orderDetails.channel_name;
-      },
-      entertainersInvited (OrderService, channelName, orderId) {
-        'ngInject';
-
-        OrderService.subcribeOnEntertainerInvite(channelName);
-        return OrderService.fetchEntertainersInvited(orderId);
-      },
-      countOfRequiredEntertainers (orderDetails) {
-        'ngInject';
-
-        return orderDetails.entertainers_number;
-      },
-      serviceTypePrice (orderDetails) {
-        'ngInject';
-
-        return orderDetails.serviceType.price;
-      }
-    },
-    onExit (OrderService) {
-      'ngInject';
-
-      OrderService.unsubcribeOnEntertainerInvite( );
-    }
+    component
   });
-}).component('manipulationEntertainers', {
-  bindings: {
-    entertainers: '=',
-    entertainersInvited: '=',
-    countOfRequiredEntertainers: '=',
-    serviceTypePrice: '<'
-  },
+}).component(component, {
   template,
   controller
 }).name;

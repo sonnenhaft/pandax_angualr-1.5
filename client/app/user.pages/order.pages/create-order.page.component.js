@@ -21,18 +21,16 @@ class controller {
   date = new Date( )
   currentDate = new Date( )
 
-  constructor (Helper, Validation, OrderService, $http, $window, $state, $mdDialog, moment, StatefulUserData, $q, $stateParams, OrderResource) {
+  constructor (Helper, Validation, OrderService, $http, $window, $state, $mdDialog, moment, StatefulUserData, $q, $stateParams, OrderResource, $location) {
     'ngInject';
 
     this.resolved = false;
-    $q.all({
+    $q.all($location.search( ).skipNYcheck ? {} : {
       notAccomplishedOrder: OrderService.fetchLastNotAccomplishedOrder( ).then(({ data }) => data),
-      // notAccomplishedOrder: $q.when( ) || OrderService.fetchLastNotAccomplishedOrder( ).then(({ data }) => data),
       notRatedEntertainers: OrderResource.fetchNotRatedEntertainers($stateParams.notRatedEntertainers).$promise
-      // notRatedEntertainers: $q.when([]) || OrderResource.fetchNotRatedEntertainers($stateParams.notRatedEntertainers).$promise
     }).then(({ notAccomplishedOrder, notRatedEntertainers }) => {
       if (notAccomplishedOrder) {
-        $state.go('main.manipulationEntertainers', { orderId: notAccomplishedOrder.id });
+        $state.go('manipulationEntertainers', { orderId: notAccomplishedOrder.id });
       } else if (notRatedEntertainers && notRatedEntertainers.length) {
         $state.go('main.rate-entertainers', { notRatedEntertainers });
       }
@@ -133,7 +131,7 @@ class controller {
         this.orderLoading = false;
         console.log(customer);
         this.StatefulUserData.extend(customer);
-        this.$state.go('main.manipulationEntertainers', { orderId, channelName });
+        this.$state.go('manipulationEntertainers', { orderId, channelName });
       }).finally(( ) => {
         this.orderLoading = false;
       });

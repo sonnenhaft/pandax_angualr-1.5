@@ -42,7 +42,7 @@ class controller {
       this.$state.go('main.billing', {
         orderId: this.$stateParams.orderId,
         entertainerId: this.entertainers[this.itemActiveIndex].id,
-        from: 'main.manipulationEntertainers'
+        from: 'manipulationEntertainers'
       });
     } else {
       this.OrderService.inviteEntertainer(this.$stateParams.orderId, this.entertainers[this.itemActiveIndex].id);
