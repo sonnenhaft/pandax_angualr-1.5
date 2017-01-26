@@ -153,9 +153,9 @@ class OrderService {
     return this.$mdDialog.show(this.$mdDialog.confirm( )
       .title('Cancel Minx')
       .textContent(penaltyAmount => penaltyAmount > 0 ? // eslint-disable-line no-confusing-arrow
-        `Canceling the order will cost $ ${penaltyAmount} penalty. Are you sure want to cancel order for the minx?` :
+        `Cancelling the order will cost $ ${penaltyAmount} penalty. Are you sure want to cancel order for the minx?` :
         'Are you sure want to cancel order for the minx?')
-      .ariaLabel('Canceling Entertainer')
+      .ariaLabel('Cancelling Entertainer')
       .targetEvent(ev)
       .ok('Yes')
       .cancel('No'))
@@ -193,7 +193,7 @@ class OrderService {
     const confirm = this.$mdDialog.confirm( )
       .title(OrderService.cancelOrderMessages[messageType].title)
       .htmlContent(OrderService.cancelOrderMessages[messageType].content)
-      .ariaLabel('Canceling Order')
+      .ariaLabel('Cancelling Order')
       .targetEvent(ev)
       .ok('Yes')
       .cancel('No');

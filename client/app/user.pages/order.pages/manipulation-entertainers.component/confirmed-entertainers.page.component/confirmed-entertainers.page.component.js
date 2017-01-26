@@ -38,8 +38,8 @@ class controller {
     }, true);
   }
 
-  cancelOrder (ev, invite, dirtyCanceling = true) {
-    this.OrderService.cancelOrderForEntertainer(ev, invite, dirtyCanceling == true ? this.serviceTypePrice : 0).then(_data => {
+  cancelOrder (ev, invite, dirtyCancelling = true) {
+    this.OrderService.cancelOrderForEntertainer(ev, invite, dirtyCancelling == true ? this.serviceTypePrice : 0).then(_data => {
       this.Helper.showToast('Done');
     });
   }

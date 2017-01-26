@@ -43,10 +43,10 @@
         </div>
 
         <span
-          class="confirmed-entertainers__canceling-message"
+          class="confirmed-entertainers__cancelling-message"
           show-in-time="{{::$ctrl.moment(invite.datetime).add($ctrl.timeToCleanCancel, 'm').valueOf()}}"
           show-in-time-action="show">
-          Canceling the invitation will cost ${{$ctrl.serviceTypePrice}} penalty
+          Cancelling the invitation will cost ${{$ctrl.serviceTypePrice}} penalty
         </span>
 
         <div
@@ -62,7 +62,7 @@
       </div>
 
       <span
-        class="confirmed-entertainers__canceling-message"
+        class="confirmed-entertainers__cancelling-message"
         ng-show="invite.status == $ctrl.statuses.canceledByCustomer">
         Canceled by you
       </span>

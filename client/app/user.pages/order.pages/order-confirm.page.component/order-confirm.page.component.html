@@ -40,17 +40,17 @@
 								<span class="order-information__card-phone">+ {{invite.provider.phone}}</span>
 								<div
 									layout-align="column"
-									class="order-information__card-canceling"
+									class="order-information__card-cancelling"
 									ng-hide="invite.status == $ctrl.ORDER_STATUSES.canceled">
 									<span
 										class="order-information__card-timer-value"
 										timer="{{::$ctrl.moment(invite.datetime).add($ctrl.timeToCleanCancel, 'm').valueOf()}}">
 									</span>
 					        <span
-					          class="order-information__card-canceling-message"
+					          class="order-information__card-cancelling-message"
 					          show-in-time="{{::$ctrl.moment(invite.datetime).add($ctrl.timeToCleanCancel, 'm').valueOf()}}"
 					          show-in-time-action="show">
-					          Canceling the invitation will cost ${{invite.type.penalty_amount}} penalty
+					          Cancelling the invitation will cost ${{invite.type.penalty_amount}} penalty
 					        </span>
 								</div>
 				      </md-card-title>
@@ -76,7 +76,7 @@
 		        </md-button>
 
 			      <span
-			        class="order-information__card-canceling-message"
+			        class="order-information__card-cancelling-message"
 			        ng-show="invite.status == $ctrl.ORDER_STATUSES.canceled">
 			        Canceled by you
 			      </span>
