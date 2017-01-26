@@ -12,6 +12,9 @@
 }
 
 #manipulation-entertainers {
+  @media (min-width: 960px) {
+    max-width: 880px;
+  }
 	padding: 52px 0px 40px 0px;
 
 	& > * {
