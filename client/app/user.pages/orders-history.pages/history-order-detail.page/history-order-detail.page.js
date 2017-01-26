@@ -23,9 +23,9 @@ class controller {
   }
 
   cancelOrder (ev, invite) {
-    const cost = this.moment(invite.datetime).add(this.timeToCleanCancel, 'm') > this.moment() ? 0 : invite.type.penalty_amount;
+    const cost = this.moment(invite.datetime).add(this.timeToCleanCancel, 'm') > this.moment( ) ? 0 : invite.type.penalty_amount;
 
-    this.OrderService.cancelOrderForEntertainer(ev, invite, cost).then(() => this.Helper.showToast('Done'));
+    this.OrderService.cancelOrderForEntertainer(ev, invite, cost).then(( ) => this.Helper.showToast('Done'));
   }
 }
 
