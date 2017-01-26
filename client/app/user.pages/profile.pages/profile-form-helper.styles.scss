@@ -1,4 +1,20 @@
 & {
+  [ng-messages] {
+    display: none;
+    a {
+      color: #8686dc;
+    }
+  }
+
+  .error {
+    [ng-messages] {
+      display: block;
+    }
+    input:not(:focus) {
+      border: 2px solid $Cardinal;
+    }
+  }
+
   .md-button {
     width: 100%;
     margin: 16px 0;

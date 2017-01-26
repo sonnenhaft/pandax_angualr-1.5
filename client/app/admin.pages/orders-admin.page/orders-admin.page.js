@@ -1,6 +1,5 @@
 import AdminDataResource from '../admin-data.resource';
 import template from './orders-admin.page.html';
-import ORDER_STATUSES from '../../common/ORDER_STATUSES';
 import AbstractScrollableController from '../../common/abstract-scrollable.controller';
 import FindLocationComponent from '../../inputs/panda-find-location.input/panda-find-location.input';
 
@@ -99,6 +98,8 @@ class controller extends AbstractScrollableController {
   }
 }
 
+
+
 const name = 'adminOrdersPage';
 export default angular.module(name, [
   AdminDataResource,
@@ -119,8 +120,8 @@ export default angular.module(name, [
 // }).config($compileProvider => {
 //   'ngInject';
 
-  // https://stackoverflow.com/questions/41170639/angular-material-date-picker-with-blank-calendar/41566534#41566534
-  // $compileProvider.preAssignBindingsEnabled(true);
+// https://stackoverflow.com/questions/41170639/angular-material-date-picker-with-blank-calendar/41566534#41566534
+// $compileProvider.preAssignBindingsEnabled(true);
 }).component(name, {
   template,
   controller

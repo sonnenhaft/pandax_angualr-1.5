@@ -94,22 +94,6 @@ profile-pages {
     background: white;
   }
 
-  [ng-messages] {
-    display: none;
-    a {
-      color: #8686dc;
-    }
-  }
-
-  .error {
-    [ng-messages] {
-      display: block;
-    }
-    input:not(:focus) {
-      border: 2px solid $Cardinal;
-    }
-  }
-
   .sub-label-no-icon {
     color: #747984;
     font: 0.813em "Open Sans", sans-serif;

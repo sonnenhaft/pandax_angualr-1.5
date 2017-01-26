@@ -38,7 +38,7 @@ class PandaHttpInterceptor {
   responseError = response => {
     console.log('api error happened');
     const Helper = this.$injector.get('Helper');
-    if (response.status === -1 && !response.statusText) {
+    if (response.status === -1 || response.status === 502 && !response.statusText) {
       response.statusText = 'Not able to connect to remote server';
       response.data = response.data || { message: response.statusText };
       Helper.showToast(response.statusText, 5000);

@@ -9,7 +9,12 @@ class controller {
 
     // $mdDialog necessary to hide "Why" tooltip
     Object.assign(this, { Cards, $mdDialog, $stateParams, StatefulUserData });
-    this.Cards.getCards( ).then(cards => this.cards = cards);
+    this.Cards.getCards( ).then(cards => {
+      this.cards = cards;
+      if (!cards.length) {
+        this.add = true;
+      }
+    });
     this.isProvider = this.StatefulUserData.isProvider( );
   }
 

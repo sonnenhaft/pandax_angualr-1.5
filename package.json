@@ -1,6 +1,6 @@
 {
   "name": "panda",
-  "version": "0.10.1",
+  "version": "0.10.4",
   "description": "Panda description",
   "main": "index.js",
   "dependencies": {
@@ -77,6 +77,7 @@
     "ng-annotate-loader": "0.0.10",
     "node-libs-browser": "^0.5.0",
     "node-sass": "^3.8.0",
+    "pre-commit": "^1.2.2",
     "raw-loader": "^0.5.1",
     "resolve-url-loader": "1.6.0",
     "run-sequence": "^1.1.0",
@@ -97,7 +98,8 @@
     "serve": "gulp serve",
     "test:watch": "karma start --autoWatch=true --singleRun=false",
     "create-component": "gulp create-component --gulpfile gulpfile.templates.js",
-    "eslint:fix": "eslint client gulpfile.babel.js webpack.* --fix"
+    "eslint:fix": "eslint client gulpfile.babel.js webpack.* --fix",
+    "bump": "npm version patch --no-git-tag-version && git add ."
   },
   "keywords": [
     "angular",
@@ -109,5 +111,8 @@
     "type": "git",
     "url": "https://gitlab.isdev.info/Pandax/Frontend.git"
   },
+  "pre-commit": [
+    "bump"
+  ],
   "author": "IntellectSoft"
 }

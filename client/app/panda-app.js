@@ -1,4 +1,3 @@
-import config from 'config';
 import angular from 'angular';
 import angularMaterial from 'angular-material';
 import 'angular-material/angular-material.css';
@@ -45,6 +44,7 @@ import hoursToTime from './common/hoursToTime.filter';
 import template from './panda-app.html';
 import './panda-app.scss';
 import PandaAppStubsConfig from './panda-app.stubs';
+import packageJson from '../../package.json';
 
 angular.module('app', [
   uiRouter,
@@ -116,4 +116,11 @@ angular.module('app', [
   }
 })
   .filter('hoursToTime', hoursToTime)
-  .component('app', { template });
+  .component('app', {
+    template,
+    controller ($window) {
+      'ngInject';
+
+      this.PANDA_VERSION = $window.PANDA_VERSION = packageJson.version;
+    }
+  });

@@ -10,6 +10,6 @@ export default angular.module('AdminDataResource', [
     fetchCustomers: { url: '{{config_api_url}}/api/admin/customers', ...resourceParams }, // {status, page}
     fetchEntertainers: { url: '{{config_api_url}}/api/provider', ...resourceParams }, // {status, page}
     fetchOrders: { url: '{{config_api_url}}/api/{{current_user_role}}/orders', ...resourceParams }, // {page},
-    fetchOrderDetails: { url: '{{config_api_url}}/api/{{current_user_role}}/orders/:orderId', ...resourceParams } // {orderId},
+    fetchOrderDetails: { url: '{{config_api_url}}/api/{{current_user_role}}/orders/:orderId?include=invites', ...resourceParams } // {orderId},
   });
 }).name;

@@ -7,9 +7,9 @@
 
   <order-details order="$ctrl.orderDetails"></order-details>
 
-  <h4 ng-show="!$ctrl.billingInfo.cards || $ctrl.billingInfo.cards.length == 0" class="billing-information__title">BILLING INFORMATION</h4>
+  <h4 ng-show="$ctrl.hasNoCards()" class="billing-information__title">BILLING INFORMATION</h4>
   <form name="billingInformationForm" layout="column" class="billing-information-form" novalidate
-        ng-show="!$ctrl.billingInfo.cards || $ctrl.billingInfo.cards.length == 0">
+        ng-show="$ctrl.hasNoCards()">
     <add-new-card-form model="$ctrl.newCard" is-required="true"></add-new-card-form>
   </form>
 
@@ -18,9 +18,9 @@
   <div layout="row" ng-hide="$ctrl.isReadOnly">
     <md-button class="black" ng-click="$ctrl.goToPreviousStep()"> Cancel</md-button>
     <div style="width: 32px"></div>
-    <md-button ng-click="$ctrl.saveInfo()" ng-disabled="(!$ctrl.hasPersonalInfo && personalInformationForm.$invalid) ||
-    							 ((!$ctrl.billingInfo.cards || $ctrl.billingInfo.cards.length == 0) && billingInformationForm.$invalid) ||
-    							 $ctrl.saveLoading">
+    <md-button
+      ng-click="$ctrl.saveInfo(billingInformationForm, personalInformationForm)"
+      ng-disabled="$ctrl.isButtonDisabled(billingInformationForm, personalInformationForm)">
       <spinner input="$ctrl.saveLoading">Pay</spinner>
     </md-button>
   </div>

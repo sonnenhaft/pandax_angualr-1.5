@@ -27,10 +27,10 @@ class controller {
     this.resolved = false;
     $q.all({
       notAccomplishedOrder: OrderService.fetchLastNotAccomplishedOrder( ).then(({ data }) => data),
+      // notAccomplishedOrder: $q.when( ) || OrderService.fetchLastNotAccomplishedOrder( ).then(({ data }) => data),
       notRatedEntertainers: OrderResource.fetchNotRatedEntertainers($stateParams.notRatedEntertainers).$promise
       // notRatedEntertainers: $q.when([]) || OrderResource.fetchNotRatedEntertainers($stateParams.notRatedEntertainers).$promise
     }).then(({ notAccomplishedOrder, notRatedEntertainers }) => {
-      console.log(notAccomplishedOrder);
       if (notAccomplishedOrder) {
         $state.go('main.manipulationEntertainers', { orderId: notAccomplishedOrder.id });
       } else if (notRatedEntertainers && notRatedEntertainers.length) {
@@ -124,7 +124,7 @@ class controller {
     } else if (!this.validate({ apt: orderModel.apt, location: this.inputLocation, date: orderModel.date })) {
       this.location = false;
       return false;
-    } else if (this.StatefulUserData.get('is_newcomer')) {
+    } else if (!this.StatefulUserData.isAccepted( )) {
       this.$state.go(acceptTermsAndConditionsPage, { order: this.orderData(orderModel) });
       return false;
     } else {
