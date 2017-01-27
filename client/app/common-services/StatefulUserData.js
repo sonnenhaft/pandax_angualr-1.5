@@ -16,7 +16,7 @@ class StatefulUserData {
   }
 
   isAccepted ( ) {
-    return !!this.storage.getItem('PANDA_RULES');
+    return !this.get('is_newcomer') || !!this.storage.getItem('PANDA_RULES');
   }
 
   setIsAccepted (value) {
