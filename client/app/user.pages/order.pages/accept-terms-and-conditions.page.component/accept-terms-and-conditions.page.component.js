@@ -16,7 +16,7 @@ class controller {
     this.$http.post('{{config_api_url}}/api/order', this.$stateParams.order).then(
       ({ data: { customer: currentUser, id: orderId, channel_name: channelName } }) => {
         this.StatefulUserData.extend(currentUser);
-        this.$state.go('main.manipulationEntertainers', { orderId, channelName });
+        this.$state.go('manipulationEntertainers', { orderId, channelName });
       },
       ( ) => { this.isLoading = false; }
     );

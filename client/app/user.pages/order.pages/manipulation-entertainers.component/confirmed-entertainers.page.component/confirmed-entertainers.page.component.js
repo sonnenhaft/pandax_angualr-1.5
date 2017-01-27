@@ -55,7 +55,7 @@ export default angular.module('confirmedEntertainers', [
   bindings: {
     entertainers: '=',
     countOfRequiredEntertainers: '<',
-    serviceTypePrice: '<'
+    inviteTypePenaltyAmount: '<'
   },
   template,
   controller

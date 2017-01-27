@@ -1,73 +1,54 @@
-<div
-	id="confirmed-entertainers"
-	layout="column"
-	layout-align="start stretch"
-	class="confirmed-entertainers">
-
-	<div class="confirmed-entertainers__header">
-		<h2 class="confirmed-entertainers__header-text">
+<div id="confirmed-entertainers" layout="column" layout-align="start stretch" class="confirmed-entertainers">
+  <div class="confirmed-entertainers__header">
+    <h2 class="confirmed-entertainers__header-text">
       CONFIRMATIONS {{($ctrl.entertainers | byStatuses: [$ctrl.statuses.accepted, $ctrl.statuses.canceledByProvider, $ctrl.statuses.canceledByCustomer]).length}}/{{$ctrl.countOfRequiredEntertainers}}
     </h2>
-	</div>
+  </div>
 
-  <md-card
-    layout="row"
-  	class="confirmed-entertainers__card"
-  	ng-repeat="invite in $ctrl.entertainers | byStatuses : [$ctrl.statuses.accepted, $ctrl.statuses.canceledByProvider, $ctrl.statuses.canceledByCustomer] track by $index">
+  <md-card layout="row" class="confirmed-entertainers__card"
+           ng-repeat="invite in $ctrl.entertainers | byStatuses : [$ctrl.statuses.accepted, $ctrl.statuses.canceledByProvider, $ctrl.statuses.canceledByCustomer] track by $index">
 
     <md-card-header class="confirmed-entertainers__card-header">
-    	<md-card-avatar class="confirmed-entertainers__avatar" ng-style="{'background-image': 'url(' + invite.provider.photos[0].preview + ')'}">
-		    <!-- <img
-          ng-src="{{invite.provider.photos[0].preview}}"
-          class="confirmed-entertainers__avatar-img"></img> -->
-    	</md-card-avatar>
+      <md-card-avatar class="confirmed-entertainers__avatar" ng-style="{'background-image': 'url(' + invite.provider.photos[0].preview + ')'}">
+        <img ng-src="{{invite.provider.photos[0].preview}}" class="confirmed-entertainers__avatar-img"/>
+      </md-card-avatar>
     </md-card-header>
 
-    <md-card-content
-      layout="column"
-       class="confirmed-entertainers__content">
-
+    <md-card-content layout="column" class="confirmed-entertainers__content">
       <span class="confirmed-entertainers__name">{{invite.provider.displaying_name}} is confirmed!</span>
 
       <div ng-hide="(invite.status == $ctrl.statuses.canceledByProvider) || (invite.status == $ctrl.statuses.canceledByCustomer)">
-        <div
-          layout="row"
-          layout-align="space-between"
-          class="confirmed-entertainers__manipulation"
-          show-in-time="{{::$ctrl.moment(invite.datetime).add($ctrl.timeToCleanCancel, 'm').valueOf()}}"
-          show-in-time-action="hide">
+        <div layout="row" layout-align="space-between" class="confirmed-entertainers__manipulation"
+             show-in-time="{{::$ctrl.moment(invite.datetime).add($ctrl.timeToCleanCancel, 'm').valueOf()}}"
+             show-in-time-action="hide">
           <div class="confirmed-entertainers__timer">
-            <span class="confirmed-entertainers__timer-value" timer="{{::$ctrl.moment(invite.datetime).add($ctrl.timeToCleanCancel, 'm').valueOf()}}"></span>
+            <span class="confirmed-entertainers__timer-value"
+                  timer="{{::$ctrl.moment(invite.datetime).add($ctrl.timeToCleanCancel, 'm').valueOf()}}"></span>
           </div>
-          <md-button class="md-primary confirmed-entertainers__cancel" type="button" ng-click="$ctrl.cancelOrder($event, invite, false)">Cancel Minx</md-button>
+          <md-button class="md-primary confirmed-entertainers__cancel" type="button" ng-click="$ctrl.cancelOrder($event, invite, false)">
+            Cancel Minx
+          </md-button>
         </div>
 
-        <span
-          class="confirmed-entertainers__cancelling-message"
-          show-in-time="{{::$ctrl.moment(invite.datetime).add($ctrl.timeToCleanCancel, 'm').valueOf()}}"
-          show-in-time-action="show">
-          Cancelling the invitation will cost ${{$ctrl.serviceTypePrice}} penalty
+        <span class="confirmed-entertainers__cancelling-message"
+              show-in-time="{{::$ctrl.moment(invite.datetime).add($ctrl.timeToCleanCancel, 'm').valueOf()}}"
+              show-in-time-action="show">
+          Cancelling the invitation will cost ${{$ctrl.inviteTypePenaltyAmount | number}} penalty
         </span>
 
-        <div
-          layout="row"
-          layout-align="start"
-          class="confirmed-entertainers__manipulation confirmed-entertainers__manipulation_bottom"
-          show-in-time="{{::$ctrl.moment(invite.datetime).add($ctrl.timeToCleanCancel, 'm').valueOf()}}"
-          show-in-time-action="show">
+        <div layout="row" layout-align="start" class="confirmed-entertainers__manipulation confirmed-entertainers__manipulation_bottom"
+             show-in-time="{{::$ctrl.moment(invite.datetime).add($ctrl.timeToCleanCancel, 'm').valueOf()}}"
+             show-in-time-action="show">
           <md-button class="md-primary confirmed-entertainers__cancel confirmed-entertainers__cancel" type="button" ng-click="$ctrl.cancelOrder($event, invite)">
             Cancel Minx
           </md-button>
         </div>
       </div>
 
-      <span
-        class="confirmed-entertainers__cancelling-message"
-        ng-show="invite.status == $ctrl.statuses.canceledByCustomer">
+      <span class="confirmed-entertainers__cancelling-message"
+            ng-show="invite.status == $ctrl.statuses.canceledByCustomer">
         Canceled by you
       </span>
-
     </md-card-content>
   </md-card>
-
 </div>

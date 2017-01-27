@@ -1,6 +1,5 @@
-<md-content id="manipulation-entertainers" flex="100"
-            layout-padding layout="column" layout-align="start stretch"
-            class="animated fadeIn manipulation-entertainers">
+<md-content id="manipulation-entertainers" flex="100" layout-align="start stretch" layout-padding layout="column"
+            class="animated fadeIn manipulation-entertainers" ng-if="$ctrl.orderDetails">
   <div layout="row" layout-align="start" class="manipulation-entertainers__header">
     <div flex="100" flex-gt-sm="50" class="manipulation-entertainers__header_left">
       <div layout="row" layout-align="space-between start">
@@ -16,45 +15,42 @@
            ng-class="{'manipulation-entertainers__head-link_active': $ctrl.showComponentOnly === 'confirmedEntertainers'}"
            ng-click="$ctrl.showComponentOnly = 'confirmedEntertainers'">
           <span>
-            CONFIRMATIONS {{($ctrl.entertainersInvited | filterBy: ['status']: $ctrl.ORDER_STATUSES.accepted).length}}/{{$ctrl.countOfRequiredEntertainers}}
+            CONFIRMATIONS {{($ctrl.OrderService.listInvited | filterBy: ['status']: $ctrl.ORDER_STATUSES.accepted).length}}/{{$ctrl.countOfRequiredEntertainers}}
           </span>
         </a>
-        <a flex="30" flex-order-gt-sm="1" class="pointer manipulation-entertainers__head-link manipulation-entertainers__head-link_depends-on-width"
-           ng-click="$ctrl.OrderService.fetchEntertainers($ctrl.$stateParams.orderId); $ctrl.itemActiveIndex = 0;">
+        <a flex="30" flex-order-gt-sm="1" ng-click="$ctrl.refresh()"
+           class="pointer manipulation-entertainers__head-link manipulation-entertainers__head-link_depends-on-width">
           <span>REFRESH</span>
           <img src="/assets/images/icons/refresh-3x.png"
-               class="icon_medium manipulation-entertainers__refresh-image manipulation-entertainers__icon"></img>
+               class="icon_medium manipulation-entertainers__refresh-image manipulation-entertainers__icon"/>
         </a>
-        <md-button
-          flex-xs="100"
-          flex-sm="100"
-          flex-gt-sm="nogrow"
-          flex-order-gt-sm="2"
-          class="md-raised manipulation-entertainers__cancel-order"
-          ng-click="$ctrl.cancelOrder($event)">
-          {{$ctrl.entertainersInvited.length == 0 ? 'Cancel Order' : 'Cancel Unconfirmed Invites' }}
+        <md-button flex-xs="100" flex-sm="100" flex-gt-sm="nogrow" flex-order-gt-sm="2"
+                   class="md-raised manipulation-entertainers__cancel-order"
+                   ng-click="$ctrl.cancelOrder($event)">
+          {{$ctrl.OrderService.listInvited.length == 0 ? 'Cancel Order' : 'Cancel Unconfirmed Invites' }}
         </md-button>
       </div>
     </div>
+
   </div>
   <div layout="row" layout-align="start" layout-wrap>
     <div flex="100" flex-gt-sm="50" class="manipulation-entertainers__search-entertainers-wrapper"
-         ng-if="$ctrl.entertainers.length > 0 && ($ctrl.showComponentOnly.length == 0 || $ctrl.showComponentOnly == 'searchEntertainers')">
-      <search-entertainers entertainers="$ctrl.entertainers" item-active-index="$ctrl.itemActiveIndex" entertainers-invited="$ctrl.entertainersInvited" flex="100" flex-gt-sm="50">
+         ng-if="$ctrl.OrderService.list.length > 0 && ($ctrl.showComponentOnly.length === 0 || $ctrl.showComponentOnly === 'searchEntertainers')">
+      <search-entertainers entertainers="$ctrl.OrderService.list" item-active-index="$ctrl.itemActiveIndex" entertainers-invited="$ctrl.OrderService.listInvited" flex="100" flex-gt-sm="50">
       </search-entertainers>
     </div>
     <div flex="100" flex-gt-sm="50" class="manipulation-entertainers__search-entertainers-wrapper"
-         ng-if="$ctrl.entertainers.length == 0 && ($ctrl.showComponentOnly.length == 0 || $ctrl.showComponentOnly == 'searchEntertainers')">
+         ng-if="$ctrl.OrderService.list.length === 0 && ($ctrl.showComponentOnly.length === 0 || $ctrl.showComponentOnly === 'searchEntertainers')">
       <h2 class="no-items-text">
         No Minx are currently available. Try back later or lock in your Minx with a future booking.
       </h2>
     </div>
 
     <div flex="100" flex-gt-sm="50" class="manipulation-entertainers__confirmed-entertainers-wrapper"
-         ng-if="$ctrl.entertainersInvited.length > 0 && ($ctrl.$mdMedia('gt-sm') || $ctrl.showComponentOnly === 'confirmedEntertainers')">
-      <confirmed-entertainers entertainers="$ctrl.entertainersInvited"
-                              count-of-required-entertainers="$ctrl.countOfRequiredEntertainers"
-                              service-type-price="$ctrl.serviceTypePrice">
+         ng-if="$ctrl.OrderService.listInvited.length > 0 && ($ctrl.$mdMedia('gt-sm') || $ctrl.showComponentOnly === 'confirmedEntertainers')">
+      <confirmed-entertainers entertainers="$ctrl.OrderService.listInvited"
+                              count-of-required-entertainers="$ctrl.orderDetails.entertainers_number"
+                              invite-type-penalty-amount="$ctrl.orderDetails.serviceType.penalty_amount"
       </confirmed-entertainers>
     </div>
   </div>
