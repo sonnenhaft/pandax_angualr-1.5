@@ -1,4 +1,14 @@
+admin {
+  display: block;
+  min-height: 100%;
+}
 #admin {
+  padding-bottom: 36px;
+  min-height: 100vh;
+  panda-copyright {
+    color: black;
+    z-index: 1;
+  }
   panda-find-location-input {
     label {
       @extend .font_admin-manip__label;

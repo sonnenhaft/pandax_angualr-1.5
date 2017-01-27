@@ -123,6 +123,20 @@ app {
 	position: relative;
 }
 
+panda-copyright {
+  position: absolute;
+  width: 100%;
+  display: block;
+  max-width: 1024px;
+  margin: auto;
+  left: 0;
+  right: 0;
+  bottom: 13px;
+  text-align: center;
+  font: 0.813em $open-sans, sans-serif;
+  color: white;
+}
+
 // pages
 @import "login.pages/login.pages.scss";
 @import "user.pages/profile.pages/profile.pages.scss";

@@ -22,10 +22,7 @@ export default angular.module(LoginPagesLayout, [
   CredentialsInputsComponent,
   ResetPasswordPageComponent
 ]).component(LoginPagesLayout, {
-  template,
-  controller ( ) {
-    this.year = new Date( ).getFullYear( );
-  }
+  template
 }).config(($stateProvider, $urlRouterProvider) => {
   'ngInject';
 

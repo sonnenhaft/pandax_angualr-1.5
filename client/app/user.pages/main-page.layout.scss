@@ -2,7 +2,25 @@
   width: 100%;
   min-height: 100%;
   position: relative;
-
+  display: block;
+  .copyrightOnMap {
+    panda-copyright {
+      z-index: 15;
+      color: black;
+      text-align: right;
+      margin-right: 6px;
+      @media (max-height: 848px) {
+        color: white;
+        text-align: center;
+        margin-right: 0;
+      }
+      @media (max-width: 960px) {
+        color: white;
+        text-align: center;
+        margin-right: 0;
+      }
+    }
+  }
   main-page-navbar {
     max-width: 230px;
     position: fixed;
