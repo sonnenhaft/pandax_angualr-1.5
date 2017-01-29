@@ -24,6 +24,7 @@ class controller {
   constructor (Helper, Validation, OrderService, $http, $window, $state, $mdDialog, moment, StatefulUserData, $q, $stateParams, OrderResource, $location) {
     'ngInject';
 
+
     this.resolved = false;
     $q.all($location.search( ).skipNYcheck ? {} : {
       notAccomplishedOrder: OrderService.fetchLastNotAccomplishedOrder( ).then(({ data }) => data),
@@ -130,7 +131,6 @@ class controller {
       this.orderLoading = true;
       this.$http.post('{{config_api_url}}/api/order', this.orderData(orderModel)).then(({ data: { customer, id: orderId, channel_name: channelName } }) => {
         this.orderLoading = false;
-        console.log(customer);
         this.StatefulUserData.extend(customer);
         this.$state.go('manipulationEntertainers', { orderId, channelName });
       }).finally(( ) => {
