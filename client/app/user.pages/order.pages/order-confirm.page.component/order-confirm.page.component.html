@@ -1,0 +1,101 @@
+<div id="orderConfirm" layout-gt-sm="row">
+
+  <div class="order-form animated fadeIn" flex-gt-sm="50">
+    <h1 class="page-name">Create Order</h1>
+
+    <div class="order-information" layout="column" layout-align="start stretch">
+	    <h3 class="order-information__header">YOUR MINX ARE CONFIRMED AND ON THEIR WAY!</h3>
+
+  	  <div class="order-information__descr text-wrapper">
+    	  <p>They will text you soon with their estimated time of the arrival.</p>
+    	  <p>
+    	   	Access your order details in your
+      		<a ui-sref="ordersHistoryPages">Orders list.</a>
+      	</p>
+    	</div>
+
+			<div class="order-information__cards-container">
+	      <md-card
+	      	layout="column"
+	      	layout="start stretch"
+	      	class="order-information__card"
+	      	ng-repeat="invite in $ctrl.invites track by $index">
+
+					<div
+						layout="row">
+						<!-- <img ng-src="{{invite.provider.photos[0].preview}}" class="order-information__card-avatar-img"> -->
+						<div class="order-information__card-avatar-img" ng-style="{'background-image': 'url(' + invite.provider.photos[0].preview + ')'}">
+
+						</div>
+					  <div
+					  	flex="80"
+					  	layout="column"
+					  	class="order-information__card-info">
+
+							<md-card-title
+								layout="column"
+								layout-align="start"
+								class="order-information__card-title">
+								<span class="order-information__card-name">{{invite.provider.displaying_name}}</span>
+								<span class="order-information__card-phone">+ {{invite.provider.phone}}</span>
+								<div
+									layout-align="column"
+									class="order-information__card-cancelling"
+									ng-hide="invite.status == $ctrl.ORDER_STATUSES.canceled">
+									<span
+										class="order-information__card-timer-value"
+										timer="{{::$ctrl.moment(invite.datetime).add($ctrl.timeToCleanCancel, 'm').valueOf()}}">
+									</span>
+					        <span
+					          class="order-information__card-cancelling-message"
+					          show-in-time="{{::$ctrl.moment(invite.datetime).add($ctrl.timeToCleanCancel, 'm').valueOf()}}"
+					          show-in-time-action="show">
+					          Cancelling the invitation will cost ${{invite.type.penalty_amount}} penalty
+					        </span>
+								</div>
+				      </md-card-title>
+
+				      <md-card-actions
+				      	layout="row"
+				      	layout-align="space-between center"
+				      	class="order-information__card-actions"
+				      	hide-gt-sm>
+				      	<a href="tel:+{{invite.provider.phone}}" class="order-information__card-action"><md-button class="md-raised md-accent">CALL</md-button></a>
+				        <a href="sms:+{{invite.provider.phone}}" class="order-information__card-action"><md-button class="md-raised md-accent">TEXT</md-button></a>
+				      </md-card-actions>
+				    </div>
+				  </div>
+
+					<div class="order-information__card-block-bottom">
+		        <md-button
+		        	class="md-raised md-accent order-information__submit order-information__submit_1"
+		        	type="button"
+		        	ng-hide="invite.status == $ctrl.ORDER_STATUSES.canceled"
+		        	ng-click="$ctrl.cancelOrder($event, invite)">
+		          Cancel Minx
+		        </md-button>
+
+			      <span
+			        class="order-information__card-cancelling-message"
+			        ng-show="invite.status == $ctrl.ORDER_STATUSES.canceled">
+			        Canceled by you
+			      </span>
+					</div>
+
+	      </md-card>
+
+	      </div>
+	    </div>
+
+			<div class="order-information__submit-wrapper">
+		    <md-button
+		    	class="md-raised md-accent order-information__submit"
+		    	ng-click="$ctrl.$state.go('main.create-order');">
+		    	MAKE NEW ORDER
+		    </md-button>
+			</div>
+    </div>
+
+	</div>
+
+</div>
