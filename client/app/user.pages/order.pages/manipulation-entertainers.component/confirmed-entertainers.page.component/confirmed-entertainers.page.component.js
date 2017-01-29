@@ -39,9 +39,7 @@ class controller {
   }
 
   cancelOrder (ev, invite, dirtyCancelling = true) {
-    const x = dirtyCancelling == true ? this.inviteTypePenaltyAmount : 0;
-    console.log(x);
-    this.OrderService.cancelOrderForEntertainer(ev, invite, x).then(_data => {
+    this.OrderService.cancelOrderForEntertainer(ev, invite, dirtyCancelling == true ? this.serviceTypePrice : 0).then(_data => {
       this.Helper.showToast('Done');
     });
   }
