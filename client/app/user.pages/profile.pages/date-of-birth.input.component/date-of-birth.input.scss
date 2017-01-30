@@ -7,7 +7,14 @@ date-of-birth-input {
     color: red;
   }
 
-  input {
+  select {
+    color: black;
+    height: 34px;
+    padding-left: 4px;
+    font: 0.938em "Open Sans", sans-serif;
+    font-weight: 600;
+  }
+  input, select{
     width: 100%;
     display: block;
   }

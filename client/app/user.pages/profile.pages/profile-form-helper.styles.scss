@@ -10,6 +10,7 @@
     [ng-messages] {
       display: block;
     }
+    select:not(:focus),
     input:not(:focus) {
       border: 2px solid $Cardinal;
     }

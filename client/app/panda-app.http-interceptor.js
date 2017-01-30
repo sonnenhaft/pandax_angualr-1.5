@@ -38,9 +38,10 @@ class PandaHttpInterceptor {
   responseError = response => {
     console.log('api error happened');
     const Helper = this.$injector.get('Helper');
+    const responseData = response.data;
     if (response.status === -1 || (response.status === 502 && !response.statusText)) {
       response.statusText = 'Not able to connect to remote server';
-      response.data = response.data || { message: response.statusText };
+      response.data = responseData || { message: response.statusText };
       Helper.showToast(response.statusText, 5000);
     }
     if (response.detail) {
@@ -48,8 +49,8 @@ class PandaHttpInterceptor {
     }
     if (response.status >= 400 && response.status != 403) { // for 403 status we have another handler only in userService.login()
       let messageText = response.statusText;
-      if (response.data) {
-        messageText = response.data.detail || response.data.message;
+      if (responseData) {
+        messageText = responseData.detail || responseData.message;
       }
       if (messageText !== 'PHONE_ALREADY_EXIST') {
         Helper.showToast(messageText, 5000);
@@ -58,7 +59,7 @@ class PandaHttpInterceptor {
         this.StatefulAuthTokenService.logout( );
       }
     } else if (response.status == 403) {
-      Helper.showBanPopUp(response.data && response.data.detail);
+      Helper.showBanPopUp(responseData && responseData.detail);
       this.StatefulAuthTokenService.logout( );
     }
 
