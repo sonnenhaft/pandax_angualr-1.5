@@ -13,8 +13,7 @@ class controller extends AbstractScrollableController {
 
   tableStatuses = {
     active: 'active',
-    blocked: 'blocked',
-    unblocked: 'unblocked'
+    blocked: 'blocked'
   }
 
   constructor ($mdDialog, $q, AdminDataResource, $http, $location) {
