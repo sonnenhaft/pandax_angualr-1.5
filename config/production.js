@@ -1,5 +1,6 @@
-let config = require('./development');
+const config = require('./development');
+
 module.exports = Object.assign(config, {
-  API_URL: ``,
+  API_URL: '',
   WS_URL: `wss://${window.location.host}/ws`
 });

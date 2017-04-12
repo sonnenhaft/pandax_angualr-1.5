@@ -25,11 +25,8 @@ import sass from 'gulp-sass';
 const root = 'client';
 
 // helper method for resolving paths
-const resolveToApp = (glob = '') => path.join(root, 'app', glob) // app/{glob}
-;
-
-const resolveToComponents = (glob = '') => path.join(root, 'app/components', glob) // app/components/{glob}
-;
+const resolveToApp = (glob = '') => path.join(root, 'app', glob); // app/{glob}
+const resolveToComponents = (glob = '') => path.join(root, 'app/components', glob); // app/components/{glob}
 
 // map of all paths
 const paths = {
@@ -77,10 +74,10 @@ gulp.task('serve', ( ) => {
   proxyOptions.route = '/api';
   serve({
     port: process.env.PORT || 3020,
-    // startPath: '/#!/login?email=admin@panda.com&password=Password1&auto',
-    startPath: '/#!/login?email=provider1@panda.com&password=Password1&auto&redirectUrl=/main/profile/edit',
-    // startPath: '/#!/login?email=provider1@panda.com&password=Password1&auto',
-    // startPath: '/#!/login?email=customer1@panda.com&password=Password1&auto',
+    // startPath: '/#/login?email=admin@panda.com&password=Password1&auto',
+    startPath: '/#/login?email=provider1@panda.com&password=Password1&auto&redirectUrl=/main/profile/edit',
+    // startPath: '/#/login?email=provider1@panda.com&password=Password1&auto',
+    // startPath: '/#/login?email=customer1@panda.com&password=Password1&auto',
     open: 'local',
     server: { baseDir: root },
     https: true,
