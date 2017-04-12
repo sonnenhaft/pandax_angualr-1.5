@@ -1,9 +1,15 @@
 import activeMenuItem from '../../common/active-menu-item.directive';
-
-import NAV_BAR_MENU_ITEMS from '../../common/NAV_BAR_MENU_ITEMS';
 import NAV_BAR_SUB_MENU from './NAV_BAR_SUB_MENU';
-
 import template from './main-page-navbar.html';
+
+const NAV_BAR_MENU_ITEMS = [
+  { role: ['customer'], text: 'Create order', url: 'main.create-order' },
+// { role: ['customer'], text: 'Rate Entertainers', url: 'main.rate-entertainers' },
+  { role: ['provider'], text: 'Orders History', url: 'ordersHistoryPages' },
+  { role: ['customer'], text: 'Orders', url: 'ordersHistoryPages' },
+  { role: ['customer', 'provider'], text: 'Contact Us', url: 'main.contact-us' },
+  { role: ['customer', 'provider'], text: 'Settings', url: '' }
+];
 
 class controller {
   constructor ($state, StatefulUserData) {
