@@ -89,9 +89,12 @@ class Helper {
     if (angular.isArray(message)) {
       message = message.join(', ');
     }
+    if (angular.isObject(message) && message.type) {
+      message = message.type;
+    }
     this.$mdToast.show(
       this.$mdToast.simple( )
-        .content(message || message.type)
+        .content(message)
         .position('top right')
         .hideDelay(duration)
         .action('OK')
