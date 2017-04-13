@@ -30,7 +30,7 @@ class controller {
       notRatedEntertainers: OrderResource.fetchNotRatedEntertainers($stateParams.notRatedEntertainers).$promise
     }).then(({ notAccomplishedOrder, notRatedEntertainers }) => {
       if (notAccomplishedOrder) {
-        // $state.go('manipulationEntertainers', { orderId: notAccomplishedOrder.id });
+        $state.go('manipulationEntertainers', { orderId: notAccomplishedOrder.id });
       } else if (notRatedEntertainers && notRatedEntertainers.length) {
         $state.go('main.rate-entertainers', { notRatedEntertainers });
       }

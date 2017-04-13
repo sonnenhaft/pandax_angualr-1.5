@@ -14,8 +14,11 @@
                 {{item.formatted_address}}
             </li>
         </ul>
-        <md-button ng-show="$ctrl.locationName" ng-click="$ctrl.clearLocation()" aria-label="remove">
-        </md-button>
+§        <md-button ng-show="$ctrl.locationName" ng-click="$ctrl.clearLocation()"
+                   aria-label="remove"></md-button>
+        <md-button ng-click="$ctrl.setDefault()"
+                   ng-class="{left: !!$ctrl.locationName}"
+                   aria-label="remove" class="location"></md-button>
         <md-progress-linear ng-show="$ctrl.isSearching" class="animated fadeIn"></md-progress-linear>
     </div>
     <span class="error" ng-if="$ctrl.locationError">

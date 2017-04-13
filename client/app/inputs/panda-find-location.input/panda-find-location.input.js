@@ -7,10 +7,10 @@ const UNKNOWN_PLACE = 'Unknown place';
 class controller {
   ALLOWED_ZIPS = ALLOWED_ZIPS
 
-  constructor (GoogleGeoLocationService, $log, $location) {
+  constructor (GoogleGeoLocationService, $log, $location, $timeout) {
     'ngInject';
 
-    Object.assign(this, { GoogleGeoLocationService, $log, $location });
+    Object.assign(this, { GoogleGeoLocationService, $log, $location, $timeout });
     this.locationName = 'Loading current location...';
   }
 
@@ -83,8 +83,10 @@ class controller {
 
   clearLocation ( ) {
     this.locationName = '';
+  }
+
+  setDefault ( ) {
     this.ngModel.$setViewValue( );
-    this.validateModel( );
   }
 }
 
