@@ -1,3 +1,6 @@
+.table_admin__cell a {
+  color: #000084
+}
 .table {
   $circleSize: 8px;
   $avatarSize: 28px;
@@ -87,7 +90,7 @@
           &:not(:first-of-type) {
             margin-left: 12px;
           }
-        } 
+        }
       }
       &_link {
         color: $UnitedNationsBlue;
