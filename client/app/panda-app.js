@@ -30,6 +30,7 @@ import LogoutComponent from './login.pages/logout.component/logout.component';
 
 // pages
 import MainPage from './user.pages/main-page.layout';
+import HiddenEntertainerPage from './user.pages/hidden-entertainer.page/hidden-entertainer.page';
 import OrderPage from './user.pages/order.pages/create-order.page.component';
 import HistoryPage from './user.pages/orders-history.pages/orders-history';
 import PasswordPage from './user.pages/password.page.component/password.page.component';
@@ -65,17 +66,18 @@ angular.module('app', [
     Map
   ],
   ...[
+    ProfilePagesComponent,
+    HiddenEntertainerPage,
     PandaAppStubsConfig,
     PandaHttpInterceptor,
-    StatefulUserData,
-    ProfilePagesComponent,
     LoginPagesRoutes,
+    AdminComponent,
+    StatefulUserData,
     HistoryMinxPage,
+    ContactUsPage,
     PasswordPage,
     PaymentsPage,
-    ContactUsPage,
     HistoryPage,
-    AdminComponent,
     OrderPage,
     MainPage
   ]
