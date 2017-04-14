@@ -1,5 +1,7 @@
 import Resolve from '../common-services/resolve.service';
 import template from './main-page.layout.html';
+import CustomersAdminPage from '../admin.pages/customers-admin.page/customers-admin.page';
+import LoginPageComponent from '../login.pages/login.page/login.page.component';
 
 export default angular.module('mainPageLayout', [
   Resolve
@@ -15,6 +17,15 @@ export default angular.module('mainPageLayout', [
         'ngInject';
 
         return Resolve.providers( );
+      },
+      allowPagesOrRedirect ($state, StatefulUserData) {
+        'ngInject';
+
+        if (StatefulUserData.isAdmin( )) {
+          $state.go(CustomersAdminPage);
+        } else if (!StatefulUserData.isCustomer( ) && !StatefulUserData.isProvider( )) {
+          $state.go(LoginPageComponent);
+        }
       }
     }
   });
