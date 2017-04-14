@@ -32,7 +32,7 @@ class controller {
       if (notAccomplishedOrder) {
         // $state.go('manipulationEntertainers', { orderId: notAccomplishedOrder.id });
       } else if (notRatedEntertainers && notRatedEntertainers.length) {
-        $state.go('main.rate-entertainers', { notRatedEntertainers });
+        // $state.go('main.rate-entertainers', { notRatedEntertainers });
       }
     }).finally(( ) => {
       this.resolved = true;

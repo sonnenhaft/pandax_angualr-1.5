@@ -29,10 +29,10 @@ class controller {
 
     const setViewValueEvent = ({ center: position }) => this.setViewValueByMarker(position);
     this.pandaMapEvents = {
-      dragend: setViewValueEvent,
-      zoom_changed: setViewValueEvent,
-      center_changed: setViewValueEvent,
-      bounds_changed: ({ center: position }) => this.setViewValueByMarker(position, true),
+      // dragend: setViewValueEvent,
+      // zoom_changed: setViewValueEvent,
+      // center_changed: setViewValueEvent,
+      // bounds_changed: ({ center: position }) => this.setViewValueByMarker(position, true),
       click: (GoogleGeoLocationService, Window, [{ latLng: position }]) => this.setViewValueByMarker(position, true)
     };
 
