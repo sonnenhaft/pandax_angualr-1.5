@@ -155,21 +155,25 @@ class OrderService {
   }
 
   cancelOrderForEntertainer (ev, invite, penaltyAmount) {
-    console.log(penaltyAmount);
-    return this.$mdDialog.show(this.$mdDialog.confirm( )
-      .title('Cancel Minx')
-      .textContent(penaltyAmount > 0 ?
-        `Cancelling the order will cost $ ${penaltyAmount} penalty. Are you sure want to cancel order for the minx?` :
-        'Are you sure want to cancel order for the minx?')
-      .ariaLabel('Cancelling Entertainer')
-      .targetEvent(ev)
-      .ok('Yes')
-      .cancel('No'))
-      .then(data => this.$http.put(`{{config_api_url}}/api/invite/${invite.id}/cancel`))
+    return this.$mdDialog.show(
+      this.$mdDialog.confirm( )
+        .title('Cancel Minx')
+        .textContent(penaltyAmount => penaltyAmount > 0 ? // eslint-disable-line no-confusing-arrow
+          `Cancelling the order will cost $ ${penaltyAmount} penalty. Are you sure want to cancel order for the minx?` :
+          'Are you sure want to cancel order for the minx?')
+        .ariaLabel('Cancelling Entertainer')
+        .targetEvent(ev)
+        .ok('Yes')
+        .cancel('No')
+    )
+      .then(( ) => {
+        invite.$isLoading = true;
+        return this.$http.put(`{{config_api_url}}/api/invite/${invite.id}/cancel`);
+      })
       .then(result => {
         invite.status = ORDER_STATUSES.canceledByCustomer;
         return result;
-      });
+      }).finally(( ) => invite.$isLoading = false);
   }
 
 
