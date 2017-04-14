@@ -1,6 +1,6 @@
 const packageJSON = require('../package.json');
 
-const apiurl = 'dev3-panda-aws.isdev.info/api';
+const apiurl = 'dev2-panda-aws.isdev.info/api';
 
 module.exports = {
   VERSION: packageJSON.version,

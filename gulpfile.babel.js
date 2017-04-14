@@ -70,7 +70,7 @@ gulp.task('serve', ( ) => {
   config.entry.app = ['webpack-hot-middleware/client?reload=true'].concat(paths.entry);
 
   const compiler = webpack(config);
-  const proxyOptions = url.parse('https://dev3-panda-aws.isdev.info/api');
+  const proxyOptions = url.parse('https://dev2-panda-aws.isdev.info/api');
   proxyOptions.route = '/api';
   serve({
     port: process.env.PORT || 3020,
