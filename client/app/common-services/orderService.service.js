@@ -2,17 +2,6 @@ import Helper from './helper.service';
 import ORDER_STATUSES from '../common/ORDER_STATUSES';
 
 class OrderService {
-  static cancelOrderMessages = [
-    { title: 'Cancel order', content: 'Are you sure want to cancel order?' },
-    { title: 'Cancel unconfirmed invites', content: 'Are you sure want to cancel unconfirmed invites and cancel order?' },
-    {
-      title: 'Cancel unconfirmed invites',
-      content: `
-              Are you sure want to cancel unconfirmed invites and complete this order?  <br/> 
-              Note: We will do a refund of the money that you paid for  unconfirmed entertainers`
-    }
-  ]
-
   list = []
   listInvited = []
   providers = []
@@ -35,10 +24,6 @@ class OrderService {
     );
   }
 
-  getEntertainers ( ) {
-    return this.list;
-  }
-
   getProviders ( ) {
     return this.providers;
   }
@@ -59,9 +44,9 @@ class OrderService {
   }
 
   fetchHistoryOrders (page = 1) {
-    return this.$http.get(this._apiUrl(page)).then(result => {
-      this.history = result.data.items;
-      return result.data;
+    return this.$http.get(this._apiUrl(page)).then(({ data }) => {
+      this.history = data.items;
+      return data;
     });
   }
 
@@ -138,7 +123,7 @@ class OrderService {
     this.WebSocket.invites(channelName, this.setEntertainerStatus.bind(this));
   }
 
-  unsubcribeOnEntertainerInvite ( ) {
+  unsubscribeOnEntertainerInvite ( ) {
     this.WebSocket.close( );
   }
 
@@ -176,46 +161,47 @@ class OrderService {
       }).finally(( ) => invite.$isLoading = false);
   }
 
-
-  /**
-   * @deprecated useless comment
-   * Confirmed entertainers
-   */
-  fetchEntertainersConfirmed (orderId) {
-    return this.$http.get(`{{config_api_url}}/api/customer/orders/${orderId}/invites?status[]=accepted&status[]=canceled`).then(
-      ({ data }) => {
-        this.listConfirmed = data && data.items;
-        return this.listConfirmed;
-      },
-      error => console.log(error)
-    );
+  fetchConfirmedEntertainers (orderId) {
+    return this.$http.get(`{{config_api_url}}/api/customer/orders/${orderId}/invites?status[]=accepted&status[]=canceled`);
   }
 
   fetchLastNotAccomplishedOrder ( ) {
     return this.$http.get('{{config_api_url}}/api/customer/orders/last-not-accomplished');
   }
 
-  payForOrder (orderId, cardId) {
-    return this.$http.post(`{{config_api_url}}/api/{{current_user_role}}/orders/${orderId}/pay`, { card_id: cardId });
+  payForOrder (orderId, card_id) {
+    return this.$http.post(`{{config_api_url}}/api/{{current_user_role}}/orders/${orderId}/pay`, { card_id });
   }
 
-  cancelOrder (ev, orderId, messageType = 0) {
-    const confirm = this.$mdDialog.confirm( )
-      .title(OrderService.cancelOrderMessages[messageType].title)
-      .htmlContent(OrderService.cancelOrderMessages[messageType].content)
-      .ariaLabel('Cancelling Order')
-      .targetEvent(ev)
-      .ok('Yes')
-      .cancel('No');
+  cancelOrder (orderId) {
+    let title = 'Cancel order';
+    let htmlContent = 'Are you sure want to cancel order?';
 
-    return this.$mdDialog.show(confirm)
-      .then(_data => this.$http.post(`{{config_api_url}}/api/{{current_user_role}}/orders/${orderId}/complete`))
-      .then(response => response.data);
+    if (this.listConfirmed.length > 0) {
+      title = 'Cancel unconfirmed invites';
+      htmlContent = `
+        Are you sure want to cancel unconfirmed invites and complete this order?  <br/> 
+        Note: We will do a refund of the money that you paid for  unconfirmed entertainers`;
+    } else if (this.listInvited.length > 0) {
+      title = 'Cancel unconfirmed invites';
+      htmlContent = 'Are you sure want to cancel unconfirmed invites and cancel order?';
+    }
+
+    const URL = `{{config_api_url}}/api/{{current_user_role}}/orders/${orderId}/complete`;
+    return this.$mdDialog.show(this.$mdDialog.confirm({
+      title,
+      htmlContent,
+      ok: 'Yes',
+      cancel: 'No',
+      ariaLabel: 'Cancelling Order'
+    }))
+      .then(( ) => this.$http.post(URL))
+      .then(({ data }) => data);
   }
 
   fillConfirmedList (invites) {
     invites
-      .filter(invite => invite.status === ORDER_STATUSES.accepted)
+      .filter(({ status }) => status === ORDER_STATUSES.accepted)
       .forEach(invite => this.listConfirmed.push(invite));
   }
 

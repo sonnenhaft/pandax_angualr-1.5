@@ -14,7 +14,6 @@ class controller {
   hours = ['0.5 H', '1 H', '1.5 H', '2 H', '2.5 H', '3 H', '3.5 H', '4 H']
   guests = ['1', '2-3', '4-5', '5-10', '10-15', '15+']
   entertainers = [1, 2, 3, 4, 5, 6]
-  entertainer = 1
   guest = 1
   asap = true
   hour = '0.5H'
@@ -51,7 +50,7 @@ class controller {
 
   $onInit ( ) {
     this.providers = _.map(this.OrderService.getProviders( ), (provider, i) => {
-      provider.active = i == 0;
+      provider.active = i === 0;
       return provider;
     });
 

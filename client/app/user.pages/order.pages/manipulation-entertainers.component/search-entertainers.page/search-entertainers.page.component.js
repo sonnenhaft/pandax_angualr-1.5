@@ -1,6 +1,6 @@
 import OrderService from '../../../../common-services/orderService.service';
 import billing from '../../../billing.page.component/billing.page.component';
-import entertainerPhotosModal from '../entertainer-protos.modal/entertainer-protoes.modal';
+import entertainerPhotosModal from '../entertainer-protos.modal/entertainer-protos.modal';
 
 import ratingsModalComponent from './view-entertainer-ratings.modal/view-entertainer-ratings.modal';
 

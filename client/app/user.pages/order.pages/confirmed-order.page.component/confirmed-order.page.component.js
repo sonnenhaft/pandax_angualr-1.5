@@ -9,8 +9,10 @@ class controller {
   }
 
   $onInit ( ) {
-    this.OrderService.fetchEntertainersConfirmed(this.$stateParams.orderId).then(( ) => {
-      this.invites = this.OrderService.listConfirmed;
+    const orderId = this.$stateParams.orderId;
+    this.OrderService.fetchConfirmedEntertainers(orderId).then(({ data: { items } = {} }) => {
+      this.invites = items;
+      this.OrderService.listConfirmed = items;
     });
   }
 }

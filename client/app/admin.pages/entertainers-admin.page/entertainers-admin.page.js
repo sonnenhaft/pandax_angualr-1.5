@@ -1,4 +1,4 @@
-import entertainerPhotosModal from '../../user.pages/order.pages/manipulation-entertainers.component/entertainer-protos.modal/entertainer-protoes.modal';
+import entertainerPhotosModal from '../../user.pages/order.pages/manipulation-entertainers.component/entertainer-protos.modal/entertainer-protos.modal';
 import { controller as CustomersPageController } from '../customers-admin.page/customers-admin.page';
 
 import template from './entertainers-admin.page.html';

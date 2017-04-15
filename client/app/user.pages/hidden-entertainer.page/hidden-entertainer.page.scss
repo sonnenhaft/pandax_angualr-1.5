@@ -4,27 +4,4 @@
   input {
     color: black;
   }
-  .button {
-    height: 32.5px;
-    width: 200px;
-    max-width: 100%;
-    border: none;
-    font-family: 'Oswald', sans-serif;
-    font-size: 15px;
-    color: rgba(255, 255, 255, 1);
-    text-align: center;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    line-height: 37px;
-    background-color: rgba(194, 28, 54, 1);
-    &:hover:not([disabled]) {
-      opacity: 0.7;
-    }
-    &[disabled] {
-      background-color: rgb(47, 8, 13);
-      vertical-align: bottom;
-      cursor: not-allowed;
-      border: 0.5px solid white;
-    }
-  }
 }

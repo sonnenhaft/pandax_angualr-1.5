@@ -1,26 +1,41 @@
 <div class="hidden-entertainer-page">
   <div>
-    <b>{{$ctrl.statusUrl}}</b>
-  </div>
-  <div>
     <b>Role:</b> {{$ctrl.user.role}}
     <b>Status:</b> {{$ctrl.user.status}}
   </div>
+  <br>
 
+  <div>
+    <b>{{$ctrl.invitesUrl}}</b>
+    <div ng-show="$ctrl.availableInvites && !$ctrl.availableInvites.length">
+      Nobody invited you, baby. Try again later.
+    </div>
+    <div ng-repeat="invite in $ctrl.availableInvites">
+      <i>#{{invite.id}}</i>
+      <b>{{invite.status}}</b>
+      {{invite.order.location.location}}
+      {{invite.order.datetime | date : 'dd/MMM/yyyy HH:mm'}}
+      <panda-button ng-disabled="invite.order.$isUpading" on-click="$ctrl.acceptOrder(invite.order)">
+        Accept order <i>#{{invite.order.id}}</i>
+      </panda-button>
+    </div>
+  </div>
+  <br>
 
-  <div ng-hide="$ctrl.loading">
-    <button class="button" ng-click="$ctrl.setStatus()" ng-disabled="$ctrl.isSwitchingStatus">
-      <spinner input="$ctrl.isSwitchingStatus">
+  <div>
+    <b>{{$ctrl.statusUrl}}</b>
+    <div ng-hide="$ctrl.loading">
+      <panda-button ng-disabled="$ctrl.$isUpading" on-click="$ctrl.setStatus()">
         Set status as "{{$ctrl.nextStatus}}"
-      </spinner>
-    </button>
-    <input type="text" class="admin__manip-field admin__manip-text"
-           placeholder="Latitude"
-           title="default will be used if empty"
-           ng-model="$ctrl.latitude" ng-hide="$ctrl.isActive">
-    <input type="text" class="admin__manip-field admin__manip-text"
-           placeholder="Longitude"
-           title="default will be used if empty"
-           ng-model="$ctrl.longitude" ng-hide="$ctrl.isActive">
+      </panda-button>
+      <input type="text" class="admin__manip-field admin__manip-text"
+             placeholder="Latitude"
+             title="default will be used if empty"
+             ng-model="$ctrl.latitude" ng-hide="$ctrl.isActive">
+      <input type="text" class="admin__manip-field admin__manip-text"
+             placeholder="Longitude"
+             title="default will be used if empty"
+             ng-model="$ctrl.longitude" ng-hide="$ctrl.isActive">
+    </div>
   </div>
 </div>

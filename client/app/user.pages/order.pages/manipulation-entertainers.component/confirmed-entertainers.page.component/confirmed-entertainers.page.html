@@ -1,12 +1,12 @@
 <div id="confirmed-entertainers" layout="column" layout-align="start stretch" class="confirmed-entertainers">
   <div class="confirmed-entertainers__header">
     <h2 class="confirmed-entertainers__header-text">
-      CONFIRMATIONS {{($ctrl.entertainers | byStatuses: [$ctrl.statuses.accepted, $ctrl.statuses.canceledByProvider, $ctrl.statuses.canceledByCustomer]).length}}/{{$ctrl.countOfRequiredEntertainers}}
+      CONFIRMATIONS {{($ctrl.entertainers | byStatuses : $ctrl.STATUSES).length}}/{{$ctrl.countOfRequiredEntertainers}}
     </h2>
   </div>
 
   <md-card layout="row" class="confirmed-entertainers__card"
-           ng-repeat="invite in $ctrl.entertainers | byStatuses : [$ctrl.statuses.accepted, $ctrl.statuses.canceledByProvider, $ctrl.statuses.canceledByCustomer] track by $index">
+           ng-repeat="invite in $ctrl.entertainers | byStatuses : $ctrl.STATUSES track by $index">
 
     <md-card-header class="confirmed-entertainers__card-header">
       <md-card-avatar class="confirmed-entertainers__avatar" ng-style="{'background-image': 'url(' + invite.provider.photos[0].preview + ')'}">
