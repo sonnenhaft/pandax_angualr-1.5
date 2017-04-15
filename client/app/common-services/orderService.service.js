@@ -151,14 +151,11 @@ class OrderService {
         .ok('Yes')
         .cancel('No')
     )
-      .then(( ) => {
-        invite.$isLoading = true;
-        return this.$http.put(`{{config_api_url}}/api/invite/${invite.id}/cancel`);
-      })
+      .then(( ) => this.$http.put(`{{config_api_url}}/api/invite/${invite.id}/cancel`))
       .then(result => {
         invite.status = ORDER_STATUSES.canceledByCustomer;
         return result;
-      }).finally(( ) => invite.$isLoading = false);
+      });
   }
 
   fetchConfirmedEntertainers (orderId) {

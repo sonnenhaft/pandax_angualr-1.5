@@ -1,0 +1,7 @@
+<label ng-show="::$ctrl.label">{{::$ctrl.label}}</label>
+<md-select ng-model="$ctrl.selectedValue" aria-label="{{::$ctrl.name}}"
+           name="{{::$ctrl.name}}" ng-disabled="$ctrl.ngDisabled">
+  <md-option ng-repeat="option in ::$ctrl.options track by option" value="{{::option}}">
+    {{::option}}
+  </md-option>
+</md-select>
