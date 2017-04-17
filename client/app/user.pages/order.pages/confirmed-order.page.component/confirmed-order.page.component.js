@@ -40,7 +40,7 @@ export default angular.module(component, [
     parent: 'main',
     component
   });
-}).component(component, {
+}).filter('pandaPhoneFilter', ( ) => phone => `${phone || ''}`.replace(/([\d+]{2})([\d]{3})([\d]{3})(.*)/, '$1 $2 $3-$4')).component(component, {
   template,
   controller
 }).name;
