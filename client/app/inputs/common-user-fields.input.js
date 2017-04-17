@@ -39,30 +39,17 @@ export default angular.module('commonUserFields', [
            ng-change="$ctrl.form.phone.$setValidity('phone_already_taken', true)"
            ng-model="$ctrl.model.phone"/>
 </input-wrapper>`
-}).directive('pandaPhoneFormatter', $timeout => {
+}).directive('pandaPhoneFormatter', ($timeout, asPhoneFilter) => {
   'ngInject';
 
   return {
     require: '^ngModel',
     priority: 1,
     link: (i, $element, $attrs, { $formatters, $parsers }) => {
-      const formatCardValue = card => {
-        card = card || '';
-        if (card) {
-          card = card.replace(/[^\d]/g, '');
-          if (card.indexOf('1') === 0) {
-            card = card.slice(1);
-          }
-          if (card.length > 3 && card.length < 7) {
-            card = card.replace(/(\d{3})(.+)/g, '$1 $2');
-          } else if (card.length > 6) {
-            card = card.replace(/(\d{3})(\d{3})(.+)/g, '$1 $2-$3');
-          }
-        }
-        card = `+1 ${card}`;
-
-        $timeout(( ) => $element.val(card), 0, false);
-        const resultCard = card.replace(/[^\d]/g, '');
+      const formatCardValue = phone => {
+        phone = asPhoneFilter(phone);
+        $timeout(( ) => $element.val(phone), 0, false);
+        const resultCard = phone.replace(/[^\d]/g, '');
         return resultCard.length === 1 ? '' : resultCard;
       };
 
@@ -70,4 +57,22 @@ export default angular.module('commonUserFields', [
       $formatters.unshift(formatCardValue);
     }
   };
+}).filter('asPhone', ( ) => (phone, noEmpty) => {
+  phone = phone || '';
+  if (phone) {
+    phone = phone.replace(/[^\d]/g, '');
+    if (phone.indexOf('1') === 0) {
+      phone = phone.slice(1);
+    }
+    if (phone.length > 3 && phone.length < 7) {
+      phone = phone.replace(/(\d{3})(.+)/g, '$1 $2');
+    } else if (phone.length > 6) {
+      phone = phone.replace(/(\d{3})(\d{3})(.+)/g, '$1 $2-$3');
+    }
+  }
+  if (!phone && noEmpty) {
+    return phone;
+  } else {
+    return `+1 ${phone}`;
+  }
 }).name;
