@@ -150,9 +150,10 @@ class OrderService {
   }
 
   cancelOrderForEntertainer (ev, invite, penaltyAmount) {
+    console.log(penaltyAmount);
     return this.$mdDialog.show(this.$mdDialog.confirm( )
       .title('Cancel Minx')
-      .textContent(penaltyAmount => penaltyAmount > 0 ? // eslint-disable-line no-confusing-arrow
+      .textContent(penaltyAmount > 0 ?
         `Cancelling the order will cost $ ${penaltyAmount} penalty. Are you sure want to cancel order for the minx?` :
         'Are you sure want to cancel order for the minx?')
       .ariaLabel('Cancelling Entertainer')

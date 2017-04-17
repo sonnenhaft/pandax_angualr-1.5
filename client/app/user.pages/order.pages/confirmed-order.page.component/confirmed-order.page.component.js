@@ -1,7 +1,7 @@
 import timer from '../../../common/timer.directive';
 import showInTime from '../../../common/show-in-time.directive';
 
-import template from './order-confirm.page.component.html';
+import template from './confirmed-order.page.html';
 
 class controller {
   timeToCleanCancel = 5;
@@ -27,8 +27,8 @@ class controller {
   }
 }
 
-const name = 'orderConfirm';
-export default angular.module(name, [
+const component = 'orderConfirm';
+export default angular.module(component, [
   timer,
   showInTime
 ]).config($stateProvider => {
@@ -36,11 +36,11 @@ export default angular.module(name, [
 
   $stateProvider.state({
     url: '/:orderId/order-confirm',
+    name: component,
     parent: 'main',
-    name,
-    component: name
+    component
   });
-}).component(name, {
+}).component(component, {
   template,
   controller
 }).name;
