@@ -16,7 +16,7 @@ class controller extends CustomersPageController {
     unblocked: 'unblocked',
   }
 
-  constructor ($http, $mdDialog, $q, entertainerPhotosModal, $window, $location, AdminDataResource) {
+  constructor ($http, $mdDialog, $q, entertainerPhotosModal, $location, AdminDataResource) {
     'ngInject';
 
     super($mdDialog, $q, AdminDataResource, $http, $location);

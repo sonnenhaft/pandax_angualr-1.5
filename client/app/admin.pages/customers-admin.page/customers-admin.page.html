@@ -11,7 +11,8 @@
         placeholder="Status"
         class="select-container_admin"
         ng-change="$ctrl.filterByStatus($ctrl.selectedStatus)">
-        <md-option ng-repeat="(key, val) in ::$ctrl.tableStatuses" value="{{::key}}">{{::val}}</md-option>
+        <md-option ng-repeat="(key, val) in ::$ctrl.tableStatuses"
+                   value="{{::key}}">{{::val}}</md-option>
       </md-select>
     </div>
   </div>
