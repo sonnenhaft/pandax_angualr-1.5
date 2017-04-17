@@ -2,6 +2,10 @@ import OrderService from '../../../common-services/orderService.service';
 import timer from '../../../common/timer.directive';
 import showInTime from '../../../common/show-in-time.directive';
 import template from './history-order-detail.page.html';
+import ORDER_STATUSES from '../../../common/ORDER_STATUSES';
+
+const { canceledByProvider, canceledByCustomer } = ORDER_STATUSES;
+const CANCELLED_STATUSES = [canceledByProvider, canceledByCustomer];
 
 class controller {
   timeToCleanCancel = 5
@@ -26,6 +30,17 @@ class controller {
     const cost = this.moment(invite.datetime).add(this.timeToCleanCancel, 'm') > this.moment( ) ? 0 : invite.type.penalty_amount;
 
     this.OrderService.cancelOrderForEntertainer(ev, invite, cost).then(( ) => this.Helper.showToast('Done'));
+  }
+
+  getStatus (inviteStatus) {
+    return {
+      [canceledByProvider]: 'Cancelled',
+      [canceledByCustomer]: 'Cancelled by you'
+    }[inviteStatus];
+  }
+
+  showButtons (inviteStatus) {
+    return this.type !== 'history' && !CANCELLED_STATUSES.includes(inviteStatus);
   }
 }
 
