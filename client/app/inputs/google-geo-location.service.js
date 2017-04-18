@@ -45,8 +45,8 @@ class GoogleGeoLocationService {
     return this.$q((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject)).then(
             ({ coords: { latitude, longitude } }) => ({ lat: ( ) => latitude, lng: ( ) => longitude }),
             e => {
-              console.log(e);
-              return { lat: ( ) => 35.5375307, lng: ( ) => -100.0695645 };
+              console.log('Setting to "Central Park, NY"');
+              return { lat: ( ) => 40.785091, lng: ( ) => -73.968285 };
             }
         );
   }
