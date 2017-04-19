@@ -86,9 +86,10 @@ class OrderService {
       service_type: Number(_.head(this.Helper.getActiveObjectFromArray(this.getProviders( ))).type),
       length: parseFloat(form.hour).toString( ),
       location: form.geo.location.formatted_address,
+
       coordinates: {
-        lat: form.geo.coords.latitude.toString( ),
-        long: form.geo.coords.longitude.toString( )
+        lat: form.geo.coords.lat( ),
+        long: form.geo.coords.lng( )
       },
       location_notes: form.notes ? form.notes : '',
       apartment: form.apt,

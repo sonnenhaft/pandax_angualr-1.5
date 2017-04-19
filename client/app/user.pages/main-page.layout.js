@@ -31,9 +31,10 @@ export default angular.module('mainPageLayout', [
   });
 }).component('mainPageLayout', {
   template,
-  controller (StatefulUserData) {
+  controller (StatefulUserData, $state) {
     'ngInject';
 
+    this.$state = $state;
     this.StatefulUserData = StatefulUserData;
   }
 }).name;

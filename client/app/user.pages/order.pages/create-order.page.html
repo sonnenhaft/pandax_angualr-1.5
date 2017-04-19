@@ -73,7 +73,7 @@
                                            nyc-only="true"
                                            ng-required="true"
                                            label="Location"></panda-find-location-input>
-                <div class="map" ng-if="$ctrl.mobile">
+                <div class="map" ng-if="$ctrl.isMobile">
                     <panda-google-map-input ng-model="$ctrl.inputLocation"></panda-google-map-input>
                 </div>
                 <div class="input" flex="40">
@@ -175,7 +175,7 @@
         </form>
     </div>
 
-    <div class="order-map" flex ng-if="!$ctrl.mobile">
+    <div class="order-map" flex ng-if="!$ctrl.isMobile">
         <panda-google-map-input ng-model="$ctrl.inputLocation"></panda-google-map-input>
     </div>
 </div>

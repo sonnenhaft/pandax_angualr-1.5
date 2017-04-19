@@ -1,4 +1,8 @@
 <section class="main-page-layout safari" layout-gt-sm="row">
   <main-page-navbar flex="20" user-avatar-src="$ctrl.StatefulUserData.getAvatar()"></main-page-navbar>
-  <ui-view flex="80" class="main-pages"></ui-view>
+  <ui-view  class="main-pages"></ui-view>
+  <div ng-class="{copyrightOnMap: $ctrl.$state.current.name === 'main.create-order'}">
+    <br>
+    <panda-copyright></panda-copyright>
+  </div>
 </section>

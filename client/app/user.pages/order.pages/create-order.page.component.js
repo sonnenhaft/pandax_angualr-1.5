@@ -32,20 +32,21 @@ class controller {
       if (notAccomplishedOrder) {
         $state.go('manipulationEntertainers', { orderId: notAccomplishedOrder.id });
       } else if (notRatedEntertainers && notRatedEntertainers.length) {
-        // $state.go('main.rate-entertainers', { notRatedEntertainers });
+        $state.go('main.rate-entertainers', { notRatedEntertainers });
       }
     }).finally(( ) => {
       this.resolved = true;
     });
 
-    Object.assign(this, { Helper, Validation, OrderService, $http, $state, $mdDialog, StatefulUserData });
-    this.maxDateForCreating = moment( ).add(14, 'days').toDate( );
-    this.mobile = $window.innerWidth <= 960;
+    Object.assign(this, { Helper, Validation, OrderService, $http,
+      $state, $mdDialog, StatefulUserData, $window });
 
-    $window.addEventListener('resize', ( ) => {
-      this.mobile = $window.innerWidth <= 960;
-    });
+    this.maxDateForCreating = moment( ).add(14, 'days').toDate( );
+    this._setIsMobile( );
+    $window.addEventListener('resize', this._setIsMobile);
   }
+
+  _setIsMobile = ( ) => this.isMobile = this.$window.innerWidth <= 960;
 
   $onInit ( ) {
     this.providers = _.map(this.OrderService.getProviders( ), (provider, i) => {

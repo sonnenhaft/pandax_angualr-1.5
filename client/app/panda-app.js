@@ -118,6 +118,10 @@ angular.module('app', [
   }
 })
   .filter('hoursToTime', hoursToTime)
+  .component('pandaCopyright', {
+    template: 'Copyright © {{ ::$ctrl.year }} MNX USA LLC',
+    controller ( ) { this.year = new Date( ).getFullYear( ); }
+  })
   .component('app', {
     template,
     controller ($window) {
