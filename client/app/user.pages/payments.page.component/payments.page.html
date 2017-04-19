@@ -4,12 +4,12 @@
 
         <div class="payments-control" layout="row" layout-align="space-between center">
             <div class="name" flex="50"><h2>Payments</h2></div>
-            <div class="button" flex="50">
+            <div class="button add-button" flex="50">
                 <button ng-click="$ctrl.add = true">Add new card</button>
             </div>
         </div>
 
-        <div class="payments-add-card" ng-if="$ctrl.add">
+        <div class="payments-add-card" ng-if="!$ctrl.add">
             <form name="billingInformationForm" layout="column" class="billing-information-form" novalidate>
                 <add-new-card-form model="$ctrl.newCard"  is-required="true"></add-new-card-form>
                 <div layout="row">

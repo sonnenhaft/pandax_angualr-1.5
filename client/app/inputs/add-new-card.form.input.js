@@ -50,6 +50,7 @@ export default angular.module('addNewCardForm', [
         <input type="text" name="expiry"
                ng-required="$ctrl.isRequired" touched-invalid
                ng-change="$ctrl.checkCardExpiry()"
+               valid-thru-formatter
                ng-model="$ctrl.model.expiry"/>
     </input-wrapper>
 
@@ -84,6 +85,46 @@ export default angular.module('addNewCardForm', [
         const cardValue = card && card.replace(/\s/g, '');
         $element.val(addSpacesToCard(cardValue));
         return cardValue;
+      });
+    }
+  };
+}).directive('validThruFormatter', ( ) => {
+  'ngInject';
+
+  return {
+    require: '^ngModel',
+    priority: 1,
+    link: (i, $element, $attrs, { $formatters, $parsers }) => {
+      const formatValidThruValue = (validThru = '') => {
+        let newCard = validThru;
+        if (validThru.length === 2 && validThru.indexOf('/') !== -1) {
+          newCard = `0${validThru}`;
+        }
+
+        if (newCard.length > 2) {
+          newCard = newCard.replace('/', '');
+          const end = Math.min(4, newCard.length);
+          let month = Math.max(1, Math.min(newCard.substring(0, 2), 12));
+          if (month < 10) {
+            month = `0${month}`;
+          }
+          const year = newCard.substring(2, end);
+          newCard = `${month}/${year}`;
+        }
+
+        if (newCard === validThru) {
+          return validThru;
+        } else {
+          $element.val(newCard);
+          return newCard;
+        }
+      };
+
+      $formatters.unshift(formatValidThruValue);
+      $parsers.push((validThru = '') => {
+        const val = formatValidThruValue(validThru);
+        $element.val(val);
+        return val.replace('/', '');
       });
     }
   };
