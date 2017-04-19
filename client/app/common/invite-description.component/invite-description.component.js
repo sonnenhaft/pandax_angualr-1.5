@@ -1,10 +1,8 @@
 import timer from '../timer.directive';
 import showInTime from '../show-in-time.directive';
-import ORDER_STATUSES from '../ORDER_STATUSES';
+import { canceledByProvider, canceledByCustomer } from '../ORDER_STATUSES';
 
 import template from './invite-description.html';
-
-const { canceledByProvider, canceledByCustomer } = ORDER_STATUSES;
 
 class controller {
   CANCELABLE_MINUTES = 5
@@ -13,7 +11,7 @@ class controller {
     'ngInject';
 
     const { displaying_name, first_name = '', last_name = '' } = this.invite.provider;
-    this.name = this.invite.provider.displaying_name || (`${first_name} ${last_name}`);
+    this.name = displaying_name || (`${first_name} ${last_name}`);
 
     Object.assign(this, { moment, $state, OrderService, Helper });
   }

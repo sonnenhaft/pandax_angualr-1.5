@@ -86,7 +86,6 @@ class OrderService {
     // TODO: fix place where lat and lng are not functions
     const lat = coords.lat ? coords.lat( ) : coords.latitude;
     const long = coords.lng ? coords.lng( ) : coords.longitude;
-
     return {
       service_type: Number(this.providers.find(({active}) => active === true).type),
       length: parseFloat(form.hour).toString( ),

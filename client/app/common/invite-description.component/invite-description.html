@@ -28,16 +28,25 @@
             </span>
         </div>
 
-        <a href="sms:{{::$ctrl.invite.provider.phone}}" hide-gt-xs
+        <a href="sms:{{::$ctrl.invite.provider.phone}}" hide-gt-sm
            ng-show="$ctrl.invite.provider.phone"
            class="md-raised md-accent md-button invite-description-action">
           TEXT
         </a>
+        <div hide-gt-xs>
+          <br>
+          <md-button class="md-raised md-accent  invite-description-action"
+                     type="button"
+                     ng-hide="$ctrl.getCancellationReason() || $ctrl.hideButton"
+                     ng-click="$ctrl.cancelOrder($event)">
+            Cancel Minx
+          </md-button>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="invite-description-block-bottom">
+  <div class="invite-description-block-bottom" hide-xs>
     <md-button class="md-raised md-accent cancel-button"
                type="button"
                ng-hide="$ctrl.getCancellationReason() || $ctrl.hideButton"

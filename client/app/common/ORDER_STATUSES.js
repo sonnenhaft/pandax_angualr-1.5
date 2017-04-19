@@ -1,3 +1,6 @@
+export const canceledByProvider = 'canceled_by_provider';
+export const canceledByCustomer = 'canceled_by_customer';
+
 export default {
   accepted: 'accepted',
   declined: 'declined',
@@ -9,6 +12,6 @@ export default {
   paid: 'paid',
   canceled: 'canceled',
   active: 'active',
-  canceledByProvider: 'canceled_by_provider',
-  canceledByCustomer: 'canceled_by_customer'
+  canceledByProvider,
+  canceledByCustomer
 };
