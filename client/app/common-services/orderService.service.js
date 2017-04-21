@@ -82,14 +82,19 @@ class OrderService {
   }
 
   buildOrder (form) {
+    const coords = form.geo.coords;
+    // TODO: fix place where lat and lng are not functions
+    const lat = coords.lat ? coords.lat( ) : coords.latitude;
+    const long = coords.lng ? coords.lng( ) : coords.longitude;
+
     return {
-      service_type: Number(_.head(this.Helper.getActiveObjectFromArray(this.getProviders( ))).type),
+      service_type: Number(this.providers.find(({active}) => active === true).type),
       length: parseFloat(form.hour).toString( ),
       location: form.geo.location.formatted_address,
 
       coordinates: {
-        lat: form.geo.coords.lat( ),
-        long: form.geo.coords.lng( )
+        lat,
+        long
       },
       location_notes: form.notes ? form.notes : '',
       apartment: form.apt,
