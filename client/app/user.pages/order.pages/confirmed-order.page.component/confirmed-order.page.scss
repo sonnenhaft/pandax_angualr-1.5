@@ -1,14 +1,4 @@
 #orderConfirm {
-  .font-styles_1 {
-    color: $white;
-    font: {
-      family: $open-sans;
-      size: 15px;
-      weight: 200;
-    }
-    letter-spacing: 0.6px;
-  }
-
   $width_main: 80%;
 
   md-content {
@@ -37,73 +27,10 @@
       margin-top: 35px;
     }
     &__cards-container {
-      margin-top: 34px;
+      margin-top: 10px;
       margin-bottom: 49px;
       @media (min-width: 960px) {
         width: $width_main;
-      }
-    }
-    &__card {
-      background-color: $Charcoal;
-      border-radius: 0;
-      margin: 0;
-      padding: 20px;
-      &-avatar-img {
-        @extend .avatar-bg;
-        height: 115px !important;
-        max-height: 115px;
-        max-width: 82px;
-        width: 82px;
-      }
-      md-card-title {
-        padding-top: 0;
-        padding-bottom: 6px;
-      }
-      &-name {
-        @extend .font-styles_1;
-        line-height: 24px;
-        text-align: left;
-      }
-      &-phone {
-        @include getImage('/icons/icon_phone-3x');
-        @extend .font-styles_1;
-        background-size: 15px 13px;
-        color: $AuroMetalSaurus;
-        margin-top: 10px;
-        padding-left: 21px;
-      }
-      &-info {
-        margin-left: 20px;
-      }
-      &-title {
-        padding: 0;
-      }
-      &-timer-value {
-        color: $AuroMetalSaurus;
-      }
-      &-cancelling {
-        @extend .font-styles_1;
-        margin-top: 9px;
-        letter-spacing: .4px;
-        &-message {
-          @extend .font-styles_1;
-        }
-      }
-      &-actions {
-        margin-bottom: 0;
-        margin-left: 0;
-        margin-right: 0;
-      }
-      &-action {
-        .md-button {
-          min-width: 80px;
-        }
-      }
-      &-block-bottom {
-        margin-top: 30px;
-      }
-      &:not(:first-child) {
-        margin-top: 20px;
       }
     }
     &__submit {

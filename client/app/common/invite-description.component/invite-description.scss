@@ -1,0 +1,133 @@
+invite-description {
+  margin-bottom: 20px;
+  display: block;
+  .font-styles_1 {
+    color: $white;
+    font: {
+      family: $open-sans;
+      size: 15px;
+      weight: 200;
+    }
+    letter-spacing: 0.6px;
+  }
+
+  .content-card {
+    justify-content: space-between;
+  }
+
+  .invited-avatar {
+    @extend .avatar-bg;
+    height: 180px !important;
+    max-height: 180px;
+    max-width: 150px;
+    width: 150px;
+  }
+
+  .invited-name {
+    @extend .font-styles_1;
+    font-weight: 600;
+    line-height: 24px;
+    text-align: left;
+  }
+
+  .invited-phone {
+    @include getImage('/icons/icon_phone-3x');
+    @extend .font-styles_1;
+    background-size: 15px 13px;
+    color: white;
+    margin-top: 10px;
+    padding-left: 21px;
+  }
+
+  .invited-info {
+    margin-left: 20px;
+  }
+
+  .invited-title {
+    padding: 0;
+  }
+
+  .invited-cancelation-timer {
+    color: $AuroMetalSaurus;
+  }
+
+  .invite-description-cancelling {
+    @extend .font-styles_1;
+    margin-top: 9px;
+    letter-spacing: .4px;
+    font-weight: 400;
+    &-message {
+      @extend .font-styles_1;
+      font-weight: 400;
+    }
+  }
+
+  .cancellation-status {
+    @extend .font-styles_1;
+    color: $Cardinal;
+    margin-bottom: 9px;
+    font: 0.938em $open-sans, sans-serif;
+    padding-left: 14px;
+    @include getImage('/history/cancel');
+  }
+
+  .duration {
+    padding-left: 14px;
+    margin-bottom: 11px;
+    font: 0.938em $open-sans, sans-serif;
+    color: $AuroMetalSaurus;
+    @include getImage('/history/time');
+  }
+
+  .price {
+    padding-left: 14px;
+    font: 1.063em $oswald, sans-serif;
+    color: white;
+    @include getImage('/history/price');
+  }
+
+  .invited-actions {
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .invite-description-action {
+    width: 100%;
+    margin: 0;
+    margin-top: 9px;
+  }
+
+  .invite-description-block-bottom {
+    margin-top: 30px;
+  }
+
+  .invite-description {
+    background-color: $Charcoal;
+    border-radius: 0;
+    margin: 0;
+    padding: 20px;
+
+    md-card-title {
+      padding-top: 0;
+      padding-bottom: 6px;
+    }
+
+    &:not(:first-child) {
+      margin-top: 20px;
+    }
+  }
+  .cancel-button {
+    padding: 8px 0;
+    margin: 0;
+    width: 100%;
+    font: {
+      family: $oswald;
+      size: 16px;
+      weight: 400;
+    }
+  }
+
+
+
+}

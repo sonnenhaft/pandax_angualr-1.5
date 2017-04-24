@@ -1,15 +1,11 @@
-import timer from '../../../common/timer.directive';
-import showInTime from '../../../common/show-in-time.directive';
-
 import template from './confirmed-order.page.html';
+import inviteDescription from '../../../common/invite-description.component/invite-description.component';
 
 class controller {
-  timeToCleanCancel = 5;
-
-  constructor (moment, $state, OrderService, Helper, $stateParams) {
+  constructor (OrderService, $stateParams) {
     'ngInject';
 
-    Object.assign(this, { moment, $state, OrderService, Helper, $stateParams });
+    Object.assign(this, { OrderService, $stateParams });
   }
 
   $onInit ( ) {
@@ -17,20 +13,11 @@ class controller {
       this.invites = this.OrderService.listConfirmed;
     });
   }
-
-  cancelOrder ($event, invite) {
-    const cost = this.moment(invite.datetime).add(this.timeToCleanCancel, 'm') > this.moment( ) ? 0 : invite.type.penalty_amount;
-
-    this.OrderService.cancelOrderForEntertainer($event, invite, cost).then(( ) => {
-      this.Helper.showToast('Done');
-    });
-  }
 }
 
 const component = 'orderConfirm';
 export default angular.module(component, [
-  timer,
-  showInTime
+  inviteDescription
 ]).config($stateProvider => {
   'ngInject';
 
@@ -40,7 +27,7 @@ export default angular.module(component, [
     parent: 'main',
     component
   });
-}).filter('pandaPhoneFilter', ( ) => phone => `${phone || ''}`.replace(/([\d+]{2})([\d]{3})([\d]{3})(.*)/, '$1 $2 $3-$4')).component(component, {
+}).component(component, {
   template,
   controller
 }).name;

@@ -1,0 +1,57 @@
+<md-card layout="column" layout="start stretch" class="invite-description">
+  <div layout="row" class="content-card">
+    <div ng-style="::{'background-image': 'url(' + $ctrl.invite.provider.photos[0].preview + ')'}"
+         class="invited-avatar"></div>
+
+    <div flex="80" layout="column" class="invited-info">
+      <span class="invited-name">{{::$ctrl.name}}</span>
+      <div class="cancellation-status" ng-show="$ctrl.getCancellationReason()">
+        {{$ctrl.getCancellationReason()}}
+      </div>
+      <span class="duration">{{::$ctrl.invite.length | hoursToTime: 'seconds'}}</span>
+      <span class="price" ng-show="$ctrl.hideButton">${{::$ctrl.invite.finalPrice}}</span>
+
+      <div ng-if="!$ctrl.getCancellationReason()">
+        <a class="invited-phone" href="tel:{{::$ctrl.invite.provider.phone}}"
+           ng-show="$ctrl.invite.provider.phone">
+          {{::$ctrl.invite.provider.phone | pandaPhoneFilter}}
+        </a>
+
+        <div layout-align="column" class="invite-description-cancelling" ng-hide="$ctrl.hideButton">
+          <span timer="{{::$ctrl.moment($ctrl.invite.datetime).add($ctrl.CANCELABLE_MINUTES, 'm').valueOf()}}"
+                class="invited-cancelation-timer"></span>
+
+          <span class="invite-description-cancelling-message"
+                show-in-time="{{::$ctrl.moment($ctrl.invite.datetime).add($ctrl.CANCELABLE_MINUTES, 'm').valueOf()}}"
+                show-in-time-action="show">
+              Cancelling the invitation will cost ${{::$ctrl.invite.type.penalty_amount}} penalty
+            </span>
+        </div>
+
+        <a href="sms:{{::$ctrl.invite.provider.phone}}" hide-gt-sm
+           ng-show="$ctrl.invite.provider.phone"
+           class="md-raised md-accent md-button invite-description-action">
+          TEXT
+        </a>
+        <div hide-gt-xs>
+          <br>
+          <md-button class="md-raised md-accent  invite-description-action"
+                     type="button"
+                     ng-hide="$ctrl.getCancellationReason() || $ctrl.hideButton"
+                     ng-click="$ctrl.cancelOrder($event)">
+            Cancel Minx
+          </md-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="invite-description-block-bottom" hide-xs>
+    <md-button class="md-raised md-accent cancel-button"
+               type="button"
+               ng-hide="$ctrl.getCancellationReason() || $ctrl.hideButton"
+               ng-click="$ctrl.cancelOrder($event)">
+      Cancel Minx
+    </md-button>
+  </div>
+</md-card>
