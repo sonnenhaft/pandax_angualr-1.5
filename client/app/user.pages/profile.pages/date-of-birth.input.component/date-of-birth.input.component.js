@@ -19,9 +19,10 @@ class panelController {
 }
 
 class controller {
-  constructor ($mdPanel, $locale) {
+  constructor ($mdPanel, $locale, readOnlyDateFilter) {
     'ngInject';
 
+    this.readOnlyDateFilter = readOnlyDateFilter;
     this.months = $locale.DATETIME_FORMATS.MONTH;
     this.$mdPanel = $mdPanel;
   }
@@ -64,7 +65,8 @@ class controller {
   }
 
   setDate ( ) {
-    let date = new Date(`${this.month}/${this.day}/${this.year}`);
+    const { month, year, day } = this;
+    let date = this.readOnlyDateFilter({ month, year, day }, true);
     if (isNaN(date.getTime( ))) {
       date = null;
       this.ngModel.$setValidity('minAge', true);
@@ -142,9 +144,16 @@ class controller {
   }
 }
 
-export default angular.module('dateOfBirthInput', []).filter('readOnlyDate', ( ) => (dateLikeObject, asObject) => {
+export default angular.module('dateOfBirthInput', [
+  'ngMaterial'
+]).filter('readOnlyDate', ( ) => (dateLikeObject, asObject) => {
   if (dateLikeObject && asObject) {
-    return new Date(`${dateLikeObject.month}/${dateLikeObject.day}/${dateLikeObject.year}`);
+    // long date generation because of iOS9, 10 and OSx
+    const date = new Date( );
+    date.setMonth(dateLikeObject.month);
+    date.setFullYear(dateLikeObject.year);
+    date.setDate(dateLikeObject.day);
+    return date;
   } else {
     return dateLikeObject;
   }
