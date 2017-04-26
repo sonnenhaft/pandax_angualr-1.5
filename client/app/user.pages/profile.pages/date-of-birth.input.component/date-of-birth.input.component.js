@@ -66,7 +66,7 @@ class controller {
 
   setDate ( ) {
     const { month, year, day } = this;
-    let date = this.readOnlyDateFilter({ month, year, day }, true);
+    let date = this.readOnlyDateFilter({ month: this.months.indexOf(month) + 1, year, day }, true);
     if (isNaN(date.getTime( ))) {
       date = null;
       this.ngModel.$setValidity('minAge', true);
@@ -146,14 +146,10 @@ class controller {
 
 export default angular.module('dateOfBirthInput', [
   'ngMaterial'
-]).filter('readOnlyDate', ( ) => (dateLikeObject, asObject) => {
+]).filter('readOnlyDate', moment => (dateLikeObject, asObject) => {
   if (dateLikeObject && asObject) {
-    // long date generation because of iOS9, 10 and OSx
-    const date = new Date( );
-    date.setMonth(dateLikeObject.month);
-    date.setFullYear(dateLikeObject.year);
-    date.setDate(dateLikeObject.day);
-    return date;
+    const { month, day, year } = dateLikeObject;
+    return moment(`${month}/${day}/${year}`, 'MM-DD-YYYY')._d;
   } else {
     return dateLikeObject;
   }
