@@ -1,19 +1,31 @@
 <form name="dateOfBirth">
   <div class="form-block" ng-if="!$ctrl.ngReadonly">
+
     <div class="month">
-      <input type="text" placeholder="Month" ng-model="$ctrl.month" ng-click="$ctrl.showMenu($event, 'month', $ctrl.months)" ng-blur="$ctrl.parseMonth()">
+      <select name="Month" ng-model="$ctrl.month" hide-gt-xs>
+        <option value="{{::month}}" ng-repeat="month in ::$ctrl.months track by month">{{::month}}</option>
+      </select>
+      <input type="text" placeholder="Month" ng-model="$ctrl.month" ng-click="$ctrl.showMenu($event, 'month', $ctrl.months)" ng-blur="$ctrl.parseMonth()" hide-xs>
     </div>
+
     <div class="day">
-      <input type="number" placeholder="Day" ng-model="$ctrl.day" name="day" ng-click="$ctrl.showMenu($event, 'day', $ctrl.days)">
+      <select name="Day" ng-model="$ctrl.day" convert-to-number hide-gt-xs>
+        <option value="{{::day}}" ng-repeat="day in $ctrl.days track by day">{{::day}}</option>
+      </select>
+      <input type="number" placeholder="Day" ng-model="$ctrl.day" name="day" ng-click="$ctrl.showMenu($event, 'day', $ctrl.days)" hide-xs>
     </div>
 
     <div class="year">
+      <select name="Year" ng-model="$ctrl.year" ng-change="$ctrl.updateDays();$ctrl.setDate()" convert-to-number hide-gt-xs>
+        <option value="{{::year}}" ng-repeat="year in ::$ctrl.years track by year">{{::year}}</option>
+      </select>
       <input type="number" placeholder="Year" ng-model="$ctrl.year" name="year" ng-click="$ctrl.showMenu($event, 'year', $ctrl.years)" ng-change="$ctrl.updateDays();$ctrl.setDate()"
-             min="{{$ctrl.years[$ctrl.years.length - 1]}}">
+             min="{{$ctrl.years[$ctrl.years.length - 1]}}" hide-xs>
     </div>
+
   </div>
   <div ng-if="$ctrl.ngReadonly">
-    <input type="text" value="{{$ctrl.ngModel.$viewValue | readOnlyDate : $ctrl.asObject | date : 'MMM d, yyyy'}}" ng-readonly="true" >
+    <input type="text" value="{{$ctrl.ngModel.$viewValue | readOnlyDate : $ctrl.asObject | date : 'MMM d, yyyy'}}" ng-readonly="true">
     <!--<span>{{$ctrl.ngModel.$viewValue | readOnlyDate : $ctrl.asObject | date : 'MMM d, yyyy'}}</span>-->
   </div>
 
