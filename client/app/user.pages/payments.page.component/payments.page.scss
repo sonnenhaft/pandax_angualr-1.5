@@ -41,6 +41,10 @@
           border-radius: 0;
           background: transparent url('../assets/images/plus.png') no-repeat center right;
         }
+        &.add-button button {
+          white-space: nowrap;
+          max-width: 144px;
+        }
       }
     }
 
