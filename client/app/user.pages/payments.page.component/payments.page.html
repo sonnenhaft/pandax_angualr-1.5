@@ -9,7 +9,7 @@
             </div>
         </div>
 
-        <div class="payments-add-card" ng-if="!$ctrl.add">
+        <div class="payments-add-card" ng-if="$ctrl.add">
             <form name="billingInformationForm" layout="column" class="billing-information-form" novalidate>
                 <add-new-card-form model="$ctrl.newCard"  is-required="true"></add-new-card-form>
                 <div layout="row">
