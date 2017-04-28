@@ -42,4 +42,8 @@ export default angular.module(component, [
   template,
   controller,
   bindings: { invite: '<', hideButton: '<' }
+}).config($compileProvider => {
+  'ngInject';
+
+  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https|http|mailto|sms)/);
 }).name;
