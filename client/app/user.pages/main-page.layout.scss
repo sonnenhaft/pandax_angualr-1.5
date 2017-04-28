@@ -3,6 +3,11 @@
   min-height: 100%;
   position: relative;
   display: block;
+  @media (max-width: 960px) {
+    panda-copyright {
+      display: none;
+    }
+  }
   .copyrightOnMap {
     position: absolute;
     width: 293px;
@@ -89,6 +94,7 @@
     flex-direction: column;
 
     main-page-navbar {
+      max-height: 66px;
       max-width: 100%;
       width: 100%;
     }
