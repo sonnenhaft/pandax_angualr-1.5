@@ -124,7 +124,7 @@ export default angular.module('addNewCardForm', [
       $parsers.push((validThru = '') => {
         const val = formatValidThruValue(validThru);
         $element.val(val);
-        return val
+        return val;
       });
     }
   };
