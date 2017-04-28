@@ -45,8 +45,8 @@ class GoogleGeoLocationService {
     return this.$q((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject)).then(
             ({ coords: { latitude, longitude } }) => ({ lat: ( ) => latitude, lng: ( ) => longitude }),
             e => {
-              console.log(e);
-              return { lat: ( ) => 35.5375307, lng: ( ) => -100.0695645 };
+              console.warn('Can not detect locatoin, switching pointer "New York, NY 10128, USA"');
+              return { lat: ( ) => 40.7816, lng: ( ) => -73.9511 };
             }
         );
   }

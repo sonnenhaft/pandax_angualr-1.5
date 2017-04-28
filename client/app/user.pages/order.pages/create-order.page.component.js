@@ -26,7 +26,7 @@ class controller {
 
 
     this.resolved = false;
-    $q.all($location.search( ).skipNYcheck ? {} : {
+    $q.all($location.search( ).skipNotAccomplished ? {} : {
       notAccomplishedOrder: OrderService.fetchLastNotAccomplishedOrder( ).then(({ data }) => data),
       notRatedEntertainers: OrderResource.fetchNotRatedEntertainers($stateParams.notRatedEntertainers).$promise
     }).then(({ notAccomplishedOrder, notRatedEntertainers }) => {
