@@ -73,18 +73,15 @@
 @import "./sign-up.page/sign-up.page.scss";
 
 @media (max-height: 600px) {
-  html {
-    height: auto;
-    min-height: 100%;
-  }
   .login-pages-layout {
+    flex-direction: row;
     padding-top: 20px;
     padding-bottom: 20px;
     display: block;
-    .login-pages-layout-copyright {
+    panda-copyright {
       position: relative;
       margin: 20px 0;
-      bottom: auto;
+      bottom: 0;
     }
   }
 }
