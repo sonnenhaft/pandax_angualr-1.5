@@ -158,4 +158,10 @@ export default angular.module('dateOfBirthInput', [
   bindings: { minAge: '<', asObject: '<', ngReadonly: '<' },
   controller,
   template
-}).name;
+}).directive('convertToNumber', ( ) => ({ // need for number inputs
+  require: 'ngModel',
+  link (i, j, k, { $parsers, $formatters }) {
+    $parsers.push(val => val != null ? parseInt(val, 10) : null); // eslint-disable-line no-confusing-arrow
+    $formatters.push(val => val != null ? `${val}` : null); // eslint-disable-line no-confusing-arrow
+  }
+})).name;
