@@ -6,6 +6,7 @@ import manipulationEntertainers from './manipulation-entertainers.component/mani
 import acceptTermsAndConditionsPage from './accept-terms-and-conditions.page.component/accept-terms-and-conditions.page.component';
 import RateEntertainersComponent from './rate-entertainers.component/rate-entertainers.component';
 import OrderResource from './order.resource';
+import SelectInput from './blocks/select-input/select-input.component';
 
 import TipModalComponent from '../../common/tip-modal.component/tip-modal.component';
 import template from './create-order.page.html';
@@ -14,7 +15,6 @@ class controller {
   hours = ['0.5 H', '1 H', '1.5 H', '2 H', '2.5 H', '3 H', '3.5 H', '4 H']
   guests = ['1', '2-3', '4-5', '5-10', '10-15', '15+']
   entertainers = [1, 2, 3, 4, 5, 6]
-  entertainer = 1
   guest = 1
   asap = true
   hour = '0.5H'
@@ -51,7 +51,7 @@ class controller {
 
   $onInit ( ) {
     this.providers = _.map(this.OrderService.getProviders( ), (provider, i) => {
-      provider.active = i == 0;
+      provider.active = i === 0;
       return provider;
     });
 
@@ -69,9 +69,13 @@ class controller {
     this.hour = this.hours[0];
   }
 
-  showDescription (event, index) {
+  showDescription (event, type) {
+    if (!type.description) {
+      return;
+    }
+    this.activeType = type;
     this.$mdDialog.show({
-      contentElement: `#typeDescr-${index}`,
+      contentElement: '#typeDescr',
       parent: document.body,
       targetEvent: event,
       clickOutsideToClose: true
@@ -79,18 +83,14 @@ class controller {
   }
 
   onDateChange (date) {
-    this.dateError = false;
-    if (this.validate({ date })) {
-      this.range = this.Helper.getNearestTime('range', date);
-    }
+    this.range = this.Helper.getNearestTime('range', date);
   }
 
   getTotalPrice ( ) {
-    return _
-        .chain(this.Helper.getActiveObjectFromArray(this.providers))
-        .map('price')
-        .sum( )
-        .value( ) * parseFloat(this.hour) * Number(this.entertainer);
+    return (this.providers || [])
+        .filter(({ active }) => active)
+        .reduce((sum, { price }) => sum + price, 0)
+      * parseFloat(this.hour) * Number(this.entertainer);
   }
 
   validate (field) {
@@ -105,8 +105,9 @@ class controller {
 
   /** @deprecated mass */
   onSearch (form) {
-    if (!form.$submitted) {
-      form.$setSubmitted( );
+    form.$setSubmitted( );
+    if (form.$invalid) {
+      return;
     }
     const orderModel = {
       hour: form.hour.$viewValue,
@@ -114,19 +115,22 @@ class controller {
       apt: form.apt.$viewValue,
       notes: form.notes.$viewValue,
       guest: form.guest.$viewValue,
-      asap: form.asap.$viewValue,
-      later: form.later.$viewValue,
+      asap: this.asap,
+      later: !this.asap,
       date: form.date.$viewValue,
-      time: form.time.$viewValue
+      time: form.time.$viewValue,
+      geo: this.inputLocation,
+      price: this.getTotalPrice( )
     };
 
-    if ((this.typeError = !this.Helper.getActiveObjectFromArray(this.providers).length) || form.$invalid) { // eslint-disable-line no-cond-assign
+    if ((this.typeError = !this.Helper.getActiveObjectFromArray(this.providers).length)) { // eslint-disable-line no-cond-assign
       return false;
     } else if (!this.validate({ apt: orderModel.apt, location: this.inputLocation, date: orderModel.date })) {
       this.location = false;
       return false;
     } else if (!this.StatefulUserData.isAccepted( )) {
-      this.$state.go(acceptTermsAndConditionsPage, { order: this.orderData(orderModel) });
+      const order = this.OrderService.buildOrder(orderModel);
+      this.$state.go(acceptTermsAndConditionsPage, { order });
       return false;
     } else {
       this.orderLoading = true;
@@ -143,7 +147,7 @@ class controller {
   orderData (orderModel) {
     return this.OrderService.buildOrder(Object.assign(orderModel, {
       geo: this.inputLocation,
-      price: this.getTotalPrice( )
+      price: this.getTotalPrice()
     }));
   }
 }
@@ -151,6 +155,7 @@ class controller {
 export default angular.module('order', [
   Helper,
   Validation,
+  SelectInput,
   orderConfirm,
   OrderService,
   OrderResource,

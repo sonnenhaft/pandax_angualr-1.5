@@ -10,10 +10,10 @@ class controller {
   itemActiveIndex = 0
   ORDER_STATUSES = ORDER_STATUSES
 
-  constructor ($state, $mdMedia, $stateParams, OrderService, $q) {
+  constructor ($state, $mdMedia, $stateParams, OrderService, $q, filterByFilter) {
     'ngInject';
 
-    Object.assign(this, { $state, $mdMedia, $stateParams, OrderService, $q });
+    Object.assign(this, { $state, $mdMedia, $stateParams, OrderService, $q, filterByFilter });
   }
 
   $onInit ( ) {
@@ -24,9 +24,15 @@ class controller {
       orderDetails: this.OrderService.fetchOrderDetails(orderId)
     }).then(({ orderDetails }) => {
       this.OrderService.subcribeOnEntertainerInvite(orderDetails.channel_name);
-      console.log(orderDetails);
       this.orderDetails = orderDetails;
+      const { listInvited } = this.OrderService;
+      const accepted = this.ORDER_STATUSES.accepted;
+      this.acceptedInvitations = this.filterByFilter(listInvited, ['status'], accepted).length;
     });
+  }
+
+  isActive (tag) {
+    return this.showComponentOnly.length === 0 || this.showComponentOnly === tag;
   }
 
   refresh ( ) {
@@ -34,18 +40,11 @@ class controller {
     this.itemActiveIndex = 0;
   }
 
-  cancelOrder (ev) {
-    let messageType = 0;
-
-    if (this.OrderService.listConfirmed.length > 0) {
-      messageType = 2;
-    } else if (this.OrderService.listInvited.length > 0) {
-      messageType = 1;
-    }
-
-    this.OrderService.cancelOrder(ev, this.$stateParams.orderId, messageType).then(({ status }) => {
+  cancelOrder ( ) {
+    const orderId = this.$stateParams.orderId;
+    this.OrderService.cancelOrder(orderId).then(({ status }) => {
       if (status === this.ORDER_STATUSES.accepted) {
-        this.$state.go('orderConfirm', { orderId: this.$stateParams.orderId });
+        this.$state.go('orderConfirm', { orderId });
       } else {
         this.$state.go('main.create-order');
       }
@@ -53,7 +52,7 @@ class controller {
   }
 
   $onDestroy ( ) {
-    this.OrderService.unsubcribeOnEntertainerInvite( );
+    this.OrderService.unsubscribeOnEntertainerInvite( );
   }
 }
 

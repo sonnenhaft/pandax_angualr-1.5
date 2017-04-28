@@ -27,23 +27,24 @@ class controller {
 
     Object.assign(this, { OrderService, Helper, moment, $scope, $state, $stateParams });
 
+    this.STATUSES = [
+      this.statuses.accepted,
+      this.statuses.canceledByCustomer,
+      this.statuses.canceledByProvider
+    ];
     this.$scope.$watch(( ) => this.entertainers, newValue => {
-      if (newValue.filter(item => item.status && ([
-        this.statuses.accepted,
-        this.statuses.canceledByCustomer,
-        this.statuses.canceledByProvider
-      ].indexOf(item.status) >= 0)).length == this.countOfRequiredEntertainers) {
+      const currentCount = newValue.filter(item => this.STATUSES.includes(item.status)).length;
+      if (currentCount === this.countOfRequiredEntertainers) {
         this.$state.go('orderConfirm', { orderId: this.$stateParams.orderId });
       }
     }, true);
   }
 
   cancelOrder (ev, invite, dirtyCancelling = true) {
-    this.OrderService.cancelOrderForEntertainer(ev, invite, dirtyCancelling == true ? this.inviteTypePenaltyAmount : 0).then(( ) => {
+    this.OrderService.cancelOrderForEntertainer(ev, invite, dirtyCancelling ? this.inviteTypePenaltyAmount : 0).then(( ) => {
       this.Helper.showToast('Done');
     });
   }
-
 }
 
 export default angular.module('confirmedEntertainers', [
@@ -53,9 +54,9 @@ export default angular.module('confirmedEntertainers', [
   timer
 ]).filter('byStatuses', byStatuses).component('confirmedEntertainers', {
   bindings: {
-    entertainers: '=',
     countOfRequiredEntertainers: '<',
-    inviteTypePenaltyAmount: '<'
+    inviteTypePenaltyAmount: '<',
+    entertainers: '='
   },
   template,
   controller

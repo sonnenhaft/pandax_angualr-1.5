@@ -18,10 +18,14 @@ class controller {
 
   cancelOrder ($event) {
     const { invite } = this;
+    this.isCancelling = true;
     const cost = this.moment(invite.datetime).add(this.CANCELABLE_MINUTES, 'm') > this.moment( ) ? 0 : invite.type.penalty_amount;
 
     this.OrderService.cancelOrderForEntertainer($event, invite, cost).then(( ) => {
       this.Helper.showToast('Done');
+      this.hideButton = true;
+    }, ( ) => {
+      this.isCancelling = true;
     });
   }
 

@@ -358,6 +358,8 @@
       }
 
       md-datepicker {
+        margin-top: 0px;
+        display: block;
 
         &.error {
           .md-datepicker-input-container {
@@ -436,6 +438,7 @@
         margin-top: 30px;
 
         button {
+          color: white;
           margin: 0;
           padding: 0;
           width: 100%;
@@ -444,7 +447,7 @@
           border-radius: 0;
           overflow: visible;
 
-          &.active {
+          &.active, &:hover {
             @include gradient(rgba(24, 95, 221, 1), rgba(188, 55, 240, 1));
 
             &:after {

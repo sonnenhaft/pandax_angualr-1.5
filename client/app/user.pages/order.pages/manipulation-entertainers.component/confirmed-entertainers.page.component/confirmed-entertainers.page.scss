@@ -9,6 +9,21 @@
 		letter-spacing: 0.6px;
 	}
 
+  .md-button {
+    font-size: 15px;
+    margin-left: 0;
+    color: white;
+    text-align: center;
+    line-height: 37px;
+    background-color: #c21c36;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
 	.confirmed-entertainers {
 
 		&__header {
@@ -91,16 +106,6 @@
 				@include getImage('/history/time');
 				padding-left: 21px;
 			}
-		}
-
-		&__cancel {
-			@extend .font-styles_1;
-			line-height: normal;
-			margin: 0;
-			min-height: 15px;
-			padding: 0;
-			text-transform: none;
-			width: auto;
 		}
 
 		&__cancelling-message {

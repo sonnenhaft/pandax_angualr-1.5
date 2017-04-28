@@ -38,8 +38,9 @@
           <md-button class="md-raised md-accent  invite-description-action"
                      type="button"
                      ng-hide="$ctrl.getCancellationReason() || $ctrl.hideButton"
-                     ng-click="$ctrl.cancelOrder($event)">
-            Cancel Minx
+                     ng-click="$ctrl.cancelOrder($event)"
+                     ng-disabled="$ctrl.isCancelling">
+            <spinner input="$ctrl.isCancelling">Cancel Minx</spinner>
           </md-button>
         </div>
       </div>
@@ -47,11 +48,12 @@
   </div>
 
   <div class="invite-description-block-bottom" hide-xs>
-    <md-button class="md-raised md-accent cancel-button"
+    <md-button class="md-raised md-accent  invite-description-action"
                type="button"
                ng-hide="$ctrl.getCancellationReason() || $ctrl.hideButton"
-               ng-click="$ctrl.cancelOrder($event)">
-      Cancel Minx
+               ng-click="$ctrl.cancelOrder($event)"
+               ng-disabled="$ctrl.isCancelling">
+      <spinner input="$ctrl.isCancelling">Cancel Minx</spinner>
     </md-button>
   </div>
 </md-card>
