@@ -50,7 +50,7 @@
          ng-if="$ctrl.OrderService.listInvited.length > 0 && ($ctrl.$mdMedia('gt-sm') || $ctrl.showComponentOnly === 'confirmedEntertainers')">
       <confirmed-entertainers entertainers="$ctrl.OrderService.listInvited"
                               count-of-required-entertainers="$ctrl.orderDetails.entertainers_number"
-                              invite-type-penalty-amount="$ctrl.orderDetails.serviceType.penalty_amount"
+                              invite-type-penalty-amount="$ctrl.orderDetails.serviceType.penalty_amount">
       </confirmed-entertainers>
     </div>
   </div>
