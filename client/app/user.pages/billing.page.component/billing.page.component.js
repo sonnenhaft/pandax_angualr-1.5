@@ -11,10 +11,10 @@ class controller {
   saveLoading = false
   hasPersonalInfo = false
 
-  constructor ($state, Cards, $stateParams, Resolve, $mdToast, $q, OrderService, $mdDialog, StatefulUserData, $http) {
+  constructor ($state, Cards, $stateParams, Resolve, $mdToast, $q, OrderService, $mdDialog, StatefulUserData, $http, UserProfileResource) {
     'ngInject';
 
-    Object.assign(this, { $state, $stateParams, Resolve, Cards, $mdToast, $q, OrderService, $mdDialog, StatefulUserData, $http });
+    Object.assign(this, { $state, $stateParams, Resolve, Cards, $mdToast, $q, OrderService, $mdDialog, StatefulUserData, $http, UserProfileResource });
 
     $q.all({
       orderDetails: OrderService.fetchOrderDetails($stateParams.orderId),
@@ -48,13 +48,15 @@ class controller {
     this.saveLoading = true;
 
     if (!this.hasPersonalInfo) {
-      promises.push(this.$http.put('{{config_api_url}}/api/{{current_user_role}}/profile', this.billingInfo));
+      const updateUserInfoPromise = this.UserProfileResource.update({}, this.billingInfo).$promise;
+      updateUserInfoPromise.then(user => this.StatefulUserData.extend(user));
+      promises.push(updateUserInfoPromise);
     }
 
     if (!this.billingInfo.cards || !this.billingInfo.cards.length) {      // should add card
       promises.push(this.Cards.add(this.newCard));
     } else if (this.defaultCardId !== this.getDefaultCardId( )) {
-      // ToDo: send request to change default card
+      // TODO: send request to change default card
     }
 
     return this.$q.all(promises)
