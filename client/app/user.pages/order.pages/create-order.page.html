@@ -25,17 +25,7 @@
           <select-input selected-value="$ctrl.entertainer" options="$ctrl.entertainers"
                         name="entertainer" label="Entertainers">
           </select-input>
-
-          <div class="descr" ng-if="$ctrl.isNewcomer || true">
-            <p>
-              Minimum 2 entertainers for first time customers.
-              <simple-tip-modal label="Why?">
-                Just trying to get to know you better for the safety of our Minx.
-              </simple-tip-modal>
-            </p>
-          </div>
         </div>
-
       </div>
       <div class="location" layout-gt-sm="row">
         <panda-find-location-input flex="60" ng-model="$ctrl.inputLocation" name="inputLocation"
