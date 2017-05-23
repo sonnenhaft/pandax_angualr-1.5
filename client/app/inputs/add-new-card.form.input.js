@@ -46,7 +46,7 @@ export default angular.module('addNewCardForm', [
 </input-wrapper>
 
 <div layout="row">
-    <input-wrapper name="expiry" field="Valid Thru">
+    <input-wrapper name="expiry" field="Exp">
         <input type="text" name="expiry"
                ng-required="$ctrl.isRequired" touched-invalid
                ng-change="$ctrl.checkCardExpiry()"
