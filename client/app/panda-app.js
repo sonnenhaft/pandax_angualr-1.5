@@ -124,9 +124,7 @@ angular.module('app', [
   })
   .component('app', {
     template,
-    controller ($window) {
-      'ngInject';
-
-      this.PANDA_VERSION = $window.PANDA_VERSION = packageJson.version;
+    controller () {
+       console.log(`PANDAX v. ${packageJson.version}`);
     }
   });
