@@ -37,6 +37,7 @@
     <div flex="100" flex-gt-sm="50" class="manipulation-entertainers__search-entertainers-wrapper"
          ng-if="$ctrl.OrderService.list.length > 0 && $ctrl.isActive('searchEntertainers')">
       <search-entertainers entertainers="$ctrl.OrderService.list" item-active-index="$ctrl.itemActiveIndex"
+                           asap-flag="$ctrl.orderDetails.asapFlag"
                            entertainers-invited="$ctrl.OrderService.listInvited" flex="100" flex-gt-sm="50">
       </search-entertainers>
     </div>
