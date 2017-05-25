@@ -95,6 +95,7 @@ export default angular.module('addNewCardForm', [
     require: '^ngModel',
     priority: 1,
     link: (i, $element, $attrs, { $formatters, $parsers }) => {
+      let backspaceClicked = false;
       const formatValidThruValue = (validThru = '') => {
         let newCard = validThru;
         if (validThru.length === 2 && validThru.indexOf('/') !== -1) {
@@ -110,7 +111,11 @@ export default angular.module('addNewCardForm', [
           }
           const year = newCard.substring(2, end);
           newCard = `${month}/${year}`;
+        } else  if (newCard.length === 2 && newCard.indexOf('/') === -1 && !backspaceClicked) {
+          newCard = `${newCard}/`
         }
+
+        backspaceClicked = false
 
         if (newCard === validThru) {
           return validThru;
@@ -119,6 +124,12 @@ export default angular.module('addNewCardForm', [
           return newCard;
         }
       };
+
+      $element.bind('keydown', function(event){
+        if (event.which === 8) {
+          backspaceClicked = true;
+        }
+      });
 
       $formatters.unshift(formatValidThruValue);
       $parsers.push((validThru = '') => {
