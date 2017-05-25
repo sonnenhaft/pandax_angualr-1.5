@@ -75,7 +75,7 @@ export default angular.module('addNewCardForm', [
 }).directive('pandaCardFormatter', ( ) => {
   'ngInject';
 
-  const addSpacesToCard = card => card && card.replace(/(\d{4}(?!\s))/g, '$1 ');
+  const addSpacesToCard = card => card && card.replace(/(\d{4}(?!\s))/g, '$1 ').substr(0, 16 + 3);
   return {
     require: '^ngModel',
     priority: 1,
