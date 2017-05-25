@@ -24,7 +24,7 @@
         {{$ctrl.entertainers[$ctrl.itemActiveIndex].rating > 0 ? $ctrl.entertainers[$ctrl.itemActiveIndex].rating : 'N/A'}}
         <img src="/assets/images/icons/raiting.png" class="icon_small"/>
       </span>
-      <span class="search-entertainers__info-distance">{{$ctrl.entertainers[$ctrl.itemActiveIndex].distance.toFixed(2)}}M AWAY</span>
+      <span class="search-entertainers__info-distance" ng-show="$cttrl.asapFlag">{{$ctrl.entertainers[$ctrl.itemActiveIndex].distance.toFixed(2)}}M AWAY</span>
     </div>
 
     <div class="search-entertainers__preview search-entertainers__preview_medium pointer"

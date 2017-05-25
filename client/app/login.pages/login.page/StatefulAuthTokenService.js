@@ -1,4 +1,5 @@
 import StatefulUserData from '../../common-services/StatefulUserData';
+import localStorage from './../../common/SafeLocalStorage'
 
 class StatefulAuthTokenService {
   STORAGE_KEY = 'MINX_TOKEN'
@@ -6,7 +7,7 @@ class StatefulAuthTokenService {
   constructor ($window, $timeout, StatefulUserData, $state) {
     'ngInject';
 
-    Object.assign(this, { storage: $window.localStorage, $timeout, StatefulUserData, $state });
+    Object.assign(this, { storage: localStorage, $timeout, StatefulUserData, $state });
     this._token = this.storage.getItem(this.STORAGE_KEY);
   }
 

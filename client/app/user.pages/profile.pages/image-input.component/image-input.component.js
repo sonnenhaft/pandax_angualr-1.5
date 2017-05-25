@@ -6,7 +6,7 @@ export default angular.module('pandaImageInput', [
   bindings: { name: '@', model: '=', onChange: '&', ngReadonly: '<', ngRequired: '<' },
   template: `
 <button class="panda-image-input" aria-label="file" ngf-select ng-model="$ctrl.model" ng-disabled="$ctrl.ngReadonly"
-        name="{{::$ctrl.name}}" ngf-capture="'camera'"
+        name="{{::$ctrl.name}}" ngf-capture="'other'"
         ngf-max-size="10MB"
         ngf-max-height="7000"
         ngf-max-width="7000"
