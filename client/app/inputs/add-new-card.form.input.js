@@ -2,31 +2,31 @@ import messages from './messages.component';
 import TouchedInvalidDirective from './touched-invalid.directive';
 
 class controller {
-  constructor (stripe, StatefulUserData, $stateParams) {
+  constructor(stripe, StatefulUserData, $stateParams) {
     'ngInject';
 
     this.stripeCardValidations = stripe.card;
-    this.isCustomer = StatefulUserData.isCustomer( );
+    this.isCustomer = StatefulUserData.isCustomer();
     this.$stateParams = $stateParams;
   }
 
-  $onInit ( ) {
-    if (this.$stateParams.stub) {
+  $onInit() {
+    if ( this.$stateParams.stub ) {
       this.model = { number: '5200828282828210 ', expiry: '12/18', cvc: 123, zip: 123456 };
     }
     this.model = this.model || {};
   }
 
-  checkCardNumber ( ) {
+  checkCardNumber() {
     const validationKey = this.isCustomer ? 'invalid_credit_card_number' : 'invalid_card_number';
     this.form.number.$setValidity(validationKey, this.stripeCardValidations.validateCardNumber(this.model.number));
   }
 
-  checkCardExpiry ( ) {
+  checkCardExpiry() {
     this.form.expiry.$setValidity('invalid_card_expiry', this.stripeCardValidations.validateExpiry(this.model.expiry));
   }
 
-  checkCardCvc ( ) {
+  checkCardCvc() {
     this.form.cvc.$setValidity('invalid_card_cvc', this.stripeCardValidations.validateCVC(this.model.cvc));
   }
 }
@@ -76,15 +76,26 @@ export default angular.module('addNewCardForm', [
     </input-wrapper>
 </div>`,
   controller
-}).directive('pandaCardFormatter', ( ) => {
+}).directive('pandaCardFormatter', () => {
   'ngInject';
 
-  const addSpacesToCard = card => card && card.replace(/(\d{4}(?!\s))/g, '$1 ').substr(0, 16 + 3);
+  const addSpacesToCard = card => card && card.replace(/(\d{4}(?!\s))/g, '$1 ').substr(0, 16 + 3)
+
   return {
     require: '^ngModel',
     priority: 1,
-    link: (i, $element, $attrs, { $formatters, $parsers }) => {
+    link: ($scope, $element, $attrs, { $formatters, $parsers }) => {
       $formatters.push(addSpacesToCard);
+
+      $element.on('keyup', () => {
+        const val = $element.val();
+        if ( val.length > 16 + 3 ) {
+          $element.val(val.substr(0, 16 + 3))
+        }
+      })
+
+      $scope.$on('$destroy', () => $element.off())
+
       $parsers.push(card => {
         const cardValue = card && card.replace(/\s/g, '');
         $element.val(addSpacesToCard(cardValue));
@@ -92,7 +103,7 @@ export default angular.module('addNewCardForm', [
       });
     }
   };
-}).directive('validThruFormatter', ( ) => {
+}).directive('validThruFormatter', () => {
   'ngInject';
 
   return {
@@ -102,26 +113,26 @@ export default angular.module('addNewCardForm', [
       let backspaceClicked = false;
       const formatValidThruValue = (validThru = '') => {
         let newCard = validThru;
-        if (validThru.length === 2 && validThru.indexOf('/') !== -1) {
+        if ( validThru.length === 2 && validThru.indexOf('/') !== -1 ) {
           newCard = `0${validThru}`;
         }
 
-        if (newCard.length > 2) {
+        if ( newCard.length > 2 ) {
           newCard = newCard.replace('/', '');
           const end = Math.min(4, newCard.length);
           let month = Math.max(1, Math.min(newCard.substring(0, 2), 12));
-          if (month < 10) {
+          if ( month < 10 ) {
             month = `0${month}`;
           }
           const year = newCard.substring(2, end);
           newCard = `${month}/${year}`;
-        } else if (newCard.length === 2 && newCard.indexOf('/') === -1 && !backspaceClicked) {
+        } else if ( newCard.length === 2 && newCard.indexOf('/') === -1 && !backspaceClicked ) {
           newCard = `${newCard}/`;
         }
 
         backspaceClicked = false;
 
-        if (newCard === validThru) {
+        if ( newCard === validThru ) {
           return validThru;
         } else {
           $element.val(newCard);
@@ -129,7 +140,7 @@ export default angular.module('addNewCardForm', [
         }
       };
 
-      $element.bind('keydown', event => {
+      $element.bind('keydown', event=>{
         if (event.which === 8) {
           backspaceClicked = true;
         }
