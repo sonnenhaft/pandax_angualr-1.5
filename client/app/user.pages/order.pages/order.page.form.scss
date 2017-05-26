@@ -447,7 +447,7 @@
           border-radius: 0;
           overflow: visible;
 
-          &.active, &:hover {
+          &.active {
             @include gradient(rgba(24, 95, 221, 1), rgba(188, 55, 240, 1));
 
             &:after {
