@@ -1,4 +1,5 @@
 import PandaHttpInterceptor from './panda-app.http-interceptor';
+import localStorage from './common/SafeLocalStorage';
 
 export default angular.module('panda-stubs', [
   PandaHttpInterceptor
@@ -9,7 +10,7 @@ export default angular.module('panda-stubs', [
     const $http = $delegate;
     const role = 'customer';
     const orderId = 113;
-    if ($window.localStorage.stub) {
+    if (localStorage.stub) {
       const mocks = {
         '/api/sessions': { data: { role }, token: 1 },
         [`/api/${role}/profile`]: { data: { role } },

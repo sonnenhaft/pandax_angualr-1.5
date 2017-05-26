@@ -1,3 +1,5 @@
+import localStorage from './../common/SafeLocalStorage';
+
 class StatefulUserData {
   STORAGE_KEY = 'MINX_USER'
   _avatar = null
@@ -5,7 +7,7 @@ class StatefulUserData {
   constructor ($window, $injector) {
     'ngInject';
 
-    Object.assign(this, { storage: $window.localStorage, $injector });
+    Object.assign(this, { storage: localStorage, $injector });
     let user = this.storage.getItem(this.STORAGE_KEY) || '{}';
     try {
       user = JSON.parse(user);
