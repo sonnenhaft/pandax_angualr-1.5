@@ -111,11 +111,11 @@ export default angular.module('addNewCardForm', [
           }
           const year = newCard.substring(2, end);
           newCard = `${month}/${year}`;
-        } else  if (newCard.length === 2 && newCard.indexOf('/') === -1 && !backspaceClicked) {
-          newCard = `${newCard}/`
+        } else if (newCard.length === 2 && newCard.indexOf('/') === -1 && !backspaceClicked) {
+          newCard = `${newCard}/`;
         }
 
-        backspaceClicked = false
+        backspaceClicked = false;
 
         if (newCard === validThru) {
           return validThru;
@@ -125,7 +125,7 @@ export default angular.module('addNewCardForm', [
         }
       };
 
-      $element.bind('keydown', function(event){
+      $element.bind('keydown', event => {
         if (event.which === 8) {
           backspaceClicked = true;
         }
@@ -135,7 +135,7 @@ export default angular.module('addNewCardForm', [
       $parsers.push((validThru = '') => {
         const val = formatValidThruValue(validThru);
         $element.val(val);
-        return val
+        return val;
       });
     }
   };

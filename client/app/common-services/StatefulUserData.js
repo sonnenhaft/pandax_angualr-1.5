@@ -1,4 +1,4 @@
-import localStorage from './../common/SafeLocalStorage'
+import localStorage from './../common/SafeLocalStorage';
 
 class StatefulUserData {
   STORAGE_KEY = 'MINX_USER'

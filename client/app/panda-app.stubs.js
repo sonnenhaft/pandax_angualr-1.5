@@ -1,5 +1,5 @@
 import PandaHttpInterceptor from './panda-app.http-interceptor';
-import localStorage from './common/SafeLocalStorage'
+import localStorage from './common/SafeLocalStorage';
 
 export default angular.module('panda-stubs', [
   PandaHttpInterceptor

@@ -147,7 +147,7 @@ class controller {
   orderData (orderModel) {
     return this.OrderService.buildOrder(Object.assign(orderModel, {
       geo: this.inputLocation,
-      price: this.getTotalPrice()
+      price: this.getTotalPrice( )
     }));
   }
 }

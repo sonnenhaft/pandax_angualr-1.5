@@ -1,5 +1,5 @@
 import StatefulUserData from '../../common-services/StatefulUserData';
-import localStorage from './../../common/SafeLocalStorage'
+import localStorage from './../../common/SafeLocalStorage';
 
 class StatefulAuthTokenService {
   STORAGE_KEY = 'MINX_TOKEN'
