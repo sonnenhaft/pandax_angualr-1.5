@@ -1,6 +1,6 @@
 {
   "name": "pandax",
-  "version": "0.10.36",
+  "version": "0.10.37",
   "description": "pandax",
   "dependencies": {
     "angular": "1.5.9",
@@ -103,7 +103,7 @@
     "serve": "gulp serve",
     "test:watch": "karma start --autoWatch=true --singleRun=false",
     "create-component": "gulp create-component --gulpfile gulpfile.templates.js",
-    "eslint:fix": "eslint client gulpfile.babel.js webpack.* --fix",
+    "lint:fix": "eslint client gulpfile.babel.js webpack.* --fix",
     "bump": "npm version patch --no-git-tag-version && git add package.json"
   },
   "repository": {

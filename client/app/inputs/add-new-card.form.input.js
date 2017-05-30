@@ -42,7 +42,8 @@ export default angular.module('addNewCardForm', [
     <input type="text" name="number"
            ng-required="$ctrl.isRequired" touched-invalid  panda-card-formatter
            ng-change="$ctrl.checkCardNumber()"
-           ng-model="$ctrl.model.number"/>
+           ng-model="$ctrl.model.number"
+           placeholder="3141 5926 5358 9793"/>
 </input-wrapper>
 
 <div layout="row">
@@ -51,6 +52,7 @@ export default angular.module('addNewCardForm', [
                ng-required="$ctrl.isRequired" touched-invalid
                ng-change="$ctrl.checkCardExpiry()"
                valid-thru-formatter
+               placeholder="MM/YY"
                ng-model="$ctrl.model.expiry"/>
     </input-wrapper>
 
@@ -60,6 +62,7 @@ export default angular.module('addNewCardForm', [
         <input type="text" name="cvc"
                ng-required="$ctrl.isRequired" touched-invalid
                ng-change="$ctrl.checkCardCvc()"
+               placeholder="123"
                ng-model="$ctrl.model.cvc"/>
     </input-wrapper>
 
@@ -68,6 +71,7 @@ export default angular.module('addNewCardForm', [
     <input-wrapper name="zip" field="Zip code">
         <input type="text" name="zip"
                ng-required="$ctrl.isRequired" touched-invalid
+               placeholder="12345"
                ng-model="$ctrl.model.zip"/>
     </input-wrapper>
 </div>`,
@@ -111,11 +115,11 @@ export default angular.module('addNewCardForm', [
           }
           const year = newCard.substring(2, end);
           newCard = `${month}/${year}`;
-        } else  if (newCard.length === 2 && newCard.indexOf('/') === -1 && !backspaceClicked) {
-          newCard = `${newCard}/`
+        } else if (newCard.length === 2 && newCard.indexOf('/') === -1 && !backspaceClicked) {
+          newCard = `${newCard}/`;
         }
 
-        backspaceClicked = false
+        backspaceClicked = false;
 
         if (newCard === validThru) {
           return validThru;
@@ -125,7 +129,7 @@ export default angular.module('addNewCardForm', [
         }
       };
 
-      $element.bind('keydown', function(event){
+      $element.bind('keydown', event => {
         if (event.which === 8) {
           backspaceClicked = true;
         }
@@ -135,7 +139,7 @@ export default angular.module('addNewCardForm', [
       $parsers.push((validThru = '') => {
         const val = formatValidThruValue(validThru);
         $element.val(val);
-        return val
+        return val;
       });
     }
   };

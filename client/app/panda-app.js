@@ -124,7 +124,7 @@ angular.module('app', [
   })
   .component('app', {
     template,
-    controller () {
-       console.log(`PANDAX v. ${packageJson.version}`);
+    controller ( ) {
+      console.log(`PANDAX v. ${packageJson.version}`);
     }
   });
