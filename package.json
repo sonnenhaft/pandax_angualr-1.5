@@ -1,6 +1,6 @@
 {
   "name": "pandax",
-  "version": "0.10.37",
+  "version": "0.10.38",
   "description": "pandax",
   "dependencies": {
     "angular": "1.5.9",
@@ -22,7 +22,7 @@
     "file-loader": "^0.9.0",
     "lodash": "^4.13.1",
     "moment": "^2.14.1",
-    "ng-file-upload": "^12.0.4",
+    "ng-file-upload": "^12.2.13",
     "ng-infinite-scroll": "^1.3.0",
     "normalize.css": "^3.0.3",
     "utf-8-validate": "^1.2.1",
