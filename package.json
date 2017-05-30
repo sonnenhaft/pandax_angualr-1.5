@@ -1,6 +1,6 @@
 {
   "name": "pandax",
-  "version": "0.10.38",
+  "version": "0.10.39",
   "description": "pandax",
   "dependencies": {
     "angular": "1.5.9",
