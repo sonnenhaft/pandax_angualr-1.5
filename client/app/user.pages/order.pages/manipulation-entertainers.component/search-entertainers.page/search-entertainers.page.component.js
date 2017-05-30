@@ -76,7 +76,8 @@ export default angular.module('searchEntertainers', [
   bindings: {
     entertainers: '=',
     itemActiveIndex: '=',
-    entertainersInvited: '='
+    entertainersInvited: '=',
+    asapFlag: '='
   },
   template,
   controller
