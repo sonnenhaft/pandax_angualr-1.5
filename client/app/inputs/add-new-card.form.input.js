@@ -109,7 +109,7 @@ export default angular.module('addNewCardForm', [
   return {
     require: '^ngModel',
     priority: 1,
-    link: (i, $element, $attrs, { $formatters, $parsers }) => {
+    link: ($scope, $element, $attrs, { $formatters, $parsers }) => {
       let backspaceClicked = false;
       const formatValidThruValue = (validThru = '') => {
         let newCard = validThru;
@@ -145,6 +145,15 @@ export default angular.module('addNewCardForm', [
           backspaceClicked = true;
         }
       });
+
+      $element.on('keyup', () => {
+        const val = $element.val();
+        if ( val.length > 5 ) {
+          $element.val(val.substr(0, 5))
+        }
+      })
+
+      $scope.$on('$destroy', () => $element.off())
 
       $formatters.unshift(formatValidThruValue);
       $parsers.push((validThru = '') => {
