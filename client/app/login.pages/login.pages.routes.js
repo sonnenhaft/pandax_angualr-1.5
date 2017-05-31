@@ -11,7 +11,7 @@ import ContactUsPage from '../user.pages/contact-us.page.component/contact-us.pa
 
 import template from './login.pages.layout.html';
 
-export { LoginPageComponent };
+export { LoginPageComponent, ResetPasswordPageComponent };
 
 const LoginPagesLayout = 'home';
 export default angular.module(LoginPagesLayout, [
@@ -26,7 +26,7 @@ export default angular.module(LoginPagesLayout, [
 }).config(($stateProvider, $urlRouterProvider) => {
   'ngInject';
 
-  const params = '?email&password&customer&auto&redirectUrl';
+  const params = '?email&password&customer&auto&redirectUrl&reset';
   $stateProvider.state({
     url: '/',
     name: LoginPagesLayout,
@@ -58,5 +58,5 @@ export default angular.module(LoginPagesLayout, [
     reloadOnSearch: false,
   }));
 
-  $urlRouterProvider.when('/', '/login').when('', '/login');
+  // $urlRouterProvider.when('/', '/login').when('', '/login');
 }).name;
