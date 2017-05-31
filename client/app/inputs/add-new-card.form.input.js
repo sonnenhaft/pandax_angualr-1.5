@@ -43,7 +43,7 @@ export default angular.module('addNewCardForm', [
            ng-required="$ctrl.isRequired" touched-invalid  panda-card-formatter
            ng-change="$ctrl.checkCardNumber()"
            ng-model="$ctrl.model.number"
-           placeholder="3141 5926 5358 9793"/>
+           placeholder="1234 5678 1234 5678"/>
 </input-wrapper>
 
 <div layout="row">
