@@ -11,7 +11,7 @@ export default angular.module('resetPasswordPage', []).component('resetPasswordP
       const password = this.credentials.password;
       const token = $stateParams.reset;
       return LoginResource.resetPassword({ token }, { password }).$promise.then(( ) => {
-        $state.go('signUpPage');
+        $state.go('loginPage');
       });
     };
   }
