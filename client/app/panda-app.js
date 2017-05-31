@@ -15,10 +15,9 @@ import angularMessages from 'angular-messages';
 import 'angular-filter/dist/angular-filter.min';
 import angularStripe from 'angular-stripe';
 import ngInfiniteScroll from 'ng-infinite-scroll';
-import ngSanitize from 'angular-sanitize';              // for material dialog to show text as html
+import ngSanitize from 'angular-sanitize'; // for material dialog to show text as html
 import StatefulUserData from './common-services/StatefulUserData';
 import PandaHttpInterceptor from './panda-app.http-interceptor';
-
 // common
 import NavbarComponent from './user.pages/main-page-navbar.component/main-page-navbar.component';
 import Map from './inputs/panda-google-map.input/panda-google-map.input';
@@ -27,7 +26,6 @@ import SpinnerComponent from './common/spinner.component/spinner.component';
 import FindLocationComponent from './inputs/panda-find-location.input/panda-find-location.input';
 import OrderDetailsComponent from './user.pages/billing.page.component/order-details.component/order-details.component';
 import LogoutComponent from './login.pages/logout.component/logout.component';
-
 // pages
 import MainPage from './user.pages/main-page.layout';
 import HiddenEntertainerPage from './user.pages/hidden-entertainer.page/hidden-entertainer.page';
@@ -38,7 +36,7 @@ import PaymentsPage from './user.pages/payments.page.component/payments.page.com
 import HistoryMinxPage from './user.pages/orders-history.pages/history-order-detail.page/history-order-detail.page';
 import ContactUsPage from './user.pages/contact-us.page.component/contact-us.page.component';
 import AdminComponent from './admin.pages/admin-pages.abstract.route';
-import LoginPagesRoutes, { LoginPageComponent as loginPageStateName } from './login.pages/login.pages.routes';
+import LoginPagesRoutes, { LoginPageComponent as loginPageStateName, ResetPasswordPageComponent as ResetPasswordStateName } from './login.pages/login.pages.routes';
 
 import hoursToTime from './common/hoursToTime.filter';
 
@@ -102,7 +100,16 @@ angular.module('app', [
   $httpProvider.interceptors.push(PandaHttpInterceptor);
 
   $locationProvider.html5Mode(false);
-  $urlRouterProvider.otherwise($injector => $injector.get('$state').go(loginPageStateName));
+  $urlRouterProvider.otherwise($injector => {
+    const { reset } = $injector.get('$location').$$search || {};
+    console.log(reset, 'hehe')
+    const $state = $injector.get('$state');
+    if (reset) {
+      $state.go(ResetPasswordStateName, { reset });
+    } else {
+      $state.go(loginPageStateName);
+    }
+  });
 
   uiGmapGoogleMapApiProvider.configure({
     key: 'AIzaSyCLBp2BxSpyfnqC_dhDKidNXDuHQTR-DYQ',
