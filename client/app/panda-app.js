@@ -8,7 +8,7 @@ import 'angular-simple-logger';
 import 'moment';
 import 'angular-moment';
 import 'lodash';
-import 'angular-google-maps';
+// import 'angular-google-maps';
 import 'normalize.css';
 import 'animate.css';
 import angularMessages from 'angular-messages';

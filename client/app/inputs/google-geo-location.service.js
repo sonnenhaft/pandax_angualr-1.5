@@ -53,5 +53,13 @@ class GoogleGeoLocationService {
 }
 
 export default angular.module('GoogleGeoLocationService', [
-  'uiGmapgoogle-maps'
-]).service('GoogleGeoLocationService', GoogleGeoLocationService).name;
+  // 'uiGmapgoogle-maps'
+])
+  .provider('uiGmapGoogleMapApi', function() {
+    this.configure = () => {}
+    this.$get = () => {
+      Promise.resolve()
+    }
+  })
+  .service('GoogleGeoLocationService', GoogleGeoLocationService)
+  .name;

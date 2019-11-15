@@ -8,12 +8,19 @@ export default angular.module('panda-stubs', [
 
   $provide.decorator('$http', ($delegate, $q, $window, PandaHttpInterceptor) => {
     const $http = $delegate;
-    const role = 'customer';
+    const role = 'provider';
     const orderId = 113;
-    if (localStorage.stub) {
+    if ($window.location.href.includes('stub') || localStorage.stub) {
       const mocks = {
         '/api/sessions': { data: { role }, token: 1 },
         [`/api/${role}/profile`]: { data: { role } },
+        [`/api/${role}/service-types`]: { data: {  } },
+        [`/api/${role}/orders/history?page=1&include=invites`]: { data: {items: [{
+              startDt: new Date(),
+              worked_time: 30*60,
+              cost: 50,
+              finalCost: 60
+            }, {}]}, meta: {pagination: {}}  },
         [`/api/${role}/orders/last-not-accomplished`]: [],
         '/api/orders/1/entertainers/search': [{}],
         [`/api/${role}/orders/1/invites`]: { items: [] },
@@ -23,9 +30,9 @@ export default angular.module('panda-stubs', [
         [`/api/${role}/orders/${orderId}/invites`]: { items: [] },
         [`/api/${role}/service-types`]: [],
         [`/api/${role}/unratedinvites`]: [
-          // { id: 204, order_id: 102, location: 'vulica Prytyckaha 2, Minsk, Belarus', location_notes: '111' },
-          // { id: 204, order_id: 102, location: 'vulica Prytyckaha 3, Minsk, Belarus', location_notes: '111', provider: { displaying_name: 'John7' } },
-          // { id: 204, order_id: 102, location: 'vulica Prytyckaha 4, Minsk, Belarus', location_notes: '111', finish_dt: '2016-11-02T14:24:50+00:00' }
+          { id: 204, order_id: 102, location: 'vulica Prytyckaha 2, Minsk, Belarus', location_notes: '111' },
+          { id: 204, order_id: 102, location: 'vulica Prytyckaha 3, Minsk, Belarus', location_notes: '111', provider: { displaying_name: 'John7' } },
+          { id: 204, order_id: 102, location: 'vulica Prytyckaha 4, Minsk, Belarus', location_notes: '111', finish_dt: '2016-11-02T14:24:50+00:00' }
         ]
       };
 
