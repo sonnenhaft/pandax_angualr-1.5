@@ -19,7 +19,7 @@
     "animate.css": "https://github.com/daneden/animate.css.git",
     "file-loader": "^0.9.0",
     "lodash": "^4.13.1",
-    "moment": "^2.14.1",
+    "moment": "^2.29.2",
     "ng-file-upload": "^12.2.13",
     "ng-infinite-scroll": "^1.3.0",
     "normalize.css": "^3.0.3",
